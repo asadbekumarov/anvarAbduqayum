@@ -1,0 +1,242 @@
+{
+  "common": {
+    "brandName": "Ilhom Begimqulov",
+    "brandRole": "Business Consultant & Executive Trainer",
+    "cta": "Apply for Mentorship",
+    "learnMore": "Learn More",
+    "viewServices": "Explore Services",
+    "applyNow": "Submit",
+    "close": "Close",
+    "openMenu": "Open Menu",
+    "closeMenu": "Close Menu",
+    "watchVideo": "Watch Video",
+    "viewDetails": "View Details",
+    "participate": "Participate"
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "events": "Events",
+    "stages": "Stages",
+    "tests": "Tests"
+  },
+  "hero": {
+    "kicker": "BUSINESS CONSULTANT & TRAINER",
+    "title": "Ilhom Begimqulov — platform of business consultant and executive trainer.",
+    "description": "Business development, systematization, strategic growth, intensive seminars, and practical advisory. Helping your company scale and achieve ambitious targets.",
+    "ctaPrimary": "Apply for Mentorship",
+    "ctaSecondary": "Explore Services",
+    "stats": {
+      "stat1Value": "8+",
+      "stat1Label": "Regional Tour Seminars",
+      "stat2Value": "100+",
+      "stat2Label": "Systematized Enterprises",
+      "stat3Value": "10,000+",
+      "stat3Label": "Entrepreneurs & Trainees"
+    }
+  },
+  "services": {
+    "kicker": "SERVICES",
+    "title": "Solutions for Scaling Your Enterprise",
+    "description": "We offer comprehensive business development solutions — from strategic planning to corporate communication refinement. Select the service that drives your company towards sustainable growth.",
+    "items": [
+      {
+        "index": "01",
+        "title": "Strategic Analysis & Planning",
+        "description": "Detailed audit of current operational and marketing workflows. Crafting sustainable growth strategies aligned with long-term company vision. Risk and market opportunity assessment."
+      },
+      {
+        "index": "02",
+        "title": "Business Process Optimization",
+        "description": "Elevating the efficiency of internal operations. Deploying modern management tools and technologies. Reducing operational costs via process refinement."
+      },
+      {
+        "index": "03",
+        "title": "Marketing Strategy Development",
+        "description": "Building strategies that maximize brand recognition. Designing high-converting marketing campaigns and calls to action. In-depth audience and competitor analysis."
+      },
+      {
+        "index": "04",
+        "title": "Project Management Advisory",
+        "description": "Designing project architecture and execution roadmaps. Monitoring project milestones and performance delivery. Training management teams in structured execution methodologies."
+      },
+      {
+        "index": "05",
+        "title": "Business Communications Refinement",
+        "description": "Auditing corporate correspondence and commercial proposals. Enhancing messaging clarity and persuasive power. Structuring contemporary communication channels with clients and partners."
+      },
+      {
+        "index": "06",
+        "title": "Business Transformation Support",
+        "description": "Hands-on company accompaniment during change implementation. Upskilling personnel for new strategic approaches. Securing seamless transitions to scalable business models."
+      }
+    ]
+  },
+  "events": {
+    "kicker": "BUSINESS TOUR",
+    "title": "CIS Countries Business Tour",
+    "description": "Unlock unprecedented growth opportunities within our unique CIS regional tour. Gain practical frameworks, attend masterclasses, learn from inspiring success cases, and network with leading regional entrepreneurs.",
+    "cta": "Participate"
+  },
+  "stages": {
+    "kicker": "STAGES",
+    "title": "SME & Enterprise Business Development",
+    "description": "Foundational stages engineered to guide your business toward sustainable expansion, adaptability, and market leadership. We accompany you at every milestone — from inception to long-term scaling.",
+    "tab1": "Small & Medium Business",
+    "tab2": "Scaling & Mentorship",
+    "systematization": [
+      {
+        "step": "01",
+        "title": "Idea & Strategic Planning",
+        "description": "Pinpointing target market demands. Formulating Unique Value Propositions (UVP). Developing financial roadmaps with cost projections and profit forecasts. Competitive environment analysis."
+      },
+      {
+        "step": "02",
+        "title": "Business Launch",
+        "description": "Legal entity registration and compliance documentation. Brand identity creation and styling. Launching MVP product or service. Orchestrating initial customer acquisition campaigns."
+      },
+      {
+        "step": "03",
+        "title": "Process Optimization",
+        "description": "Reviewing initial performance and fine-tuning strategy. Automating internal workflows. Assembling core team talent. Improving quality through customer feedback loops."
+      },
+      {
+        "step": "04",
+        "title": "Sales Volume Expansion",
+        "description": "Introducing supplementary products and services. Broadening customer acquisition channels. Establishing strategic partnerships. Measuring sales efficiency metrics."
+      },
+      {
+        "step": "05",
+        "title": "Business Scaling",
+        "description": "Expanding into new geographical markets. Scaling manufacturing or service delivery capacity. Structuring long-term expansion roadmaps. Capital investments into technology and infrastructure."
+      },
+      {
+        "step": "06",
+        "title": "Sustainable Growth",
+        "description": "Continuous service and product excellence. Strengthening brand equity and industry authority. Monitoring financial sustainability metrics. Comprehensive risk mitigation strategies."
+      }
+    ],
+    "mentorship": [
+      {
+        "step": "01",
+        "title": "Individual Audit & Diagnostics",
+        "description": "Evaluating existing operational bottlenecks, profitability limits, and immediate leverage points."
+      },
+      {
+        "step": "02",
+        "title": "Strategic Roadmap Blueprint",
+        "description": "Setting measurable financial targets and laying out step-by-step organizational progression."
+      },
+      {
+        "step": "03",
+        "title": "Systematized SOPs & Structure",
+        "description": "Establishing standard operating procedures, job responsibilities, and clear lines of accountability."
+      },
+      {
+        "step": "04",
+        "title": "Sales & Marketing Amplification",
+        "description": "Formulating high-converting offers, multi-channel lead funnels, and disciplined pipeline tracking."
+      },
+      {
+        "step": "05",
+        "title": "Team Leadership & Delegation",
+        "description": "Implementing objective KPIs and liberating the founder from routine operational micromanagement."
+      },
+      {
+        "step": "06",
+        "title": "Expansion & Asset Protection",
+        "description": "Conquering new market territories, reinforcing brand goodwill, and managing capital growth."
+      }
+    ]
+  },
+  "partners": {
+    "kicker": "PARTNERS",
+    "title": "Businesses We Have Supported"
+  },
+  "ctaBand": {
+    "title": "Ask your question, and we will help you find the right solution to grow your business successfully!",
+    "description": "Receive professional guidance on scaling operations, reducing unnecessary expenses, and building disciplined systems.",
+    "cta": "Apply for Mentorship"
+  },
+  "expert": {
+    "kicker": "BUSINESS CONSULTANT",
+    "name": "Ilhom Begimqulov",
+    "role": "Business Consultant & Executive Trainer",
+    "bio1": "An accomplished business consultant who assists companies in solving critical strategic hurdles and reaching their growth goals.",
+    "bio2": "With deep multidisciplinary experience across businesses of various scales, he identifies tailored solutions that deliver measurable results.",
+    "quote": "Business is about continuous growth, disciplined strategy, and an effective operational system.",
+    "pillar1Title": "Education:",
+    "pillar1Desc": "Master of Business Administration (MBA), leading international university. Advanced coursework in strategic marketing and project management.",
+    "pillar2Title": "Experience:",
+    "pillar2Desc": "Collaboration with dynamic startups and prominent corporations. Managing multi-million-dollar transformations and architecting expansion strategies.",
+    "pillar3Title": "Specialization:",
+    "pillar3Desc": "Developing and executing marketing strategies. Optimizing corporate communications. Comprehensive end-to-end project management.",
+    "pillar4Title": "Personal Qualities:",
+    "pillar4Desc": "Methodical execution and attention to detail. Tailoring solutions to the exact priorities of every client with pragmatic development plans."
+  },
+  "testimonials": {
+    "kicker": "CLIENT FEEDBACK",
+    "title": "Client feedback is the strongest proof of our work's effectiveness and quality.",
+    "lead": "Discover how our consulting helped enterprises achieve breakthroughs, optimize operations, and uncover new scaling horizons."
+  },
+  "book": {
+    "kicker": "PRACTICAL GUIDE",
+    "title": "“Business Cheat Sheet” Book",
+    "description": "The “Business Cheat Sheet” book is a practical manual for anyone launching or scaling a business. It consolidates straightforward advice, battle-tested tools, and real-world examples from entrepreneurial practice.",
+    "cta": "Order the Book",
+    "pages": "Practical format",
+    "format": "Hardcover & audio edition",
+    "feature1": "Challenges encountered in real business",
+    "feature2": "My business mistakes and lessons learned",
+    "feature3": "Actionable recommendations for growth"
+  },
+  "webinars": {
+    "kicker": "MASTERCLASSES",
+    "title": "PAST WEBINARS",
+    "lead": "In these recorded sessions, you will find actionable advice and invaluable insights for business. Core topics, current trends, and success cases will empower you to implement effective strategies and advance."
+  },
+  "diplomas": {
+    "kicker": "ACCREDITATION",
+    "title": "Diplomas and Certificates",
+    "description": "Official international credentials attesting to recognized expertise in strategic business management, marketing, and executive consulting.",
+    "zoomHint": "Click to enlarge"
+  },
+  "contact": {
+    "kicker": "CONTACT",
+    "title": "Get in Touch",
+    "description": "Ask your question, and we will help you find the right solution to grow your business successfully!",
+    "phoneLabel": "Phone",
+    "phoneValue": "+998 55 503 61 00",
+    "whatsappLabel": "WhatsApp",
+    "whatsappValue": "+998 90 969 66 24",
+    "addressLabel": "Address",
+    "addressValue": "Tashkent, Shaykhontokhur district, Furkat street 18",
+    "hoursLabel": "Working Hours",
+    "hoursValue": "Monday - Saturday: 09:00 - 18:00",
+    "socialLabel": "Social Networks",
+    "cta": "Apply for Mentorship"
+  },
+  "applyModal": {
+    "title": "Apply for Mentorship",
+    "subtitle": "Fill in your details, and our team will get in touch with you shortly!",
+    "nameLabel": "Your Name",
+    "namePlaceholder": "Enter your full name",
+    "phoneLabel": "Phone Number",
+    "phonePlaceholder": "+998 (__) ___-__-__",
+    "businessLabel": "Do you own a business?",
+    "businessPlaceholder": "Yes / No",
+    "questionLabel": "What main challenge are you facing in business?",
+    "questionPlaceholder": "Describe your challenge in detail...",
+    "submit": "Submit",
+    "submitButton": "Submit",
+    "submitting": "Submitting...",
+    "successMessage": "Submitted! Your information has been received. We will contact you shortly!",
+    "errorMessage": "An error occurred. Please check your information and try again."
+  },
+  "footer": {
+    "location": "Tashkent, Furkat street 18",
+    "phone": "+998 55 503 61 00",
+    "rights": "Ilhom Begimqulov © 2026. All rights reserved.",
+    "backToTop": "Back to top"
+  }
+}

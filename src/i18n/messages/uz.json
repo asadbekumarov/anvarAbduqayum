@@ -1,0 +1,242 @@
+{
+  "common": {
+    "brandName": "Ilhom Begimqulov",
+    "brandRole": "Biznes konsultant va trener",
+    "cta": "Ustozga shogird tushish",
+    "learnMore": "Batafsil ma'lumot",
+    "viewServices": "Xizmatlar bilan tanishish",
+    "applyNow": "Yuborish",
+    "close": "Yopish",
+    "openMenu": "Menyuni ochish",
+    "closeMenu": "Menyuni yopish",
+    "watchVideo": "Video ko'rish",
+    "viewDetails": "Batafsil ko'rish",
+    "participate": "Ishtirok etish"
+  },
+  "nav": {
+    "home": "Bosh sahifa",
+    "services": "Xizmatlar",
+    "events": "Tadbirlarimiz",
+    "stages": "Bosqichlar",
+    "tests": "Testlar"
+  },
+  "hero": {
+    "kicker": "BIZNES KONSULTANT VA TRENER",
+    "title": "Ilhom Begimqulov — biznes konsultant va trener platformasi.",
+    "description": "Biznesni rivojlantirish, tizimlashtirish, strategiya, seminarlar va amaliy maslahatlar. Kompaniyangiz o'sishiga va yangi maqsadlarga erishishga yordam beramiz.",
+    "ctaPrimary": "Ustozga shogird tushish",
+    "ctaSecondary": "Xizmatlar bilan tanishish",
+    "stats": {
+      "stat1Value": "8+",
+      "stat1Label": "Mintaqaviy shahar bo'ylab seminar",
+      "stat2Value": "100+",
+      "stat2Label": "Tizimlashtirilgan kompaniyalar",
+      "stat3Value": "10 000+",
+      "stat3Label": "Tadbirkorlar va tinglovchilar"
+    }
+  },
+  "services": {
+    "kicker": "XIZMATLAR",
+    "title": "Kompaniyangiz o'sishi uchun amaliy yechimlar",
+    "description": "Biz biznesni rivojlantirish uchun — strategik rejalashtirishdan tortib, kommunikatsiyalarni takomillashtirishgacha bo'lgan yechimlarni taklif etamiz. Kompaniyangiz o'sishiga va yangi maqsadlarga erishishga yordam beradigan xizmatni tanlang.",
+    "items": [
+      {
+        "index": "01",
+        "title": "Strategik tahlil va rejalashtirish",
+        "description": "Biznesning joriy holatini, jumladan, marketing va operatsion jarayonlarni tahlil qilish. Kompaniyaning uzoq muddatli maqsadlarini hisobga olgan holda o'sish strategiyasini ishlab chiqish. Bozordagi xavf va imkoniyatlarni baholash."
+      },
+      {
+        "index": "02",
+        "title": "Biznes jarayonlarini optimallashtirish",
+        "description": "Kompaniyaning ichki jarayonlari samaradorligini oshirish. Zamonaviy vositalar va texnologiyalarni joriy etish. Ish jarayonlarini optimallashtirish hisobiga xarajatlarni kamaytirish."
+      },
+      {
+        "index": "03",
+        "title": "Marketing strategiyalarini ishlab chiqish",
+        "description": "Brend tan olinishini oshirish strategiyalarini yaratish. Samarali reklama kampaniyalari va harakatga chorlovlarni ishlab chiqish. Auditoriya va raqobat muhitini tahlil qilish."
+      },
+      {
+        "index": "04",
+        "title": "Loyiha boshqaruvi bo'yicha konsultatsiya",
+        "description": "Loyihalarning tuzilmasi va bosqichlarini ishlab chiqishda yordam. Loyihaning bajarilishini nazorat qilish va kuzatib borish. Xodimlarni loyiha boshqaruvi usullariga o'rgatish."
+      },
+      {
+        "index": "05",
+        "title": "Biznes-kommunikatsiyalarni takomillashtirish",
+        "description": "Ish yozishmalari va tijorat takliflarining auditi. Aniqroq va samaraliroq matnlarni yaratishda yordam. Mijozlar va hamkorlar bilan o'zaro hamkorlikning zamonaviy formatlarini ishlab chiqish."
+      },
+      {
+        "index": "06",
+        "title": "Biznes transformatsiyasi jarayonlarida qo'llab-quvvatlash",
+        "description": "O'zgarishlarni joriy etishda kompaniyani kuzatib borish va qo'llab-quvvatlash. Xodimlarni yangi strategiyalar va yondashuvlarga tayyorlash. Yangi biznes-modellarga silliq o'tishni ta'minlash."
+      }
+    ]
+  },
+  "events": {
+    "kicker": "BIZNES-TUR",
+    "title": "CHT mamlakatlari bo'yicha biznes-tur",
+    "description": "CHT mamlakatlari bo'ylab noyob tur doirasida biznesingiz uchun yangi imkoniyatlarni oching. Sizni amaliy maslahatlar, master-klasslar, ilhomlantiruvchi muvaffaqiyat hikoyalari va mintaqa tadbirkorlari bilan uchrashuvlar kutmoqda.",
+    "cta": "Ishtirok etish"
+  },
+  "stages": {
+    "kicker": "BOSQICHLAR",
+    "title": "Katta va kichik biznesni rivojlantirish",
+    "description": "Asosiy bosqichlar biznesning o'sishiga, moslashishiga va muvaffaqiyatga erishishiga yordam beradi. Biz har bir qadamda — rejalashtirishdan tortib uzoq muddatli rivojlanishgacha qo'llab-quvvatlaymiz.",
+    "tab1": "Kichik va o'rta biznes",
+    "tab2": "Masshtablash va shogirdlik",
+    "systematization": [
+      {
+        "step": "01",
+        "title": "G'oya va rejalashtirish",
+        "description": "Maqsadli auditoriyaning ehtiyojlarini aniqlash. Noyob tijorat taklifini (NTT) shakllantirish. Xarajatlar hisob-kitoblari va daromad prognozlari bilan birga biznes-reja ishlab chiqish. Bozor va raqobatchilarni tahlil qilish."
+      },
+      {
+        "step": "02",
+        "title": "Biznesni ishga tushirish",
+        "description": "Biznesni ro'yxatdan o'tkazish va kerakli hujjatlarni rasmiylashtirish. Firma stilini ishlab chiqish va brendni yaratish. Mahsulot yoki xizmatning birinchi versiyasini ishga tushirish. Birinchi mijozlarni jalb qilish uchun marketing faoliyatini tashkil etish."
+      },
+      {
+        "step": "03",
+        "title": "Jarayonlarni optimallashtirish",
+        "description": "Dastlabki natijalarni tahlil qilish va strategiyani tuzatish. Ichki jarayonlarni avtomatlashtirish va optimallashtirish. Jamoani shakllantirish: xodimlarni yollash yoki mutaxassislarni jalb qilish. Qayta aloqa asosida mahsulot yoki xizmat sifatini yaxshilash."
+      },
+      {
+        "step": "04",
+        "title": "Savdo hajmini oshirish",
+        "description": "Qo'shimcha xizmatlar yoki mahsulotlarni joriy etish. Marketing va reklama orqali mijozlar bazasini kengaytirish. Boshqa kompaniyalar bilan hamkorlik aloqalarini o'rnatish. Savdo strategiyalarining samaradorligini baholash."
+      },
+      {
+        "step": "05",
+        "title": "Biznesni masshtablash (kengaytirish)",
+        "description": "Yangi bozorlarga chiqish. Ishlab chiqarish yoki xizmat ko'rsatish hajmini oshirish. Uzoq muddatli o'sish strategiyasini ishlab chiqish. Yangi texnologiyalar va infratuzilmaga investitsiyalar kiritish."
+      },
+      {
+        "step": "06",
+        "title": "Barqaror rivojlanish",
+        "description": "Mahsulot yoki xizmat va mijozlarga xizmat ko'rsatish sifatini doimiy yaxshilash. Brendni rivojlantirish va bozordagi obro'sini mustahkamlash. Moliyaviy barqarorlik monitoringi. Xatarlarni boshqarish strategiyasini ishlab chiqish."
+      }
+    ],
+    "mentorship": [
+      {
+        "step": "01",
+        "title": "Individual tahlil va audit",
+        "description": "Biznesingizdagi mavjud to'siqlar, daromad cheklovlari va operativ muammolarni chuqur tahlil qilish."
+      },
+      {
+        "step": "02",
+        "title": "Strategik o'sish rejasi",
+        "description": "Daromadni oshirish va kompaniyaning uzoq muddatli o'sish yo'l xaritasini aniq raqamlar bilan belgilash."
+      },
+      {
+        "step": "03",
+        "title": "Tizimli boshqaruv va reglamentlar",
+        "description": "Jarayonlarni reglamentlash, lavozim yo'riqnomalari va har bir bo'g'in uchun javobgarlik zanjirini qurish."
+      },
+      {
+        "step": "04",
+        "title": "Sotuv va marketing kuchaytirish",
+        "description": "Kuchli reklama kampaniyalari, takliflar va yangi mijozlar oqimini jalb qilish mexanizmlari."
+      },
+      {
+        "step": "05",
+        "title": "Jamoa boshqaruvi va delegatsiyalash",
+        "description": "Xodimlarni boshqarish, KPI ko'rsatkichlari va korxona rahbarini operativkadan to'liq ozod etish."
+      },
+      {
+        "step": "06",
+        "title": "Masshtablash va yangi bozorlar",
+        "description": "Yangi hududlarga chiqish, daromadni barqarorlashtirish va shaxsiy kapitalni mustahkamlash."
+      }
+    ]
+  },
+  "partners": {
+    "kicker": "HAMKORLAR",
+    "title": "Biz qo'llab-quvvatlagan bizneslar"
+  },
+  "ctaBand": {
+    "title": "Savolingizni bering, biz sizning biznesingizni muvaffaqiyatli rivojlantirish uchun yechim topishga yordam beramiz!",
+    "description": "Kompaniyangiz o'sishi, xarajatlarni optimallashtirish va tizimli boshqaruv bo'yicha amaliy maslahat oling.",
+    "cta": "Ustozga shogird tushish"
+  },
+  "expert": {
+    "kicker": "BIZNES-KONSULTANT",
+    "name": "Ilhom Begimqulov",
+    "role": "Biznes-konsultant va amaliyotchi trener",
+    "bio1": "Tajribali biznes-konsultant bo'lib, kompaniyalarga strategik masalalarni hal qilishga va ularning maqsadlariga erishishga yordam beradi.",
+    "bio2": "Turli miqyosdagi bizneslar bilan ko'p yillik ishlash tajribasi tufayli, natija beradigan individual yechimlarni topa oladi.",
+    "quote": "Biznes — bu doimiy o'sish, aniq strategiya va samarali boshqaruv tizimidir.",
+    "pillar1Title": "Ta'lim:",
+    "pillar1Desc": "Biznesni boshqarish magistri (MBA), yetakchi xalqaro universitet. Strategik marketing va loyihalarni boshqarish bo'yicha qo'shimcha kurslar.",
+    "pillar2Title": "Tajriba:",
+    "pillar2Desc": "Kichik startaplar va yirik korporatsiyalar bilan hamkorlik. Ko'p millionlik loyihalarni boshqarish va o'sish strategiyalari.",
+    "pillar3Title": "Mutaxassislik:",
+    "pillar3Desc": "Marketing strategiyalarini ishlab chiqish va joriy etish. Biznes-kommunikatsiyalarni optimallashtirish va loyihalarni to'liq qo'llab-quvvatlash.",
+    "pillar4Title": "Shaxsiy fazilatlari:",
+    "pillar4Desc": "Metodiklik va detallarga e'tibor. Yechimlarni har bir mijozning vazifalariga moslashtirish va realistik rivojlanish rejalari."
+  },
+  "testimonials": {
+    "kicker": "MIJOZLAR FIKRLARI",
+    "title": "Mijozlarimizning fikrlari — ish samaradorligi va sifatining eng yaxshi isbotidir.",
+    "lead": "Bizning maslahatlarimiz kompaniyalarga muvaffaqiyatga erishishda, jarayonlarni optimallashtirishda va oʻsish uchun yangi istiqbollarni topishda qanday yordam berganini bilib oling."
+  },
+  "book": {
+    "kicker": "AMALIY QO'LLANMA",
+    "title": "“Biznes shpargalkasi” kitobi",
+    "description": "“Biznes shpargalkasi” kitobi — bu oʻz biznesini boshlamoqchi yoki rivojlantirmoqchi boʻlganlar uchun amaliy qoʻllanmadir. Unda oddiy va tushunarli maslahatlar, vaqt sinovidan oʻtgan vositalar va tadbirkorlik amaliyotidan real misollar jamlangan.",
+    "cta": "Kitobni buyurtma qilish",
+    "pages": "Amaliy format",
+    "format": "Qattiq muqova & audio shaklda",
+    "feature1": "Biznesda duch kelgan qiyinchiliklar",
+    "feature2": "Biznesdagi xatolarim va ulardan olgan saboqlarim",
+    "feature3": "Biznesni rivojlantirish uchun foydali tavsiyalar"
+  },
+  "webinars": {
+    "kicker": "MAHORAT DARSLARI",
+    "title": "O'TGAN VEBINARLAR",
+    "lead": "O'tgan videolarda siz biznes uchun amaliy tavsiyalar va foydali insayt (tushuncha)larni topasiz. Asosiy mavzular, dolzarb trendlar va muvaffaqiyatli keyslar sizga samarali strategiyalarni joriy etishga va oldinga siljishga yordam beradi."
+  },
+  "diplomas": {
+    "kicker": "AKKREDITATSIYA",
+    "title": "Diplom va sertifikatlar",
+    "description": "Biznes boshqaruvi, marketing va konsalting sohalaridagi xalqaro malaka va professional hujjatlar.",
+    "zoomHint": "Kattalashtirib ko'rish uchun bosing"
+  },
+  "contact": {
+    "kicker": "CONTACT",
+    "title": "Bog'lanish",
+    "description": "Savolingizni bering, biz sizning biznesingizni muvaffaqiyatli rivojlantirish uchun yechim topishga yordam beramiz!",
+    "phoneLabel": "Telefon",
+    "phoneValue": "+998 55 503 61 00",
+    "whatsappLabel": "WhatsApp",
+    "whatsappValue": "+998 90 969 66 24",
+    "addressLabel": "Manzil",
+    "addressValue": "Toshkent, Shayxontoxur, Furkat ko'chasi 18",
+    "hoursLabel": "Ish vaqti",
+    "hoursValue": "Dushanba - Shanba: 09:00 - 18:00",
+    "socialLabel": "Ijtimoiy tarmoqlar",
+    "cta": "Ustozga shogird tushish"
+  },
+  "applyModal": {
+    "title": "Ustozga shogird tushish",
+    "subtitle": "Ma'lumotlaringizni to'ldiring, tez orada siz bilan bog'lanamiz!",
+    "nameLabel": "Ismingiz",
+    "namePlaceholder": "To'liq ismingiz",
+    "phoneLabel": "Telefon raqamingiz",
+    "phonePlaceholder": "+998 (__) ___-__-__",
+    "businessLabel": "Biznesingiz bormi?",
+    "businessPlaceholder": "Ha, bor / Yo'q",
+    "questionLabel": "Biznesingizdagi qaysi muammo qiynayapdi?",
+    "questionPlaceholder": "Muammongizni batafsil yozing...",
+    "submit": "Yuborish",
+    "submitButton": "Yuborish",
+    "submitting": "Yuborilmoqda...",
+    "successMessage": "Yuborildi! Ma'lumotlaringiz qabul qilindi. Tez orada siz bilan bog'lanamiz!",
+    "errorMessage": "Xatolik yuz berdi. Iltimos, ma'lumotlarni tekshirib qaytadan urinib ko'ring."
+  },
+  "footer": {
+    "location": "Toshkent, Furkat ko'chasi 18",
+    "phone": "+998 55 503 61 00",
+    "rights": "Ilhom Begimqulov © 2026. Barcha huquqlar himoyalangan.",
+    "backToTop": "Yuqoriga qaytish"
+  }
+}

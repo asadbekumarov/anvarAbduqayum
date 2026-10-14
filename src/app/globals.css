@@ -1,0 +1,250 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+@import "lenis/dist/lenis.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.outfit,
+[class*="outfit-"],
+.font-outfit,
+.font-serif,
+.font-sans,
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-outfit), "Outfit", sans-serif !important;
+  font-optical-sizing: auto;
+}
+
+
+:root {
+  --color-base: #0A0A0A;
+  --color-elevated: #141414;
+  --color-border: #262626;
+  --color-gold: #C5A880;
+  --color-muted: #737373;
+}
+
+html {
+  background-color: #0A0A0A;
+  color: #FFFFFF;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #0A0A0A;
+  color: #FFFFFF;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: var(--font-outfit), "Outfit", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+::selection {
+  background-color: #C5A880;
+  color: #0A0A0A;
+}
+
+/* Gold Gradient Utility - Strictly for primary button and large index numerals */
+.gold-gradient {
+  background: linear-gradient(135deg, #DFBA73 0%, #C5A059 50%, #9E7D3B 100%);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #DFBA73 0%, #C5A059 50%, #9E7D3B 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes marqueeReverse {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 35s linear infinite;
+}
+
+.animate-marquee-reverse {
+  animation: marqueeReverse 35s linear infinite;
+}
+
+/* Sharp architectural border utilities */
+.border-grid {
+  border-color: #262626;
+}
+
+/* Subtle focus ring */
+:focus-visible {
+  outline: 1px solid #C5A880;
+  outline-offset: 2px;
+}
+
+/* Minimalist scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #383838;
+}
+
+/* Minimalist Staggered Hero Entrance Animations */
+@keyframes heroFadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroFadeScale {
+  from {
+    opacity: 0;
+    transform: scale(0.98) translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-hero-1 {
+  animation: heroFadeSlideUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
+}
+
+.animate-hero-2 {
+  animation: heroFadeSlideUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.25s backwards;
+}
+
+.animate-hero-3 {
+  animation: heroFadeSlideUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.4s backwards;
+}
+
+.animate-hero-4 {
+  animation: heroFadeSlideUp 0.85s cubic-bezier(0.16, 1, 0.3, 1) 0.55s backwards;
+}
+
+/* 3D Motion & Perspective Utilities */
+.preserve-3d {
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+}
+
+.perspective-1200 {
+  perspective: 1200px;
+  -webkit-perspective: 1200px;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* 3D Orbital Aura Animations */
+@keyframes orbitGold1 {
+  0% {
+    transform: rotateX(68deg) rotateY(15deg) rotateZ(0deg);
+  }
+  100% {
+    transform: rotateX(68deg) rotateY(15deg) rotateZ(360deg);
+  }
+}
+
+@keyframes orbitGold2 {
+  0% {
+    transform: rotateX(-58deg) rotateY(-20deg) rotateZ(360deg);
+  }
+  100% {
+    transform: rotateX(-58deg) rotateY(-20deg) rotateZ(0deg);
+  }
+}
+
+.animate-orbit-1 {
+  animation: orbitGold1 28s linear infinite;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.animate-orbit-2 {
+  animation: orbitGold2 36s linear infinite;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Luxury Book Cover Sheen Animation */
+@keyframes bookSheen {
+  0%, 25% {
+    transform: translateX(-150%) rotate(25deg);
+    opacity: 0;
+  }
+  35% {
+    opacity: 0.65;
+  }
+  50%, 100% {
+    transform: translateX(250%) rotate(25deg);
+    opacity: 0;
+  }
+}
+
+.animate-book-sheen {
+  animation: bookSheen 5s ease-in-out infinite;
+}
+
+/* Button Shimmer Ray */
+@keyframes buttonShimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+.animate-shimmer {
+  animation: buttonShimmer 3s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
