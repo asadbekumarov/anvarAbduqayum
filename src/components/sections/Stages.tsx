@@ -100,7 +100,7 @@ export function Stages({ onOpenApply }: StagesProps) {
           />
 
           {/* Interactive Animated Tabs Switcher */}
-          <div className="shrink-0">
+          <div className="w-full lg:w-auto shrink-0">
             <Tabs
               value={activeTab}
               onValueChange={(val) => {
@@ -109,12 +109,12 @@ export function Stages({ onOpenApply }: StagesProps) {
               }}
               className="w-full sm:w-auto"
             >
-              <TabsList className="border border-border/80 bg-elevated/70 p-1 rounded-xl gap-1">
+              <TabsList className="w-full sm:w-auto grid grid-cols-2 sm:flex sm:flex-row border border-border/80 bg-elevated/70 p-1 rounded-xl gap-1 border-b-0">
                 {tabItems.map((tab) => (
                   <TabsTrigger
                     key={tab.id}
                     value={tab.id}
-                    className="text-xs uppercase tracking-wider py-2 px-4 sm:px-5 font-medium transition-all text-muted hover:text-white data-[state=active]:text-base data-[state=active]:bg-gold data-[state=active]:font-semibold rounded-lg shadow-sm"
+                    className="w-full flex items-center justify-center text-center py-2.5 px-2 sm:px-5 text-[11px] sm:text-xs uppercase tracking-normal sm:tracking-wider font-medium transition-all text-muted hover:text-white data-[state=active]:text-base data-[state=active]:bg-gold data-[state=active]:font-semibold rounded-lg shadow-sm whitespace-normal sm:whitespace-nowrap leading-tight sm:leading-normal min-h-[44px]"
                   >
                     {tab.label}
                   </TabsTrigger>

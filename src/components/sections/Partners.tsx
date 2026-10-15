@@ -40,9 +40,9 @@ export function Partners() {
         {/* Row 1: Forward Marquee */}
         <div className="border-y border-border py-6 bg-elevated/20">
           <Marquee speed={38}>
-            {partners.slice(0, 14).map((p) => (
+            {partners.map((p) => (
               <div
-                key={p.id}
+                key={`r1-${p.id}`}
                 className="h-16 px-8 flex items-center justify-center border border-border bg-base hover:border-gold hover:bg-elevated/80 hover:shadow-[0_0_25px_rgba(197,168,128,0.16)] transition-all duration-300 shrink-0 rounded-[2px] group"
               >
                 <span className="font-serif text-sm tracking-wider uppercase text-muted group-hover:text-gold transition-colors duration-200">
@@ -56,9 +56,9 @@ export function Partners() {
         {/* Row 2: Reverse Marquee */}
         <div className="border-b border-border py-6 bg-elevated/40">
           <Marquee speed={44} reverse>
-            {partners.slice(14).map((p) => (
+            {[...partners].reverse().map((p) => (
               <div
-                key={p.id}
+                key={`r2-${p.id}`}
                 className="h-16 px-8 flex items-center justify-center border border-border bg-base hover:border-gold hover:bg-elevated/80 hover:shadow-[0_0_25px_rgba(197,168,128,0.16)] transition-all duration-300 shrink-0 rounded-[2px] group"
               >
                 <span className="font-serif text-sm tracking-wider uppercase text-muted group-hover:text-gold transition-colors duration-200">

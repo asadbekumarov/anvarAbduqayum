@@ -153,29 +153,29 @@ export function Hero({ onOpenApply }: HeroProps) {
             {/* Key Metrics Strip */}
             <motion.div
               variants={itemVariants}
-              className="pt-10 border-t border-border-subtle grid grid-cols-3 gap-6 sm:gap-8 max-w-2xl"
+              className="pt-8 sm:pt-10 border-t border-border-subtle grid grid-cols-3 divide-x divide-border-subtle max-w-2xl"
             >
-              <div className="border-r border-border-subtle pr-4">
-                <span className="gold-gradient-text font-serif text-3xl sm:text-4xl lg:text-5xl font-bold block">
+              <div className="pr-2 sm:pr-6">
+                <span className="gold-gradient-text font-serif text-2xl sm:text-4xl lg:text-5xl font-bold block leading-none">
                   <AnimatedCounter value={t("stats.stat1Value")} delay={650} duration={1500} />
                 </span>
-                <span className="text-[11px] sm:text-xs text-muted uppercase tracking-wider block mt-1 font-light">
+                <span className="text-[10px] sm:text-xs text-muted uppercase tracking-normal sm:tracking-wider block mt-1.5 font-light leading-tight sm:leading-normal">
                   {t("stats.stat1Label")}
                 </span>
               </div>
-              <div className="border-r border-border-subtle pr-4">
-                <span className="gold-gradient-text font-serif text-3xl sm:text-4xl lg:text-5xl font-bold block">
+              <div className="px-2 sm:px-6">
+                <span className="gold-gradient-text font-serif text-2xl sm:text-4xl lg:text-5xl font-bold block leading-none">
                   <AnimatedCounter value={t("stats.stat2Value")} delay={800} duration={1700} />
                 </span>
-                <span className="text-[11px] sm:text-xs text-muted uppercase tracking-wider block mt-1 font-light">
+                <span className="text-[10px] sm:text-xs text-muted uppercase tracking-normal sm:tracking-wider block mt-1.5 font-light leading-tight sm:leading-normal">
                   {t("stats.stat2Label")}
                 </span>
               </div>
-              <div>
-                <span className="gold-gradient-text font-serif text-3xl sm:text-4xl lg:text-5xl font-bold block">
+              <div className="pl-2 sm:px-6">
+                <span className="gold-gradient-text font-serif text-2xl sm:text-4xl lg:text-5xl font-bold block leading-none">
                   <AnimatedCounter value={t("stats.stat3Value")} delay={950} duration={1900} />
                 </span>
-                <span className="text-[11px] sm:text-xs text-muted uppercase tracking-wider block mt-1 font-light">
+                <span className="text-[10px] sm:text-xs text-muted uppercase tracking-normal sm:tracking-wider block mt-1.5 font-light leading-tight sm:leading-normal">
                   {t("stats.stat3Label")}
                 </span>
               </div>
