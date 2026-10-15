@@ -42,22 +42,45 @@ export async function sendTelegramLead(
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;");
 
-  const message = [
-    `<b>💼 YANGI ARIZA | ILHOM BEGIMQULOV SAYTI</b>`,
-    `━━━━━━━━━━━━━━━━━━━━`,
-    `👤 <b>Ism:</b> ${cleanText(lead.name)}`,
-    `📞 <b>Telefon:</b> <code>${cleanText(lead.phone)}</code>`,
-    `🏢 <b>Biznes sohasi:</b> ${cleanText(lead.business)}`,
-    lead.service ? `🎯 <b>Xizmat / Yo'nalish:</b> ${cleanText(lead.service)}` : null,
-    lead.question
-      ? `❓ <b>Savol / Izoh:</b>\n<i>${cleanText(lead.question)}</i>`
-      : null,
-    `━━━━━━━━━━━━━━━━━━━━`,
-    `⏰ <b>Vaqt:</b> ${timestamp} (Toshkent)`,
-    clientIp ? `🌐 <b>IP:</b> <code>${clientIp}</code>` : null,
-  ]
-    .filter(Boolean)
-    .join("\n");
+  const isBookLead =
+    lead.service?.toLowerCase().includes("kitob") ||
+    lead.service?.toLowerCase().includes("книга") ||
+    lead.service?.toLowerCase().includes("book") ||
+    lead.service?.toLowerCase().includes("shpargalka") ||
+    lead.service?.toLowerCase().includes("шпаргалка");
+
+  const message = isBookLead
+    ? [
+        `<b>📚 YANGI BUYURTMA | "BIZNES SHPARGALKASI" KITOBI</b>`,
+        `━━━━━━━━━━━━━━━━━━━━`,
+        `👤 <b>Mijoz:</b> ${cleanText(lead.name)}`,
+        `📞 <b>Telefon:</b> <code>${cleanText(lead.phone)}</code>`,
+        `📍 <b>Yetkazib berish manzili:</b> ${cleanText(lead.address || "Ko'rsatilmagan")}`,
+        lead.question
+          ? `📦 <b>Buyurtma / Izoh:</b>\n<i>${cleanText(lead.question)}</i>`
+          : null,
+        `━━━━━━━━━━━━━━━━━━━━`,
+        `⏰ <b>Vaqt:</b> ${timestamp} (Toshkent)`,
+        clientIp ? `🌐 <b>IP:</b> <code>${clientIp}</code>` : null,
+      ]
+        .filter(Boolean)
+        .join("\n")
+    : [
+        `<b>💼 YANGI ARIZA | ILHOM BEGIMQULOV SAYTI</b>`,
+        `━━━━━━━━━━━━━━━━━━━━`,
+        `👤 <b>Ism:</b> ${cleanText(lead.name)}`,
+        `📞 <b>Telefon:</b> <code>${cleanText(lead.phone)}</code>`,
+        lead.business ? `🏢 <b>Biznes sohasi:</b> ${cleanText(lead.business)}` : null,
+        lead.service ? `🎯 <b>Xizmat / Yo'nalish:</b> ${cleanText(lead.service)}` : null,
+        lead.question
+          ? `❓ <b>Savol / Izoh:</b>\n<i>${cleanText(lead.question)}</i>`
+          : null,
+        `━━━━━━━━━━━━━━━━━━━━`,
+        `⏰ <b>Vaqt:</b> ${timestamp} (Toshkent)`,
+        clientIp ? `🌐 <b>IP:</b> <code>${clientIp}</code>` : null,
+      ]
+        .filter(Boolean)
+        .join("\n");
 
   try {
     const url = `https://api.telegram.org/bot${token}/sendMessage`;

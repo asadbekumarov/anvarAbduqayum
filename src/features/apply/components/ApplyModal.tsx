@@ -29,24 +29,37 @@ export function ApplyModal({
     }
   }, [isOpen]);
 
+  const isBook =
+    selectedService?.toLowerCase().includes("kitob") ||
+    selectedService?.toLowerCase().includes("книга") ||
+    selectedService?.toLowerCase().includes("book") ||
+    selectedService?.toLowerCase().includes("shpargalka") ||
+    selectedService?.toLowerCase().includes("шпаргалка");
+
   const isConsultation =
     selectedService?.toLowerCase().includes("konsultatsiya") ||
     selectedService?.toLowerCase().includes("audit");
 
   const modalTitle = selectedService
-    ? isConsultation
+    ? isBook
+      ? t("bookTitle") || selectedService
+      : isConsultation
       ? t("consultTitle") || "Bepul konsultatsiya olish"
       : selectedService
     : t("title");
 
   const modalSubtitle = selectedService
-    ? isConsultation
+    ? isBook
+      ? t("bookSubtitle") || "Yetkazib berish uchun ma'lumotlaringizni to'ldiring, tez orada operator siz bilan bog'lanadi."
+      : isConsultation
       ? t("subtitle")
       : t("serviceSubtitle") || "Ma'lumotlaringizni to'ldiring, ushbu xizmat yuzasidan tez orada siz bilan bog'lanamiz."
     : t("subtitle");
 
   const badgeText = selectedService
-    ? isConsultation
+    ? isBook
+      ? t("badgeBook") || "KITOB BUYURTMA QILISH"
+      : isConsultation
       ? t("badgeConsultation") || "BEPUL KONSULTATSIYA"
       : t("badgeService") || "XIZMAT UCHUN ARIZA"
     : t("title");
@@ -90,10 +103,14 @@ export function ApplyModal({
             </svg>
           </div>
           <h3 className="font-serif text-2xl text-white font-medium">
-            {t("successMessage") || "Arizangiz qabul qilindi!"}
+            {isBook
+              ? t("bookSuccessMessage") || "Buyurtmangiz qabul qilindi!"
+              : t("successMessage") || "Arizangiz qabul qilindi!"}
           </h3>
           <p className="text-xs sm:text-sm text-muted font-light max-w-sm mx-auto leading-relaxed">
-            Tez orada mutaxassisimiz siz bilan bog&apos;lanadi va barcha savollaringizga batafsil javob beradi.
+            {isBook
+              ? "Tez orada operatorimiz siz bilan bog'lanadi va yetkazib berish tafsilotlarini kelishib oladi."
+              : "Tez orada mutaxassisimiz siz bilan bog'lanadi va barcha savollaringizga batafsil javob beradi."}
           </p>
           <div className="pt-2">
             <Button
@@ -129,6 +146,7 @@ export function ApplyModal({
           <ApplyForm
             onSuccess={() => setIsSuccess(true)}
             selectedService={selectedService}
+            isBook={Boolean(isBook)}
           />
         </div>
       )}

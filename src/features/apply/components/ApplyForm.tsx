@@ -14,15 +14,17 @@ import { Spinner } from "@/components/ui/spinner";
 interface ApplyFormProps {
   onSuccess: () => void;
   selectedService?: string | null;
+  isBook?: boolean;
 }
 
-export function ApplyForm({ onSuccess, selectedService }: ApplyFormProps) {
+export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps) {
   const t = useTranslations("applyModal");
 
   const [formData, setFormData] = useState<ApplyFormData>({
     name: "",
     phone: "+998",
     business: "",
+    address: "",
     question: "",
     service: selectedService || undefined,
     honeypot: "",
@@ -180,87 +182,125 @@ export function ApplyForm({ onSuccess, selectedService }: ApplyFormProps) {
         </Field>
       </div>
 
-      {/* Biznesingiz bormi? (2-button segmented toggle) */}
-      <Field invalid={!!errors.business} size="sm">
-        <FieldLabel className="text-xs font-sans uppercase tracking-wider text-muted-light font-medium">
-          {t("businessLabel")} <span className="text-gold">*</span>
-        </FieldLabel>
-
-        {/* 2-Button Toggle */}
-        <div className="grid grid-cols-2 gap-2 p-1 bg-[#0D0D0D] border border-[#262626] rounded-lg">
-          <button
-            type="button"
-            onClick={() => handleSelectBusinessOption(true)}
-            disabled={isSubmitting}
-            className={cn(
-              "py-2 px-3 text-xs font-medium rounded-md transition-all flex items-center justify-center gap-2 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-gold",
-              hasBusiness === true
-                ? "bg-gradient-to-r from-gold/20 to-gold/10 text-gold border border-gold/50 shadow-[0_0_12px_rgba(197,168,128,0.2)] font-semibold"
-                : "text-muted-light hover:text-white hover:bg-white/5 border border-transparent"
-            )}
-          >
-            <span
-              className={cn(
-                "w-1.5 h-1.5 rounded-full transition-colors",
-                hasBusiness === true ? "bg-gold shadow-[0_0_6px_#C5A880]" : "bg-neutral-600"
-              )}
-            />
-            <span>{t("yes")}</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => handleSelectBusinessOption(false)}
-            disabled={isSubmitting}
-            className={cn(
-              "py-2 px-3 text-xs font-medium rounded-md transition-all flex items-center justify-center gap-2 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-white/40",
-              hasBusiness === false
-                ? "bg-white/10 text-white border border-white/30 shadow-sm font-semibold"
-                : "text-muted-light hover:text-white hover:bg-white/5 border border-transparent"
-            )}
-          >
-            <span
-              className={cn(
-                "w-1.5 h-1.5 rounded-full transition-colors",
-                hasBusiness === false ? "bg-white/90" : "bg-neutral-600"
-              )}
-            />
-            <span>{t("no")}</span>
-          </button>
-        </div>
-
-        {/* Agar 'Ha' bo'lsa, biznes sohasi / kompaniya nomini ixtiyoriy kiritish */}
-        {hasBusiness === true && (
-          <div className="mt-2 animate-in fade-in slide-in-from-top-1 duration-200">
+      {isBook ? (
+        <>
+          {/* Yetkazib berish manzili */}
+          <Field invalid={!!errors.address} size="sm">
+            <FieldLabel className="text-xs font-sans uppercase tracking-wider text-muted-light font-medium">
+              {t("addressLabel")} <span className="text-gold">*</span>
+            </FieldLabel>
             <Input
-              value={businessDetail}
-              onChange={(e) => handleDetailChange(e.target.value)}
-              placeholder={t("businessDetailPlaceholder")}
+              value={formData.address || ""}
+              onChange={(e) => handleChange("address", e.target.value)}
+              placeholder={t("addressPlaceholder")}
               disabled={isSubmitting}
-              className="text-xs"
-              autoFocus
             />
-          </div>
-        )}
+            {errors.address && (
+              <FieldError className="text-xs text-red-400 font-light">
+                {errors.address}
+              </FieldError>
+            )}
+          </Field>
 
-        {errors.business && (
-          <FieldError className="text-xs text-red-400 font-light">{errors.business}</FieldError>
-        )}
-      </Field>
+          {/* Kitob soni yoki izoh */}
+          <Field size="sm">
+            <FieldLabel className="text-xs font-sans uppercase tracking-wider text-muted-light font-medium">
+              {t("bookNoteLabel")}
+            </FieldLabel>
+            <Textarea
+              rows={2}
+              value={formData.question || ""}
+              onChange={(e) => handleChange("question", e.target.value)}
+              placeholder={t("bookNotePlaceholder")}
+              disabled={isSubmitting}
+            />
+          </Field>
+        </>
+      ) : (
+        <>
+          {/* Biznesingiz bormi? (2-button segmented toggle) */}
+          <Field invalid={!!errors.business} size="sm">
+            <FieldLabel className="text-xs font-sans uppercase tracking-wider text-muted-light font-medium">
+              {t("businessLabel")} <span className="text-gold">*</span>
+            </FieldLabel>
 
-      {/* Savol / Izoh */}
-      <Field size="sm">
-        <FieldLabel className="text-xs font-sans uppercase tracking-wider text-muted-light font-medium">
-          {t("questionLabel")}
-        </FieldLabel>
-        <Textarea
-          rows={2}
-          value={formData.question || ""}
-          onChange={(e) => handleChange("question", e.target.value)}
-          placeholder={t("questionPlaceholder")}
-          disabled={isSubmitting}
-        />
-      </Field>
+            {/* 2-Button Toggle */}
+            <div className="grid grid-cols-2 gap-2 p-1 bg-[#0D0D0D] border border-[#262626] rounded-lg">
+              <button
+                type="button"
+                onClick={() => handleSelectBusinessOption(true)}
+                disabled={isSubmitting}
+                className={cn(
+                  "py-2 px-3 text-xs font-medium rounded-md transition-all flex items-center justify-center gap-2 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-gold",
+                  hasBusiness === true
+                    ? "bg-gradient-to-r from-gold/20 to-gold/10 text-gold border border-gold/50 shadow-[0_0_12px_rgba(197,168,128,0.2)] font-semibold"
+                    : "text-muted-light hover:text-white hover:bg-white/5 border border-transparent"
+                )}
+              >
+                <span
+                  className={cn(
+                    "w-1.5 h-1.5 rounded-full transition-colors",
+                    hasBusiness === true ? "bg-gold shadow-[0_0_6px_#C5A880]" : "bg-neutral-600"
+                  )}
+                />
+                <span>{t("yes")}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleSelectBusinessOption(false)}
+                disabled={isSubmitting}
+                className={cn(
+                  "py-2 px-3 text-xs font-medium rounded-md transition-all flex items-center justify-center gap-2 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-white/40",
+                  hasBusiness === false
+                    ? "bg-white/10 text-white border border-white/30 shadow-sm font-semibold"
+                    : "text-muted-light hover:text-white hover:bg-white/5 border border-transparent"
+                )}
+              >
+                <span
+                  className={cn(
+                    "w-1.5 h-1.5 rounded-full transition-colors",
+                    hasBusiness === false ? "bg-white/90" : "bg-neutral-600"
+                  )}
+                />
+                <span>{t("no")}</span>
+              </button>
+            </div>
+
+            {/* Agar 'Ha' bo'lsa, biznes sohasi / kompaniya nomini ixtiyoriy kiritish */}
+            {hasBusiness === true && (
+              <div className="mt-2 animate-in fade-in slide-in-from-top-1 duration-200">
+                <Input
+                  value={businessDetail}
+                  onChange={(e) => handleDetailChange(e.target.value)}
+                  placeholder={t("businessDetailPlaceholder")}
+                  disabled={isSubmitting}
+                  className="text-xs"
+                  autoFocus
+                />
+              </div>
+            )}
+
+            {errors.business && (
+              <FieldError className="text-xs text-red-400 font-light">{errors.business}</FieldError>
+            )}
+          </Field>
+
+          {/* Savol / Izoh */}
+          <Field size="sm">
+            <FieldLabel className="text-xs font-sans uppercase tracking-wider text-muted-light font-medium">
+              {t("questionLabel")}
+            </FieldLabel>
+            <Textarea
+              rows={2}
+              value={formData.question || ""}
+              onChange={(e) => handleChange("question", e.target.value)}
+              placeholder={t("questionPlaceholder")}
+              disabled={isSubmitting}
+            />
+          </Field>
+        </>
+      )}
 
       {/* Submit Button */}
       <div className="pt-2">
@@ -276,7 +316,7 @@ export function ApplyForm({ onSuccess, selectedService }: ApplyFormProps) {
             </div>
           ) : (
             <>
-              <span>{t("submit")}</span>
+              <span>{isBook ? t("bookSubmit") : t("submit")}</span>
               <svg
                 className="w-4 h-4 transition-transform group-hover:translate-x-1"
                 fill="none"
