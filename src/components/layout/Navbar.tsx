@@ -33,7 +33,6 @@ export function Navbar({ onOpenApply }: NavbarProps) {
     { href: "#xizmatlar", label: t("services") },
     { href: "#tadbirlarimiz", label: t("events") },
     { href: "#bosqichlar", label: t("stages") },
-    { href: "#testlar", label: t("tests") },
   ];
 
   return (

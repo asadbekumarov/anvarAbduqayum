@@ -39,6 +39,18 @@
     "kicker": "XIZMATLAR",
     "title": "Kompaniyangiz o'sishi uchun amaliy yechimlar",
     "description": "Biz biznesni rivojlantirish uchun — strategik rejalashtirishdan tortib, kommunikatsiyalarni takomillashtirishgacha bo'lgan yechimlarni taklif etamiz. Kompaniyangiz o'sishiga va yangi maqsadlarga erishishga yordam beradigan xizmatni tanlang.",
+    "tagDirection": "6 ta asosiy yo'nalish",
+    "tagClients": "100+ muvaffaqiyatli keyslar",
+    "tagPractice": "B2B amaliy tajriba",
+    "consultCardKicker": "BEPUL DIAGNOSTIKA",
+    "consultCardTitle": "Qaysi xizmat sizga mos?",
+    "consultCardDesc": "Biznesingizning joriy holatini tahlil qilib, aynan sizning bosqichingizga mos amaliy yechimni tanlashga yordam beramiz.",
+    "consultCta": "Konsultatsiya olish",
+    "consultPerk1": "15 daqiqada aloqa",
+    "consultPerk2": "Individual tahlil",
+    "consultPerk3": "100% maxfiylik",
+    "duration": "20 daqiqa",
+    "selectService": "Ariza qoldirish",
     "items": [
       {
         "index": "01",
@@ -83,69 +95,149 @@
     "title": "Katta va kichik biznesni rivojlantirish",
     "description": "Asosiy bosqichlar biznesning o'sishiga, moslashishiga va muvaffaqiyatga erishishiga yordam beradi. Biz har bir qadamda — rejalashtirishdan tortib uzoq muddatli rivojlanishgacha qo'llab-quvvatlaymiz.",
     "tab1": "Kichik va o'rta biznes",
-    "tab2": "Masshtablash va shogirdlik",
+    "tab2": "Katta biznes va masshtablash",
+    "introSmallTitle": "Kichik va o'rta tadbirkorlikni rivojlantirish",
+    "introSmallDesc": "Kichik biznes aniq strategiya va amaliy yechimlarni talab qiladi. Biz tadbirkorlarga g'oyadan tortib masshtablashgacha bo'lgan barcha bosqichlarda yordam beramiz, barqaror o'sish va uzluksiz rivojlanishni ta'minlaymiz.",
+    "introCorporateTitle": "Katta biznesni masshtablash va tizimlashtirish",
+    "introCorporateDesc": "Katta bizneslar uchun jarayonlarni avtomatlashtirish, jamoani boshqarish, xatarlarni kamaytirish va korxona rahbarini operatsion boshqaruvdan ozod qilish tizimini joriy etamiz.",
+    "stageAction": "Ushbu bosqich bo'yicha yordam olish",
+    "ctaBandTitle": "Biznesingizni tizimlashtirishga tayyormisiz?",
+    "ctaBandDesc": "Kompaniyangiz bosqichiga mos dastlabki audit va diagnostika bo'yicha amaliy maslahat oling.",
+    "ctaBandButton": "Konsultatsiya olish",
     "systematization": [
       {
         "step": "01",
         "title": "G'oya va rejalashtirish",
-        "description": "Maqsadli auditoriyaning ehtiyojlarini aniqlash. Noyob tijorat taklifini (NTT) shakllantirish. Xarajatlar hisob-kitoblari va daromad prognozlari bilan birga biznes-reja ishlab chiqish. Bozor va raqobatchilarni tahlil qilish."
+        "description": "Bozor va auditoriyani tahlil qilib, aniq hisob-kitoblar bilan biznes-reja ishlab chiqish.",
+        "points": [
+          "Maqsadli auditoriyaning ehtiyojlarini aniqlash.",
+          "Noyob tijorat taklifini (NTT) shakllantirish.",
+          "Xarajatlar hisob-kitoblari va daromad prognozlari bilan birga biznes-reja ishlab chiqish.",
+          "Bozor va raqobatchilarni tahlil qilish."
+        ]
       },
       {
         "step": "02",
         "title": "Biznesni ishga tushirish",
-        "description": "Biznesni ro'yxatdan o'tkazish va kerakli hujjatlarni rasmiylashtirish. Firma stilini ishlab chiqish va brendni yaratish. Mahsulot yoki xizmatning birinchi versiyasini ishga tushirish. Birinchi mijozlarni jalb qilish uchun marketing faoliyatini tashkil etish."
+        "description": "Brend yaratish, birinchi mahsulotni ishga tushirish va dastlabki mijozlarni jalb qilish.",
+        "points": [
+          "Biznesni ro'yxatdan o'tkazish va kerakli hujjatlarni rasmiylashtirish.",
+          "Firma stilini ishlab chiqish va brendni yaratish.",
+          "Mahsulot yoki xizmatning birinchi versiyasini ishga tushirish.",
+          "Birinchi mijozlarni jalb qilish uchun marketing faoliyatini tashkil etish."
+        ]
       },
       {
         "step": "03",
         "title": "Jarayonlarni optimallashtirish",
-        "description": "Dastlabki natijalarni tahlil qilish va strategiyani tuzatish. Ichki jarayonlarni avtomatlashtirish va optimallashtirish. Jamoani shakllantirish: xodimlarni yollash yoki mutaxassislarni jalb qilish. Qayta aloqa asosida mahsulot yoki xizmat sifatini yaxshilash."
+        "description": "Dastlabki natijalarni baholash, ichki jarayonlarni avtomatlashtirish va jamoani kuchaytirish.",
+        "points": [
+          "Dastlabki natijalarni tahlil qilish va strategiyani tuzatish.",
+          "Ichki jarayonlarni avtomatlashtirish va optimallashtirish.",
+          "Jamoani shakllantirish: xodimlarni yollash yoki mutaxassislarni jalb qilish.",
+          "Qayta aloqa asosida mahsulot yoki xizmat sifatini yaxshilash."
+        ]
       },
       {
         "step": "04",
         "title": "Savdo hajmini oshirish",
-        "description": "Qo'shimcha xizmatlar yoki mahsulotlarni joriy etish. Marketing va reklama orqali mijozlar bazasini kengaytirish. Boshqa kompaniyalar bilan hamkorlik aloqalarini o'rnatish. Savdo strategiyalarining samaradorligini baholash."
+        "description": "Mijozlar bazasini kengaytirish, yangi mahsulotlar kiritish va strategik sherikliklar.",
+        "points": [
+          "Qo'shimcha xizmatlar yoki mahsulotlarni joriy etish.",
+          "Marketing va reklama orqali mijozlar bazasini kengaytirish.",
+          "Boshqa kompaniyalar bilan hamkorlik aloqalarini o'rnatish.",
+          "Savdo strategiyalarining samaradorligini baholash."
+        ]
       },
       {
         "step": "05",
         "title": "Biznesni masshtablash (kengaytirish)",
-        "description": "Yangi bozorlarga chiqish. Ishlab chiqarish yoki xizmat ko'rsatish hajmini oshirish. Uzoq muddatli o'sish strategiyasini ishlab chiqish. Yangi texnologiyalar va infratuzilmaga investitsiyalar kiritish."
+        "description": "Yangi bozorlarga chiqish, ishlab chiqarish hajmini oshirish va infratuzilmaga investitsiya.",
+        "points": [
+          "Yangi bozorlarga chiqish.",
+          "Ishlab chiqarish yoki xizmat ko'rsatish hajmini oshirish.",
+          "Uzoq muddatli o'sish strategiyasini ishlab chiqish.",
+          "Yangi texnologiyalar va infratuzilmaga investitsiyalar kiritish."
+        ]
       },
       {
         "step": "06",
         "title": "Barqaror rivojlanish",
-        "description": "Mahsulot yoki xizmat va mijozlarga xizmat ko'rsatish sifatini doimiy yaxshilash. Brendni rivojlantirish va bozordagi obro'sini mustahkamlash. Moliyaviy barqarorlik monitoringi. Xatarlarni boshqarish strategiyasini ishlab chiqish."
+        "description": "Sifatni doimiy nazorat qilish, moliyaviy barqarorlik va xatarlarni boshqarish.",
+        "points": [
+          "Mahsulot yoki xizmat va mijozlarga xizmat ko'rsatish sifatini doimiy yaxshilash.",
+          "Brendni rivojlantirish va bozordagi obro'sini mustahkamlash.",
+          "Moliyaviy barqarorlik monitoringi.",
+          "Xatarlarni boshqarish strategiyasini ishlab chiqish."
+        ]
       }
     ],
     "mentorship": [
       {
         "step": "01",
         "title": "Individual tahlil va audit",
-        "description": "Biznesingizdagi mavjud to'siqlar, daromad cheklovlari va operativ muammolarni chuqur tahlil qilish."
+        "description": "Kompaniyaning moliyaviy va boshqaruv tizimidagi mavjud to'siqlarni chuqur tahlil qilish.",
+        "points": [
+          "Kompaniyaning moliyaviy va boshqaruv hisobotlarini chuqur tekshirish.",
+          "Operatsion tizimdagi bo'shliqlar va samarasiz xarajatlarni aniqlash.",
+          "Rahbar va top-menejerlar vakolatlari auditi.",
+          "Kompaniyaning bozor ulushi va raqobatbardoshligini baholash."
+        ]
       },
       {
         "step": "02",
-        "title": "Strategik o'sish rejasi",
-        "description": "Daromadni oshirish va kompaniyaning uzoq muddatli o'sish yo'l xaritasini aniq raqamlar bilan belgilash."
+        "title": "Strategik o'sish yo'l xaritasi",
+        "description": "Daromadni oshirish va kompaniyaning uzoq muddatli o'sish strategiyasini raqamlar bilan belgilash.",
+        "points": [
+          "Kompaniyaning 1-3 yillik aniq moliyaviy maqsadlarini belgilash.",
+          "Yangi daromad oqimlari va mahsulot yo'nalishlarini ishlab chiqish.",
+          "Bozor o'zgarishlariga moslashuvchan rejalashtirish.",
+          "Investitsion jozibadorlikni oshirish strategiyasi."
+        ]
       },
       {
         "step": "03",
         "title": "Tizimli boshqaruv va reglamentlar",
-        "description": "Jarayonlarni reglamentlash, lavozim yo'riqnomalari va har bir bo'g'in uchun javobgarlik zanjirini qurish."
+        "description": "Jarayonlarni reglamentlash, lavozim yo'riqnomalari va operatsion boshqaruvni avtomatlashtirish.",
+        "points": [
+          "Kompaniya ichki biznes jarayonlarini xaritalash va standartlashtirish.",
+          "Har bir lavozim uchun aniq yo'riqnomalar va javobgarlik kartalarini joriy etish.",
+          "Operatsion boshqaruvni avtomatlashtirish vositalari (CRM, ERP, Task Manager).",
+          "Barcha bo'limlararo uzluksiz kommunikatsiyani yo'lga qo'yish."
+        ]
       },
       {
         "step": "04",
         "title": "Sotuv va marketing kuchaytirish",
-        "description": "Kuchli reklama kampaniyalari, takliflar va yangi mijozlar oqimini jalb qilish mexanizmlari."
+        "description": "Sotuv voronkasini kuchaytirish, yangi mijozlar oqimi va takroriy savdolarni oshirish.",
+        "points": [
+          "Sotuv voronkasini tahlil qilish va konversiyani oshirish.",
+          "B2B va B2C mijozlar uchun kuchli noyob takliflar (NTT) yaratish.",
+          "Marketing kanallari samaradorligini (ROI, CAC, LTV) nazorat qilish.",
+          "Mijozlarni ushlab qolish va takroriy savdolarni oshirish mexanizmlari."
+        ]
       },
       {
         "step": "05",
         "title": "Jamoa boshqaruvi va delegatsiyalash",
-        "description": "Xodimlarni boshqarish, KPI ko'rsatkichlari va korxona rahbarini operativkadan to'liq ozod etish."
+        "description": "Xodimlarni boshqarish, KPI ko'rsatkichlari va rahbarni operativkadan to'liq ozod etish.",
+        "points": [
+          "Kuchli motivatsiya va KPI (asosiy samaradorlik ko'rsatkichlari) tizimi.",
+          "Rahbarni 'operativka' (kundalik mayda ishlar)dan to'liq ozod etish.",
+          "Mustaqil qaror qabul qila oladigan top-menejment jamoasini shakllantirish.",
+          "Korporativ madaniyat va xodimlar sodiqligini mustahkamlash."
+        ]
       },
       {
         "step": "06",
         "title": "Masshtablash va yangi bozorlar",
-        "description": "Yangi hududlarga chiqish, daromadni barqarorlashtirish va shaxsiy kapitalni mustahkamlash."
+        "description": "Filiallar tarmog'ini yo'lga qo'yish, daromadni barqarorlashtirish va shaxsiy kapitalni mustahkamlash.",
+        "points": [
+          "Filiallar tarmog'ini yoki franchayzing modelini yo'lga qo'yish.",
+          "Mintaqaviy va xalqaro bozorlarga chiqish rejasini amalga oshirish.",
+          "Kompaniya aktivlarini himoyalash va kapitallashuvni oshirish.",
+          "Uzoq muddatli barqaror dividendlar va biznes qiymatini o'stirish."
+        ]
       }
     ]
   },
@@ -181,14 +273,25 @@
   },
   "book": {
     "kicker": "AMALIY QO'LLANMA",
+    "badge": "110,000$ GA TUSHGAN XATOLAR TAHLILI",
     "title": "“Biznes shpargalkasi” kitobi",
     "description": "“Biznes shpargalkasi” kitobi — bu oʻz biznesini boshlamoqchi yoki rivojlantirmoqchi boʻlganlar uchun amaliy qoʻllanmadir. Unda oddiy va tushunarli maslahatlar, vaqt sinovidan oʻtgan vositalar va tadbirkorlik amaliyotidan real misollar jamlangan.",
     "cta": "Kitobni buyurtma qilish",
-    "pages": "Amaliy format",
-    "format": "Qattiq muqova & audio shaklda",
+    "view3D": "3D Kitob",
+    "viewPages": "Sahifalar ko'rinishi",
+    "specCover": "Premium qattiq muqova",
+    "specAudio": "Audio versiyasi mavjud",
+    "specCases": "110,000$ lik real keyslar",
+    "specDelivery": "O'zbekiston bo'ylab yetkazish",
     "feature1": "Biznesda duch kelgan qiyinchiliklar",
+    "feature1Desc": "Startap va o'sish pallasida yuzaga keladigan moliyaviy, operatsion va kadrlar bilan bog'liq asosiy to'siqlarni yengish usullari.",
     "feature2": "Biznesdagi xatolarim va ulardan olgan saboqlarim",
-    "feature3": "Biznesni rivojlantirish uchun foydali tavsiyalar"
+    "feature2Desc": "Shaxsiy amaliyotdagi $110,000 lik yo'qotishlarga sabab bo'lgan xatolar tahlili va ularni o'z biznesingizda takrorlamaslik choralari.",
+    "feature3": "Biznesni rivojlantirish uchun foydali tavsiyalar",
+    "feature3Desc": "Sotuvlarni oshirish, tizimlashtirish, marketing va daromadni barqarorlashtirish bo'yicha amaliy vositalar va real misollar.",
+    "trustFast": "Tezkor yetkazib berish",
+    "trustAudio": "Audio kitob sovg'a tariqasida",
+    "trustDirect": "Muallifdan to'g'ridan-to'g'ri maslahatlar"
   },
   "webinars": {
     "kicker": "MAHORAT DARSLARI",
@@ -218,13 +321,22 @@
   },
   "applyModal": {
     "title": "Ustozga shogird tushish",
+    "serviceTitle": "Xizmat uchun ariza",
+    "consultTitle": "Bepul konsultatsiya olish",
+    "serviceSubtitle": "Ma'lumotlaringizni to'ldiring, ushbu yo'nalish bo'yicha mutaxassisimiz tez orada siz bilan bog'lanadi.",
     "subtitle": "Ma'lumotlaringizni to'ldiring, tez orada siz bilan bog'lanamiz!",
+    "badgeConsultation": "BEPUL KONSULTATSIYA",
+    "badgeService": "XIZMAT UCHUN ARIZA",
+    "selectedServiceLabel": "Tanlangan xizmat:",
     "nameLabel": "Ismingiz",
     "namePlaceholder": "To'liq ismingiz",
     "phoneLabel": "Telefon raqamingiz",
     "phonePlaceholder": "+998 (__) ___-__-__",
     "businessLabel": "Biznesingiz bormi?",
     "businessPlaceholder": "Ha, bor / Yo'q",
+    "yes": "Ha",
+    "no": "Yo'q",
+    "businessDetailPlaceholder": "Biznes sohasi yoki kompaniya nomi (ixtiyoriy)...",
     "questionLabel": "Biznesingizdagi qaysi muammo qiynayapdi?",
     "questionPlaceholder": "Muammongizni batafsil yozing...",
     "submit": "Yuborish",

@@ -14,7 +14,6 @@ import { Book } from "@/components/sections/Book";
 import { Webinars } from "@/components/sections/Webinars";
 import { Diplomas } from "@/components/sections/Diplomas";
 import { Contact } from "@/components/sections/Contact";
-import { SectionHeader } from "@/components/ui/SectionHeader";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 
 export default async function HomePage({
@@ -86,20 +85,6 @@ export default async function HomePage({
         {/* Section 12: Contact (Direct channels, address, and consultation trigger) */}
         <RevealOnScroll>
           <Contact />
-        </RevealOnScroll>
-
-        {/* Section 13: Tests Anchor Target */}
-        <RevealOnScroll>
-          <section id="testlar" className="py-12 border-b border-border/40">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <SectionHeader
-                index="13"
-                kicker="BIZNES DIAGNOSTIKA"
-                title="Biznes salomatligini aniqlash testi"
-                description="Tez orada taqdim etiladi."
-              />
-            </div>
-          </section>
         </RevealOnScroll>
       </main>
 

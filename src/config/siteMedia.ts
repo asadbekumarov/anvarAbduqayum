@@ -40,6 +40,29 @@ export const siteMedia = {
       height: 900,
       alt: "Biznes shpargalkasi kitobi muqovasi",
     },
+    previews: [
+      {
+        id: "difficulties",
+        src: "/images/book/page-1.webp",
+        width: 800,
+        height: 1000,
+        alt: "Biznesda duch kelgan qiyinchiliklar sahifasi",
+      },
+      {
+        id: "cover",
+        src: "/images/book/cover.jpg",
+        width: 700,
+        height: 900,
+        alt: "Biznes shpargalkasi kitobi asosiy muqovasi",
+      },
+      {
+        id: "tips",
+        src: "/images/book/page-2.webp",
+        width: 800,
+        height: 1000,
+        alt: "Biznesni rivojlantirish uchun foydali tavsiyalar sahifasi",
+      },
+    ],
   },
 
   events: [
@@ -220,8 +243,8 @@ export const siteMedia = {
       year: "2022",
       src: "/images/diplomas/diplom-1.webp",
       thumb: "/images/diplomas/diplom-1.webp",
-      width: 1200,
-      height: 850,
+      width: 600,
+      height: 888,
       alt: "Ilhom Begimqulov xalqaro biznes sertifikati",
     },
     {
@@ -231,8 +254,8 @@ export const siteMedia = {
       year: "2023",
       src: "/images/diplomas/diplom-2.webp",
       thumb: "/images/diplomas/diplom-2.webp",
-      width: 1200,
-      height: 850,
+      width: 600,
+      height: 876,
       alt: "Strategik boshqaruv diplomi",
     },
     {
@@ -242,8 +265,8 @@ export const siteMedia = {
       year: "2024",
       src: "/images/diplomas/diplom-3.webp",
       thumb: "/images/diplomas/diplom-3.webp",
-      width: 1200,
-      height: 850,
+      width: 600,
+      height: 878,
       alt: "Biznes trenerlik akkreditatsiyasi",
     },
   ] as DiplomaItem[],

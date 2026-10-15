@@ -5,12 +5,14 @@ import { ApplyModal } from "../components/ApplyModal";
 
 interface ApplyModalContextValue {
   isOpen: boolean;
-  openApply: () => void;
+  selectedService: string | null;
+  openApply: (serviceName?: string | unknown) => void;
   closeApply: () => void;
 }
 
 const ApplyModalContext = createContext<ApplyModalContextValue>({
   isOpen: false,
+  selectedService: null,
   openApply: () => {},
   closeApply: () => {},
 });
@@ -29,14 +31,32 @@ export function ApplyModalProvider({
   children: React.ReactNode;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<string | null>(null);
 
-  const openApply = useCallback(() => setIsOpen(true), []);
-  const closeApply = useCallback(() => setIsOpen(false), []);
+  const openApply = useCallback((serviceName?: string | unknown) => {
+    if (typeof serviceName === "string") {
+      setSelectedService(serviceName);
+    } else {
+      setSelectedService(null);
+    }
+    setIsOpen(true);
+  }, []);
+
+  const closeApply = useCallback(() => {
+    setIsOpen(false);
+    setSelectedService(null);
+  }, []);
 
   return (
-    <ApplyModalContext.Provider value={{ isOpen, openApply, closeApply }}>
+    <ApplyModalContext.Provider
+      value={{ isOpen, selectedService, openApply, closeApply }}
+    >
       {children}
-      <ApplyModal isOpen={isOpen} onClose={closeApply} />
+      <ApplyModal
+        isOpen={isOpen}
+        onClose={closeApply}
+        selectedService={selectedService}
+      />
     </ApplyModalContext.Provider>
   );
 }

@@ -1,15 +1,22 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { applySchema, type ApplyFormData } from "../schemas/applySchema";
 import { cn } from "@/lib/utils";
 
+import { Field, FieldLabel, FieldError } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { InlineAlert, InlineAlertDescription } from "@/components/ui/inline-alert";
+import { Spinner } from "@/components/ui/spinner";
+
 interface ApplyFormProps {
   onSuccess: () => void;
+  selectedService?: string | null;
 }
 
-export function ApplyForm({ onSuccess }: ApplyFormProps) {
+export function ApplyForm({ onSuccess, selectedService }: ApplyFormProps) {
   const t = useTranslations("applyModal");
 
   const [formData, setFormData] = useState<ApplyFormData>({
@@ -17,9 +24,18 @@ export function ApplyForm({ onSuccess }: ApplyFormProps) {
     phone: "+998",
     business: "",
     question: "",
+    service: selectedService || undefined,
     honeypot: "",
   });
 
+  useEffect(() => {
+    if (selectedService) {
+      setFormData((prev) => ({ ...prev, service: selectedService }));
+    }
+  }, [selectedService]);
+
+  const [hasBusiness, setHasBusiness] = useState<boolean | null>(null);
+  const [businessDetail, setBusinessDetail] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
@@ -50,6 +66,23 @@ export function ApplyForm({ onSuccess }: ApplyFormProps) {
         return next;
       });
     }
+  };
+
+  const handleSelectBusinessOption = (hasBiz: boolean) => {
+    setHasBusiness(hasBiz);
+    if (hasBiz) {
+      const text = businessDetail.trim() ? `${t("yes")}: ${businessDetail.trim()}` : t("yes");
+      handleChange("business", text);
+    } else {
+      setBusinessDetail("");
+      handleChange("business", t("no"));
+    }
+  };
+
+  const handleDetailChange = (detail: string) => {
+    setBusinessDetail(detail);
+    const text = detail.trim() ? `${t("yes")}: ${detail.trim()}` : t("yes");
+    handleChange("business", text);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -94,7 +127,7 @@ export function ApplyForm({ onSuccess }: ApplyFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3.5">
+    <form onSubmit={handleSubmit} className="space-y-4">
       {/* Honeypot anti-spam field */}
       <input
         type="text"
@@ -107,112 +140,127 @@ export function ApplyForm({ onSuccess }: ApplyFormProps) {
       />
 
       {serverError && (
-        <div className="p-3 bg-red-950/40 border border-red-500/40 text-red-300 text-xs rounded-lg">
-          {serverError}
-        </div>
+        <InlineAlert variant="danger" appearance="soft" className="border-red-500/30 bg-red-950/40 text-red-300">
+          <InlineAlertDescription className="text-xs">
+            {serverError}
+          </InlineAlertDescription>
+        </InlineAlert>
       )}
 
-      {/* 2-Column Responsive Name & Phone Grid */}
+      {/* 2-Column Responsive Name & Phone Grid using Create UI Field & Input */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
         {/* Ism */}
-        <div>
-          <label className="block text-xs font-sans uppercase tracking-wider text-muted-light mb-1.5 font-medium">
+        <Field invalid={!!errors.name} size="sm">
+          <FieldLabel className="text-xs font-sans uppercase tracking-wider text-muted-light font-medium">
             {t("nameLabel")} <span className="text-gold">*</span>
-          </label>
-          <input
-            type="text"
+          </FieldLabel>
+          <Input
             value={formData.name}
             onChange={(e) => handleChange("name", e.target.value)}
             placeholder={t("namePlaceholder")}
             disabled={isSubmitting}
-            className="w-full bg-[#0A0A0A] border border-[#262626] hover:border-[#383838] focus:border-gold focus:ring-1 focus:ring-gold/30 px-3.5 py-2.5 text-sm text-white placeholder:text-muted/60 transition-all rounded-lg outline-none"
           />
-          {errors.name && (
-            <p className="mt-1 text-xs text-red-400 font-light">{errors.name}</p>
-          )}
-        </div>
+          {errors.name && <FieldError className="text-xs text-red-400 font-light">{errors.name}</FieldError>}
+        </Field>
 
         {/* Telefon */}
-        <div>
-          <label className="block text-xs font-sans uppercase tracking-wider text-muted-light mb-1.5 font-medium">
+        <Field invalid={!!errors.phone} size="sm">
+          <FieldLabel className="text-xs font-sans uppercase tracking-wider text-muted-light font-medium">
             {t("phoneLabel")} <span className="text-gold">*</span>
-          </label>
-          <input
+          </FieldLabel>
+          <Input
             type="tel"
             value={formData.phone}
             onChange={handlePhoneChange}
             placeholder="+998 90 123 45 67"
             disabled={isSubmitting}
-            className="w-full bg-[#0A0A0A] border border-[#262626] hover:border-[#383838] focus:border-gold focus:ring-1 focus:ring-gold/30 px-3.5 py-2.5 text-sm text-white placeholder:text-muted/60 font-mono transition-all rounded-lg outline-none"
+            className="font-mono"
           />
-          {errors.phone && (
-            <p className="mt-1 text-xs text-red-400 font-light">{errors.phone}</p>
-          )}
-        </div>
+          {errors.phone && <FieldError className="text-xs text-red-400 font-light">{errors.phone}</FieldError>}
+        </Field>
       </div>
 
-      {/* Biznes sohasi / holati */}
-      <div>
-        <label className="block text-xs font-sans uppercase tracking-wider text-muted-light mb-1.5 font-medium">
+      {/* Biznesingiz bormi? (2-button segmented toggle) */}
+      <Field invalid={!!errors.business} size="sm">
+        <FieldLabel className="text-xs font-sans uppercase tracking-wider text-muted-light font-medium">
           {t("businessLabel")} <span className="text-gold">*</span>
-        </label>
-        
-        {/* Quick selection pills */}
-        <div className="grid grid-cols-2 gap-2 mb-2">
+        </FieldLabel>
+
+        {/* 2-Button Toggle */}
+        <div className="grid grid-cols-2 gap-2 p-1 bg-[#0D0D0D] border border-[#262626] rounded-lg">
           <button
             type="button"
-            onClick={() => handleChange("business", "Ha, biznesim bor")}
+            onClick={() => handleSelectBusinessOption(true)}
+            disabled={isSubmitting}
             className={cn(
-              "py-2 px-3 text-xs rounded-lg border transition-all text-center font-medium",
-              formData.business.includes("Ha")
-                ? "border-gold bg-gold/15 text-gold font-semibold shadow-[0_0_12px_rgba(197,168,128,0.2)]"
-                : "border-[#262626] bg-[#0A0A0A] text-muted-light hover:border-[#383838] hover:text-white"
+              "py-2 px-3 text-xs font-medium rounded-md transition-all flex items-center justify-center gap-2 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-gold",
+              hasBusiness === true
+                ? "bg-gradient-to-r from-gold/20 to-gold/10 text-gold border border-gold/50 shadow-[0_0_12px_rgba(197,168,128,0.2)] font-semibold"
+                : "text-muted-light hover:text-white hover:bg-white/5 border border-transparent"
             )}
           >
-            Ha, biznesim bor
+            <span
+              className={cn(
+                "w-1.5 h-1.5 rounded-full transition-colors",
+                hasBusiness === true ? "bg-gold shadow-[0_0_6px_#C5A880]" : "bg-neutral-600"
+              )}
+            />
+            <span>{t("yes")}</span>
           </button>
+
           <button
             type="button"
-            onClick={() => handleChange("business", "Yo'q, yangi boshlayapman")}
+            onClick={() => handleSelectBusinessOption(false)}
+            disabled={isSubmitting}
             className={cn(
-              "py-2 px-3 text-xs rounded-lg border transition-all text-center font-medium",
-              formData.business.includes("Yo'q")
-                ? "border-gold bg-gold/15 text-gold font-semibold shadow-[0_0_12px_rgba(197,168,128,0.2)]"
-                : "border-[#262626] bg-[#0A0A0A] text-muted-light hover:border-[#383838] hover:text-white"
+              "py-2 px-3 text-xs font-medium rounded-md transition-all flex items-center justify-center gap-2 cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-white/40",
+              hasBusiness === false
+                ? "bg-white/10 text-white border border-white/30 shadow-sm font-semibold"
+                : "text-muted-light hover:text-white hover:bg-white/5 border border-transparent"
             )}
           >
-            Yo&apos;q, yangi boshlayapman
+            <span
+              className={cn(
+                "w-1.5 h-1.5 rounded-full transition-colors",
+                hasBusiness === false ? "bg-white/90" : "bg-neutral-600"
+              )}
+            />
+            <span>{t("no")}</span>
           </button>
         </div>
 
-        {/* Custom text input if user wants to specify company or sector */}
-        <input
-          type="text"
-          value={formData.business}
-          onChange={(e) => handleChange("business", e.target.value)}
-          placeholder="Yoki biznes sohasi/kompaniya nomini yozing..."
-          disabled={isSubmitting}
-          className="w-full bg-[#0A0A0A] border border-[#262626] hover:border-[#383838] focus:border-gold focus:ring-1 focus:ring-gold/30 px-3.5 py-2 text-xs text-white placeholder:text-muted/50 transition-all rounded-lg outline-none"
-        />
-        {errors.business && (
-          <p className="mt-1 text-xs text-red-400 font-light">{errors.business}</p>
+        {/* Agar 'Ha' bo'lsa, biznes sohasi / kompaniya nomini ixtiyoriy kiritish */}
+        {hasBusiness === true && (
+          <div className="mt-2 animate-in fade-in slide-in-from-top-1 duration-200">
+            <Input
+              value={businessDetail}
+              onChange={(e) => handleDetailChange(e.target.value)}
+              placeholder={t("businessDetailPlaceholder")}
+              disabled={isSubmitting}
+              className="text-xs"
+              autoFocus
+            />
+          </div>
         )}
-      </div>
+
+        {errors.business && (
+          <FieldError className="text-xs text-red-400 font-light">{errors.business}</FieldError>
+        )}
+      </Field>
 
       {/* Savol / Izoh */}
-      <div>
-        <label className="block text-xs font-sans uppercase tracking-wider text-muted-light mb-1.5 font-medium">
+      <Field size="sm">
+        <FieldLabel className="text-xs font-sans uppercase tracking-wider text-muted-light font-medium">
           {t("questionLabel")}
-        </label>
-        <textarea
+        </FieldLabel>
+        <Textarea
           rows={2}
           value={formData.question || ""}
           onChange={(e) => handleChange("question", e.target.value)}
           placeholder={t("questionPlaceholder")}
           disabled={isSubmitting}
-          className="w-full bg-[#0A0A0A] border border-[#262626] hover:border-[#383838] focus:border-gold focus:ring-1 focus:ring-gold/30 p-3 text-sm text-white placeholder:text-muted/60 transition-all resize-none rounded-lg outline-none"
         />
-      </div>
+      </Field>
 
       {/* Submit Button */}
       <div className="pt-2">
@@ -223,10 +271,7 @@ export function ApplyForm({ onSuccess }: ApplyFormProps) {
         >
           {isSubmitting ? (
             <div className="flex items-center gap-2">
-              <svg className="animate-spin w-4 h-4 text-[#0A0A0A]" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-              </svg>
+              <Spinner size="xs" variant="inverse" />
               <span>{t("submitting")}</span>
             </div>
           ) : (

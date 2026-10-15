@@ -39,6 +39,18 @@
     "kicker": "SERVICES",
     "title": "Solutions for Scaling Your Enterprise",
     "description": "We offer comprehensive business development solutions — from strategic planning to corporate communication refinement. Select the service that drives your company towards sustainable growth.",
+    "tagDirection": "6 Core Verticals",
+    "tagClients": "100+ Proven Cases",
+    "tagPractice": "B2B Practical Track Record",
+    "consultCardKicker": "FREE DIAGNOSIS",
+    "consultCardTitle": "Not sure which service you need?",
+    "consultCardDesc": "We will evaluate your operational bottlenecks and suggest the exact solution to accelerate growth.",
+    "consultCta": "Get Consultation",
+    "consultPerk1": "Reply in 15 min",
+    "consultPerk2": "Tailored audit",
+    "consultPerk3": "100% confidential",
+    "duration": "20 min",
+    "selectService": "Apply for Service",
     "items": [
       {
         "index": "01",
@@ -83,69 +95,149 @@
     "title": "SME & Enterprise Business Development",
     "description": "Foundational stages engineered to guide your business toward sustainable expansion, adaptability, and market leadership. We accompany you at every milestone — from inception to long-term scaling.",
     "tab1": "Small & Medium Business",
-    "tab2": "Scaling & Mentorship",
+    "tab2": "Enterprise & Scaling",
+    "introSmallTitle": "Small & Medium Business Acceleration",
+    "introSmallDesc": "Small enterprises require clear strategy and practical execution. We support founders from initial concept to scaling, ensuring sustainable profitability and streamlined operations.",
+    "introCorporateTitle": "Enterprise Scaling & Systematization",
+    "introCorporateDesc": "For mature companies, we build operational workflow automations, leadership structures, and corporate governance to liberate founders from day-to-day micromanagement.",
+    "stageAction": "Get Consultation on this Stage",
+    "ctaBandTitle": "Ready to systematize and scale your business?",
+    "ctaBandDesc": "Receive targeted preliminary auditing and diagnostic advisory tailored for your enterprise phase.",
+    "ctaBandButton": "Book Consultation",
     "systematization": [
       {
         "step": "01",
         "title": "Idea & Strategic Planning",
-        "description": "Pinpointing target market demands. Formulating Unique Value Propositions (UVP). Developing financial roadmaps with cost projections and profit forecasts. Competitive environment analysis."
+        "description": "Target audience analysis, competitive landscape evaluation, and financial projection modelling.",
+        "points": [
+          "Identifying target audience core requirements and pain points.",
+          "Formulating a compelling Unique Value Proposition (UVP).",
+          "Developing actionable financial roadmaps with cost breakdowns.",
+          "Thorough market and competitor landscape audit."
+        ]
       },
       {
         "step": "02",
         "title": "Business Launch",
-        "description": "Legal entity registration and compliance documentation. Brand identity creation and styling. Launching MVP product or service. Orchestrating initial customer acquisition campaigns."
+        "description": "Corporate registration, brand creation, MVP deployment, and first client acquisition.",
+        "points": [
+          "Business entity registration and necessary legal compliance.",
+          "Crafting corporate identity, positioning, and brand guidelines.",
+          "Deploying the initial version (MVP) of product or service.",
+          "Coordinating targeted marketing campaigns to secure first clients."
+        ]
       },
       {
         "step": "03",
         "title": "Process Optimization",
-        "description": "Reviewing initial performance and fine-tuning strategy. Automating internal workflows. Assembling core team talent. Improving quality through customer feedback loops."
+        "description": "Initial KPI assessment, operational workflow automation, and core talent acquisition.",
+        "points": [
+          "Auditing early metrics and calibrating go-to-market strategy.",
+          "Automating and standardizing internal operational workflows.",
+          "Team structuring: hiring key specialists and delegating roles.",
+          "Refining product or service excellence via feedback loops."
+        ]
       },
       {
         "step": "04",
         "title": "Sales Volume Expansion",
-        "description": "Introducing supplementary products and services. Broadening customer acquisition channels. Establishing strategic partnerships. Measuring sales efficiency metrics."
+        "description": "Pipeline diversification, client retention funnels, and high-impact commercial partnerships.",
+        "points": [
+          "Rolling out complementary product and service offerings.",
+          "Expanding customer acquisition funnels through marketing.",
+          "Forging strategic B2B partnerships and supplier alliances.",
+          "Measuring sales conversion velocity and sales team efficiency."
+        ]
       },
       {
         "step": "05",
         "title": "Business Scaling",
-        "description": "Expanding into new geographical markets. Scaling manufacturing or service delivery capacity. Structuring long-term expansion roadmaps. Capital investments into technology and infrastructure."
+        "description": "Market expansion, capacity amplification, and investment into scalable technologies.",
+        "points": [
+          "Expansion into regional and cross-border target markets.",
+          "Multiplying production or service fulfillment capacity.",
+          "Formulating comprehensive long-term growth roadmaps.",
+          "Investing into scalable infrastructure and digital tooling."
+        ]
       },
       {
         "step": "06",
         "title": "Sustainable Growth",
-        "description": "Continuous service and product excellence. Strengthening brand equity and industry authority. Monitoring financial sustainability metrics. Comprehensive risk mitigation strategies."
+        "description": "Continuous quality management, brand equity consolidation, and risk governance.",
+        "points": [
+          "Continuous product excellence and client satisfaction tracking.",
+          "Cultivating brand authority and dominant market reputation.",
+          "Ongoing cash flow and financial health monitoring.",
+          "Comprehensive risk mitigation and corporate continuity planning."
+        ]
       }
     ],
     "mentorship": [
       {
         "step": "01",
         "title": "Individual Audit & Diagnostics",
-        "description": "Evaluating existing operational bottlenecks, profitability limits, and immediate leverage points."
+        "description": "Comprehensive review of enterprise operational, financial, and managerial bottlenecks.",
+        "points": [
+          "Deep audit of financial and managerial balance sheets.",
+          "Identifying operational resource leakages and overheads.",
+          "Evaluating executive competencies and team dynamics.",
+          "Benchmarking competitive market positioning."
+        ]
       },
       {
         "step": "02",
         "title": "Strategic Roadmap Blueprint",
-        "description": "Setting measurable financial targets and laying out step-by-step organizational progression."
+        "description": "1 to 3-year measurable growth milestones and high-margin product expansion.",
+        "points": [
+          "Establishing measurable 1-3 year financial targets.",
+          "Developing new high-margin revenue streams.",
+          "Agile adaptation to market and macroeconomic shifts.",
+          "Strengthening enterprise valuation and investment appeal."
+        ]
       },
       {
         "step": "03",
         "title": "Systematized SOPs & Structure",
-        "description": "Establishing standard operating procedures, job responsibilities, and clear lines of accountability."
+        "description": "Process architecture, job descriptions, and integrated cloud ERP/CRM management.",
+        "points": [
+          "Mapping and formalizing company-wide operating procedures.",
+          "Establishing accountability frameworks and role descriptions.",
+          "Deploying cloud management platforms (CRM, ERP, Task Suites).",
+          "Setting up seamless inter-departmental communication lines."
+        ]
       },
       {
         "step": "04",
         "title": "Sales & Marketing Amplification",
-        "description": "Formulating high-converting offers, multi-channel lead funnels, and disciplined pipeline tracking."
+        "description": "High-converting B2B/B2C offers, multi-channel pipelines, and repeat purchase drivers.",
+        "points": [
+          "Auditing sales funnels to maximize conversion rates.",
+          "Crafting irresistible value propositions for enterprise clients.",
+          "Rigorous KPI monitoring across channels (ROI, CAC, LTV).",
+          "Building client retention loops and lifetime value optimization."
+        ]
       },
       {
         "step": "05",
         "title": "Team Leadership & Delegation",
-        "description": "Implementing objective KPIs and liberating the founder from routine operational micromanagement."
+        "description": "Transparent KPI systems, high-performing executives, and operational freedom.",
+        "points": [
+          "Instituting transparent performance-driven KPI compensation.",
+          "Empowering executive management to run daily operations.",
+          "Freeing the business owner from everyday micromanagement.",
+          "Cultivating high-trust corporate culture and talent retention."
+        ]
       },
       {
         "step": "06",
         "title": "Expansion & Asset Protection",
-        "description": "Conquering new market territories, reinforcing brand goodwill, and managing capital growth."
+        "description": "Franchise systems, international scaling, asset security, and equity value growth.",
+        "points": [
+          "Developing branch networks and scalable franchise models.",
+          "Executing international and regional market penetration.",
+          "Securing intellectual property and capital reserves.",
+          "Maximizing long-term enterprise valuation and owner dividends."
+        ]
       }
     ]
   },
@@ -181,14 +273,25 @@
   },
   "book": {
     "kicker": "PRACTICAL GUIDE",
+    "badge": "ANALYSIS OF $110,000 IN BUSINESS MISTAKES",
     "title": "“Business Cheat Sheet” Book",
     "description": "The “Business Cheat Sheet” book is a practical manual for anyone launching or scaling a business. It consolidates straightforward advice, battle-tested tools, and real-world examples from entrepreneurial practice.",
     "cta": "Order the Book",
-    "pages": "Practical format",
-    "format": "Hardcover & audio edition",
+    "view3D": "3D Book",
+    "viewPages": "Sample Pages",
+    "specCover": "Premium Hardcover",
+    "specAudio": "Audiobook Included",
+    "specCases": "Real $110,000 Cases",
+    "specDelivery": "Nationwide Delivery",
     "feature1": "Challenges encountered in real business",
+    "feature1Desc": "Overcoming critical financial, operational, and organizational bottlenecks encountered during launch and scaling.",
     "feature2": "My business mistakes and lessons learned",
-    "feature3": "Actionable recommendations for growth"
+    "feature2Desc": "An honest breakdown of personal missteps costing $110,000 and preventative frameworks to protect your enterprise.",
+    "feature3": "Actionable recommendations for growth",
+    "feature3Desc": "Battle-tested instruments to ramp up sales, systemize workflows, optimize marketing, and stabilize profits.",
+    "trustFast": "Prompt courier delivery",
+    "trustAudio": "Complimentary audiobook included",
+    "trustDirect": "Direct insights from the author"
   },
   "webinars": {
     "kicker": "MASTERCLASSES",
@@ -218,13 +321,22 @@
   },
   "applyModal": {
     "title": "Apply for Mentorship",
+    "serviceTitle": "Service Inquiry",
+    "consultTitle": "Free Consultation",
+    "serviceSubtitle": "Fill in your details and our advisory team will contact you shortly.",
     "subtitle": "Fill in your details, and our team will get in touch with you shortly!",
+    "badgeConsultation": "FREE CONSULTATION",
+    "badgeService": "SERVICE INQUIRY",
+    "selectedServiceLabel": "Selected service:",
     "nameLabel": "Your Name",
     "namePlaceholder": "Enter your full name",
     "phoneLabel": "Phone Number",
     "phonePlaceholder": "+998 (__) ___-__-__",
     "businessLabel": "Do you own a business?",
     "businessPlaceholder": "Yes / No",
+    "yes": "Yes",
+    "no": "No",
+    "businessDetailPlaceholder": "Business sector or company name (optional)...",
     "questionLabel": "What main challenge are you facing in business?",
     "questionPlaceholder": "Describe your challenge in detail...",
     "submit": "Submit",

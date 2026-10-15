@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/Button";
+import { Badge } from "@/components/ui/badge";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 import { siteMedia } from "@/config/siteMedia";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
@@ -102,6 +103,18 @@ export function Hero({ onOpenApply }: HeroProps) {
             className="lg:col-span-7 space-y-8"
           >
 
+
+            <motion.div variants={itemVariants}>
+              <Badge
+                variant="neutral"
+                appearance="outline"
+                size="sm"
+                className="border-gold/30 text-gold bg-gold/5 uppercase tracking-[0.2em] text-[11px] font-semibold py-1 px-3 inline-flex items-center gap-2"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse shrink-0" />
+                {t("kicker")}
+              </Badge>
+            </motion.div>
 
             <motion.h1
               variants={itemVariants}

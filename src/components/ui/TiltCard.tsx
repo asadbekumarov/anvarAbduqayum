@@ -69,7 +69,7 @@ export function TiltCard({
         {isHoverSupported && (
           <motion.div
             aria-hidden="true"
-            className="pointer-events-none absolute -inset-px rounded-[inherit] border border-gold/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-20"
+            className="pointer-events-none absolute inset-0 rounded-[inherit] border border-gold/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-20"
             style={{
               maskImage: spotlightBorderMask,
               WebkitMaskImage: spotlightBorderMask,

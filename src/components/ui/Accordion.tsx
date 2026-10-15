@@ -1,143 +1,257 @@
-"use client";
+"use client"
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import * as React from "react"
+import { RiArrowDownSLine } from "@create-ui/assets/icons"
+import { cva, type VariantProps } from "class-variance-authority"
+import { Accordion as AccordionPrimitive } from "radix-ui"
 
-export interface AccordionItemData {
-  id: string;
-  step: string;
-  title: string;
-  description: string;
-}
+import { cn } from "@/lib/utils"
 
-interface AccordionProps {
-  items: AccordionItemData[];
-  defaultOpenId?: string;
-  className?: string;
-  onActiveChange?: (index: number) => void;
-}
+type Appearance =
+  | "ghost-default"
+  | "ghost-underline"
+  | "ghost-rounded"
+  | "outline-rounded"
+  | "outline-sharp"
+  | "filled-rounded"
 
-const EASE_SWISS = [0.16, 1, 0.3, 1] as const;
+const AccordionContext = React.createContext<{ appearance: Appearance }>({
+  appearance: "ghost-default",
+})
 
-export function Accordion({
-  items,
-  defaultOpenId,
-  className = "",
-  onActiveChange,
+const useAccordion = () => React.useContext(AccordionContext)
+
+const accordionVariants = cva("flex w-full min-w-0 flex-col", {
+  variants: {
+    appearance: {
+      "ghost-default": "gap-component-sm",
+      "ghost-underline": "",
+      "ghost-rounded": "gap-component-sm",
+      "outline-rounded": "gap-component-sm",
+      "outline-sharp": "",
+      "filled-rounded": "gap-component-sm",
+    },
+  },
+  defaultVariants: { appearance: "ghost-default" },
+})
+
+const accordionItemVariants = cva(
+  [
+    // base
+    "group/accordion-item relative",
+    // transition
+    "transition duration-200",
+    // has-[trigger:focus-visible]
+    "has-[[data-slot=accordion-trigger]:focus-visible]:z-10 has-[[data-slot=accordion-trigger]:focus-visible]:outline-2 has-[[data-slot=accordion-trigger]:focus-visible]:outline-strong has-[[data-slot=accordion-trigger]:focus-visible]:outline-offset-2",
+  ],
+  {
+    variants: {
+      appearance: {
+        "ghost-default": "data-[state=open]:bg-static",
+        "ghost-underline": [
+          // base
+          "border-weak border-b last:border-b-0",
+          // has-[trigger:hover]
+          "has-[[data-slot=accordion-trigger]:hover]:border-medium",
+          // data-[state=open]
+          "data-[state=open]:bg-static data-[state=open]:border-medium",
+        ],
+        "ghost-rounded": "",
+        "outline-rounded": [
+          // base
+          "bg-static border-light shadow-neutral-2xs border",
+          // has-[trigger:hover]
+          "has-[[data-slot=accordion-trigger]:hover]:shadow-none",
+          // has-[trigger:focus-visible]
+          "has-[[data-slot=accordion-trigger]:focus-visible]:shadow-none",
+          // has-[trigger:disabled]
+          "has-[[data-slot=accordion-trigger]:disabled]:shadow-none",
+          // data-[state=open]
+          "data-[state=open]:border-medium",
+        ],
+        "outline-sharp": "border-light -mt-px border first:mt-0",
+        "filled-rounded": [
+          // base
+          "bg-weakest border border-transparent",
+          // data-[state=open]
+          "data-[state=open]:border-light",
+        ],
+      },
+    },
+    compoundVariants: [
+      {
+        appearance: ["ghost-rounded", "outline-rounded", "filled-rounded"],
+        class: "overflow-hidden rounded-xl",
+      },
+      {
+        appearance: ["ghost-rounded", "outline-sharp", "filled-rounded"],
+        class: "data-[state=open]:bg-weak",
+      },
+    ],
+    defaultVariants: { appearance: "ghost-default" },
+  }
+)
+
+const accordionTriggerVariants = cva(
+  [
+    // base
+    "group/accordion-trigger relative flex w-full items-center gap-component-sm p-component-lg text-left outline-hidden text-body text-body-lg font-medium cursor-pointer",
+    // transition
+    "transition duration-200",
+    // hover
+    "hover:text-strongest",
+    // disabled
+    "disabled:cursor-not-allowed disabled:!text-disabled",
+    // data-[state=open]
+    "data-[state=open]:text-strongest",
+    // data-[state=closed]:focus-visible
+    "data-[state=closed]:focus-visible:bg-static",
+  ],
+  {
+    variants: {
+      appearance: {
+        "ghost-default": "px-component-none",
+        "ghost-underline": "",
+        "ghost-rounded": "",
+        "outline-rounded": "",
+        "outline-sharp": "",
+        "filled-rounded": [
+          // data-[state=closed]:hover
+          "data-[state=closed]:hover:bg-weak",
+          // data-[state=closed]:focus-visible
+          "data-[state=closed]:focus-visible:bg-weakest",
+        ],
+      },
+    },
+    compoundVariants: [
+      {
+        appearance: ["ghost-rounded", "outline-rounded", "outline-sharp"],
+        class: "data-[state=closed]:hover:bg-weakest",
+      },
+    ],
+    defaultVariants: { appearance: "ghost-default" },
+  }
+)
+
+const accordionContentVariants = cva("p-component-lg pt-component-none ", {
+  variants: {
+    appearance: {
+      "ghost-default": "p-component-none",
+      "ghost-underline": "",
+      "ghost-rounded": "",
+      "outline-rounded": "",
+      "outline-sharp": "",
+      "filled-rounded": "",
+    },
+  },
+  defaultVariants: { appearance: "ghost-default" },
+})
+
+type AccordionProps = React.ComponentProps<typeof AccordionPrimitive.Root> &
+  VariantProps<typeof accordionVariants>
+
+function Accordion({
+  className,
+  appearance = "ghost-default",
+  ...props
 }: AccordionProps) {
-  const [openId, setOpenId] = useState<string | null>(
-    defaultOpenId ?? (items.length > 0 ? items[0].id : null)
-  );
-
-  const toggleItem = (id: string, idx: number) => {
-    const next = openId === id ? null : id;
-    setOpenId(next);
-    if (onActiveChange) {
-      onActiveChange(next ? idx : -1);
-    }
-  };
-
   return (
-    <div className={`relative divide-y divide-border border-y border-border ${className}`}>
-      {items.map((item, idx) => {
-        const isOpen = openId === item.id;
-        const buttonId = `accordion-button-${item.id}`;
-        const panelId = `accordion-panel-${item.id}`;
-
-        return (
-          <div
-            key={item.id}
-            className={`relative transition-colors duration-300 ${
-              isOpen ? "bg-elevated/50" : "hover:bg-elevated/20"
-            }`}
-          >
-            {/* Active Step Metallic Gold Left Indicator */}
-            {isOpen && (
-              <motion.div
-                layoutId="active-accordion-gold-line"
-                className="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-[#DFBA73] via-[#C5A059] to-[#9E7D3B] shadow-[0_0_12px_rgba(223,186,115,0.4)] z-10"
-                transition={{ duration: 0.35, ease: EASE_SWISS }}
-              />
-            )}
-
-            <h3>
-              <button
-                id={buttonId}
-                type="button"
-                aria-expanded={isOpen}
-                aria-controls={panelId}
-                onClick={() => toggleItem(item.id, idx)}
-                className="w-full py-6 sm:py-8 px-4 sm:px-8 flex items-center justify-between gap-6 text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold group"
-              >
-                <div className="flex items-baseline gap-6 sm:gap-8 flex-1">
-                  <span
-                    className={`font-serif text-xl sm:text-2xl font-light shrink-0 transition-colors duration-300 ${
-                      isOpen ? "text-gold font-medium" : "text-gold/60 group-hover:text-gold"
-                    }`}
-                  >
-                    /{item.step}
-                  </span>
-                  <span
-                    className={`font-serif text-lg sm:text-2xl tracking-tight transition-colors duration-300 ${
-                      isOpen ? "text-white font-medium" : "text-white/80 group-hover:text-white"
-                    }`}
-                  >
-                    {item.title}
-                  </span>
-                </div>
-
-                {/* Tactile Motion Rotate Plus/Close Icon */}
-                <motion.div
-                  animate={{ rotate: isOpen ? 45 : 0 }}
-                  transition={{ duration: 0.3, ease: EASE_SWISS }}
-                  className={`w-8 h-8 shrink-0 border flex items-center justify-center transition-colors duration-300 rounded-[2px] ${
-                    isOpen
-                      ? "border-gold text-gold bg-gold/10"
-                      : "border-border text-muted group-hover:border-gold/40 group-hover:text-white"
-                  }`}
-                  aria-hidden="true"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M12 4.5v15m7.5-7.5h-15"
-                    />
-                  </svg>
-                </motion.div>
-              </button>
-            </h3>
-
-            {/* Framer Motion Zero-Jank Seamless Accordion Content */}
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <motion.div
-                  id={panelId}
-                  role="region"
-                  aria-labelledby={buttonId}
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.38, ease: EASE_SWISS }}
-                  className="overflow-hidden"
-                >
-                  <div className="px-4 sm:px-8 pb-8 pl-14 sm:pl-20 max-w-3xl">
-                    <p className="text-sm sm:text-base text-muted font-light leading-relaxed">
-                      {item.description}
-                    </p>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        );
-      })}
-    </div>
-  );
+    <AccordionContext.Provider value={{ appearance: appearance! }}>
+      <AccordionPrimitive.Root
+        data-slot="accordion"
+        data-appearance={appearance}
+        className={cn(accordionVariants({ appearance }), className)}
+        {...props}
+      />
+    </AccordionContext.Provider>
+  )
 }
+
+function AccordionItem({
+  className,
+  ...props
+}: React.ComponentProps<typeof AccordionPrimitive.Item>) {
+  const { appearance } = useAccordion()
+  return (
+    <AccordionPrimitive.Item
+      data-slot="accordion-item"
+      className={cn(accordionItemVariants({ appearance }), className)}
+      {...props}
+    />
+  )
+}
+
+type AccordionTriggerProps = React.ComponentProps<
+  typeof AccordionPrimitive.Trigger
+> & {
+  icon?: React.ReactNode
+}
+
+function AccordionTrigger({
+  className,
+  children,
+  icon,
+  ...props
+}: AccordionTriggerProps) {
+  const { appearance } = useAccordion()
+  return (
+    <AccordionPrimitive.Header className="flex">
+      <AccordionPrimitive.Trigger
+        data-slot="accordion-trigger"
+        className={cn(accordionTriggerVariants({ appearance }), className)}
+        {...props}
+      >
+        {icon && (
+          <span
+            data-slot="accordion-trigger-icon"
+            className="shrink-0 [&_svg]:size-5"
+          >
+            {icon}
+          </span>
+        )}
+        <span
+          data-slot="accordion-trigger-label"
+          className="gap-component-sm flex min-w-0 flex-1 items-center"
+        >
+          {children}
+        </span>
+        <RiArrowDownSLine
+          data-slot="accordion-trigger-chevron"
+          className="text-placeholder group-data-[state=open]/accordion-trigger:text-body group-disabled/accordion-trigger:!text-disabled size-5 shrink-0 transition-[color,rotate] duration-200 group-data-[state=open]/accordion-trigger:-rotate-180"
+        />
+      </AccordionPrimitive.Trigger>
+    </AccordionPrimitive.Header>
+  )
+}
+
+function AccordionContent({
+  className,
+  children,
+  forceMount,
+  ...props
+}: React.ComponentProps<typeof AccordionPrimitive.Content>) {
+  const { appearance } = useAccordion()
+  return (
+    <AccordionPrimitive.Content
+      forceMount={forceMount}
+      data-slot="accordion-content"
+      className={cn(
+        "data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down text-paragraph-sm overflow-hidden duration-250 text-neutral-300",
+        forceMount && "data-[state=closed]:hidden"
+      )}
+      {...props}
+    >
+      <div
+        className={cn(
+          "flex flex-col gap-4 text-neutral-300",
+          accordionContentVariants({ appearance }),
+          className
+        )}
+      >
+        {children}
+      </div>
+    </AccordionPrimitive.Content>
+  )
+}
+
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent }

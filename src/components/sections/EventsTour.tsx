@@ -22,7 +22,7 @@ export function EventsTour({ onOpenApply }: EventsTourProps) {
     <section
       id="tadbirlarimiz"
       aria-label="Tadbirlarimiz"
-      className="py-20 sm:py-28 border-b border-border bg-base"
+      className="py-16 sm:py-24 border-b border-border bg-base"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
@@ -30,6 +30,7 @@ export function EventsTour({ onOpenApply }: EventsTourProps) {
           kicker={t("kicker")}
           title={t("title")}
           description={t("description")}
+          className="mb-8 sm:mb-12"
         />
 
         {/* 6 City Posters Grid with 3D Tilt & Gold Spotlight */}
@@ -40,47 +41,47 @@ export function EventsTour({ onOpenApply }: EventsTourProps) {
               className="h-full rounded-[2px]"
             >
               <article className="group border border-border bg-elevated relative overflow-hidden flex flex-col justify-between transition-all duration-300 hover:border-gold/50 rounded-[2px] h-full">
-                {/* Poster Image Container */}
-                <div className="relative aspect-[3/4] w-full overflow-hidden bg-base">
+                {/* Poster Image Container - Compact Height */}
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-base">
                   <Image
                     src={evt.image}
                     alt={evt.alt}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover grayscale contrast-110 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-500 ease-out"
+                    className="object-cover object-top grayscale contrast-110 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-500 ease-out"
                   />
 
                   {/* Dark Vignette Overlay */}
                   <div
-                    className="absolute inset-0 bg-gradient-to-t from-base via-base/40 to-transparent pointer-events-none"
+                    className="absolute inset-0 bg-gradient-to-t from-base via-base/30 to-transparent pointer-events-none"
                     aria-hidden="true"
                   />
 
                   {/* City Number Stamp */}
-                  <div className="absolute top-4 right-4 z-10">
-                    <span className="font-serif text-xs text-gold/80 tracking-widest font-semibold border border-gold/30 px-2 py-1 bg-base/80">
+                  <div className="absolute top-3 right-3 z-10">
+                    <span className="font-serif text-[11px] text-gold/80 tracking-widest font-semibold border border-gold/30 px-2 py-0.5 bg-base/80 backdrop-blur-xs">
                       /0{idx + 1}
                     </span>
                   </div>
 
                   {/* City & Country Typography */}
-                  <div className="absolute bottom-6 left-6 right-6 z-10">
-                    <span className="text-[11px] font-sans uppercase tracking-[0.2em] text-gold font-medium block mb-1">
+                  <div className="absolute bottom-3.5 left-4 right-4 z-10">
+                    <span className="text-[10px] font-sans uppercase tracking-[0.2em] text-gold font-medium block mb-0.5">
                       {evt.country}
                     </span>
-                    <h3 className="font-serif text-3xl font-normal text-white tracking-wide">
+                    <h3 className="font-serif text-2xl font-normal text-white tracking-wide leading-tight">
                       {evt.city}
                     </h3>
                   </div>
                 </div>
 
-                {/* Poster Footer Info */}
-                <div className="p-6 border-t border-border bg-base flex flex-col justify-between flex-1 space-y-4">
+                {/* Poster Footer Info - Compact */}
+                <div className="p-4 sm:p-4.5 border-t border-border bg-base flex flex-col justify-between flex-1 space-y-3">
                   <div>
-                    <h4 className="font-sans text-sm font-medium text-white line-clamp-1">
+                    <h4 className="font-sans text-xs sm:text-sm font-medium text-white line-clamp-1">
                       {evt.title}
                     </h4>
-                    <span className="text-xs text-muted font-light block mt-1">
+                    <span className="text-[11px] text-muted font-light block mt-0.5">
                       {evt.date}
                     </span>
                   </div>

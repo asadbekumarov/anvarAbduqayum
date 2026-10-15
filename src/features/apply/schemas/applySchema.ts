@@ -26,6 +26,7 @@ export const applySchema = z.object({
     .max(1000, { message: "Savol 1000 ta belgidan oshmasligi kerak" })
     .optional()
     .or(z.literal("")),
+  service: z.string().trim().max(120).optional(),
   honeypot: z.string().optional(),
 });
 

@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
+import { CloseButton } from "@/components/ui/close-button";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
 import { useLockScroll } from "@/hooks/useLockScroll";
@@ -45,7 +46,6 @@ export function MobileMenu({ isOpen, onClose, onOpenApply }: MobileMenuProps) {
     { href: "#xizmatlar", label: t("services") },
     { href: "#tadbirlarimiz", label: t("events") },
     { href: "#bosqichlar", label: t("stages") },
-    { href: "#testlar", label: t("tests") },
   ];
 
   const handleLinkClick = () => {
@@ -64,23 +64,15 @@ export function MobileMenu({ isOpen, onClose, onOpenApply }: MobileMenuProps) {
         <span className="font-serif text-lg tracking-wider font-semibold text-white">
           ILHOM BEGIMQULOV
         </span>
-        <button
+        <CloseButton
           ref={closeButtonRef}
-          type="button"
           onClick={onClose}
           aria-label={common("closeMenu")}
-          className="p-2 text-muted hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold"
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="1.5"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
+          appearance="soft"
+          variant="neutral"
+          size="lg"
+          className="text-muted hover:text-white"
+        />
       </div>
 
       {/* Nav List */}

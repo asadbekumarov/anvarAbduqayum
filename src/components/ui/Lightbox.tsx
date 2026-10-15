@@ -52,7 +52,7 @@ export function Lightbox({ isOpen, onClose, media }: LightboxProps) {
       onClick={onClose}
     >
       <div
-        className="relative max-w-4xl w-full border border-border bg-base p-4 sm:p-6 rounded-[2px]"
+        className="relative max-w-3xl w-full border border-border bg-base p-4 sm:p-6 rounded-[2px]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Header */}
@@ -87,14 +87,15 @@ export function Lightbox({ isOpen, onClose, media }: LightboxProps) {
           </button>
         </div>
 
-        {/* Enlarged Image Display */}
-        <div className="relative aspect-[4/3] w-full border border-border-subtle bg-elevated overflow-hidden">
+        {/* Enlarged Image Display - Portrait Friendly */}
+        <div className="relative h-[65vh] sm:h-[72vh] max-h-[750px] w-full border border-border-subtle bg-[#0D0D0D] p-2 rounded-[2px] overflow-hidden">
           <Image
             src={media.src}
             alt={media.alt}
             fill
             sizes="(max-width: 1024px) 100vw, 900px"
             className="object-contain"
+            priority
           />
         </div>
       </div>

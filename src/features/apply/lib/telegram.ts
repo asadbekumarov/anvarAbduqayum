@@ -48,6 +48,7 @@ export async function sendTelegramLead(
     `👤 <b>Ism:</b> ${cleanText(lead.name)}`,
     `📞 <b>Telefon:</b> <code>${cleanText(lead.phone)}</code>`,
     `🏢 <b>Biznes sohasi:</b> ${cleanText(lead.business)}`,
+    lead.service ? `🎯 <b>Xizmat / Yo'nalish:</b> ${cleanText(lead.service)}` : null,
     lead.question
       ? `❓ <b>Savol / Izoh:</b>\n<i>${cleanText(lead.question)}</i>`
       : null,
