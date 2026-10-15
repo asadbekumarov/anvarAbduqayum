@@ -47,16 +47,16 @@ export function YouTubeModal({
       role="dialog"
       aria-modal="true"
       aria-label={title || "Video"}
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/95"
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/95"
       onClick={onClose}
     >
       <div
-        className="relative max-w-4xl w-full border border-border bg-base p-4 sm:p-6 rounded-[2px]"
+        className="relative max-w-4xl w-full border border-border bg-base p-3.5 sm:p-6 rounded-[2px]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Bar */}
-        <div className="flex items-center justify-between pb-4 border-b border-border mb-4">
-          <h3 className="font-serif text-base sm:text-lg text-white font-medium line-clamp-1 pr-4">
+        <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-border mb-3 sm:mb-4">
+          <h3 className="font-serif text-sm sm:text-lg text-white font-medium line-clamp-1 pr-3 sm:pr-4">
             {title || "Video"}
           </h3>
           <button
@@ -64,10 +64,10 @@ export function YouTubeModal({
             type="button"
             onClick={onClose}
             aria-label="Videoni yopish"
-            className="p-2 text-muted hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold shrink-0"
+            className="p-1.5 sm:p-2 text-muted hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold shrink-0"
           >
             <svg
-              className="w-6 h-6"
+              className="w-5 h-5 sm:w-6 sm:h-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

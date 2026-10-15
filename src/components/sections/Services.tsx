@@ -161,7 +161,7 @@ export function Services({ onOpenApply }: ServicesProps) {
               className="border-b border-border transition-colors duration-200 hover:bg-elevated/60 group cursor-pointer"
             >
               <div
-                className="py-7 sm:py-8 px-4 sm:px-6"
+                className="py-5 sm:py-8 px-4 sm:px-6"
                 onClick={() => handleApply(service.title)}
                 role="button"
                 tabIndex={0}
@@ -173,30 +173,33 @@ export function Services({ onOpenApply }: ServicesProps) {
                 }}
                 aria-label={`${service.title} - ${t("selectService")}`}
               >
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 items-center">
-                  {/* Index Numeral */}
-                  <div className="md:col-span-2">
-                    <span className="font-serif text-2xl sm:text-3xl font-light text-gold group-hover:gold-gradient-text transition-colors">
-                      /{service.index}
-                    </span>
-                  </div>
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-6 items-start md:items-center">
+                  {/* Index & Title: Flex on mobile, separate grid cells on desktop */}
+                  <div className="flex items-center gap-3 md:contents">
+                    {/* Index Numeral */}
+                    <div className="md:col-span-2">
+                      <span className="font-serif text-xl sm:text-3xl font-light text-gold group-hover:gold-gradient-text transition-colors">
+                        /{service.index}
+                      </span>
+                    </div>
 
-                  {/* Service Title */}
-                  <div className="md:col-span-4">
-                    <h3 className="font-serif text-xl sm:text-2xl text-white font-normal group-hover:text-gold transition-colors">
-                      {service.title}
-                    </h3>
+                    {/* Service Title */}
+                    <div className="md:col-span-4">
+                      <h3 className="font-serif text-lg sm:text-2xl text-white font-normal group-hover:text-gold transition-colors">
+                        {service.title}
+                      </h3>
+                    </div>
                   </div>
 
                   {/* Service Description */}
                   <div className="md:col-span-4">
-                    <p className="text-sm text-muted font-light leading-relaxed group-hover:text-muted-light transition-colors">
+                    <p className="text-xs sm:text-sm text-muted font-light leading-relaxed group-hover:text-muted-light transition-colors">
                       {service.description}
                     </p>
                   </div>
 
                   {/* Row Action Button */}
-                  <div className="md:col-span-2 flex md:justify-end">
+                  <div className="md:col-span-2 flex md:justify-end pt-1 md:pt-0">
                     <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium border border-border group-hover:border-gold/50 text-muted-light group-hover:text-gold group-hover:bg-gold/5 transition-all duration-200">
                       <span>{t("selectService")}</span>
                       <svg

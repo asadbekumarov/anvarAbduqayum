@@ -71,7 +71,7 @@ export function Navbar({ onOpenApply }: NavbarProps) {
             </nav>
 
             {/* Desktop Right Actions */}
-            <div className="hidden md:flex items-center space-x-6">
+            <div className="hidden lg:flex items-center space-x-6">
               <LanguageSwitcher />
 
               <Button
@@ -83,8 +83,18 @@ export function Navbar({ onOpenApply }: NavbarProps) {
               </Button>
             </div>
 
-            {/* Mobile Actions: Language & Hamburger */}
-            <div className="flex items-center space-x-4 md:hidden">
+            {/* Tablet & Mobile Actions: Language & Hamburger */}
+            <div className="flex items-center space-x-3 sm:space-x-4 lg:hidden">
+              <div className="hidden sm:block">
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={handleApply}
+                >
+                  {common("cta")}
+                </Button>
+              </div>
+
               <LanguageSwitcher />
 
               <button

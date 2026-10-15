@@ -21,6 +21,18 @@ h1, h2, h3, h4, h5, h6 {
   font-optical-sizing: auto;
 }
 
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  max-width: 100vw;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 :root {
   --color-base: #0A0A0A;
   --color-elevated: #141414;

@@ -46,6 +46,11 @@ export function MobileMenu({ isOpen, onClose, onOpenApply }: MobileMenuProps) {
     { href: "#xizmatlar", label: t("services") },
     { href: "#tadbirlarimiz", label: t("events") },
     { href: "#bosqichlar", label: t("stages") },
+    { href: "#hamkorlar", label: "Hamkorlar" },
+    { href: "#ekspert", label: "Ekspert" },
+    { href: "#fikrlar", label: "Fikrlar" },
+    { href: "#kitob", label: "Kitob" },
+    { href: "#kontaktlar", label: "Kontaktlar" },
   ];
 
   const handleLinkClick = () => {
@@ -57,10 +62,10 @@ export function MobileMenu({ isOpen, onClose, onOpenApply }: MobileMenuProps) {
       role="dialog"
       aria-modal="true"
       aria-label={common("openMenu")}
-      className="fixed inset-0 z-50 flex flex-col bg-base text-white md:hidden"
+      className="fixed inset-0 z-50 flex flex-col bg-base text-white lg:hidden"
     >
       {/* Top Bar */}
-      <div className="flex items-center justify-between px-6 h-20 border-b border-border">
+      <div className="flex items-center justify-between px-5 sm:px-6 h-20 border-b border-border shrink-0">
         <span className="font-serif text-lg tracking-wider font-semibold text-white">
           ILHOM BEGIMQULOV
         </span>
@@ -80,16 +85,16 @@ export function MobileMenu({ isOpen, onClose, onOpenApply }: MobileMenuProps) {
         ref={menuRef}
         className="flex-1 flex flex-col justify-between px-6 py-8 overflow-y-auto"
       >
-        <nav className="flex flex-col space-y-6">
+        <nav className="flex flex-col space-y-2 sm:space-y-4">
           {navLinks.map((link, index) => (
             <a
               key={link.href}
               href={link.href}
               onClick={handleLinkClick}
-              className="group flex items-center justify-between text-2xl font-serif text-white hover:text-gold transition-colors py-2 border-b border-border-subtle"
+              className="group flex items-center justify-between text-lg sm:text-2xl font-serif text-white hover:text-gold transition-colors py-2 border-b border-border-subtle"
             >
               <span>{link.label}</span>
-              <span className="text-xs font-sans text-muted tracking-widest">
+              <span className="text-[10px] sm:text-xs font-sans text-muted tracking-widest">
                 /0{index + 1}
               </span>
             </a>

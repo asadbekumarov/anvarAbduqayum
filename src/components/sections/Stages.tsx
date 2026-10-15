@@ -142,7 +142,7 @@ export function Stages({ onOpenApply }: StagesProps) {
             <button
               type="button"
               onClick={() => handleApply(currentIntro.title)}
-              className="shrink-0 self-start sm:self-center inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium border border-gold/40 text-gold bg-gold/10 hover:bg-gold hover:text-base transition-all duration-200"
+              className="shrink-0 self-stretch sm:self-center inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 rounded-lg text-xs font-medium border border-gold/40 text-gold bg-gold/10 hover:bg-gold hover:text-base transition-all duration-200"
             >
               <span>{t("stageAction")}</span>
               <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -179,21 +179,21 @@ export function Stages({ onOpenApply }: StagesProps) {
                     value={item.id}
                     className="relative transition-colors duration-300 border-none data-[state=open]:bg-elevated/40 hover:bg-elevated/20 group/accordion-item"
                   >
-                    <AccordionTrigger className="w-full flex items-center justify-between py-5 sm:py-6 px-4 sm:px-6 text-left cursor-pointer hover:no-underline group outline-none">
-                      <div className="flex items-center gap-4 sm:gap-6 min-w-0 pr-4">
-                        <span className="font-serif text-lg sm:text-xl text-gold tracking-widest shrink-0 font-medium">
+                    <AccordionTrigger className="w-full flex items-center justify-between py-4 sm:py-6 px-3 sm:px-6 text-left cursor-pointer hover:no-underline group outline-none">
+                      <div className="flex items-center gap-3 sm:gap-6 min-w-0 pr-2 sm:pr-4">
+                        <span className="font-serif text-base sm:text-xl text-gold tracking-widest shrink-0 font-medium">
                           /{item.step}
                         </span>
-                        <span className="font-serif text-base sm:text-xl text-white font-normal group-hover:text-gold transition-colors truncate">
+                        <span className="font-serif text-sm sm:text-xl text-white font-normal group-hover:text-gold transition-colors leading-snug break-words">
                           {item.title}
                         </span>
                       </div>
                     </AccordionTrigger>
 
-                    <AccordionContent className="px-4 sm:px-6 pb-6 pt-0 text-neutral-300 font-light leading-relaxed pl-12 sm:pl-16">
+                    <AccordionContent className="px-3 sm:px-6 pb-6 pt-0 text-neutral-300 font-light leading-relaxed pl-8 sm:pl-16">
                       <div className="space-y-4">
                         {/* Summary description */}
-                        <p className="text-sm sm:text-base text-neutral-200 leading-relaxed">
+                        <p className="text-xs sm:text-base text-neutral-200 leading-relaxed">
                           {item.description}
                         </p>
 
@@ -203,7 +203,7 @@ export function Stages({ onOpenApply }: StagesProps) {
                             {item.points.map((pt, pIdx) => (
                               <div
                                 key={pIdx}
-                                className="flex items-start gap-2.5 p-3 rounded-xl bg-base/80 border border-border/80 hover:border-gold/30 transition-colors"
+                                className="flex items-start gap-2.5 p-2.5 sm:p-3 rounded-xl bg-base/80 border border-border/80 hover:border-gold/30 transition-colors"
                               >
                                 <span className="text-gold text-xs shrink-0 mt-0.5" aria-hidden="true">
                                   ❖
@@ -249,13 +249,13 @@ export function Stages({ onOpenApply }: StagesProps) {
         </div>
 
         {/* Bottom Contextual CTA Band */}
-        <div className="mt-12 p-6 sm:p-8 border border-gold/30 bg-gradient-to-r from-elevated via-[#151515] to-elevated flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 rounded-2xl relative overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
+        <div className="mt-10 sm:mt-12 p-5 sm:p-8 border border-gold/30 bg-gradient-to-r from-elevated via-[#151515] to-elevated flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 sm:gap-6 rounded-2xl relative overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
           <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-gold to-transparent opacity-70" />
           <div className="relative z-10 max-w-2xl">
-            <h4 className="font-serif text-xl sm:text-2xl text-white font-medium">
+            <h4 className="font-serif text-lg sm:text-2xl text-white font-medium">
               {t("ctaBandTitle")}
             </h4>
-            <p className="text-xs sm:text-sm text-neutral-300 mt-1.5 font-light leading-relaxed">
+            <p className="text-xs sm:text-sm text-neutral-300 mt-1 sm:mt-1.5 font-light leading-relaxed">
               {t("ctaBandDesc")}
             </p>
           </div>
@@ -263,7 +263,7 @@ export function Stages({ onOpenApply }: StagesProps) {
             variant="primary"
             size="md"
             onClick={() => handleApply("Biznesni tizimlashtirish bosqichlari")}
-            className="shrink-0 bg-gold hover:bg-gold-light text-[#0A0A0A] font-medium shadow-[0_0_20px_rgba(197,168,128,0.25)] rounded-lg transition-all"
+            className="w-full sm:w-auto shrink-0 justify-center bg-gold hover:bg-gold-light text-[#0A0A0A] font-medium shadow-[0_0_20px_rgba(197,168,128,0.25)] rounded-lg transition-all"
           >
             <span>{t("ctaBandButton")}</span>
             <svg

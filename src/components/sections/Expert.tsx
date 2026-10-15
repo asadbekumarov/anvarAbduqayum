@@ -70,10 +70,10 @@ export function Expert({ onOpenApply }: ExpertProps) {
             </div>
 
             {/* 4 Philosophy Pillars */}
-            <div className="border-t border-border pt-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="border border-border p-6 bg-elevated/40 rounded-[2px]">
-                <span className="font-serif text-gold text-lg block mb-2">/01</span>
-                <h4 className="font-serif text-lg text-white font-normal mb-2">
+            <div className="border-t border-border pt-6 sm:pt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div className="border border-border p-4 sm:p-6 bg-elevated/40 rounded-[2px]">
+                <span className="font-serif text-gold text-base sm:text-lg block mb-1.5 sm:mb-2">/01</span>
+                <h4 className="font-serif text-base sm:text-lg text-white font-normal mb-1.5 sm:mb-2">
                   {t("pillar1Title")}
                 </h4>
                 <p className="text-xs text-muted leading-relaxed font-light">
@@ -81,9 +81,9 @@ export function Expert({ onOpenApply }: ExpertProps) {
                 </p>
               </div>
 
-              <div className="border border-border p-6 bg-elevated/40 rounded-[2px]">
-                <span className="font-serif text-gold text-lg block mb-2">/02</span>
-                <h4 className="font-serif text-lg text-white font-normal mb-2">
+              <div className="border border-border p-4 sm:p-6 bg-elevated/40 rounded-[2px]">
+                <span className="font-serif text-gold text-base sm:text-lg block mb-1.5 sm:mb-2">/02</span>
+                <h4 className="font-serif text-base sm:text-lg text-white font-normal mb-1.5 sm:mb-2">
                   {t("pillar2Title")}
                 </h4>
                 <p className="text-xs text-muted leading-relaxed font-light">
@@ -91,9 +91,9 @@ export function Expert({ onOpenApply }: ExpertProps) {
                 </p>
               </div>
 
-              <div className="border border-border p-6 bg-elevated/40 rounded-[2px]">
-                <span className="font-serif text-gold text-lg block mb-2">/03</span>
-                <h4 className="font-serif text-lg text-white font-normal mb-2">
+              <div className="border border-border p-4 sm:p-6 bg-elevated/40 rounded-[2px]">
+                <span className="font-serif text-gold text-base sm:text-lg block mb-1.5 sm:mb-2">/03</span>
+                <h4 className="font-serif text-base sm:text-lg text-white font-normal mb-1.5 sm:mb-2">
                   {t("pillar3Title")}
                 </h4>
                 <p className="text-xs text-muted leading-relaxed font-light">
@@ -101,9 +101,9 @@ export function Expert({ onOpenApply }: ExpertProps) {
                 </p>
               </div>
 
-              <div className="border border-border p-6 bg-elevated/40 rounded-[2px]">
-                <span className="font-serif text-gold text-lg block mb-2">/04</span>
-                <h4 className="font-serif text-lg text-white font-normal mb-2">
+              <div className="border border-border p-4 sm:p-6 bg-elevated/40 rounded-[2px]">
+                <span className="font-serif text-gold text-base sm:text-lg block mb-1.5 sm:mb-2">/04</span>
+                <h4 className="font-serif text-base sm:text-lg text-white font-normal mb-1.5 sm:mb-2">
                   {t("pillar4Title")}
                 </h4>
                 <p className="text-xs text-muted leading-relaxed font-light">
@@ -113,11 +113,12 @@ export function Expert({ onOpenApply }: ExpertProps) {
             </div>
 
             {/* CTA Trigger */}
-            <div className="pt-4">
+            <div className="pt-2 sm:pt-4">
               <Button
                 variant="primary"
                 size="md"
                 onClick={handleApply}
+                className="w-full sm:w-auto text-center justify-center"
               >
                 {common("cta")}
               </Button>

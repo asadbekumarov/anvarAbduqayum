@@ -29,23 +29,23 @@ export function Partners() {
       <div className="relative w-full">
         {/* Left & Right Gradient Fade Masks */}
         <div
-          className="absolute inset-y-0 left-0 w-24 sm:w-48 bg-gradient-to-r from-base via-base/90 to-transparent pointer-events-none z-20"
+          className="absolute inset-y-0 left-0 w-10 sm:w-28 lg:w-48 bg-gradient-to-r from-base via-base/90 to-transparent pointer-events-none z-20"
           aria-hidden="true"
         />
         <div
-          className="absolute inset-y-0 right-0 w-24 sm:w-48 bg-gradient-to-l from-base via-base/90 to-transparent pointer-events-none z-20"
+          className="absolute inset-y-0 right-0 w-10 sm:w-28 lg:w-48 bg-gradient-to-l from-base via-base/90 to-transparent pointer-events-none z-20"
           aria-hidden="true"
         />
 
         {/* Row 1: Forward Marquee */}
-        <div className="border-y border-border py-6 bg-elevated/20">
+        <div className="border-y border-border py-4 sm:py-6 bg-elevated/20">
           <Marquee speed={38}>
             {partners.map((p) => (
               <div
                 key={`r1-${p.id}`}
-                className="h-16 px-8 flex items-center justify-center border border-border bg-base hover:border-gold hover:bg-elevated/80 hover:shadow-[0_0_25px_rgba(197,168,128,0.16)] transition-all duration-300 shrink-0 rounded-[2px] group"
+                className="h-14 sm:h-16 px-5 sm:px-8 flex items-center justify-center border border-border bg-base hover:border-gold hover:bg-elevated/80 hover:shadow-[0_0_25px_rgba(197,168,128,0.16)] transition-all duration-300 shrink-0 rounded-[2px] group"
               >
-                <span className="font-serif text-sm tracking-wider uppercase text-muted group-hover:text-gold transition-colors duration-200">
+                <span className="font-serif text-xs sm:text-sm tracking-wider uppercase text-muted group-hover:text-gold transition-colors duration-200">
                   {p.name}
                 </span>
               </div>
@@ -54,14 +54,14 @@ export function Partners() {
         </div>
 
         {/* Row 2: Reverse Marquee */}
-        <div className="border-b border-border py-6 bg-elevated/40">
+        <div className="border-b border-border py-4 sm:py-6 bg-elevated/40">
           <Marquee speed={44} reverse>
             {[...partners].reverse().map((p) => (
               <div
                 key={`r2-${p.id}`}
-                className="h-16 px-8 flex items-center justify-center border border-border bg-base hover:border-gold hover:bg-elevated/80 hover:shadow-[0_0_25px_rgba(197,168,128,0.16)] transition-all duration-300 shrink-0 rounded-[2px] group"
+                className="h-14 sm:h-16 px-5 sm:px-8 flex items-center justify-center border border-border bg-base hover:border-gold hover:bg-elevated/80 hover:shadow-[0_0_25px_rgba(197,168,128,0.16)] transition-all duration-300 shrink-0 rounded-[2px] group"
               >
-                <span className="font-serif text-sm tracking-wider uppercase text-muted group-hover:text-gold transition-colors duration-200">
+                <span className="font-serif text-xs sm:text-sm tracking-wider uppercase text-muted group-hover:text-gold transition-colors duration-200">
                   {p.name}
                 </span>
               </div>

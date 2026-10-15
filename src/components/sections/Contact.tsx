@@ -29,49 +29,49 @@ export function Contact({ onOpenApply }: ContactProps) {
           description={t("description")}
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
           {/* Direct Channels Column */}
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             {/* Phone Card */}
-            <div className="border border-border p-6 bg-elevated/40 rounded-[2px] flex flex-col justify-between">
+            <div className="border border-border p-4.5 sm:p-6 bg-elevated/40 rounded-[2px] flex flex-col justify-between">
               <div>
-                <span className="text-[11px] font-sans uppercase tracking-[0.2em] text-muted block mb-2">
+                <span className="text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.2em] text-muted block mb-2">
                   {t("phoneLabel")}
                 </span>
                 <a
                   href="tel:+998555036100"
-                  className="font-serif text-2xl text-white hover:text-gold transition-colors block"
+                  className="font-serif text-lg xs:text-xl sm:text-2xl text-white hover:text-gold transition-colors block break-words"
                 >
                   +998 55 503 61 00
                 </a>
               </div>
-              <span className="text-xs text-muted font-light mt-4 block">
+              <span className="text-xs text-muted font-light mt-3 sm:mt-4 block">
                 {t("hoursValue")}
               </span>
             </div>
 
             {/* WhatsApp Card */}
-            <div className="border border-border p-6 bg-elevated/40 rounded-[2px] flex flex-col justify-between">
+            <div className="border border-border p-4.5 sm:p-6 bg-elevated/40 rounded-[2px] flex flex-col justify-between">
               <div>
-                <span className="text-[11px] font-sans uppercase tracking-[0.2em] text-muted block mb-2">
+                <span className="text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.2em] text-muted block mb-2">
                   {t("whatsappLabel")}
                 </span>
                 <a
                   href="https://wa.me/998909696624"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-serif text-2xl text-white hover:text-gold transition-colors block"
+                  className="font-serif text-lg xs:text-xl sm:text-2xl text-white hover:text-gold transition-colors block break-words"
                 >
                   +998 90 969 66 24
                 </a>
               </div>
-              <span className="text-xs text-muted font-light mt-4 block">
+              <span className="text-xs text-muted font-light mt-3 sm:mt-4 block">
                 WhatsApp orqali tezkor muloqot
               </span>
             </div>
 
             {/* Address Card */}
-            <div className="border border-border p-6 bg-elevated/40 rounded-[2px] sm:col-span-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="border border-border p-4.5 sm:p-6 bg-elevated/40 rounded-[2px] sm:col-span-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <span className="text-[11px] font-sans uppercase tracking-[0.2em] text-muted block mb-1">
                   {t("addressLabel")}
@@ -125,8 +125,8 @@ export function Contact({ onOpenApply }: ContactProps) {
           </div>
 
           {/* Consultation Direct Trigger Card */}
-          <div className="lg:col-span-5 border border-gold/40 p-8 sm:p-10 bg-elevated/60 flex flex-col justify-between rounded-[2px]">
-            <div className="space-y-4">
+          <div className="lg:col-span-5 border border-gold/40 p-5 sm:p-8 lg:p-10 bg-elevated/60 flex flex-col justify-between rounded-[2px]">
+            <div className="space-y-3 sm:space-y-4">
               <span className="text-[11px] font-sans uppercase tracking-[0.25em] text-gold font-medium block">
                 USTOZGA SHOGIRD TUSHISH
               </span>

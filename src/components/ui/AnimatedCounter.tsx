@@ -24,10 +24,10 @@ export function AnimatedCounter({
   const suffix = value.includes("+") ? "+" : value.includes("%") ? "%" : "";
   const prefix = value.startsWith("$") ? "$" : "";
 
-  // Helper to format number matching original formatting (space separated thousands)
+  // Helper to format number matching original formatting (non-breaking space separated thousands)
   const formatNumber = useCallback(
     (num: number) => {
-      const formatted = num.toLocaleString("uz-UZ").replace(/,/g, " ");
+      const formatted = num.toLocaleString("uz-UZ").replace(/,/g, "\u00A0");
       return `${prefix}${formatted}${suffix}`;
     },
     [prefix, suffix]
@@ -62,7 +62,7 @@ export function AnimatedCounter({
       if (progress < 1) {
         frameRef.current = requestAnimationFrame(animate);
       } else {
-        setDisplayValue(value); // Ensure exact final value matches translation
+        setDisplayValue(value.replace(/\s+/g, "\u00A0")); // Ensure exact final value matches translation with non-breaking space
       }
     };
 
@@ -78,8 +78,8 @@ export function AnimatedCounter({
 
   // If server-side rendering or before mount, return fallback to prevent layout shift
   if (!mounted) {
-    return <span className={className}>{value}</span>;
+    return <span className={`inline-block whitespace-nowrap ${className}`}>{value.replace(/\s+/g, "\u00A0")}</span>;
   }
 
-  return <span className={className}>{displayValue}</span>;
+  return <span className={`inline-block whitespace-nowrap ${className}`}>{displayValue}</span>;
 }

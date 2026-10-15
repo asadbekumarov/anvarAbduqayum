@@ -87,7 +87,7 @@ export function VideoStrip({
       <div
         ref={scrollRef}
         onScroll={checkScroll}
-        className="flex gap-6 overflow-x-auto pb-4 scrollbar-none snap-x snap-mandatory"
+        className="flex gap-4 sm:gap-6 overflow-x-auto pb-4 scrollbar-none snap-x snap-mandatory -mx-4 px-4 sm:mx-0 sm:px-0"
         tabIndex={0}
         aria-label="Videolar ro'yxati"
       >
@@ -95,7 +95,7 @@ export function VideoStrip({
           <article
             key={vid.id === "REPLACE_ME" ? `vid-${idx}` : vid.id}
             onClick={() => onSelectVideo(vid)}
-            className="group flex-none w-[280px] sm:w-[340px] border border-border bg-elevated/40 p-4 flex flex-col justify-between cursor-pointer hover:border-gold/60 transition-all duration-200 snap-start rounded-[2px]"
+            className="group flex-none w-[250px] xs:w-[280px] sm:w-[340px] border border-border bg-elevated/40 p-3.5 sm:p-4 flex flex-col justify-between cursor-pointer hover:border-gold/60 transition-all duration-200 snap-start rounded-[2px]"
           >
             {/* Thumbnail Box */}
             <div className="relative aspect-video w-full bg-base border border-border-subtle overflow-hidden mb-4">

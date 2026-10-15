@@ -65,7 +65,7 @@ export function Modal({
       <div
         ref={dialogRef}
         className={cn(
-          "relative z-10 w-full max-w-lg bg-[#111111]/95 backdrop-blur-2xl border border-border/80 shadow-[0_25px_70px_rgba(0,0,0,0.85),0_0_50px_rgba(197,168,128,0.06)] p-6 sm:p-8 animate-in zoom-in-95 fade-in duration-200 rounded-2xl overflow-hidden",
+          "relative z-10 w-full max-w-lg max-h-[92dvh] overflow-y-auto bg-[#111111]/95 backdrop-blur-2xl border border-border/80 shadow-[0_25px_70px_rgba(0,0,0,0.85),0_0_50px_rgba(197,168,128,0.06)] p-5 sm:p-8 animate-in zoom-in-95 fade-in duration-200 rounded-2xl",
           className
         )}
       >

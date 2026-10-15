@@ -26,7 +26,7 @@ export function Diplomas() {
           description={t("description")}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
           {diplomas.map((doc, idx) => (
             <article
               key={doc.id}
@@ -39,7 +39,7 @@ export function Diplomas() {
                   alt: doc.alt,
                 })
               }
-              className="group border border-border bg-elevated/40 p-6 flex flex-col justify-between cursor-pointer hover:border-gold/60 transition-all duration-300 rounded-[2px] h-full hover:shadow-[0_4px_24px_rgba(197,168,128,0.1)]"
+              className="group border border-border bg-elevated/40 p-4 sm:p-6 flex flex-col justify-between cursor-pointer hover:border-gold/60 transition-all duration-300 rounded-[2px] h-full hover:shadow-[0_4px_24px_rgba(197,168,128,0.1)]"
             >
               {/* Document Thumbnail Container - Portrait Aspect Ratio to prevent cropping */}
               <div className="relative aspect-[1/1.44] w-full border border-border/80 bg-[#0F0F0F] rounded-[4px] overflow-hidden p-2 sm:p-2.5 mb-6 group-hover:border-gold/50 transition-colors">

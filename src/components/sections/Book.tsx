@@ -102,14 +102,14 @@ export function Book({ onOpenApply }: BookProps) {
           <div className="lg:col-span-5 flex flex-col items-center">
             
             {/* 3D Book Stage */}
-            <div className="relative w-full max-w-[340px] sm:max-w-[400px] h-[460px] sm:h-[500px] flex items-center justify-center select-none">
+            <div className="relative w-full max-w-[320px] sm:max-w-[400px] h-[400px] xs:h-[450px] sm:h-[500px] flex items-center justify-center select-none">
               <div className="relative w-full h-full flex items-center justify-center perspective-1200">
                 {/* Ground Drop Shadow */}
                 <div
                   style={{
                     transform: "rotateX(75deg) translateZ(-40px)",
                   }}
-                  className="absolute bottom-6 w-[260px] sm:w-[300px] h-[70px] bg-black/90 blur-xl rounded-full pointer-events-none z-0"
+                  className="absolute bottom-6 w-[230px] sm:w-[300px] h-[60px] sm:h-[70px] bg-black/90 blur-xl rounded-full pointer-events-none z-0"
                   aria-hidden="true"
                 />
 
@@ -125,7 +125,7 @@ export function Book({ onOpenApply }: BookProps) {
                     transform: "rotateX(8deg) rotateY(-16deg)",
                     transformStyle: "preserve-3d",
                   }}
-                  className="relative w-[230px] sm:w-[260px] h-[340px] sm:h-[390px] preserve-3d transition-transform duration-500 hover:rotate-y-[-8deg] hover:scale-105"
+                  className="relative w-[210px] xs:w-[230px] sm:w-[260px] h-[310px] xs:h-[340px] sm:h-[390px] preserve-3d transition-transform duration-500 hover:rotate-y-[-8deg] hover:scale-105"
                 >
                   {/* 1. FRONT COVER */}
                   <div
@@ -221,7 +221,7 @@ export function Book({ onOpenApply }: BookProps) {
             </div>
 
             {/* Glassmorphic Specs Strip */}
-            <div className="w-full max-w-sm mt-4 p-3.5 border border-border/80 bg-elevated/60 backdrop-blur-sm rounded-lg grid grid-cols-2 gap-3 text-xs font-sans">
+            <div className="w-full max-w-sm mt-4 p-3 sm:p-3.5 border border-border/80 bg-elevated/60 backdrop-blur-sm rounded-lg grid grid-cols-1 xs:grid-cols-2 gap-2 sm:gap-3 text-xs font-sans">
               {specs.map((item, i) => (
                 <div key={i} className="flex items-center gap-2 text-neutral-300">
                   {item.icon}
@@ -234,15 +234,15 @@ export function Book({ onOpenApply }: BookProps) {
           {/* ========================================================= */}
           {/* RIGHT: DETAILS, VISIBLE CARDS & ACTION */}
           {/* ========================================================= */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-5 sm:space-y-6">
             
             {/* Header */}
             <div>
-              <div className="flex flex-wrap items-center gap-3 mb-3">
+              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 mb-2.5 sm:mb-3">
                 <span className="font-serif text-gold text-sm tracking-widest font-semibold">
                   /09
                 </span>
-                <span className="text-[11px] font-sans uppercase tracking-[0.2em] text-neutral-400 font-medium">
+                <span className="text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.2em] text-neutral-400 font-medium">
                   {t("kicker")}
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-wider uppercase bg-gold/15 text-gold border border-gold/30">
@@ -250,11 +250,11 @@ export function Book({ onOpenApply }: BookProps) {
                 </span>
               </div>
 
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight text-white leading-[1.15]">
+              <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl font-normal tracking-tight text-white leading-[1.18] sm:leading-[1.15]">
                 {t("title")}
               </h2>
 
-              <p className="mt-4 text-base sm:text-lg text-neutral-300 font-normal leading-relaxed">
+              <p className="mt-3 sm:mt-4 text-sm sm:text-lg text-neutral-300 font-normal leading-relaxed">
                 {t("description")}
               </p>
             </div>

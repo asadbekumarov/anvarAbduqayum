@@ -85,22 +85,22 @@ export function Hero({ onOpenApply }: HeroProps) {
     <section
       id="hero"
       aria-label="Bosh sahifa"
-      className="relative min-h-[calc(100vh-5rem)] flex items-center border-b border-border py-16 sm:py-20 lg:py-24 overflow-hidden"
+      className="relative min-h-[calc(100dvh-5rem)] lg:min-h-[calc(100vh-5rem)] flex items-center border-b border-border py-12 sm:py-20 lg:py-24 overflow-hidden"
     >
       {/* Background Subtle Luxury Radial Ambient */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(197,168,128,0.06)_0%,transparent_70%)] pointer-events-none blur-3xl"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[600px] lg:w-[800px] h-[320px] sm:h-[500px] lg:h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(197,168,128,0.06)_0%,transparent_70%)] pointer-events-none blur-3xl"
         aria-hidden="true"
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 lg:gap-8 items-center">
           {/* Text Content */}
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="show"
-            className="lg:col-span-7 space-y-8"
+            className="lg:col-span-7 space-y-6 sm:space-y-8"
           >
 
 
@@ -109,7 +109,7 @@ export function Hero({ onOpenApply }: HeroProps) {
                 variant="neutral"
                 appearance="outline"
                 size="sm"
-                className="border-gold/30 text-gold bg-gold/5 uppercase tracking-[0.2em] text-[11px] font-semibold py-1 px-3 inline-flex items-center gap-2"
+                className="border-gold/30 text-gold bg-gold/5 uppercase tracking-[0.2em] text-[10px] sm:text-[11px] font-semibold py-1 px-3 inline-flex items-center gap-2"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse shrink-0" />
                 {t("kicker")}
@@ -118,26 +118,27 @@ export function Hero({ onOpenApply }: HeroProps) {
 
             <motion.h1
               variants={itemVariants}
-              className="font-serif text-4xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-white leading-[1.08] max-w-3xl"
+              className="font-serif text-3xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-white leading-[1.12] sm:leading-[1.08] max-w-3xl"
             >
               {t("title")}
             </motion.h1>
 
             <motion.p
               variants={itemVariants}
-              className="text-base sm:text-lg lg:text-xl text-muted font-light leading-relaxed max-w-2xl"
+              className="text-sm sm:text-lg lg:text-xl text-muted font-light leading-relaxed max-w-2xl"
             >
               {t("description")}
             </motion.p>
 
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4"
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-2 sm:pt-4"
             >
               <Button
                 variant="primary"
                 size="lg"
                 onClick={handleApply}
+                className="w-full sm:w-auto text-center justify-center"
               >
                 {t("ctaPrimary")}
               </Button>
@@ -145,6 +146,7 @@ export function Hero({ onOpenApply }: HeroProps) {
                 variant="outline"
                 size="lg"
                 href="#xizmatlar"
+                className="w-full sm:w-auto text-center justify-center"
               >
                 {t("ctaSecondary")}
               </Button>
@@ -153,29 +155,29 @@ export function Hero({ onOpenApply }: HeroProps) {
             {/* Key Metrics Strip */}
             <motion.div
               variants={itemVariants}
-              className="pt-8 sm:pt-10 border-t border-border-subtle grid grid-cols-3 divide-x divide-border-subtle max-w-2xl"
+              className="pt-6 sm:pt-10 border-t border-border-subtle grid grid-cols-3 divide-x divide-border-subtle max-w-2xl"
             >
-              <div className="pr-2 sm:pr-6">
-                <span className="gold-gradient-text font-serif text-2xl sm:text-4xl lg:text-5xl font-bold block leading-none">
+              <div className="pr-1.5 sm:pr-6 min-w-0">
+                <span className="gold-gradient-text font-serif text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold block leading-none whitespace-nowrap">
                   <AnimatedCounter value={t("stats.stat1Value")} delay={650} duration={1500} />
                 </span>
-                <span className="text-[10px] sm:text-xs text-muted uppercase tracking-normal sm:tracking-wider block mt-1.5 font-light leading-tight sm:leading-normal">
+                <span className="text-[9px] sm:text-xs text-muted uppercase tracking-normal sm:tracking-wider block mt-1 sm:mt-1.5 font-light leading-tight sm:leading-normal">
                   {t("stats.stat1Label")}
                 </span>
               </div>
-              <div className="px-2 sm:px-6">
-                <span className="gold-gradient-text font-serif text-2xl sm:text-4xl lg:text-5xl font-bold block leading-none">
+              <div className="px-1.5 sm:px-6 min-w-0">
+                <span className="gold-gradient-text font-serif text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold block leading-none whitespace-nowrap">
                   <AnimatedCounter value={t("stats.stat2Value")} delay={800} duration={1700} />
                 </span>
-                <span className="text-[10px] sm:text-xs text-muted uppercase tracking-normal sm:tracking-wider block mt-1.5 font-light leading-tight sm:leading-normal">
+                <span className="text-[9px] sm:text-xs text-muted uppercase tracking-normal sm:tracking-wider block mt-1 sm:mt-1.5 font-light leading-tight sm:leading-normal">
                   {t("stats.stat2Label")}
                 </span>
               </div>
-              <div className="pl-2 sm:px-6">
-                <span className="gold-gradient-text font-serif text-2xl sm:text-4xl lg:text-5xl font-bold block leading-none">
+              <div className="pl-1.5 sm:px-6 min-w-0">
+                <span className="gold-gradient-text font-serif text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold block leading-none whitespace-nowrap">
                   <AnimatedCounter value={t("stats.stat3Value")} delay={950} duration={1900} />
                 </span>
-                <span className="text-[10px] sm:text-xs text-muted uppercase tracking-normal sm:tracking-wider block mt-1.5 font-light leading-tight sm:leading-normal">
+                <span className="text-[9px] sm:text-xs text-muted uppercase tracking-normal sm:tracking-wider block mt-1 sm:mt-1.5 font-light leading-tight sm:leading-normal">
                   {t("stats.stat3Label")}
                 </span>
               </div>
@@ -193,30 +195,24 @@ export function Hero({ onOpenApply }: HeroProps) {
               ref={cardRef}
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
-              className="relative w-full max-w-md perspective-1200 flex items-center justify-center"
+              className="relative w-full max-w-sm sm:max-w-md perspective-1200 flex items-center justify-center"
             >
               {/* 3D Architectural Orbital Gold Wireframe Aura */}
               <div
-                className="absolute inset-0 -m-8 sm:-m-12 flex items-center justify-center pointer-events-none preserve-3d"
+                className="absolute inset-0 -m-6 sm:-m-12 flex items-center justify-center pointer-events-none preserve-3d"
                 aria-hidden="true"
               >
                 {/* Ambient Soft Gold Radiance */}
-                <div className="absolute w-[380px] sm:w-[480px] h-[380px] sm:h-[480px] rounded-full bg-[radial-gradient(circle,rgba(197,168,128,0.16)_0%,rgba(197,168,128,0.04)_45%,transparent_70%)] blur-2xl" />
+                <div className="absolute w-[260px] sm:w-[380px] lg:w-[480px] h-[260px] sm:h-[380px] lg:h-[480px] rounded-full bg-[radial-gradient(circle,rgba(197,168,128,0.16)_0%,rgba(197,168,128,0.04)_45%,transparent_70%)] blur-2xl" />
 
                 {/* Primary 3D Tilted Rotating Gold Ring */}
-                <div className="absolute w-[360px] sm:w-[460px] h-[360px] sm:h-[460px] rounded-full border border-gold/25 border-dashed animate-orbit-1" />
+                <div className="absolute w-[250px] sm:w-[360px] lg:w-[460px] h-[250px] sm:h-[360px] lg:h-[460px] rounded-full border border-gold/25 border-dashed animate-orbit-1" />
 
                 {/* Secondary Counter-Rotating Architectural Ring */}
-                <div className="absolute w-[310px] sm:w-[400px] h-[310px] sm:h-[400px] rounded-full border border-gold/20 animate-orbit-2" />
+                <div className="absolute w-[220px] sm:w-[310px] lg:w-[400px] h-[220px] sm:h-[310px] lg:h-[400px] rounded-full border border-gold/20 animate-orbit-2" />
 
                 {/* Outer Fine Accent Ring */}
-                <div className="absolute w-[400px] sm:w-[510px] h-[400px] sm:h-[510px] rounded-full border border-border/40" />
-
-                {/* Precision Corner Crosshair Ticks */}
-                <span className="absolute -top-3 -left-3 text-gold/40 text-xs font-mono select-none">+</span>
-                <span className="absolute -top-3 -right-3 text-gold/40 text-xs font-mono select-none">+</span>
-                <span className="absolute -bottom-3 -left-3 text-gold/40 text-xs font-mono select-none">+</span>
-                <span className="absolute -bottom-3 -right-3 text-gold/40 text-xs font-mono select-none">+</span>
+                <div className="absolute w-[280px] sm:w-[400px] lg:w-[510px] h-[280px] sm:h-[400px] lg:h-[510px] rounded-full border border-border/40" />
               </div>
 
               {/* Portrait Frame */}

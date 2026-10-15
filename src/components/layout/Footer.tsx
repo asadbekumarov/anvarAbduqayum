@@ -23,7 +23,7 @@ export function Footer() {
     <footer className="border-t border-border bg-base text-white pt-16 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-border-subtle">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 sm:gap-10 md:gap-12 pb-10 sm:pb-16 border-b border-border-subtle">
           {/* Brand Info */}
           <div className="md:col-span-5 flex flex-col space-y-4">
             <span className="font-serif text-2xl tracking-wider font-semibold text-white">
