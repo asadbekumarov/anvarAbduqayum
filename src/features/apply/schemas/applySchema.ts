@@ -22,6 +22,12 @@ export const applySchema = z
       .max(120)
       .optional()
       .or(z.literal("")),
+    companySize: z
+      .string()
+      .trim()
+      .max(60)
+      .optional()
+      .or(z.literal("")),
     address: z
       .string()
       .trim()
@@ -35,6 +41,8 @@ export const applySchema = z
       .optional()
       .or(z.literal("")),
     service: z.string().trim().max(120).optional(),
+    locale: z.string().trim().max(10).optional(),
+    pageUrl: z.string().trim().max(300).optional(),
     honeypot: z.string().optional(),
   })
   .refine(
@@ -49,7 +57,10 @@ export const applySchema = z
       if (isBook) {
         return Boolean(data.address && data.address.trim().length >= 3);
       }
-      return Boolean(data.business && data.business.trim().length >= 2);
+      return (
+        Boolean(data.business && data.business.trim().length >= 2) ||
+        Boolean(data.companySize && data.companySize.trim().length >= 1)
+      );
     },
     (data) => {
       const isBook =

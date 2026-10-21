@@ -2,9 +2,11 @@
 
 import React from "react";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
+import { Marquee } from "@/components/ui/Marquee";
+import { siteMedia } from "@/config/siteMedia";
 
 interface HeroProps {
   onOpenModal?: () => void;
@@ -15,11 +17,14 @@ export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
   const { openApply } = useApplyModal();
   const handleOpenModal = onOpenModal || onOpenApply || openApply;
   const t = useTranslations("hero");
+  const locale = useLocale();
+  const isRu = locale === "ru";
+  const isEn = locale === "en";
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen bg-[#0A0A0A] text-[#F5F5F0] pt-28 pb-16 flex flex-col justify-between overflow-hidden border-b border-white/[0.07]"
+      className="scroll-mt-20 relative min-h-screen bg-[#0A0A0A] text-[#F5F5F0] pt-28 pb-16 flex flex-col justify-between overflow-hidden border-b border-white/[0.07]"
     >
       {/* Deep midnight navy atmospheric ambient glow */}
       <div
@@ -43,13 +48,15 @@ export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
           </div>
 
           {/* Bespoke Editorial H1 (Sans + Serif Italic mix with Warm Champagne) */}
-          <h1 className="text-4xl sm:text-6xl lg:text-[62px] font-light tracking-[-0.03em] leading-[1.08] text-white">
-            {t("titlePrefix")}
-            <span className="font-serif italic font-normal text-champagne">
-              {t("titleHighlight")}
-            </span>
-            {t("titleSuffix")}
-          </h1>
+          <div className="overflow-hidden">
+            <h1 className="text-4xl sm:text-6xl lg:text-[62px] font-light tracking-[-0.03em] leading-[1.08] text-white animate-hero-mask-reveal will-change-transform">
+              {t("titlePrefix")}
+              <span className="font-serif italic font-normal text-champagne">
+                {t("titleHighlight")}
+              </span>
+              {t("titleSuffix")}
+            </h1>
+          </div>
 
           {/* Executive Subheadline with Platinum Tint */}
           <p className="text-base sm:text-lg text-platinum font-light leading-relaxed max-w-xl">
@@ -61,10 +68,14 @@ export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
             <button
               type="button"
               onClick={handleOpenModal}
-              className="group inline-flex items-center gap-4 bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] px-8 py-4 text-sm font-medium tracking-wide rounded-none transition-all duration-300 cursor-pointer"
+              className="group relative overflow-hidden inline-flex items-center gap-4 bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] px-8 py-4 text-sm font-medium tracking-wide rounded-none transition-all duration-300 cursor-pointer"
             >
-              <span>{t("ctaPrimary")}</span>
-              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+              {/* Liquid Sheen Overlay */}
+              <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
+              <span className="relative z-10">{t("ctaPrimary")}</span>
+              <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1.5">
+                →
+              </span>
             </button>
 
             <a
@@ -156,6 +167,50 @@ export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
               <AnimatedCounter value="8" />
               <span className="text-white/40 font-serif italic ml-0.5">+</span>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Embedded Compact Partner Logos Credibility Marquee Strip */}
+      <div
+        id="hamkorlar"
+        className="w-full border-t border-white/[0.07] mt-8 py-4 sm:py-5 bg-[#0B132B]/15 relative"
+      >
+        <div className="max-w-[1360px] mx-auto px-6 md:px-12 flex flex-col md:flex-row md:items-center gap-3 sm:gap-6">
+          <div className="flex items-center gap-2.5 shrink-0">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#C5A880]" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-platinum whitespace-nowrap">
+              {isRu
+                ? "27+ БРЕНДОВ, ДОВЕРИВШИХ НАМ СИСТЕМАТИЗАЦИЮ"
+                : isEn
+                ? "27+ BRANDS THAT TRUSTED OUR EXPERTISE"
+                : "ISHONCH BILDIRGAN 27+ BRENDLAR"}
+            </span>
+          </div>
+
+          <div className="flex-1 overflow-hidden relative [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
+            <Marquee speed={32} pauseOnHover innerClassName="gap-3 sm:gap-4 pr-3 sm:pr-4">
+              {siteMedia.partners.map((p, idx) => (
+                <div
+                  key={`${p.id}-${idx}`}
+                  className="flex items-center gap-3 px-3 py-1.5 bg-[#0F172A]/40 hover:bg-[#0B132B]/60 border border-white/[0.08] hover:border-platinum/30 transition-all rounded-none shrink-0 group cursor-default"
+                >
+                  <div className="w-12 h-8 sm:w-14 sm:h-9 bg-white flex items-center justify-center p-1 rounded-none shrink-0 overflow-hidden shadow-xs">
+                    <Image
+                      src={p.logo}
+                      alt={p.name}
+                      width={80}
+                      height={48}
+                      loading="lazy"
+                      className="max-h-full max-w-full object-contain scale-[1.18] group-hover:scale-[1.28] transition-transform duration-300"
+                    />
+                  </div>
+                  <span className="text-xs sm:text-sm font-normal text-white tracking-tight whitespace-nowrap pr-1">
+                    {p.name}
+                  </span>
+                </div>
+              ))}
+            </Marquee>
           </div>
         </div>
       </div>

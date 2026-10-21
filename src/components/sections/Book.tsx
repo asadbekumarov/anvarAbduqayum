@@ -5,6 +5,8 @@ import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
 import { siteMedia } from "@/config/siteMedia";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
+import { MaskedHeading } from "@/components/ui/MaskedHeading";
+import { KenBurnsImage } from "@/components/ui/KenBurnsImage";
 
 interface BookProps {
   onOpenApply?: (serviceName?: string) => void;
@@ -64,15 +66,17 @@ export function Book({ onOpenApply }: BookProps) {
             />
 
             {/* Book Cover Frame */}
-            <div className="relative w-[210px] sm:w-[250px] aspect-[1/1.42] shadow-[0_25px_45px_rgba(0,0,0,0.85)] border border-white/[0.08] transition-transform duration-700 hover:scale-[1.02] z-10">
-              <Image
-                src={cover.src}
-                alt={cover.alt}
-                fill
-                sizes="(max-width: 768px) 210px, 250px"
-                className="object-cover"
-                loading="lazy"
-              />
+            <div className="relative w-[210px] sm:w-[250px] aspect-[1/1.42] shadow-[0_25px_45px_rgba(0,0,0,0.85)] border border-white/[0.08] overflow-hidden transition-transform duration-700 hover:scale-[1.02] z-10">
+              <KenBurnsImage>
+                <Image
+                  src={cover.src}
+                  alt={cover.alt}
+                  fill
+                  sizes="(max-width: 768px) 210px, 250px"
+                  className="object-cover"
+                  loading="lazy"
+                />
+              </KenBurnsImage>
             </div>
 
             {/* Bottom Pedestal Caption */}
@@ -93,13 +97,13 @@ export function Book({ onOpenApply }: BookProps) {
             </span>
           </div>
 
-          {/* H2 Heading */}
-          <h2 className="text-3xl sm:text-5xl font-light tracking-[-0.03em] leading-[1.1] text-white mt-6">
+          {/* H2 Heading with Editorial Masked Reveal */}
+          <MaskedHeading className="text-3xl sm:text-5xl font-light tracking-[-0.03em] leading-[1.1] text-white mt-6">
             {t("titlePrefix")}
             <span className="font-serif italic font-normal text-white/90">
               {t("titleHighlight")}
             </span>
-          </h2>
+          </MaskedHeading>
 
           {/* Description */}
           <p className="text-base text-neutral-300 font-light leading-relaxed mt-5 max-w-xl">
@@ -128,10 +132,12 @@ export function Book({ onOpenApply }: BookProps) {
             <button
               type="button"
               onClick={handleOrderBook}
-              className="group inline-flex items-center gap-4 bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] px-8 py-4 text-sm font-medium tracking-wide rounded-none transition-all duration-300 cursor-pointer"
+              className="group relative overflow-hidden inline-flex items-center gap-4 bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] px-8 py-4 text-sm font-medium tracking-wide rounded-none transition-all duration-300 cursor-pointer"
             >
-              <span>{t("cta")}</span>
-              <span className="transition-transform duration-300 group-hover:translate-x-1">
+              {/* Liquid Sheen */}
+              <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
+              <span className="relative z-10">{t("cta")}</span>
+              <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1.5">
                 →
               </span>
             </button>

@@ -69,6 +69,7 @@ export async function POST(req: NextRequest) {
     console.info("[Apply Lead Processed]", {
       name: validData.name,
       phone: validData.phone,
+      companySize: validData.companySize,
       business: validData.business,
       hasQuestion: Boolean(validData.question),
       clientIp,

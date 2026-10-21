@@ -56,7 +56,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {/* Subtle Gold/White Shimmer Light-Sweep Ray on Primary */}
         {variant === "primary" && (
           <span
-            className="absolute inset-0 -translate-x-[120%] group-hover:translate-x-[150%] transition-transform duration-1000 ease-out bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none z-10"
+            className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full z-10"
             aria-hidden="true"
           />
         )}

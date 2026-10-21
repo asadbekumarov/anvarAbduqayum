@@ -16,8 +16,13 @@
   "nav": {
     "home": "Bosh sahifa",
     "services": "Xizmatlar",
+    "methodology": "Metodologiya",
+    "stages": "Metodologiya",
+    "expert": "Ekspert",
+    "media": "Keyslar va Media",
+    "contact": "Aloqa",
+    "book": "Kitob",
     "events": "Tadbirlarimiz",
-    "stages": "Bosqichlar",
     "tests": "Testlar"
   },
   "hero": {
@@ -384,7 +389,23 @@
     "submitButton": "Ariza yuborish",
     "submitting": "Yuborilmoqda...",
     "successMessage": "Yuborildi! Ma'lumotlaringiz qabul qilindi. Tez orada siz bilan bog'lanamiz!",
-    "errorMessage": "Xatolik yuz berdi. Iltimos, ma'lumotlarni tekshirib qaytadan urinib ko'ring."
+    "errorMessage": "Xatolik yuz berdi. Iltimos, ma'lumotlarni tekshirib qaytadan urinib ko'ring.",
+    "companyScaleLabel": "KOMPANIYA KO'LAMI (XODIMLAR SONI)",
+    "scale1Sub": "Kichik biznes",
+    "scale2Sub": "O'rta biznes",
+    "scale3Sub": "Yirik korporatsiya",
+    "scale4Sub": "Yangi loyiha",
+    "thankYouBadge": "● ARIZA RO'YXATGA OLINDI · #VIP-USTUVORLIK",
+    "thankYouTitle": "Murojaatingiz qabul qilindi.",
+    "thankYouBody": "Sizning ma'lumotlaringiz Ilhom Begimqulovning strategik bo'limiga yuborildi. Ekspertimiz 15 daqiqa ichida (ish vaqtida) siz bilan bog'lanib, 20 daqiqalik diagnostika vaqtini belgilaydi.",
+    "timelineStep1Prefix": "01 / HOZIR:",
+    "timelineStep1Text": "Arizangiz mas'ul menejerga biriktirildi",
+    "timelineStep2Prefix": "02 / 15 DAQIQA:",
+    "timelineStep2Text": "Qisqa qo'ng'iroq va biznesingizni dastlabki o'rganish",
+    "timelineStep3Prefix": "03 / UCHRASHUV:",
+    "timelineStep3Text": "Shaxsiy strategik diagnostika sessiyasi",
+    "actionTelegram": "Telegram kanalga o'tish",
+    "actionWebinars": "Bepul master-klasslarni ko'rish"
   },
   "footer": {
     "brand": "ILHOM BEGIMQULOV",

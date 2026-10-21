@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { applySchema, type ApplyFormData } from "../schemas/applySchema";
 
 interface ApplyFormProps {
@@ -12,14 +12,18 @@ interface ApplyFormProps {
 
 export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps) {
   const t = useTranslations("applyModal");
+  const locale = useLocale();
 
   const [formData, setFormData] = useState<ApplyFormData>({
     name: "",
     phone: "+998",
     business: "",
+    companySize: "10–50",
     address: "",
     question: "",
     service: selectedService || undefined,
+    locale,
+    pageUrl: typeof window !== "undefined" ? window.location.href : undefined,
     honeypot: "",
   });
 
@@ -28,6 +32,16 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
       setFormData((prev) => ({ ...prev, service: selectedService }));
     }
   }, [selectedService]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setFormData((prev) => ({
+        ...prev,
+        locale,
+        pageUrl: window.location.href,
+      }));
+    }
+  }, [locale]);
 
   const [hasBusiness, setHasBusiness] = useState<boolean | null>(null);
   const [businessDetail, setBusinessDetail] = useState("");
@@ -227,6 +241,38 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
         </>
       ) : (
         <>
+          {/* B2B Qualification: Kompaniya ko'lami */}
+          <div>
+            <label className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#94A3B8] block mb-2">
+              {t("companyScaleLabel")}
+            </label>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
+              {[
+                { value: "1–10", sub: t("scale1Sub") },
+                { value: "10–50", sub: t("scale2Sub") },
+                { value: "50–200+", sub: t("scale3Sub") },
+                { value: "Startap", sub: t("scale4Sub") },
+              ].map((opt) => {
+                const isSelected = (formData.companySize || "10–50") === opt.value;
+                return (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => handleChange("companySize", opt.value)}
+                    className={`py-2.5 px-2 font-mono text-xs transition-all rounded-none text-center cursor-pointer flex flex-col items-center justify-center gap-0.5 border ${
+                      isSelected
+                        ? "bg-[#0B132B]/80 border-[#C5A880] text-[#E2C79D] shadow-[0_0_15px_rgba(197,168,128,0.15)]"
+                        : "bg-[#111111] border-white/[0.1] text-neutral-400 hover:text-white hover:border-white/25"
+                    }`}
+                  >
+                    <span className="font-semibold text-xs tracking-wider">{opt.value}</span>
+                    <span className="text-[9px] opacity-70 tracking-normal font-sans">{opt.sub}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           {/* Biznesingiz bormi? (Architectural Joined 2-button toggle) */}
           <div>
             <label htmlFor="apply-business" className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 block mb-2">
@@ -306,14 +352,16 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] py-4 text-xs uppercase tracking-[0.2em] font-medium transition-colors rounded-none flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+          className="group relative overflow-hidden w-full bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] py-4 text-xs uppercase tracking-[0.2em] font-medium transition-colors rounded-none flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
         >
+          {/* Liquid Sheen */}
+          <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
           {isSubmitting ? (
-            <span>{t("submitting")}</span>
+            <span className="relative z-10">{t("submitting")}</span>
           ) : (
             <>
-              <span>{isBook ? t("bookSubmit") : t("submit")}</span>
-              <span>→</span>
+              <span className="relative z-10">{isBook ? t("bookSubmit") : t("submit")}</span>
+              <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1.5">→</span>
             </>
           )}
         </button>

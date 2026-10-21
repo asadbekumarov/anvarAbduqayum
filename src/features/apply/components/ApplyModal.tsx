@@ -68,25 +68,65 @@ export function ApplyModal({
       )}
 
       {isSuccess ? (
-        <div className="text-center py-8 space-y-5 animate-in fade-in duration-300">
-          <div className="w-14 h-14 mx-auto border border-white/40 flex items-center justify-center text-white font-mono text-xl">
-            ✓
+        <div className="py-2 text-left animate-in fade-in duration-300">
+          {/* Top Status Indicator */}
+          <div className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-[#C5A880] mb-4">
+            <span className="w-2 h-2 rounded-full bg-[#C5A880] animate-pulse" />
+            <span>{t("thankYouBadge")}</span>
           </div>
-          <h4 className="font-serif italic text-2xl text-white">
-            {isBook ? t("bookSuccessMessage") : t("successMessage")}
+
+          {/* Headline */}
+          <h4 className="font-serif italic text-2xl sm:text-3xl text-white mb-3">
+            {isBook ? t("bookSuccessMessage") : t("thankYouTitle")}
           </h4>
-          <p className="text-xs sm:text-sm text-neutral-400 font-light max-w-sm mx-auto leading-relaxed">
+
+          {/* Body Copy */}
+          <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed mb-6">
             {isBook
               ? "Tez orada operatorimiz siz bilan bog'lanadi va yetkazib berish tafsilotlarini kelishib oladi."
-              : "Tez orada mutaxassisimiz siz bilan bog'lanadi va barcha savollaringizga batafsil javob beradi."}
+              : t("thankYouBody")}
           </p>
-          <div className="pt-3">
+
+          {/* What Happens Next (3-Step Mini Timeline inside Thank You screen) */}
+          <div className="border-t border-b border-white/[0.08] py-4 mb-6 space-y-3 font-mono text-xs">
+            <div className="flex items-start gap-2">
+              <span className="text-[#C5A880] shrink-0 font-bold">{t("timelineStep1Prefix")}</span>
+              <span className="text-neutral-300">{t("timelineStep1Text")}</span>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="text-[#94A3B8] shrink-0 font-bold">{t("timelineStep2Prefix")}</span>
+              <span className="text-neutral-400">{t("timelineStep2Text")}</span>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="text-[#94A3B8] shrink-0 font-bold">{t("timelineStep3Prefix")}</span>
+              <span className="text-neutral-400">{t("timelineStep3Text")}</span>
+            </div>
+          </div>
+
+          {/* Value-Add Action (Replaces PDF Lead Magnet) */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+            <a
+              href="https://t.me/ilhombegimqulov"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center justify-center gap-2 px-5 py-3 border border-[#C5A880]/60 hover:border-[#C5A880] bg-[#C5A880]/10 hover:bg-[#C5A880]/20 text-[#E2C79D] hover:text-white font-mono text-xs uppercase tracking-[0.14em] transition-all rounded-none"
+            >
+              <span>{t("actionTelegram")}</span>
+              <span className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+            </a>
             <button
               type="button"
-              onClick={onClose}
-              className="px-8 py-3.5 border border-white/[0.12] hover:border-white text-xs font-mono uppercase tracking-[0.2em] text-white hover:bg-white hover:text-[#0A0A0A] transition-colors rounded-none cursor-pointer"
+              onClick={() => {
+                onClose();
+                const el = document.getElementById("natijalar");
+                if (el) {
+                  el.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
+              className="inline-flex items-center justify-center gap-2 px-5 py-3 border border-white/[0.12] hover:border-white/40 text-neutral-300 hover:text-white font-mono text-xs uppercase tracking-[0.14em] transition-all rounded-none cursor-pointer"
             >
-              Yopish
+              <span>{t("actionWebinars")}</span>
+              <span>→</span>
             </button>
           </div>
         </div>

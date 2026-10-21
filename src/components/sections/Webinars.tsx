@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
 import { YouTubeModal } from "@/components/ui/YouTubeModal";
 import { siteMedia, VideoItem } from "@/config/siteMedia";
+import { MaskedHeading } from "@/components/ui/MaskedHeading";
 
 export function Webinars() {
   const t = useTranslations("webinars");
@@ -44,12 +45,13 @@ export function Webinars() {
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-light tracking-[-0.03em] leading-[1.1] text-white mt-5">
+          {/* H2 Heading with Editorial Masked Reveal */}
+          <MaskedHeading className="text-3xl sm:text-5xl font-light tracking-[-0.03em] leading-[1.1] text-white mt-5">
             {t("titlePrefix")}
             <span className="font-serif italic font-normal text-white/90">
               {t("titleHighlight")}
             </span>
-          </h2>
+          </MaskedHeading>
         </div>
 
         {/* Right Column: Counter Badge & Custom Architectural Scroll Controls */}

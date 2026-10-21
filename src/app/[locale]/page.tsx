@@ -5,18 +5,13 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
 import { Services } from "@/components/sections/Services";
-import { EventsTour } from "@/components/sections/EventsTour";
-import { Partners } from "@/components/sections/Partners";
-import { CtaBand } from "@/components/sections/CtaBand";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 
 // Dynamic imports for heavy below-fold sections to reduce TBT
 const Stages = dynamic(() => import("@/components/sections/Stages").then((m) => m.Stages));
 const Expert = dynamic(() => import("@/components/sections/Expert").then((m) => m.Expert));
-const Testimonials = dynamic(() => import("@/components/sections/Testimonials").then((m) => m.Testimonials));
-const Book = dynamic(() => import("@/components/sections/Book").then((m) => m.Book));
-const Webinars = dynamic(() => import("@/components/sections/Webinars").then((m) => m.Webinars));
-const Diplomas = dynamic(() => import("@/components/sections/Diplomas").then((m) => m.Diplomas));
+const MediaArchive = dynamic(() => import("@/components/sections/MediaArchive").then((m) => m.MediaArchive));
+const BookCtaSplit = dynamic(() => import("@/components/sections/BookCtaSplit").then((m) => m.BookCtaSplit));
 const Contact = dynamic(() => import("@/components/sections/Contact").then((m) => m.Contact));
 
 export default async function HomePage({
@@ -32,60 +27,35 @@ export default async function HomePage({
       <Navbar />
 
       <main className="flex-1 pt-20">
-        {/* Section 01: Hero */}
+        {/* Section 01: Hero + Metrics + Partner Logos Strip */}
         <Hero />
 
-        {/* Section 02: Services (6 table-like rows) */}
+        {/* Section 02: Services Ledger (6 compact table rows + Free Diagnostics Monolith) */}
         <RevealOnScroll>
           <Services />
         </RevealOnScroll>
 
-        {/* Section 03: EventsTour (6 Latin city posters) */}
-        <RevealOnScroll>
-          <EventsTour />
-        </RevealOnScroll>
-
-        {/* Section 04: Stages (2 tabs + 6-step accordion) */}
+        {/* Section 03: Stages Methodology Blueprint (2 tabs + compact accordion) */}
         <RevealOnScroll>
           <Stages />
         </RevealOnScroll>
 
-        {/* Section 05: Partners (27 logos continuous marquee) */}
-        <RevealOnScroll>
-          <Partners />
-        </RevealOnScroll>
-
-        {/* Section 06: CTA Band (High-contrast editorial callout) */}
-        <RevealOnScroll>
-          <CtaBand />
-        </RevealOnScroll>
-
-        {/* Section 07: Expert (Biography, philosophy pillars) */}
+        {/* Section 04: Founder Monograph + Compact Diplomas Strip with Lightbox */}
         <RevealOnScroll>
           <Expert />
         </RevealOnScroll>
 
-        {/* Section 08: Testimonials (13 video cases in responsive strip) */}
+        {/* Section 05: Tabbed Media, Cases & Business Tour Hub (Testimonials + Webinars + EventsTour) */}
         <RevealOnScroll>
-          <Testimonials />
+          <MediaArchive />
         </RevealOnScroll>
 
-        {/* Section 09: Book (Biznes shpargalkasi kitobi) */}
+        {/* Section 06: Book & Strategic Diagnostic Split-Screen */}
         <RevealOnScroll>
-          <Book />
+          <BookCtaSplit />
         </RevealOnScroll>
 
-        {/* Section 10: Webinars (14 masterclass archive videos) */}
-        <RevealOnScroll>
-          <Webinars />
-        </RevealOnScroll>
-
-        {/* Section 11: Diplomas (3 credentials + Lightbox zoom) */}
-        <RevealOnScroll>
-          <Diplomas />
-        </RevealOnScroll>
-
-        {/* Section 12: Contact (Direct channels, address, and consultation trigger) */}
+        {/* Section 07: Executive Contact Channels & Quick Consultation Form */}
         <RevealOnScroll>
           <Contact />
         </RevealOnScroll>

@@ -23,11 +23,9 @@ export const siteConfig = {
 
   navLinks: [
     { href: "#xizmatlar", labelKey: "services" },
-    { href: "#tadbirlar", labelKey: "events" },
-    { href: "#bosqichlar", labelKey: "stages" },
+    { href: "#bosqichlar", labelKey: "methodology" },
     { href: "#ekspert", labelKey: "expert" },
-    { href: "#natijalar", labelKey: "testimonials" },
-    { href: "#kitob", labelKey: "book" },
-    { href: "#kontakt", labelKey: "contact" },
+    { href: "#natijalar", labelKey: "media" },
+    { href: "#aloqa", labelKey: "contact" },
   ],
 };

@@ -16,8 +16,13 @@
   "nav": {
     "home": "Home",
     "services": "Services",
+    "methodology": "Methodology",
+    "stages": "Methodology",
+    "expert": "Expert",
+    "media": "Cases & Media",
+    "contact": "Contact",
+    "book": "Book",
     "events": "Events",
-    "stages": "Stages",
     "tests": "Tests"
   },
   "hero": {
@@ -384,7 +389,23 @@
     "submitButton": "Submit Application",
     "submitting": "Submitting...",
     "successMessage": "Submitted! Your information has been received. We will contact you shortly!",
-    "errorMessage": "An error occurred. Please check your information and try again."
+    "errorMessage": "An error occurred. Please check your information and try again.",
+    "companyScaleLabel": "COMPANY SCALE (TEAM SIZE)",
+    "scale1Sub": "Small team",
+    "scale2Sub": "Medium business",
+    "scale3Sub": "Enterprise",
+    "scale4Sub": "Startup",
+    "thankYouBadge": "● APPLICATION REGISTERED · #VIP-PRIORITY",
+    "thankYouTitle": "Your application has been received.",
+    "thankYouBody": "Your details have been submitted to Ilhom Begimqulov's strategic advisory team. Our expert will contact you within 15 minutes (during business hours) to schedule your 20-minute diagnostic session.",
+    "timelineStep1Prefix": "01 / NOW:",
+    "timelineStep1Text": "Your request has been assigned to a designated manager",
+    "timelineStep2Prefix": "02 / 15 MINUTES:",
+    "timelineStep2Text": "Brief call and initial assessment of your business",
+    "timelineStep3Prefix": "03 / SESSION:",
+    "timelineStep3Text": "Personal strategic diagnostic session",
+    "actionTelegram": "Join Telegram Channel",
+    "actionWebinars": "Watch Free Masterclasses"
   },
   "footer": {
     "brand": "ILHOM BEGIMQULOV",

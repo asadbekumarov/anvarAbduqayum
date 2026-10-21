@@ -1927,3 +1927,27 @@ body {
   --font-body: var(--font-body);
   --font-numeric: var(--font-numeric);
 }
+
+/* Swiss Editorial Micro-Animations (Zero CLS / Zero TBT) */
+@keyframes heroMaskReveal {
+  0% {
+    transform: translateY(100%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-hero-mask-reveal {
+  animation: heroMaskReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-mask-reveal {
+    animation: none !important;
+    transform: none !important;
+  }
+}

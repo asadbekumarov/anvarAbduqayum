@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { MobileMenu } from "./MobileMenu";
@@ -15,85 +15,225 @@ export function Navbar({ onOpenApply }: NavbarProps) {
   const handleApply = onOpenApply || openApply;
   const t = useTranslations("nav");
   const common = useTranslations("common");
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("");
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const navItems = [
-    { href: "#hero", label: t("home") },
     { href: "#xizmatlar", label: t("services") },
-    { href: "#tadbirlarimiz", label: t("events") },
-    { href: "#bosqichlar", label: t("stages") },
+    { href: "#bosqichlar", label: t("methodology") },
+    { href: "#ekspert", label: t("expert") },
+    { href: "#natijalar", label: t("media") },
+    { href: "#aloqa", label: t("contact") },
   ];
+
+  // Smooth scroll handler with header height offset
+  const handleNavClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      e.preventDefault();
+      const targetId = href.replace("#", "");
+      const element = document.getElementById(targetId);
+
+      if (element) {
+        const headerOffset = 76;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+
+        // Set active section immediately for instantaneous UI feedback
+        setActiveSection(targetId);
+
+        // Update URL hash without forcing jump
+        if (window.history.pushState) {
+          window.history.pushState(null, "", href);
+        }
+      }
+    },
+    []
+  );
+
+  useEffect(() => {
+    const sectionIds = ["xizmatlar", "bosqichlar", "ekspert", "natijalar", "aloqa"];
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+
+          // Header shadow and compacting trigger
+          setIsScrolled(scrollY > 24);
+
+          // Calculate reading progress percentage
+          const totalHeight =
+            document.documentElement.scrollHeight - window.innerHeight;
+          const progress = totalHeight > 0 ? (scrollY / totalHeight) * 100 : 0;
+          setScrollProgress(Math.min(100, Math.max(0, progress)));
+
+          // Active Section Calculation
+          // Near bottom edge check
+          if (
+            window.innerHeight + scrollY >=
+            document.documentElement.scrollHeight - 80
+          ) {
+            setActiveSection("aloqa");
+            ticking = false;
+            return;
+          }
+
+          let current = "";
+          for (const id of sectionIds) {
+            const el = document.getElementById(id);
+            if (el) {
+              const rect = el.getBoundingClientRect();
+              if (rect.top <= 180 && rect.bottom > 120) {
+                current = id;
+                break;
+              }
+            }
+          }
+          if (current) {
+            setActiveSection(current);
+          } else if (scrollY < 120) {
+            setActiveSection("");
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 h-20 bg-[#0A0A0A]/85 backdrop-blur-md border-b border-white/[0.07] transition-all">
-        <div className="max-w-[1360px] mx-auto w-full h-full px-6 md:px-12 flex items-center justify-between">
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${
+          isScrolled
+            ? "h-16 md:h-[70px] bg-[#0A0A0A]/92 backdrop-blur-xl border-b border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.65)]"
+            : "h-20 bg-[#0A0A0A]/70 backdrop-blur-md border-b border-white/[0.05]"
+        }`}
+      >
+        <div className="max-w-[1400px] mx-auto w-full h-full px-4 sm:px-6 md:px-8 xl:px-12 flex items-center justify-between gap-3 xl:gap-6">
           {/* Brand Identity (Left) */}
-          <a
-            href="#hero"
-            className="flex items-center focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
-          >
-            <span className="text-xs font-medium tracking-[0.22em] text-white uppercase">
-              ILHOM BEGIMQULOV
-            </span>
-            <span className="h-3 w-[1px] bg-white/15 mx-3" aria-hidden="true" />
-            <span className="font-mono text-[10px] tracking-[0.18em] text-platinum uppercase">
-              B2B CONSULTING
-            </span>
-          </a>
+          <div className="shrink-0 flex items-center">
+            <a
+              href="#hero"
+              onClick={(e) => handleNavClick(e, "#hero")}
+              aria-label="Ilhom Begimqulov - Asosiy sahifa"
+              className="group flex items-center gap-2.5 sm:gap-3 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#C5A880]/60 rounded-sm py-1 pr-1 select-none"
+            >
+              {/* Minimalist Monogram Badge */}
+              <div className="w-8 h-8 rounded-sm bg-gradient-to-br from-[#1A1A1A] to-[#0D0D0D] border border-[#C5A880]/40 group-hover:border-[#E2C79D] flex items-center justify-center shrink-0 transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.4)] group-hover:shadow-[0_0_12px_rgba(197,168,128,0.25)]">
+                <span className="font-serif text-[11px] font-bold tracking-wider text-[#C5A880] group-hover:text-[#E2C79D] transition-colors">
+                  IB
+                </span>
+              </div>
 
-          {/* Navigation Links (Center) */}
-          <nav className="hidden lg:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="text-xs tracking-[0.12em] uppercase text-platinum hover:text-white transition-colors"
-              >
-                {item.label}
-              </a>
-            ))}
+              {/* Brand Typography */}
+              <div className="flex flex-col whitespace-nowrap">
+                <span className="text-[11px] sm:text-xs font-semibold tracking-[0.16em] sm:tracking-[0.2em] text-white uppercase group-hover:text-[#E2C79D] transition-colors leading-tight whitespace-nowrap">
+                  ILHOM BEGIMQULOV
+                </span>
+                <span className="text-[8px] sm:text-[9px] font-mono tracking-[0.14em] uppercase text-neutral-400 group-hover:text-neutral-300 transition-colors hidden sm:inline-block leading-tight mt-0.5 whitespace-nowrap">
+                  Business Consulting
+                </span>
+              </div>
+            </a>
+          </div>
+
+          {/* Navigation Links (Center — Balanced Luxury Navigation) */}
+          <nav
+            aria-label="Asosiy navigatsiya"
+            className="hidden xl:flex items-center justify-center gap-1 2xl:gap-2 shrink-0 bg-white/[0.02] border border-white/[0.04] rounded-full px-2.5 2xl:px-3.5 py-1.5 backdrop-blur-sm"
+          >
+            {navItems.map((item) => {
+              const isActive = activeSection === item.href.slice(1);
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  onClick={(e) => handleNavClick(e, item.href)}
+                  aria-current={isActive ? "page" : undefined}
+                  className={`group relative flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] 2xl:text-xs uppercase tracking-[0.08em] 2xl:tracking-[0.1em] font-medium transition-all duration-200 select-none whitespace-nowrap ${
+                    isActive
+                      ? "text-white bg-white/[0.08] shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]"
+                      : "text-neutral-400 hover:text-white hover:bg-white/[0.04]"
+                  }`}
+                >
+                  <span>{item.label}</span>
+
+                  {/* Active Indicator Micro-dot */}
+                  {isActive && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#C5A880] shadow-[0_0_6px_#C5A880]" />
+                  )}
+                </a>
+              );
+            })}
           </nav>
 
-          {/* Language Switcher & CTA (Right) */}
-          <div className="hidden lg:flex items-center space-x-6">
+          {/* Actions: Language Switcher & CTA (Right for Desktop) */}
+          <div className="hidden xl:flex shrink-0 items-center justify-end gap-3.5">
             <LanguageSwitcher />
 
             <button
               type="button"
               onClick={handleApply}
-              className="rounded-none bg-[#C5A880] hover:bg-[#d4b992] px-5 py-2.5 text-xs uppercase tracking-[0.15em] text-[#0A0A0A] font-medium transition-colors cursor-pointer"
+              className="h-10 shrink-0 group relative overflow-hidden rounded-sm bg-gradient-to-r from-[#C5A880] via-[#D4B992] to-[#C5A880] hover:brightness-105 active:scale-[0.98] px-4 2xl:px-5 font-sans text-xs uppercase tracking-[0.08em] text-[#0A0A0A] font-semibold transition-all duration-200 cursor-pointer flex items-center gap-2 whitespace-nowrap shadow-[0_2px_12px_rgba(197,168,128,0.2)] hover:shadow-[0_4px_20px_rgba(197,168,128,0.35)]"
             >
-              {common("cta")}
+              {/* Shimmer sweep effect */}
+              <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full" />
+              <span className="relative z-10 whitespace-nowrap">{common("cta")}</span>
+              <svg
+                className="w-3.5 h-3.5 shrink-0 relative z-10 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-[#0A0A0A]"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                aria-hidden="true"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+              </svg>
             </button>
           </div>
 
-          {/* Tablet & Mobile Actions: Language & Hamburger */}
-          <div className="flex items-center space-x-3 sm:space-x-4 lg:hidden">
+          {/* Tablet & Mobile Actions (Shown below XL screens) */}
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3 xl:hidden">
             <div className="hidden sm:block">
               <button
                 type="button"
                 onClick={handleApply}
-                className="rounded-none bg-[#C5A880] hover:bg-[#d4b992] px-4 py-2 text-xs uppercase tracking-[0.15em] text-[#0A0A0A] font-medium transition-colors cursor-pointer"
+                className="h-9 shrink-0 group relative overflow-hidden rounded-sm bg-gradient-to-r from-[#C5A880] to-[#D4B992] px-3.5 font-sans text-[11px] uppercase tracking-[0.06em] text-[#0A0A0A] font-semibold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shadow-sm active:scale-[0.98]"
               >
-                {common("cta")}
+                <span className="relative z-10 whitespace-nowrap">{common("cta")}</span>
+                <span className="text-[10px] font-bold">↗</span>
               </button>
             </div>
 
             <LanguageSwitcher />
 
+            {/* Premium Mobile Menu Toggle Button */}
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(true)}
               aria-label={common("openMenu")}
-              className="p-2 text-neutral-400 hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 cursor-pointer"
+              className="w-10 h-10 rounded-full flex items-center justify-center text-neutral-300 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-[#C5A880]/50 transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#C5A880] cursor-pointer"
             >
               <svg
                 className="w-5 h-5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                strokeWidth="1.5"
+                strokeWidth="1.75"
                 aria-hidden="true"
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -101,9 +241,17 @@ export function Navbar({ onOpenApply }: NavbarProps) {
             </button>
           </div>
         </div>
+
+        {/* Dynamic Reading / Scroll Progress Bar */}
+        <div className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-transparent overflow-hidden pointer-events-none">
+          <div
+            className="h-full bg-gradient-to-r from-[#C5A880] via-[#E2C79D] to-[#9E7D3B] transition-all duration-150 ease-out"
+            style={{ width: `${scrollProgress}%` }}
+          />
+        </div>
       </header>
 
-      {/* Accessible Mobile Menu */}
+      {/* Accessible Mobile Menu Drawer */}
       <MobileMenu
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
@@ -115,3 +263,4 @@ export function Navbar({ onOpenApply }: NavbarProps) {
     </>
   );
 }
+

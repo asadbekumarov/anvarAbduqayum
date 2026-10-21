@@ -3,6 +3,8 @@
 import React from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
+import { GridLine } from "@/components/ui/GridLine";
+import { MaskedHeading } from "@/components/ui/MaskedHeading";
 
 interface ServiceItem {
   index: string;
@@ -26,11 +28,11 @@ export function Services({ onOpenApply }: ServicesProps) {
     <section
       id="xizmatlar"
       aria-label={isRu ? "Архитектура услуг" : "Xizmatlar arxitekturasi"}
-      className="py-24 sm:py-32 border-b border-white/[0.08] bg-[#0A0A0A] text-[#F5F5F0] relative overflow-hidden"
+      className="scroll-mt-20 py-14 sm:py-20 border-b border-white/[0.08] bg-[#0A0A0A] text-[#F5F5F0] relative overflow-hidden"
     >
       <div className="max-w-[1360px] mx-auto px-6 md:px-12">
         {/* Top Header & "Bepul Diagnostika" Bespoke Monolith */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end mb-12">
           {/* Left Column (lg:col-span-7 — Section Intro) */}
           <div className="lg:col-span-7">
             {/* Swiss Kicker */}
@@ -41,13 +43,13 @@ export function Services({ onOpenApply }: ServicesProps) {
               </span>
             </div>
 
-            {/* H2 Heading (Sans + Serif Italic mix) */}
-            <h2 className="text-3xl sm:text-5xl font-light tracking-[-0.03em] leading-[1.1] text-white mt-6">
+            {/* H2 Heading (Sans + Serif Italic mix) with Editorial Masked Reveal */}
+            <MaskedHeading className="text-3xl sm:text-5xl font-light tracking-[-0.03em] leading-[1.1] text-white mt-6">
               {t("titlePrefix")}
               <span className="font-serif italic font-normal text-white/90">
                 {t("titleHighlight")}
               </span>
-            </h2>
+            </MaskedHeading>
 
             {/* Subheadline */}
             <p className="text-base text-neutral-300 font-light leading-relaxed max-w-xl mt-5">
@@ -110,8 +112,11 @@ export function Services({ onOpenApply }: ServicesProps) {
         </div>
 
         {/* The 6 Services — Architectural Ledger Rows (Table/List Layout) */}
-        <div className="border-t border-white/[0.08] flex flex-col">
-          {items.map((service) => (
+        <div className="relative flex flex-col group/list">
+          {/* Top Divider Architectural Line Draw */}
+          <GridLine />
+
+          {items.map((service, idx) => (
             <div
               key={service.index}
               role="button"
@@ -124,21 +129,24 @@ export function Services({ onOpenApply }: ServicesProps) {
                 }
               }}
               aria-label={`${service.title} - ${t("selectService")}`}
-              className="group relative grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 items-baseline py-9 px-4 sm:px-6 border-b border-white/[0.08] bg-transparent hover:bg-[#0B132B]/20 transition-all duration-300 cursor-pointer rounded-none"
+              className="group relative grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 items-baseline py-5 px-4 sm:px-6 bg-transparent hover:bg-[#0B132B]/25 transition-all duration-500 group-hover/list:opacity-40 hover:!opacity-100 cursor-pointer rounded-none"
             >
-              {/* Left Subtle Accent on Hover */}
-              <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-white scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top" />
+              {/* Left Subtle Gold Accent Indicator on Hover - expanding from bottom */}
+              <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-[#C5A880] scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+
+              {/* Architectural Grid Line for this row with staggered draw */}
+              <GridLine delay={idx * 0.08} className="absolute bottom-0 left-0 right-0" />
 
               {/* Column 1 (lg:col-span-1 — Index) */}
               <div className="lg:col-span-1">
-                <span className="font-mono text-xs text-platinum group-hover:text-white transition-colors">
+                <span className="font-mono text-xs text-platinum group-hover:text-white transition-colors duration-300">
                   /{service.index}
                 </span>
               </div>
 
-              {/* Column 2 (lg:col-span-4 — Service Title) */}
+              {/* Column 2 (lg:col-span-4 — Service Title with translate-x-2) */}
               <div className="lg:col-span-4">
-                <h3 className="text-xl sm:text-2xl font-normal tracking-[-0.02em] text-white group-hover:translate-x-1 transition-transform duration-300">
+                <h3 className="text-xl sm:text-2xl font-normal tracking-[-0.02em] text-white transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2">
                   {service.title}
                 </h3>
               </div>
@@ -151,9 +159,9 @@ export function Services({ onOpenApply }: ServicesProps) {
               </div>
 
               {/* Column 4 (lg:col-span-2 — Minimal Action Trigger) */}
-              <div className="lg:col-span-2 lg:text-right flex lg:justify-end items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-platinum group-hover:text-white transition-colors mt-2 lg:mt-0">
+              <div className="lg:col-span-2 lg:text-right flex lg:justify-end items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-platinum group-hover:text-white transition-colors duration-300 mt-2 lg:mt-0">
                 <span>{t("selectService")}</span>
-                <span className="transition-transform duration-300 group-hover:translate-x-1">
+                <span className="transition-transform duration-300 group-hover:translate-x-1.5">
                   →
                 </span>
               </div>

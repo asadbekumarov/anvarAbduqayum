@@ -49,35 +49,46 @@ export async function sendTelegramLead(
     lead.service?.toLowerCase().includes("shpargalka") ||
     lead.service?.toLowerCase().includes("шпаргалка");
 
+  const localeStr = lead.locale ? lead.locale.toUpperCase() : "UZ";
+  const sourceStr = lead.pageUrl ? ` · ${cleanText(lead.pageUrl)}` : "";
+
   const message = isBookLead
     ? [
-        `<b>📚 YANGI BUYURTMA | "BIZNES SHPARGALKASI" KITOBI</b>`,
+        `🏛 <b>YANGI BUYURTMA | "BIZNES SHPARGALKASI" KITOBI</b>`,
         `━━━━━━━━━━━━━━━━━━━━`,
         `👤 <b>Mijoz:</b> ${cleanText(lead.name)}`,
         `📞 <b>Telefon:</b> <code>${cleanText(lead.phone)}</code>`,
         `📍 <b>Yetkazib berish manzili:</b> ${cleanText(lead.address || "Ko'rsatilmagan")}`,
+        lead.companySize
+          ? `🏢 <b>Kompaniya ko'lami:</b> ${cleanText(lead.companySize)}`
+          : null,
         lead.question
           ? `📦 <b>Buyurtma / Izoh:</b>\n<i>${cleanText(lead.question)}</i>`
           : null,
-        `━━━━━━━━━━━━━━━━━━━━`,
-        `⏰ <b>Vaqt:</b> ${timestamp} (Toshkent)`,
+        `🌐 <b>Til / Manba:</b> ${localeStr}${sourceStr}`,
+        `🕒 <b>Vaqt:</b> ${timestamp} (Toshkent vaqti)`,
         clientIp ? `🌐 <b>IP:</b> <code>${clientIp}</code>` : null,
+        `━━━━━━━━━━━━━━━━━━━━`,
+        `⚡ <i>15 daqiqa ichida aloqaga chiqish tavsiya etiladi.</i>`,
       ]
         .filter(Boolean)
         .join("\n")
     : [
-        `<b>💼 YANGI ARIZA | ILHOM BEGIMQULOV SAYTI</b>`,
+        `🏛 <b>YANGI B2B ARIZA — ILHOM BEGIMQULOV</b>`,
         `━━━━━━━━━━━━━━━━━━━━`,
-        `👤 <b>Ism:</b> ${cleanText(lead.name)}`,
+        `👤 <b>Mijoz:</b> ${cleanText(lead.name)}`,
         `📞 <b>Telefon:</b> <code>${cleanText(lead.phone)}</code>`,
-        lead.business ? `🏢 <b>Biznes sohasi:</b> ${cleanText(lead.business)}` : null,
-        lead.service ? `🎯 <b>Xizmat / Yo'nalish:</b> ${cleanText(lead.service)}` : null,
+        `🏢 <b>Kompaniya ko'lami:</b> ${cleanText(lead.companySize || "Ko'rsatilmagan")}`,
+        `🎯 <b>Yo'nalish / Xizmat:</b> ${cleanText(lead.service || "Bepul Diagnostika (Umumiy)")}`,
+        lead.business ? `💼 <b>Biznes / Holat:</b> ${cleanText(lead.business)}` : null,
         lead.question
           ? `❓ <b>Savol / Izoh:</b>\n<i>${cleanText(lead.question)}</i>`
           : null,
-        `━━━━━━━━━━━━━━━━━━━━`,
-        `⏰ <b>Vaqt:</b> ${timestamp} (Toshkent)`,
+        `🌐 <b>Til / Manba:</b> ${localeStr}${sourceStr}`,
+        `🕒 <b>Vaqt:</b> ${timestamp} (Toshkent vaqti)`,
         clientIp ? `🌐 <b>IP:</b> <code>${clientIp}</code>` : null,
+        `━━━━━━━━━━━━━━━━━━━━`,
+        `⚡ <i>15 daqiqa ichida aloqaga chiqish tavsiya etiladi.</i>`,
       ]
         .filter(Boolean)
         .join("\n");

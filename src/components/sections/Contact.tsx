@@ -1,14 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import { MaskedHeading } from "@/components/ui/MaskedHeading";
 
 export function Contact() {
   const t = useTranslations("contact");
+  const applyT = useTranslations("applyModal");
+  const locale = useLocale();
 
   const [formData, setFormData] = useState({
     name: "",
     phone: "+998",
+    companySize: "10–50",
     business: "",
     honeypot: "",
   });
@@ -49,8 +53,11 @@ export function Contact() {
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
+          companySize: formData.companySize || "10–50",
           business: formData.business || "Tezkor murojaat formasi",
           service: "Tezkor murojaat (Kontaktlar bo'limi)",
+          locale,
+          pageUrl: typeof window !== "undefined" ? window.location.href : undefined,
           honeypot: formData.honeypot,
         }),
       });
@@ -62,7 +69,13 @@ export function Contact() {
       }
 
       setIsSuccess(true);
-      setFormData({ name: "", phone: "+998", business: "", honeypot: "" });
+      setFormData({
+        name: "",
+        phone: "+998",
+        companySize: "10–50",
+        business: "",
+        honeypot: "",
+      });
     } catch {
       setErrorMessage("Aloqa xatosi yuz berdi. Internetni tekshirib qayta urinib ko'ring.");
     } finally {
@@ -74,8 +87,12 @@ export function Contact() {
     <section
       id="aloqa"
       aria-label={t("title")}
-      className="relative bg-gradient-to-b from-[#0A0A0A] via-[#070D1F]/50 to-[#0A0A0A] border-t border-white/[0.08] py-24 sm:py-32 overflow-hidden"
+      className="scroll-mt-20 relative bg-gradient-to-b from-[#0A0A0A] via-[#070D1F]/50 to-[#0A0A0A] border-t border-white/[0.08] py-14 sm:py-20 overflow-hidden"
     >
+      {/* Anchor aliases */}
+      <span id="kontakt" className="absolute -top-24 pointer-events-none" />
+      <span id="kontaktlar" className="absolute -top-24 pointer-events-none" />
+
       {/* Subtle midnight navy atmospheric ambient glow */}
       <div
         aria-hidden="true"
@@ -93,12 +110,13 @@ export function Contact() {
               </span>
             </div>
 
-            <h2 className="text-3xl sm:text-5xl font-light tracking-[-0.03em] leading-[1.1] text-white mt-5">
+            {/* H2 Heading with Editorial Masked Reveal */}
+            <MaskedHeading className="text-3xl sm:text-5xl font-light tracking-[-0.03em] leading-[1.1] text-white mt-5">
               {t("titlePrefix")}
               <span className="font-serif italic font-normal text-white/90">
                 {t("titleHighlight")}
               </span>
-            </h2>
+            </MaskedHeading>
 
             <p className="text-sm sm:text-base text-neutral-300 font-light leading-relaxed mt-4 max-w-xl">
               {t("description")}
@@ -157,20 +175,58 @@ export function Contact() {
           </p>
 
           {isSuccess ? (
-            <div className="py-10 text-center space-y-4 animate-in fade-in duration-300">
-              <div className="w-12 h-12 mx-auto border border-white/30 flex items-center justify-center text-white font-mono text-lg">
-                ✓
+            <div className="py-4 text-left animate-in fade-in duration-300">
+              {/* Top Status Indicator */}
+              <div className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-[#C5A880] mb-4">
+                <span className="w-2 h-2 rounded-full bg-[#C5A880] animate-pulse" />
+                <span>{applyT("thankYouBadge")}</span>
               </div>
-              <p className="text-sm font-light text-white max-w-sm mx-auto">
-                {t("formSuccess")}
+
+              {/* Headline */}
+              <h4 className="font-serif italic text-2xl sm:text-3xl text-white mb-3">
+                {applyT("thankYouTitle")}
+              </h4>
+
+              {/* Body Copy */}
+              <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed mb-6">
+                {applyT("thankYouBody")}
               </p>
-              <button
-                type="button"
-                onClick={() => setIsSuccess(false)}
-                className="text-xs font-mono uppercase tracking-[0.2em] text-white hover:text-neutral-300 underline pt-4 cursor-pointer"
-              >
-                Yana ariza qoldirish
-              </button>
+
+              {/* What Happens Next (3-Step Mini Timeline) */}
+              <div className="border-t border-b border-white/[0.08] py-4 mb-6 space-y-3 font-mono text-xs">
+                <div className="flex items-start gap-2">
+                  <span className="text-[#C5A880] shrink-0 font-bold">{applyT("timelineStep1Prefix")}</span>
+                  <span className="text-neutral-300">{applyT("timelineStep1Text")}</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-[#94A3B8] shrink-0 font-bold">{applyT("timelineStep2Prefix")}</span>
+                  <span className="text-neutral-400">{applyT("timelineStep2Text")}</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <span className="text-[#94A3B8] shrink-0 font-bold">{applyT("timelineStep3Prefix")}</span>
+                  <span className="text-neutral-400">{applyT("timelineStep3Text")}</span>
+                </div>
+              </div>
+
+              {/* Value-Add Action */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <a
+                  href="https://t.me/ilhombegimqulov"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group inline-flex items-center justify-center gap-2 px-5 py-3 border border-[#C5A880]/60 hover:border-[#C5A880] bg-[#C5A880]/10 hover:bg-[#C5A880]/20 text-[#E2C79D] hover:text-white font-mono text-xs uppercase tracking-[0.14em] transition-all rounded-none"
+                >
+                  <span>{applyT("actionTelegram")}</span>
+                  <span className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setIsSuccess(false)}
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 border border-white/[0.12] hover:border-white/40 text-neutral-300 hover:text-white font-mono text-xs uppercase tracking-[0.14em] transition-all rounded-none cursor-pointer"
+                >
+                  <span>Yana ariza qoldirish</span>
+                </button>
+              </div>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
@@ -229,6 +285,40 @@ export function Contact() {
                 />
               </div>
 
+              {/* B2B Qualification: Kompaniya ko'lami */}
+              <div>
+                <label className="font-mono text-[10px] uppercase tracking-[0.2em] text-platinum block mb-2">
+                  {applyT("companyScaleLabel")}
+                </label>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2">
+                  {[
+                    { value: "1–10", sub: applyT("scale1Sub") },
+                    { value: "10–50", sub: applyT("scale2Sub") },
+                    { value: "50–200+", sub: applyT("scale3Sub") },
+                    { value: "Startap", sub: applyT("scale4Sub") },
+                  ].map((opt) => {
+                    const isSelected = (formData.companySize || "10–50") === opt.value;
+                    return (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() =>
+                          setFormData((prev) => ({ ...prev, companySize: opt.value }))
+                        }
+                        className={`py-2 px-2 font-mono text-xs transition-all rounded-none text-center cursor-pointer flex flex-col items-center justify-center gap-0.5 border ${
+                          isSelected
+                            ? "bg-[#0B132B]/80 border-[#C5A880] text-[#E2C79D] shadow-[0_0_15px_rgba(197,168,128,0.15)]"
+                            : "bg-[#0A0A0A]/70 border-white/[0.1] text-neutral-400 hover:text-white hover:border-white/25"
+                        }`}
+                      >
+                        <span className="font-semibold text-xs tracking-wider">{opt.value}</span>
+                        <span className="text-[9px] opacity-70 tracking-normal font-sans">{opt.sub}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
               {/* Biznes sohasi va savol */}
               <div>
                 <label htmlFor="contact-business" className="font-mono text-[10px] uppercase tracking-[0.2em] text-platinum block mb-2">
@@ -251,9 +341,11 @@ export function Contact() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] py-4 text-xs uppercase tracking-[0.2em] font-medium transition-colors rounded-none mt-2 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                className="group relative overflow-hidden w-full bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] py-4 text-xs uppercase tracking-[0.2em] font-medium transition-colors rounded-none mt-2 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
-                <span>{isSubmitting ? "Yuborilmoqda..." : t("formSubmit")}</span>
+                {/* Liquid Sheen */}
+                <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
+                <span className="relative z-10">{isSubmitting ? "Yuborilmoqda..." : t("formSubmit")}</span>
               </button>
             </form>
           )}

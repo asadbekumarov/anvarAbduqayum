@@ -5,6 +5,8 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { siteMedia } from "@/config/siteMedia";
 import { Lightbox, LightboxMedia } from "@/components/ui/Lightbox";
+import { MaskedHeading } from "@/components/ui/MaskedHeading";
+import { KenBurnsImage } from "@/components/ui/KenBurnsImage";
 
 export function Diplomas() {
   const t = useTranslations("diplomas");
@@ -27,12 +29,13 @@ export function Diplomas() {
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-light tracking-[-0.03em] leading-[1.1] text-white mt-5">
+          {/* H2 Heading with Editorial Masked Reveal */}
+          <MaskedHeading className="text-3xl sm:text-5xl font-light tracking-[-0.03em] leading-[1.1] text-white mt-5">
             {t("titlePrefix")}
             <span className="font-serif italic font-normal text-white/90">
               {t("titleHighlight")}
             </span>
-          </h2>
+          </MaskedHeading>
 
           <p className="text-base text-neutral-300 font-light max-w-xl mt-4 leading-relaxed">
             {t("description")}
@@ -72,24 +75,26 @@ export function Diplomas() {
             >
               {/* Image Thumbnail Container */}
               <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#141414] mb-4 border border-white/[0.04] flex items-center justify-center p-2">
-                <Image
-                  src={doc.thumb}
-                  alt={doc.alt}
-                  fill
-                  loading="lazy"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  className="object-contain w-full h-full grayscale-[15%] group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700"
-                />
+                <KenBurnsImage delay={idx * 0.08}>
+                  <Image
+                    src={doc.thumb}
+                    alt={doc.alt}
+                    fill
+                    loading="lazy"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-contain w-full h-full grayscale-[15%] group-hover:grayscale-0 group-hover:scale-[1.04] transition-all duration-700 ease-out"
+                  />
+                </KenBurnsImage>
 
                 {/* Lightbox Trigger Overlay */}
-                <div className="absolute bottom-3 right-3 bg-[#070D1F]/90 border border-white/[0.12] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5">
+                <div className="absolute bottom-3 right-3 bg-[#070D1F]/90 border border-white/[0.12] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 pointer-events-none z-10">
                   <span>{t("zoomHint")}</span>
                 </div>
               </div>
 
               {/* Certificate Footer (Below Image) */}
-              <div className="flex items-baseline justify-between pt-3 border-t border-white/[0.06] gap-4">
-                <h3 className="text-sm font-normal text-white group-hover:translate-x-1 transition-transform leading-snug line-clamp-2">
+              <div className="flex items-baseline justify-between pt-3 border-t border-white/[0.06] gap-4 transition-transform duration-500 ease-out group-hover:translate-x-1">
+                <h3 className="text-sm font-normal text-white leading-snug line-clamp-2">
                   {doc.title}
                 </h3>
                 <span className="font-mono text-[10px] text-platinum-light uppercase tracking-wider shrink-0">

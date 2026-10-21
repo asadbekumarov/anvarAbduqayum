@@ -1,5 +1,6 @@
 import React from "react";
 import { cn } from "@/lib/utils";
+import { MaskedHeading } from "@/components/ui/MaskedHeading";
 
 interface SectionHeaderProps {
   kicker?: string;
@@ -30,9 +31,9 @@ export function SectionHeader({
           </span>
         )}
       </div>
-      <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight text-white max-w-3xl leading-[1.15]">
+      <MaskedHeading className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight text-white max-w-3xl leading-[1.15]">
         {title}
-      </h2>
+      </MaskedHeading>
       {description && (
         <p className="mt-4 text-base sm:text-lg text-platinum-light max-w-2xl font-light leading-relaxed">
           {description}
