@@ -4,9 +4,6 @@ import React, { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Modal } from "@/components/ui/Modal";
 import { ApplyForm } from "./ApplyForm";
-import { Button } from "@/components/ui/Button";
-import { CloseButton } from "@/components/ui/close-button";
-import { Badge } from "@/components/ui/badge";
 
 interface ApplyModalProps {
   isOpen: boolean;
@@ -22,46 +19,22 @@ export function ApplyModal({
   const t = useTranslations("applyModal");
   const [isSuccess, setIsSuccess] = useState(false);
 
-  // Reset success state whenever modal re-opens
   useEffect(() => {
     if (isOpen) {
       setIsSuccess(false);
     }
   }, [isOpen]);
 
-  const isBook =
+  const isBook = Boolean(
     selectedService?.toLowerCase().includes("kitob") ||
     selectedService?.toLowerCase().includes("книга") ||
     selectedService?.toLowerCase().includes("book") ||
     selectedService?.toLowerCase().includes("shpargalka") ||
-    selectedService?.toLowerCase().includes("шпаргалка");
+    selectedService?.toLowerCase().includes("шпаргалка")
+  );
 
-  const isConsultation =
-    selectedService?.toLowerCase().includes("konsultatsiya") ||
-    selectedService?.toLowerCase().includes("audit");
-
-  const modalTitle = selectedService
-    ? isBook
-      ? t("bookTitle") || selectedService
-      : isConsultation
-      ? t("consultTitle") || "Bepul konsultatsiya olish"
-      : selectedService
-    : t("title");
-
-  const modalSubtitle = selectedService
-    ? isBook
-      ? t("bookSubtitle") || "Yetkazib berish uchun ma'lumotlaringizni to'ldiring, tez orada operator siz bilan bog'lanadi."
-      : isConsultation
-      ? t("subtitle")
-      : t("serviceSubtitle") || "Ma'lumotlaringizni to'ldiring, ushbu xizmat yuzasidan tez orada siz bilan bog'lanamiz."
-    : t("subtitle");
-
-  const badgeText = selectedService
-    ? isBook
-      ? t("badgeBook") || "KITOB BUYURTMA QILISH"
-      : isConsultation
-      ? t("badgeConsultation") || "BEPUL KONSULTATSIYA"
-      : t("badgeService") || "XIZMAT UCHUN ARIZA"
+  const modalTitle = isBook
+    ? t("bookTitle") || "«Biznes shpargalkasi» kitobi"
     : t("title");
 
   return (
@@ -69,84 +42,60 @@ export function ApplyModal({
       isOpen={isOpen}
       onClose={onClose}
       ariaLabel={modalTitle}
-      className="!max-w-[480px] w-full p-6 sm:p-7 relative overflow-hidden bg-[#111111]/95 border border-[#262626]"
+      className="!max-w-lg w-full p-8 sm:p-10 relative bg-gradient-to-br from-[#0F172A] via-[#0B132B] to-[#0A0A0A] border border-white/[0.12] rounded-none shadow-[0_30px_70px_rgba(7,13,31,0.85)]"
     >
-      {/* Top subtle gold accent ray */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent opacity-80" />
-      <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-48 h-20 bg-gold/15 blur-2xl pointer-events-none rounded-full" />
+      {/* Modal Header */}
+      <div className="flex justify-between items-center mb-6 pb-4 border-b border-white/[0.08]">
+        <h3 className="font-serif italic text-2xl text-white">
+          {modalTitle}
+        </h3>
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Yopish"
+          className="font-mono text-xl text-platinum hover:text-white transition-colors p-1 cursor-pointer"
+        >
+          ✕
+        </button>
+      </div>
 
-      {/* Create UI Close button */}
-      <CloseButton
-        onClick={onClose}
-        aria-label="Close"
-        appearance="soft"
-        variant="neutral"
-        size="md"
-        className="absolute top-4 right-4 text-muted hover:text-white border border-border/70 bg-base/60 hover:bg-gold/10 hover:border-gold/50"
-      />
+      {/* Dynamic Context Badge */}
+      {selectedService && (
+        <div className="bg-[#0B132B]/60 border-l-2 border-platinum/60 px-4 py-2.5 mb-6 font-mono text-xs text-white">
+          <span className="text-platinum mr-2">{t("selectedPrefix")}</span>
+          {selectedService}
+        </div>
+      )}
 
       {isSuccess ? (
-        <div className="text-center py-6 sm:py-8 space-y-4 animate-in fade-in zoom-in-95 duration-200">
-          <div className="w-16 h-16 mx-auto rounded-full bg-gold/10 border border-gold/40 flex items-center justify-center text-gold shadow-[0_0_24px_rgba(197,168,128,0.25)]">
-            <svg
-              className="w-8 h-8"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
+        <div className="text-center py-8 space-y-5 animate-in fade-in duration-300">
+          <div className="w-14 h-14 mx-auto border border-white/40 flex items-center justify-center text-white font-mono text-xl">
+            ✓
           </div>
-          <h3 className="font-serif text-2xl text-white font-medium">
-            {isBook
-              ? t("bookSuccessMessage") || "Buyurtmangiz qabul qilindi!"
-              : t("successMessage") || "Arizangiz qabul qilindi!"}
-          </h3>
-          <p className="text-xs sm:text-sm text-muted font-light max-w-sm mx-auto leading-relaxed">
+          <h4 className="font-serif italic text-2xl text-white">
+            {isBook ? t("bookSuccessMessage") : t("successMessage")}
+          </h4>
+          <p className="text-xs sm:text-sm text-neutral-400 font-light max-w-sm mx-auto leading-relaxed">
             {isBook
               ? "Tez orada operatorimiz siz bilan bog'lanadi va yetkazib berish tafsilotlarini kelishib oladi."
               : "Tez orada mutaxassisimiz siz bilan bog'lanadi va barcha savollaringizga batafsil javob beradi."}
           </p>
-          <div className="pt-2">
-            <Button
-              variant="outline"
-              size="md"
+          <div className="pt-3">
+            <button
+              type="button"
               onClick={onClose}
-              className="px-8 rounded-lg"
+              className="px-8 py-3.5 border border-white/[0.12] hover:border-white text-xs font-mono uppercase tracking-[0.2em] text-white hover:bg-white hover:text-[#0A0A0A] transition-colors rounded-none cursor-pointer"
             >
               Yopish
-            </Button>
+            </button>
           </div>
         </div>
       ) : (
-        <div className="relative z-10">
-          <div className="mb-5">
-            <Badge
-              variant="neutral"
-              appearance="outline"
-              size="sm"
-              className="border-gold/40 text-gold bg-gold/5 uppercase tracking-[0.18em] text-[10px] font-semibold mb-2 gap-1.5"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse shrink-0" />
-              {badgeText}
-            </Badge>
-            <h3 className="font-serif text-2xl sm:text-[26px] font-medium text-white tracking-tight leading-tight">
-              {modalTitle}
-            </h3>
-            <p className="text-xs text-muted-light font-light mt-1.5 leading-relaxed">
-              {modalSubtitle}
-            </p>
-          </div>
-
+        <div>
           <ApplyForm
             onSuccess={() => setIsSuccess(true)}
             selectedService={selectedService}
-            isBook={Boolean(isBook)}
+            isBook={isBook}
           />
         </div>
       )}

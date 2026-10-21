@@ -1,62 +1,67 @@
 "use client";
 
 import React from "react";
-import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/Button";
+import { useTranslations, useLocale } from "next-intl";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
 
 interface CtaBandProps {
-  onOpenApply?: () => void;
+  onOpenApply?: (serviceName?: string) => void;
+  onOpenModal?: () => void;
 }
 
-export function CtaBand({ onOpenApply }: CtaBandProps) {
+export function CtaBand({ onOpenApply, onOpenModal }: CtaBandProps) {
   const { openApply } = useApplyModal();
-  const handleApply = onOpenApply || openApply;
+  const handleApply = onOpenApply || onOpenModal || openApply;
   const t = useTranslations("ctaBand");
+  const locale = useLocale();
+  const isRu = locale === "ru";
 
   return (
     <section
       id="cta-band"
-      aria-label="Harakatga chaqiruv"
-      className="py-20 sm:py-28 border-b border-border bg-elevated relative overflow-hidden"
+      aria-label={isRu ? "Диагностический вопрос" : "Diagnostik savol"}
+      className="relative bg-gradient-to-r from-[#070D1F] via-[#0B132B]/50 to-[#0A0A0A] border-b border-white/[0.08] py-20 sm:py-28 overflow-hidden"
     >
-      {/* Editorial Decorative Grid Lines */}
-      <div className="absolute inset-0 pointer-events-none opacity-20">
-        <div className="max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 border-x border-border flex justify-between">
-          <div className="w-px h-full bg-border" />
-          <div className="w-px h-full bg-border hidden sm:block" />
-          <div className="w-px h-full bg-border hidden lg:block" />
-        </div>
-      </div>
+      {/* Subtle deep navy depth glow */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute right-1/4 top-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#0F172A]/70 blur-[130px] rounded-full"
+      />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-4xl space-y-8">
+      <div className="max-w-[1360px] mx-auto px-6 md:px-12 relative z-10">
+        <div className="border-l border-platinum/30 pl-6 sm:pl-12">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
+            {/* Left Column (lg:col-span-8) */}
+            <div className="lg:col-span-8">
+              <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum block mb-4">
+                {t("kicker")}
+              </span>
 
-          <h2 className="font-serif text-2xl sm:text-5xl lg:text-6xl font-normal text-white tracking-tight leading-[1.18] sm:leading-[1.12]">
-            &ldquo;{t("title")}&rdquo;
-          </h2>
+              <h2 className="text-3xl sm:text-5xl lg:text-[54px] font-light tracking-[-0.03em] leading-[1.08] text-white">
+                {t("titlePrefix")}
+                <span className="font-serif italic font-normal text-white/90">
+                  {t("titleHighlight")}
+                </span>
+              </h2>
 
-          <p className="text-sm sm:text-xl text-muted font-light leading-relaxed max-w-2xl">
-            {t("description")}
-          </p>
+              <p className="text-base sm:text-lg text-neutral-300 font-light mt-5 max-w-2xl leading-relaxed">
+                {t("description")}
+              </p>
+            </div>
 
-          <div className="pt-2 sm:pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
-            <Button
-              variant="primary"
-              size="lg"
-              onClick={handleApply}
-              className="w-full sm:w-auto text-center justify-center"
-            >
-              {t("cta")}
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              href="#kontaktlar"
-              className="w-full sm:w-auto text-center justify-center"
-            >
-              Bog&apos;lanish
-            </Button>
+            {/* Right Column (lg:col-span-4 lg:flex lg:justify-end) */}
+            <div className="lg:col-span-4 lg:flex lg:justify-end">
+              <button
+                type="button"
+                onClick={() => handleApply(isRu ? "Стратегический разбор бизнеса" : "Strategik tahlil")}
+                className="group inline-flex items-center justify-between gap-6 bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] px-8 py-5 text-sm font-medium tracking-wide rounded-none transition-all duration-300 w-full sm:w-auto cursor-pointer"
+              >
+                <span>{t("cta")}</span>
+                <span className="transition-transform duration-300 group-hover:translate-x-1.5">
+                  →
+                </span>
+              </button>
+            </div>
           </div>
         </div>
       </div>

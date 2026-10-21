@@ -9,6 +9,7 @@ interface MarqueeProps {
   pauseOnHover?: boolean;
   reverse?: boolean;
   className?: string;
+  innerClassName?: string;
   repeat?: number;
 }
 
@@ -18,6 +19,7 @@ export function Marquee({
   pauseOnHover = true,
   reverse = false,
   className = "",
+  innerClassName = "",
   repeat = 4,
 }: MarqueeProps) {
   const animClass = reverse ? "animate-marquee-reverse" : "animate-marquee";
@@ -35,7 +37,8 @@ export function Marquee({
           key={i}
           aria-hidden={i > 0}
           className={cn(
-            "flex shrink-0 items-center gap-6 sm:gap-8 pr-6 sm:pr-8 group-hover:[animation-play-state:paused]",
+            "flex shrink-0 items-center group-hover:[animation-play-state:paused]",
+            innerClassName || "gap-6 sm:gap-8 pr-6 sm:pr-8",
             animClass
           )}
           style={{

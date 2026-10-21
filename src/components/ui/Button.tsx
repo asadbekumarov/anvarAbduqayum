@@ -27,7 +27,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const baseStyles =
-      "relative inline-flex items-center justify-center font-medium uppercase tracking-wider text-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold disabled:opacity-50 disabled:pointer-events-none rounded-[2px] overflow-hidden group select-none transition-colors duration-200";
+      "relative inline-flex items-center justify-center font-medium uppercase tracking-wider text-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 disabled:opacity-50 disabled:pointer-events-none rounded-[2px] overflow-hidden group select-none transition-colors duration-200";
 
     const sizeStyles = {
       sm: "h-9 px-4 text-[11px]",
@@ -37,9 +37,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const variantStyles = {
       primary:
-        "gold-gradient text-base font-semibold border-none shadow-[0_4px_16px_rgba(197,168,128,0.2)] hover:shadow-[0_6px_22px_rgba(197,168,128,0.35)]",
+        "bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] font-medium border-none",
       outline:
-        "bg-transparent border border-border text-white hover:border-gold hover:text-gold active:bg-elevated",
+        "bg-transparent border border-white/15 text-white hover:border-white/40 hover:text-white active:bg-elevated",
       ghost:
         "bg-transparent text-muted hover:text-white border-none p-0 h-auto",
     };

@@ -91,7 +91,7 @@ export function MobileMenu({ isOpen, onClose, onOpenApply }: MobileMenuProps) {
               key={link.href}
               href={link.href}
               onClick={handleLinkClick}
-              className="group flex items-center justify-between text-lg sm:text-2xl font-serif text-white hover:text-gold transition-colors py-2 border-b border-border-subtle"
+              className="group flex items-center justify-between text-lg sm:text-2xl font-serif text-neutral-300 hover:text-white transition-colors py-2 border-b border-white/[0.08]"
             >
               <span>{link.label}</span>
               <span className="text-[10px] sm:text-xs font-sans text-muted tracking-widest">

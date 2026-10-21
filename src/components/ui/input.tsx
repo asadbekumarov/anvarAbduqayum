@@ -75,8 +75,8 @@ const inputShellVariants = cva(
         false: [
           "border-[#262626]",
           "hover:border-[#383838]",
-          "focus-within:border-gold focus-within:ring-1 focus-within:ring-gold/30",
-          "focus-visible:border-gold focus-visible:ring-1 focus-visible:ring-gold/30",
+          "focus-within:border-white/50 focus-within:ring-1 focus-within:ring-white/20",
+          "focus-visible:border-white/50 focus-visible:ring-1 focus-visible:ring-white/20",
         ],
       },
       disabled: {

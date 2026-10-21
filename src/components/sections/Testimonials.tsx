@@ -1,35 +1,143 @@
 "use client";
 
-import React, { useState } from "react";
-import { useTranslations } from "next-intl";
-import { SectionHeader } from "@/components/ui/SectionHeader";
-import { VideoStrip } from "@/components/ui/VideoStrip";
+import React, { useState, useRef } from "react";
+import Image from "next/image";
+import { useTranslations, useLocale } from "next-intl";
 import { YouTubeModal } from "@/components/ui/YouTubeModal";
 import { siteMedia, VideoItem } from "@/config/siteMedia";
 
 export function Testimonials() {
   const t = useTranslations("testimonials");
+  const locale = useLocale();
+  const isRu = locale === "ru";
   const testimonials = siteMedia.testimonials;
   const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: "left" | "right") => {
+    if (!scrollRef.current) return;
+    const scrollAmount = scrollRef.current.clientWidth * 0.75;
+    scrollRef.current.scrollBy({
+      left: direction === "left" ? -scrollAmount : scrollAmount,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <section
       id="fikrlar"
-      aria-label="Mijozlar fikrlari"
-      className="py-20 sm:py-28 border-b border-border bg-base"
+      aria-label={isRu ? "Отзывы клиентов" : "Mijozlar fikrlari"}
+      className="py-24 sm:py-32 border-b border-white/[0.08] bg-[#0A0A0A] text-[#F5F5F0] relative overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeader
-          index="08"
-          kicker={t("kicker")}
-          title={t("title")}
-          description="Kompaniyamiz bilan hamkorlikda tizimlashtirilgan korxona rahbarlari va asoschilarining amaliy xulosalari."
-        />
+      {/* Header Row */}
+      <div className="max-w-[1360px] mx-auto px-6 md:px-12 mb-14">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+          {/* Left Column */}
+          <div>
+            <div className="flex items-center gap-4">
+              <span className="w-8 h-[1px] bg-[#C5A880]" />
+              <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum">
+                {t("kicker")}
+              </span>
+            </div>
 
-        <VideoStrip
-          videos={testimonials}
-          onSelectVideo={(vid) => setSelectedVideo(vid)}
-        />
+            <h2 className="text-3xl sm:text-5xl font-light tracking-[-0.03em] leading-[1.1] text-white mt-5">
+              {t("titlePrefix")}
+              <span className="font-serif italic font-normal text-white/90">
+                {t("titleHighlight")}
+              </span>
+            </h2>
+          </div>
+
+          {/* Right Column: Custom Architectural Scroll Controls */}
+          <div className="shrink-0 flex items-center">
+            <div className="inline-flex border border-white/[0.12] divide-x divide-white/[0.12]">
+              <button
+                type="button"
+                onClick={() => scroll("left")}
+                aria-label={isRu ? "Предыдущий отзыв" : "Oldingi fikr"}
+                className="w-12 h-12 flex items-center justify-center text-platinum hover:text-white hover:bg-white/[0.04] transition-colors rounded-none font-mono text-sm cursor-pointer"
+              >
+                ←
+              </button>
+              <button
+                type="button"
+                onClick={() => scroll("right")}
+                aria-label={isRu ? "Следующий отзыв" : "Keyingi fikr"}
+                className="w-12 h-12 flex items-center justify-center text-platinum hover:text-white hover:bg-white/[0.04] transition-colors rounded-none font-mono text-sm cursor-pointer"
+              >
+                →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Horizontal Filmstrip Cards */}
+      <div
+        ref={scrollRef}
+        className="flex border-t border-b border-white/[0.08] divide-x divide-white/[0.08] overflow-x-auto scroll-smooth no-scrollbar"
+        tabIndex={0}
+        aria-label="Keyslar ro'yxati"
+      >
+        {testimonials.map((vid, idx) => {
+          const indexNum = idx < 9 ? `0${idx + 1}` : `${idx + 1}`;
+          return (
+            <article
+              key={vid.id === "REPLACE_ME" ? `vid-${idx}` : vid.id}
+              role="button"
+              tabIndex={0}
+              onClick={() => setSelectedVideo(vid)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setSelectedVideo(vid);
+                }
+              }}
+              aria-label={`${vid.title} - ${t("playTrigger")}`}
+              className="w-[320px] sm:w-[380px] shrink-0 bg-[#0A0A0A] hover:bg-[#0B132B]/35 p-6 sm:p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer group rounded-none"
+            >
+              {/* Top Index Bar */}
+              <div>
+                <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-platinum mb-5">
+                  <span className="group-hover:text-white transition-colors">
+                    {t("tagKey")} / {indexNum}
+                  </span>
+                  <span className="text-platinum-light">{t("tagFormat")}</span>
+                </div>
+
+                {/* Thumbnail Container */}
+                <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#141414] mb-6 border border-white/[0.06]">
+                  <Image
+                    src={vid.thumb}
+                    alt={vid.title}
+                    fill
+                    loading="lazy"
+                    sizes="(max-width: 640px) 320px, 380px"
+                    className="object-cover w-full h-full grayscale-[25%] contrast-[1.05] group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700"
+                  />
+                  {/* Bespoke Play Trigger */}
+                  <div className="absolute bottom-0 left-0 bg-[#070D1F]/90 border-t border-r border-white/[0.12] px-3.5 py-2 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-white group-hover:bg-white group-hover:text-[#0A0A0A] transition-colors">
+                    <span>{t("playTrigger")}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Client Info (Bottom) */}
+              <div className="pt-2">
+                <h3 className="text-lg font-normal text-white tracking-tight group-hover:translate-x-1 transition-transform line-clamp-2">
+                  {vid.title}
+                </h3>
+                <div className="font-mono text-xs text-platinum mt-1.5 uppercase tracking-wider flex items-center justify-between">
+                  <span>{vid.company || vid.author}</span>
+                  {vid.duration && (
+                    <span className="text-platinum-light">{vid.duration}</span>
+                  )}
+                </div>
+              </div>
+            </article>
+          );
+        })}
       </div>
 
       {/* Accessible YouTube Modal */}

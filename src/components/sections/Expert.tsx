@@ -2,126 +2,120 @@
 
 import React from "react";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
-import { SectionHeader } from "@/components/ui/SectionHeader";
+import { useTranslations, useLocale } from "next-intl";
 import { siteMedia } from "@/config/siteMedia";
-import { Button } from "@/components/ui/Button";
-import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
 
-interface ExpertProps {
-  onOpenApply?: () => void;
-}
-
-export function Expert({ onOpenApply }: ExpertProps) {
-  const { openApply } = useApplyModal();
-  const handleApply = onOpenApply || openApply;
+export function Expert() {
   const t = useTranslations("expert");
-  const common = useTranslations("common");
+  const locale = useLocale();
+  const isRu = locale === "ru";
   const { portrait } = siteMedia.expert;
 
   return (
     <section
       id="ekspert"
-      aria-label="Ekspert haqida"
-      className="py-20 sm:py-28 border-b border-border bg-base"
+      aria-label={isRu ? "Об эксперте" : "Ekspert haqida"}
+      className="py-24 sm:py-32 border-b border-white/[0.08] bg-gradient-to-b from-[#0A0A0A] via-[#070D1F]/40 to-[#0A0A0A] text-[#F5F5F0] relative overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeader
-          index="07"
-          kicker={t("kicker")}
-          title={t("name")}
-          description={t("role")}
-        />
+      {/* Subtle midnight navy atmospheric ambient glow */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-[5%] top-1/3 w-[500px] h-[500px] bg-[#0B132B]/50 blur-[140px] rounded-full"
+      />
 
+      <div className="max-w-[1360px] mx-auto px-6 md:px-12 relative z-10">
+        {/* Top Section Kicker */}
+        <div className="flex items-center gap-4 mb-12">
+          <span className="w-8 h-[1px] bg-[#C5A880]" />
+          <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum">
+            {t("kicker")}
+          </span>
+        </div>
+
+        {/* Main 12-Column Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Portrait Column */}
+          {/* Left Column — Editorial Portrait (lg:col-span-5) */}
           <div className="lg:col-span-5">
-            <div className="border border-border bg-elevated relative overflow-hidden rounded-[2px] group">
-              <div className="relative aspect-[3/4] w-full">
-                <Image
-                  src={portrait.src}
-                  alt={portrait.alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 45vw, 500px"
-                  className="object-cover grayscale contrast-110 group-hover:grayscale-0 transition-all duration-500 ease-out"
-                />
-                <div
-                  className="absolute inset-0 bg-gradient-to-t from-base via-transparent to-transparent pointer-events-none"
-                  aria-hidden="true"
-                />
-              </div>
+            <div className="relative aspect-[3/4] w-full bg-[#0F172A]/40 overflow-hidden border border-white/[0.08] shadow-[0_20px_50px_rgba(7,13,31,0.5)]">
+              <Image
+                src={portrait.src}
+                alt={portrait.alt}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 45vw, 500px"
+                className="object-cover w-full h-full contrast-[1.05] grayscale-[10%]"
+                loading="lazy"
+              />
+            </div>
 
-              {/* Quote Footer Stamp */}
-              <div className="p-6 border-t border-border bg-base">
-                <blockquote className="font-serif italic text-sm sm:text-base text-muted-light leading-relaxed">
-                  &ldquo;{t("quote")}&rdquo;
-                </blockquote>
-              </div>
+            {/* Below Image Metadata Bar */}
+            <div className="mt-4 pt-4 border-t border-white/[0.08] flex items-baseline justify-between font-mono text-[11px] uppercase tracking-[0.18em] text-platinum">
+              <span>{t("name")}</span>
+              <span className="text-platinum-light">{t("experience")}</span>
             </div>
           </div>
 
-          {/* Biography & Philosophy Column */}
+          {/* Right Column — Biography, Editorial Quote & 3 Pillars (lg:col-span-7 space-y-10) */}
           <div className="lg:col-span-7 space-y-10">
-            <div className="space-y-6 text-base sm:text-lg text-muted font-light leading-relaxed">
-              <p className="text-white font-normal text-xl sm:text-2xl font-serif">
-                {t("bio1")}
-              </p>
+            {/* Headline */}
+            <h2 className="text-3xl sm:text-5xl font-light tracking-[-0.03em] leading-[1.12] text-white">
+              {t("headlinePrefix")}
+              <span className="font-serif italic font-normal text-white/90">
+                {t("headlineHighlight")}
+              </span>
+              {t("headlineSuffix")}
+            </h2>
+
+            {/* Editorial Pull-Quote */}
+            <blockquote className="border-l border-platinum/40 pl-6 py-1 font-serif italic text-xl sm:text-2xl text-neutral-200 leading-relaxed">
+              &ldquo;{t("quote")}&rdquo;
+            </blockquote>
+
+            {/* Biography Prose */}
+            <div className="text-sm sm:text-base text-neutral-300 font-light leading-relaxed space-y-4">
+              <p>{t("bio1")}</p>
               <p>{t("bio2")}</p>
             </div>
 
-            {/* 4 Philosophy Pillars */}
-            <div className="border-t border-border pt-6 sm:pt-8 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-              <div className="border border-border p-4 sm:p-6 bg-elevated/40 rounded-[2px]">
-                <span className="font-serif text-gold text-base sm:text-lg block mb-1.5 sm:mb-2">/01</span>
-                <h4 className="font-serif text-base sm:text-lg text-white font-normal mb-1.5 sm:mb-2">
+            {/* The 3 Philosophy Pillars */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.08] pt-0">
+              {/* Pillar 1 */}
+              <div className="p-6 first:pl-0 last:pr-0">
+                <span className="font-mono text-[10px] text-platinum tracking-[0.2em] block mb-2">
+                  {t("pillar1Tag")}
+                </span>
+                <h3 className="text-lg font-normal text-white mb-2">
                   {t("pillar1Title")}
-                </h4>
-                <p className="text-xs text-muted leading-relaxed font-light">
+                </h3>
+                <p className="text-xs text-neutral-400 font-light leading-relaxed">
                   {t("pillar1Desc")}
                 </p>
               </div>
 
-              <div className="border border-border p-4 sm:p-6 bg-elevated/40 rounded-[2px]">
-                <span className="font-serif text-gold text-base sm:text-lg block mb-1.5 sm:mb-2">/02</span>
-                <h4 className="font-serif text-base sm:text-lg text-white font-normal mb-1.5 sm:mb-2">
+              {/* Pillar 2 */}
+              <div className="p-6 first:pl-0 last:pr-0">
+                <span className="font-mono text-[10px] text-platinum tracking-[0.2em] block mb-2">
+                  {t("pillar2Tag")}
+                </span>
+                <h3 className="text-lg font-normal text-white mb-2">
                   {t("pillar2Title")}
-                </h4>
-                <p className="text-xs text-muted leading-relaxed font-light">
+                </h3>
+                <p className="text-xs text-neutral-400 font-light leading-relaxed">
                   {t("pillar2Desc")}
                 </p>
               </div>
 
-              <div className="border border-border p-4 sm:p-6 bg-elevated/40 rounded-[2px]">
-                <span className="font-serif text-gold text-base sm:text-lg block mb-1.5 sm:mb-2">/03</span>
-                <h4 className="font-serif text-base sm:text-lg text-white font-normal mb-1.5 sm:mb-2">
+              {/* Pillar 3 */}
+              <div className="p-6 first:pl-0 last:pr-0">
+                <span className="font-mono text-[10px] text-platinum tracking-[0.2em] block mb-2">
+                  {t("pillar3Tag")}
+                </span>
+                <h3 className="text-lg font-normal text-white mb-2">
                   {t("pillar3Title")}
-                </h4>
-                <p className="text-xs text-muted leading-relaxed font-light">
+                </h3>
+                <p className="text-xs text-neutral-400 font-light leading-relaxed">
                   {t("pillar3Desc")}
                 </p>
               </div>
-
-              <div className="border border-border p-4 sm:p-6 bg-elevated/40 rounded-[2px]">
-                <span className="font-serif text-gold text-base sm:text-lg block mb-1.5 sm:mb-2">/04</span>
-                <h4 className="font-serif text-base sm:text-lg text-white font-normal mb-1.5 sm:mb-2">
-                  {t("pillar4Title")}
-                </h4>
-                <p className="text-xs text-muted leading-relaxed font-light">
-                  {t("pillar4Desc")}
-                </p>
-              </div>
-            </div>
-
-            {/* CTA Trigger */}
-            <div className="pt-2 sm:pt-4">
-              <Button
-                variant="primary"
-                size="md"
-                onClick={handleApply}
-                className="w-full sm:w-auto text-center justify-center"
-              >
-                {common("cta")}
-              </Button>
             </div>
           </div>
         </div>

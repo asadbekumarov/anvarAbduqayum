@@ -1,21 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
-import { SectionHeader } from "@/components/ui/SectionHeader";
-import {
-  Tabs,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/Tabs";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "@/components/ui/Accordion";
-import { Button } from "@/components/ui/Button";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
 
 interface StageItemRaw {
@@ -35,13 +22,23 @@ export function Stages({ onOpenApply }: StagesProps) {
   const { openApply } = useApplyModal();
   const handleApply = onOpenApply || openApply;
   const t = useTranslations("stages");
+  const locale = useLocale();
+  const isRu = locale === "ru";
 
   const [activeTab, setActiveTab] = useState<string>("tab-systematization");
-  const [openItem, setOpenItem] = useState<string>("");
+  const [openItem, setOpenItem] = useState<string>("sys-1");
 
   const tabItems = [
-    { id: "tab-systematization", label: t("tab1") },
-    { id: "tab-mentorship", label: t("tab2") },
+    {
+      id: "tab-systematization",
+      direction: t("direction1"),
+      title: t("tab1"),
+    },
+    {
+      id: "tab-mentorship",
+      direction: t("direction2"),
+      title: t("tab2"),
+    },
   ];
 
   const systematizationItems = (
@@ -69,213 +66,190 @@ export function Stages({ onOpenApply }: StagesProps) {
       ? systematizationItems
       : mentorshipItems;
 
-  const currentIntro =
-    activeTab === "tab-systematization"
-      ? {
-          title: t("introSmallTitle"),
-          desc: t("introSmallDesc"),
-          badge: "B2B BOSQICHLAR",
-        }
-      : {
-          title: t("introCorporateTitle"),
-          desc: t("introCorporateDesc"),
-          badge: "MASSHTABLASH",
-        };
+  const toggleItem = (id: string) => {
+    setOpenItem((prev) => (prev === id ? "" : id));
+  };
 
   return (
     <section
       id="bosqichlar"
-      aria-label="Bosqichlar"
-      className="py-16 sm:py-24 border-b border-border bg-base"
+      aria-label={isRu ? "Методология и этапы" : "Metodologiya va bosqichlar"}
+      className="py-24 sm:py-32 border-b border-white/[0.08] bg-[#0A0A0A] text-[#F5F5F0] relative overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header & Tab Controls */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-10 sm:mb-12">
-          <SectionHeader
-            index="04"
-            kicker={t("kicker")}
-            title={t("title")}
-            description={t("description")}
-            className="mb-0 max-w-3xl"
-          />
-
-          {/* Interactive Animated Tabs Switcher */}
-          <div className="w-full lg:w-auto shrink-0">
-            <Tabs
-              value={activeTab}
-              onValueChange={(val) => {
-                setActiveTab(val);
-                setOpenItem("");
-              }}
-              className="w-full sm:w-auto"
-            >
-              <TabsList className="w-full sm:w-auto grid grid-cols-2 sm:flex sm:flex-row border border-border/80 bg-elevated/70 p-1 rounded-xl gap-1 border-b-0">
-                {tabItems.map((tab) => (
-                  <TabsTrigger
-                    key={tab.id}
-                    value={tab.id}
-                    className="w-full flex items-center justify-center text-center py-2.5 px-2 sm:px-5 text-[11px] sm:text-xs uppercase tracking-normal sm:tracking-wider font-medium transition-all text-muted hover:text-white data-[state=active]:text-base data-[state=active]:bg-gold data-[state=active]:font-semibold rounded-lg shadow-sm whitespace-normal sm:whitespace-nowrap leading-tight sm:leading-normal min-h-[44px]"
-                  >
-                    {tab.label}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
-            </Tabs>
-          </div>
-        </div>
-
-        {/* Tab Intro Highlight Card */}
-        <div className="mb-8 p-5 sm:p-6 rounded-2xl border border-gold/25 bg-gradient-to-r from-elevated/90 via-base to-elevated/90 relative overflow-hidden backdrop-blur-xs">
-          <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-gold/50 to-transparent" />
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <span className="text-[10px] font-sans uppercase tracking-[0.2em] text-gold font-semibold block mb-1">
-                {currentIntro.badge}
+      <div className="max-w-[1360px] mx-auto px-6 md:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+          {/* Left Column (lg:col-span-5 lg:sticky lg:top-28 — Strategy & Mode Switcher) */}
+          <div className="lg:col-span-5 lg:sticky lg:top-28">
+            {/* Swiss Kicker */}
+            <div className="flex items-center gap-4">
+              <span className="w-8 h-[1px] bg-[#C5A880]" />
+              <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum">
+                {t("kicker")}
               </span>
-              <h3 className="font-serif text-xl sm:text-2xl text-white font-medium">
-                {currentIntro.title}
-              </h3>
-              <p className="mt-1.5 text-xs sm:text-sm text-neutral-300 font-light max-w-3xl leading-relaxed">
-                {currentIntro.desc}
-              </p>
             </div>
-            <button
-              type="button"
-              onClick={() => handleApply(currentIntro.title)}
-              className="shrink-0 self-stretch sm:self-center inline-flex items-center justify-center gap-2 px-4 py-2.5 sm:py-2 rounded-lg text-xs font-medium border border-gold/40 text-gold bg-gold/10 hover:bg-gold hover:text-base transition-all duration-200"
-            >
-              <span>{t("stageAction")}</span>
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
-            </button>
-          </div>
-        </div>
 
-        {/* 6-Step Smooth Accordion Container */}
-        <div
-          id={`panel-${activeTab}`}
-          role="tabpanel"
-          aria-labelledby={`tab-${activeTab}`}
-        >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12 }}
-              transition={{ duration: 0.35, ease: EASE_SWISS }}
-            >
-              <Accordion
-                type="single"
-                collapsible
-                value={openItem}
-                onValueChange={setOpenItem}
-                className="relative divide-y divide-border border-y border-border"
-              >
-                {currentItems.map((item) => (
-                  <AccordionItem
-                    key={item.id}
-                    value={item.id}
-                    className="relative transition-colors duration-300 border-none data-[state=open]:bg-elevated/40 hover:bg-elevated/20 group/accordion-item"
+            {/* H2 Heading (Sans + Serif Italic mix) */}
+            <h2 className="text-3xl sm:text-5xl font-light tracking-[-0.03em] leading-[1.1] text-white mt-6">
+              {t("titlePrefix")}
+              <span className="font-serif italic font-normal text-white/90">
+                {t("titleHighlight")}
+              </span>
+            </h2>
+
+            {/* Description */}
+            <p className="text-sm sm:text-base text-neutral-300 font-light leading-relaxed mt-5">
+              {t("description")}
+            </p>
+
+            {/* Bespoke Architectural Tabs */}
+            <div className="mt-10 flex flex-col border-t border-white/[0.08]">
+              {tabItems.map((tab) => {
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => {
+                      setActiveTab(tab.id);
+                      setOpenItem(tab.id === "tab-systematization" ? "sys-1" : "mentor-1");
+                    }}
+                    className={`group flex items-center justify-between py-5 px-4 border-b border-white/[0.08] text-left transition-all rounded-none cursor-pointer w-full ${
+                      isActive
+                        ? "bg-gradient-to-r from-[#0B132B]/60 to-white/[0.02] border-l-2 border-l-[#C5A880] pl-5 text-white"
+                        : "text-neutral-400 hover:text-white hover:bg-[#0B132B]/20"
+                    }`}
                   >
-                    <AccordionTrigger className="w-full flex items-center justify-between py-4 sm:py-6 px-3 sm:px-6 text-left cursor-pointer hover:no-underline group outline-none">
-                      <div className="flex items-center gap-3 sm:gap-6 min-w-0 pr-2 sm:pr-4">
-                        <span className="font-serif text-base sm:text-xl text-gold tracking-widest shrink-0 font-medium">
+                    <div>
+                      <span className="font-mono text-[10px] uppercase tracking-[0.2em] block text-platinum mb-1">
+                        {tab.direction}
+                      </span>
+                      <span className="text-base sm:text-lg font-normal tracking-tight">
+                        {tab.title}
+                      </span>
+                    </div>
+                    <span className="font-mono text-xs transition-transform duration-300 group-hover:translate-x-1">
+                      →
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Right Column (lg:col-span-7 — Sharp Accordion Blueprint) */}
+          <div className="lg:col-span-7">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.35, ease: EASE_SWISS }}
+                className="border-t border-white/[0.08]"
+              >
+                {currentItems.map((item) => {
+                  const isOpen = openItem === item.id;
+                  return (
+                    <div
+                      key={item.id}
+                      className="border-b border-white/[0.08] transition-colors"
+                    >
+                      <button
+                        type="button"
+                        onClick={() => toggleItem(item.id)}
+                        aria-expanded={isOpen}
+                        className="w-full py-7 flex items-baseline justify-between gap-6 text-left group rounded-none cursor-pointer"
+                      >
+                        <span className="font-mono text-xs text-platinum group-hover:text-white shrink-0 w-12 transition-colors">
                           /{item.step}
                         </span>
-                        <span className="font-serif text-sm sm:text-xl text-white font-normal group-hover:text-gold transition-colors leading-snug break-words">
+                        <span className="text-xl sm:text-2xl font-light tracking-[-0.02em] text-white group-hover:translate-x-1 transition-transform flex-1">
                           {item.title}
                         </span>
-                      </div>
-                    </AccordionTrigger>
+                        <span className="font-mono text-lg text-platinum group-hover:text-white transition-transform shrink-0">
+                          {isOpen ? "−" : "+"}
+                        </span>
+                      </button>
 
-                    <AccordionContent className="px-3 sm:px-6 pb-6 pt-0 text-neutral-300 font-light leading-relaxed pl-8 sm:pl-16">
-                      <div className="space-y-4">
-                        {/* Summary description */}
-                        <p className="text-xs sm:text-base text-neutral-200 leading-relaxed">
-                          {item.description}
-                        </p>
-
-                        {/* Structured Checklist Points from ilxombegimqulov.uz */}
-                        {item.points && item.points.length > 0 && (
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3 pt-2">
-                            {item.points.map((pt, pIdx) => (
-                              <div
-                                key={pIdx}
-                                className="flex items-start gap-2.5 p-2.5 sm:p-3 rounded-xl bg-base/80 border border-border/80 hover:border-gold/30 transition-colors"
-                              >
-                                <span className="text-gold text-xs shrink-0 mt-0.5" aria-hidden="true">
-                                  ❖
-                                </span>
-                                <span className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
-                                  {pt}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-
-                        {/* Action link */}
-                        <div className="pt-2">
-                          <button
-                            type="button"
-                            onClick={() => handleApply(`${item.title} bosqichi`)}
-                            className="inline-flex items-center gap-2 text-xs font-sans uppercase tracking-wider text-gold hover:text-gold-light group/btn font-medium transition-colors"
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.35, ease: EASE_SWISS }}
+                            className="overflow-hidden"
                           >
-                            <span>{t("stageAction")}</span>
-                            <svg
-                              className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-1"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </motion.div>
-          </AnimatePresence>
-        </div>
+                            <div className="pb-8 pl-0 sm:pl-12 pr-4 space-y-4">
+                              <p className="text-sm sm:text-base text-neutral-300 font-light leading-relaxed">
+                                {item.description}
+                              </p>
 
-        {/* Bottom Contextual CTA Band */}
-        <div className="mt-10 sm:mt-12 p-5 sm:p-8 border border-gold/30 bg-gradient-to-r from-elevated via-[#151515] to-elevated flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 sm:gap-6 rounded-2xl relative overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
-          <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-gold to-transparent opacity-70" />
-          <div className="relative z-10 max-w-2xl">
-            <h4 className="font-serif text-lg sm:text-2xl text-white font-medium">
-              {t("ctaBandTitle")}
-            </h4>
-            <p className="text-xs sm:text-sm text-neutral-300 mt-1 sm:mt-1.5 font-light leading-relaxed">
-              {t("ctaBandDesc")}
-            </p>
+                              {item.points && item.points.length > 0 && (
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                                  {item.points.map((pt, pIdx) => (
+                                    <div key={pIdx} className="flex items-start gap-2.5">
+                                      <span className="text-platinum/60 font-mono text-xs shrink-0 mt-0.5">
+                                        —
+                                      </span>
+                                      <span className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
+                                        {pt}
+                                      </span>
+                                    </div>
+                                  ))}
+                                </div>
+                              )}
+
+                              <div className="pt-2">
+                                <button
+                                  type="button"
+                                  onClick={() => handleApply(`${item.title} bosqichi`)}
+                                  className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-platinum hover:text-white transition-colors cursor-pointer group/btn"
+                                >
+                                  <span>{t("stageAction")}</span>
+                                  <span className="transition-transform duration-300 group-hover/btn:translate-x-1">
+                                    →
+                                  </span>
+                                </button>
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                })}
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Bottom Contextual CTA Monolith */}
+            <div className="mt-12 p-8 border border-white/[0.08] bg-gradient-to-r from-[#070D1F] via-[#0B132B]/40 to-[#0A0A0A] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 rounded-none shadow-[0_15px_35px_rgba(7,13,31,0.4)]">
+              <div className="max-w-xl">
+                <h3 className="font-serif italic text-xl sm:text-2xl text-white font-normal">
+                  {t("ctaBandTitle")}
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-300 mt-2 font-light leading-relaxed">
+                  {t("ctaBandDesc")}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() =>
+                  handleApply(
+                    activeTab === "tab-systematization"
+                      ? "Biznesni tizimlashtirish bosqichlari"
+                      : "Shogirdlik va mentorlik bosqichlari"
+                  )
+                }
+                className="shrink-0 inline-flex items-center gap-3 bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] px-6 py-3.5 text-xs font-mono uppercase tracking-[0.16em] rounded-none transition-colors duration-300 cursor-pointer group/cta"
+              >
+                <span>{t("ctaBandButton")}</span>
+                <span className="transition-transform duration-300 group-hover/cta:translate-x-1">
+                  →
+                </span>
+              </button>
+            </div>
           </div>
-          <Button
-            variant="primary"
-            size="md"
-            onClick={() => handleApply("Biznesni tizimlashtirish bosqichlari")}
-            className="w-full sm:w-auto shrink-0 justify-center bg-gold hover:bg-gold-light text-[#0A0A0A] font-medium shadow-[0_0_20px_rgba(197,168,128,0.25)] rounded-lg transition-all"
-          >
-            <span>{t("ctaBandButton")}</span>
-            <svg
-              className="w-4 h-4 ml-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          </Button>
         </div>
       </div>
     </section>

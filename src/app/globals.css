@@ -14,11 +14,17 @@
 .outfit,
 [class*="outfit-"],
 .font-outfit,
-.font-serif,
-.font-sans,
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-outfit), "Outfit", sans-serif !important;
+.font-sans {
+  font-family: var(--font-sans), var(--font-outfit), "Outfit", sans-serif;
   font-optical-sizing: auto;
+}
+
+.font-serif {
+  font-family: var(--font-serif), "Cormorant Garamond", serif !important;
+}
+
+.font-mono {
+  font-family: var(--font-mono), "JetBrains Mono", monospace !important;
 }
 
 html {
@@ -34,10 +40,16 @@ body {
 }
 
 :root {
+  --font-sans: var(--font-sans, "Outfit", sans-serif);
+  --font-serif: var(--font-serif, "Cormorant Garamond", serif);
+  --font-mono: var(--font-mono, "JetBrains Mono", monospace);
   --color-base: #0A0A0A;
   --color-elevated: #141414;
   --color-border: #262626;
   --color-gold: #C5A880;
+  --color-champagne: #D8C29D;
+  --color-navy: #0B132B;
+  --color-platinum: #94A3B8;
   --color-muted: #737373;
   --color-primary-50: var(--color-neutral-50);
   --color-primary-100: var(--color-neutral-100);
@@ -788,7 +800,7 @@ body {
   color: #FFFFFF;
   min-height: 100vh;
   overflow-x: hidden;
-  font-family: var(--font-outfit), "Outfit", sans-serif;
+  font-family: var(--font-sans), var(--font-outfit), "Outfit", sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -842,7 +854,7 @@ body {
 
 /* Subtle focus ring */
 :focus-visible {
-  outline: 1px solid #C5A880;
+  outline: 1px solid rgba(255, 255, 255, 0.4);
   outline-offset: 2px;
 }
 

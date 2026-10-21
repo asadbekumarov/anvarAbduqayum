@@ -63,9 +63,9 @@
 
 ---
 
-## 4. CHT Mamlakatlari Bo'yicha Biznes-Tur & Tadbirlarimiz
-- **Sarlavha**: "CHT mamlakatlari bo'yicha biznes-tur"
-- **Kirish matni**: "CHT mamlakatlari bo'ylab noyob tur doirasida biznesingiz uchun yangi imkoniyatlarni oching. Sizni amaliy maslahatlar, master-klasslar, ilhomlantiruvchi muvaffaqiyat hikoyalari va mintaqa tadbirkorlari bilan uchrashuvlar kutmoqda."
+## 4. Markaziy Osiyo va MDH Bo'yicha Biznes-Tur & Tadbirlarimiz
+- **Sarlavha**: "Markaziy Osiyo bo'ylab amaliy biznes-turlar"
+- **Kirish matni**: "O'zbekiston, Qozog'iston, Qirg'iziston va Tojikistonning yirik biznes markazlarida minglab tadbirkorlar ishtirokida o'tkazilgan intensiv seminarlar va yopiq uchrashuvlar arxivi."
 - **Shaharlar va seminarlar**:
   1. **Shymkent (Шимкент)**: Ilhom Begimqulov bilan 3 kunlik intensiv seminar. Biznesni o‘stirish va tizimlashtirish bo‘yicha amaliy bilimlar.
   2. **Osh (Ош)**: Seminar 4 ta davlat, 8 ta shaharda bo‘lib o‘tadi. Fokus: daromad, avtomatlashtirish va kuchli networking.

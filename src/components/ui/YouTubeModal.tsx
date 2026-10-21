@@ -64,7 +64,7 @@ export function YouTubeModal({
             type="button"
             onClick={onClose}
             aria-label="Videoni yopish"
-            className="p-1.5 sm:p-2 text-muted hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold shrink-0"
+            className="p-1.5 sm:p-2 text-muted hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 shrink-0"
           >
             <svg
               className="w-5 h-5 sm:w-6 sm:h-6"
@@ -82,7 +82,7 @@ export function YouTubeModal({
         <div className="relative aspect-video w-full bg-elevated border border-border-subtle overflow-hidden flex items-center justify-center">
           {isPlaceholder ? (
             <div className="p-8 text-center max-w-md space-y-4">
-              <div className="w-12 h-12 border border-gold/40 mx-auto flex items-center justify-center text-gold">
+              <div className="w-12 h-12 border border-white/30 mx-auto flex items-center justify-center text-white">
                 <svg
                   className="w-6 h-6"
                   fill="none"

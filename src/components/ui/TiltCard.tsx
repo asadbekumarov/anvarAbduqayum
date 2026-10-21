@@ -37,7 +37,7 @@ export function TiltCard({
   const spotlightBg = useTransform(
     [mousePixelX, mousePixelY],
     ([x, y]) =>
-      `radial-gradient(500px circle at ${x}px ${y}px, rgba(212, 175, 55, 0.12), transparent 40%)`
+      `radial-gradient(500px circle at ${x}px ${y}px, rgba(148, 163, 184, 0.08), transparent 45%)`
   );
 
   const spotlightBorderMask = useTransform(
@@ -54,7 +54,7 @@ export function TiltCard({
       {...props}
     >
       <div className="relative w-full h-full rounded-[inherit] group">
-        {/* Dynamic mouse-tracking radial Gold Spotlight glow on surface */}
+        {/* Dynamic mouse-tracking radial subtle platinum glow on surface */}
         {isHoverSupported && (
           <motion.div
             aria-hidden="true"
@@ -65,11 +65,11 @@ export function TiltCard({
           />
         )}
 
-        {/* Dynamic Gold Spotlight Border Glow */}
+        {/* Dynamic subtle platinum border glow */}
         {isHoverSupported && (
           <motion.div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 rounded-[inherit] border border-gold/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-20"
+            className="pointer-events-none absolute inset-0 rounded-[inherit] border border-[#94A3B8]/25 opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-20"
             style={{
               maskImage: spotlightBorderMask,
               WebkitMaskImage: spotlightBorderMask,

@@ -20,8 +20,8 @@ const textareaVariants = cva(
     // hover
     "hover:border-[#383838]",
     // focus
-    "focus:border-gold focus:ring-1 focus:ring-gold/30",
-    "focus-visible:border-gold focus-visible:ring-1 focus-visible:ring-gold/30",
+    "focus:border-white/50 focus:ring-1 focus:ring-white/20",
+    "focus-visible:border-white/50 focus-visible:ring-1 focus-visible:ring-white/20",
     // disabled
     "disabled:cursor-not-allowed disabled:opacity-50",
     // aria-[invalid=true]

@@ -199,7 +199,7 @@ export function ApplyModal({ isOpen, onClose }: ApplyModalProps) {
           type="button"
           onClick={onClose}
           aria-label={common("close")}
-          className="absolute top-6 right-6 p-2 text-muted hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold"
+          className="absolute top-6 right-6 p-2 text-muted hover:text-white transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
         >
           <svg
             className="w-6 h-6"
@@ -230,7 +230,7 @@ export function ApplyModal({ isOpen, onClose }: ApplyModalProps) {
         {/* Success View */}
         {isSuccess ? (
           <div className="py-8 space-y-6 text-center border-t border-border">
-            <div className="w-12 h-12 border border-gold mx-auto flex items-center justify-center text-gold">
+            <div className="w-12 h-12 border border-white/20 mx-auto flex items-center justify-center text-white">
               <svg
                 className="w-6 h-6"
                 fill="none"
@@ -306,7 +306,7 @@ export function ApplyModal({ isOpen, onClose }: ApplyModalProps) {
                 className={`w-full py-2.5 bg-transparent border-b text-sm text-white placeholder-muted-dark focus:outline-none transition-colors rounded-none ${
                   errors.name
                     ? "border-red-500 focus:border-red-500"
-                    : "border-border focus:border-gold"
+                    : "border-border focus:border-white/50"
                 }`}
               />
               {errors.name && (
@@ -334,7 +334,7 @@ export function ApplyModal({ isOpen, onClose }: ApplyModalProps) {
                 className={`w-full py-2.5 bg-transparent border-b text-sm font-mono text-white placeholder-muted-dark focus:outline-none transition-colors rounded-none ${
                   errors.phone
                     ? "border-red-500 focus:border-red-500"
-                    : "border-border focus:border-gold"
+                    : "border-border focus:border-white/50"
                 }`}
               />
               {errors.phone && (
@@ -362,7 +362,7 @@ export function ApplyModal({ isOpen, onClose }: ApplyModalProps) {
                 className={`w-full py-2.5 bg-transparent border-b text-sm text-white placeholder-muted-dark focus:outline-none transition-colors rounded-none ${
                   errors.business
                     ? "border-red-500 focus:border-red-500"
-                    : "border-border focus:border-gold"
+                    : "border-border focus:border-white/50"
                 }`}
               />
               {errors.business && (
@@ -391,7 +391,7 @@ export function ApplyModal({ isOpen, onClose }: ApplyModalProps) {
                 className={`w-full py-2.5 bg-transparent border-b text-sm text-white placeholder-muted-dark focus:outline-none transition-colors resize-none rounded-none ${
                   errors.question
                     ? "border-red-500 focus:border-red-500"
-                    : "border-border focus:border-gold"
+                    : "border-border focus:border-white/50"
                 }`}
               />
               {errors.question && (

@@ -20,12 +20,12 @@ export function SectionHeader({
     <div className={cn("mb-12 md:mb-16", className)}>
       <div className="flex items-center gap-4 mb-3">
         {index && (
-          <span className="font-serif text-gold text-sm tracking-widest font-semibold">
+          <span className="font-mono text-platinum text-xs tracking-widest">
             /{index}
           </span>
         )}
         {kicker && (
-          <span className="text-[11px] font-sans uppercase tracking-[0.2em] text-muted font-medium">
+          <span className="text-[11px] font-sans uppercase tracking-[0.2em] text-platinum font-medium">
             {kicker}
           </span>
         )}
@@ -34,7 +34,7 @@ export function SectionHeader({
         {title}
       </h2>
       {description && (
-        <p className="mt-4 text-base sm:text-lg text-muted max-w-2xl font-light leading-relaxed">
+        <p className="mt-4 text-base sm:text-lg text-platinum-light max-w-2xl font-light leading-relaxed">
           {description}
         </p>
       )}

@@ -1,73 +1,70 @@
 "use client";
 
 import React from "react";
-import { useTranslations } from "next-intl";
-import { SectionHeader } from "@/components/ui/SectionHeader";
+import Image from "next/image";
+import { useTranslations, useLocale } from "next-intl";
 import { Marquee } from "@/components/ui/Marquee";
 import { siteMedia } from "@/config/siteMedia";
 
 export function Partners() {
   const t = useTranslations("partners");
+  const locale = useLocale();
+  const isRu = locale === "ru";
   const partners = siteMedia.partners;
 
   return (
     <section
       id="hamkorlar"
-      aria-label="Hamkorlar"
-      className="py-20 sm:py-24 border-b border-border bg-base overflow-hidden relative"
+      aria-label={isRu ? "Партнеры" : "Hamkorlar"}
+      className="bg-[#0A0A0A] border-t border-b border-white/[0.07] py-16 sm:py-20 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-        <SectionHeader
-          index="05"
-          kicker={t("kicker")}
-          title={t("title")}
-          className="mb-0"
-        />
+      {/* Minimalist Single Bar Header Row */}
+      <div className="max-w-[1360px] mx-auto px-6 md:px-12 mb-10 sm:mb-12">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center">
+            <span className="w-8 h-[1px] bg-[#C5A880] inline-block mr-4" />
+            <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum">
+              {t("kicker")}
+            </span>
+          </div>
+          <span className="font-mono text-xs text-platinum tracking-wider">
+            {t("count")}
+          </span>
+        </div>
       </div>
 
-      {/* Relative Marquee Container with Left & Right Gradient Fade Masks */}
-      <div className="relative w-full">
-        {/* Left & Right Gradient Fade Masks */}
-        <div
-          className="absolute inset-y-0 left-0 w-10 sm:w-28 lg:w-48 bg-gradient-to-r from-base via-base/90 to-transparent pointer-events-none z-20"
-          aria-hidden="true"
-        />
-        <div
-          className="absolute inset-y-0 right-0 w-10 sm:w-28 lg:w-48 bg-gradient-to-l from-base via-base/90 to-transparent pointer-events-none z-20"
-          aria-hidden="true"
-        />
+      {/* Marquee Track with Edge Fade Masks */}
+      <div className="relative w-full border-y border-white/[0.08] py-4 bg-[#0B132B]/20 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+        <Marquee speed={36} pauseOnHover innerClassName="gap-4 sm:gap-6 pr-4 sm:pr-6">
+          {partners.map((p, idx) => (
+            <div
+              key={`${p.id}-${idx}`}
+              className="flex items-center gap-4 sm:gap-5 px-5 sm:px-6 py-3.5 bg-[#0F172A]/40 hover:bg-[#0B132B]/70 border border-white/[0.08] hover:border-platinum/30 transition-all duration-300 rounded-none shrink-0 group cursor-default"
+            >
+              {/* Crisp High-Contrast Logo Badge */}
+              <div className="w-20 h-14 sm:w-24 sm:h-16 bg-white flex items-center justify-center p-2 rounded-none shrink-0 overflow-hidden shadow-sm">
+                <Image
+                  src={p.logo}
+                  alt={p.name}
+                  width={140}
+                  height={80}
+                  loading="lazy"
+                  className="max-h-full max-w-full object-contain scale-[1.25] group-hover:scale-[1.35] transition-transform duration-300"
+                />
+              </div>
 
-        {/* Row 1: Forward Marquee */}
-        <div className="border-y border-border py-4 sm:py-6 bg-elevated/20">
-          <Marquee speed={38}>
-            {partners.map((p) => (
-              <div
-                key={`r1-${p.id}`}
-                className="h-14 sm:h-16 px-5 sm:px-8 flex items-center justify-center border border-border bg-base hover:border-gold hover:bg-elevated/80 hover:shadow-[0_0_25px_rgba(197,168,128,0.16)] transition-all duration-300 shrink-0 rounded-[2px] group"
-              >
-                <span className="font-serif text-xs sm:text-sm tracking-wider uppercase text-muted group-hover:text-gold transition-colors duration-200">
+              {/* Bold Readable Brand Name & Category */}
+              <div className="flex flex-col justify-center pr-3 min-w-[120px] sm:min-w-[140px]">
+                <span className="text-base sm:text-lg font-medium text-white tracking-tight group-hover:text-white transition-colors whitespace-nowrap">
                   {p.name}
                 </span>
-              </div>
-            ))}
-          </Marquee>
-        </div>
-
-        {/* Row 2: Reverse Marquee */}
-        <div className="border-b border-border py-4 sm:py-6 bg-elevated/40">
-          <Marquee speed={44} reverse>
-            {[...partners].reverse().map((p) => (
-              <div
-                key={`r2-${p.id}`}
-                className="h-14 sm:h-16 px-5 sm:px-8 flex items-center justify-center border border-border bg-base hover:border-gold hover:bg-elevated/80 hover:shadow-[0_0_25px_rgba(197,168,128,0.16)] transition-all duration-300 shrink-0 rounded-[2px] group"
-              >
-                <span className="font-serif text-xs sm:text-sm tracking-wider uppercase text-muted group-hover:text-gold transition-colors duration-200">
-                  {p.name}
+                <span className="font-mono text-[10px] text-platinum-light uppercase tracking-widest mt-0.5 whitespace-nowrap">
+                  {isRu ? "B2B Партнер" : "B2B Hamkor"}
                 </span>
               </div>
-            ))}
-          </Marquee>
-        </div>
+            </div>
+          ))}
+        </Marquee>
       </div>
     </section>
   );

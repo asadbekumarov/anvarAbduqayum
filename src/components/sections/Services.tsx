@@ -1,10 +1,7 @@
 "use client";
 
 import React from "react";
-import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/Button";
-import { TiltCard } from "@/components/ui/TiltCard";
-import { Badge } from "@/components/ui/badge";
+import { useTranslations, useLocale } from "next-intl";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
 
 interface ServiceItem {
@@ -21,205 +18,146 @@ export function Services({ onOpenApply }: ServicesProps) {
   const { openApply } = useApplyModal();
   const handleApply = onOpenApply || openApply;
   const t = useTranslations("services");
+  const locale = useLocale();
+  const isRu = locale === "ru";
   const items = t.raw("items") as ServiceItem[];
 
   return (
     <section
       id="xizmatlar"
-      aria-label="Xizmatlar"
-      className="py-20 sm:py-28 border-b border-border bg-base relative overflow-hidden"
+      aria-label={isRu ? "Архитектура услуг" : "Xizmatlar arxitekturasi"}
+      className="py-24 sm:py-32 border-b border-white/[0.08] bg-[#0A0A0A] text-[#F5F5F0] relative overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Modern 2-Column Responsive Header with High-Conversion Diagnostic Card */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch mb-14 sm:mb-16">
-          {/* Left Column: Heading, Context & Trust Pillars */}
-          <div className="lg:col-span-7 flex flex-col justify-between">
-            <div>
-              <div className="flex items-center gap-3 mb-3">
-                <span className="font-serif text-gold text-sm tracking-widest font-semibold">
-                  /02
-                </span>
-                <span className="text-[11px] font-sans uppercase tracking-[0.2em] text-muted font-medium">
-                  {t("kicker")}
-                </span>
-                <span className="inline-block w-1 h-1 rounded-full bg-gold/60" />
-                <span className="text-[11px] font-sans uppercase tracking-wider text-gold/80 font-medium">
-                  {t("tagDirection")}
-                </span>
-              </div>
-
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight text-white max-w-2xl leading-[1.15]">
-                {t("title")}
-              </h2>
-
-              <p className="mt-4 text-base sm:text-lg text-muted max-w-2xl font-light leading-relaxed">
-                {t("description")}
-              </p>
-            </div>
-
-            {/* Credibility / Feature Tags */}
-            <div className="mt-8 pt-6 border-t border-border/60 flex flex-wrap items-center gap-2.5">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs text-muted-light bg-elevated/70 border border-border">
-                <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
-                {t("tagClients")}
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs text-muted-light bg-elevated/70 border border-border">
-                <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
-                {t("tagPractice")}
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs text-muted-light bg-elevated/70 border border-border">
-                <span className="w-1.5 h-1.5 rounded-full bg-gold shrink-0" />
-                {t("consultPerk2")}
+      <div className="max-w-[1360px] mx-auto px-6 md:px-12">
+        {/* Top Header & "Bepul Diagnostika" Bespoke Monolith */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end mb-20">
+          {/* Left Column (lg:col-span-7 — Section Intro) */}
+          <div className="lg:col-span-7">
+            {/* Swiss Kicker */}
+            <div className="flex items-center gap-4">
+              <span className="w-8 h-[1px] bg-[#C5A880]" />
+              <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum">
+                {t("kicker")}
               </span>
             </div>
+
+            {/* H2 Heading (Sans + Serif Italic mix) */}
+            <h2 className="text-3xl sm:text-5xl font-light tracking-[-0.03em] leading-[1.1] text-white mt-6">
+              {t("titlePrefix")}
+              <span className="font-serif italic font-normal text-white/90">
+                {t("titleHighlight")}
+              </span>
+            </h2>
+
+            {/* Subheadline */}
+            <p className="text-base text-neutral-300 font-light leading-relaxed max-w-xl mt-5">
+              {t("description")}
+            </p>
           </div>
 
-          {/* Right Column: Diagnostic & Quick Consultation Card (eliminates the empty void & solves UX) */}
+          {/* Right Column (lg:col-span-5 — "Bepul Diagnostika" Bespoke Midnight Navy Monolith) */}
           <div className="lg:col-span-5">
-            <div className="h-full relative overflow-hidden rounded-2xl border border-gold/30 bg-gradient-to-b from-[#181818] via-[#121212] to-[#0A0A0A] p-6 sm:p-7 shadow-[0_12px_40px_rgba(0,0,0,0.5)] flex flex-col justify-between group">
-              {/* Subtle top ambient gold light ray */}
-              <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-gold/80 to-transparent opacity-80" />
-              <div className="absolute -top-12 -right-12 w-44 h-44 bg-gold/10 blur-3xl pointer-events-none rounded-full" />
-
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <Badge
-                    variant="neutral"
-                    appearance="outline"
-                    size="sm"
-                    className="border-gold/40 text-gold bg-gold/5 uppercase tracking-[0.16em] text-[10px] font-semibold gap-1.5"
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse shrink-0" />
-                    {t("consultCardKicker")}
-                  </Badge>
-                  <span className="text-[11px] text-muted-light font-mono flex items-center gap-1">
-                    <svg className="w-3.5 h-3.5 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                      <circle cx="12" cy="12" r="10" />
-                      <polyline points="12 6 12 12 16 14" />
-                    </svg>
-                    {t("duration")}
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={() => handleApply(t("diagServiceApplyName"))}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handleApply(t("diagServiceApplyName"));
+                }
+              }}
+              aria-label={`${t("diagTitle")} - ${t("diagCta")}`}
+              className="relative bg-gradient-to-br from-[#0F172A]/80 via-[#0B132B]/60 to-[#0A0A0A] border border-white/[0.1] hover:border-platinum/30 p-8 sm:p-10 rounded-none transition-all duration-300 hover:bg-[#0F172A]/90 shadow-[0_15px_35px_rgba(7,13,31,0.45)] cursor-pointer group"
+            >
+              {/* Top Meta Row */}
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-platinum shrink-0" />
+                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-platinum">
+                    {t("diagKicker")}
                   </span>
                 </div>
-
-                <h3 className="font-serif text-xl sm:text-2xl text-white font-medium tracking-tight">
-                  {t("consultCardTitle")}
-                </h3>
-
-                <p className="mt-2.5 text-xs sm:text-sm text-muted-light font-light leading-relaxed">
-                  {t("consultCardDesc")}
-                </p>
+                <span className="font-mono text-xs text-platinum-light">
+                  {t("diagTime")}
+                </span>
               </div>
 
-              <div className="mt-6 pt-5 border-t border-white/[0.08] space-y-4">
-                <Button
-                  variant="primary"
-                  size="md"
-                  className="w-full justify-center group/btn relative overflow-hidden bg-gold hover:bg-gold-light text-[#0A0A0A] font-medium shadow-[0_0_20px_rgba(197,168,128,0.25)] rounded-lg transition-all"
-                  onClick={() => handleApply("Dastlabki bepul konsultatsiya")}
-                >
-                  <span>{t("consultCta")}</span>
-                  <svg
-                    className="w-4 h-4 ml-2 transition-transform duration-200 group-hover/btn:translate-x-1"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                    />
-                  </svg>
-                </Button>
+              {/* Title */}
+              <h3 className="font-serif italic text-2xl sm:text-3xl text-white mt-5">
+                {t("diagTitle")}
+              </h3>
 
-                {/* Micro trust indicators */}
-                <div className="flex items-center justify-between text-[11px] text-muted-light font-light pt-1">
-                  <span className="flex items-center gap-1.5">
-                    <svg className="w-3.5 h-3.5 text-gold shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                    {t("consultPerk1")}
+              {/* Description */}
+              <p className="text-sm text-neutral-300 font-light leading-relaxed mt-3">
+                {t("diagDesc")}
+              </p>
+
+              {/* Bottom Action Row */}
+              <div className="mt-8 pt-5 border-t border-white/[0.08] flex items-center justify-between">
+                <span className="font-mono text-[11px] text-platinum uppercase tracking-wider">
+                  {t("diagPrivacy")}
+                </span>
+                <span className="text-xs font-medium uppercase tracking-[0.15em] text-white flex items-center gap-2">
+                  <span>{t("diagCta")}</span>
+                  <span className="transition-transform duration-300 group-hover:translate-x-1.5">
+                    →
                   </span>
-                  <span className="flex items-center gap-1.5">
-                    <svg className="w-3.5 h-3.5 text-gold shrink-0" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                    {t("consultPerk3")}
-                  </span>
-                </div>
+                </span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* 6 Interactive Service Rows */}
-        <div className="border-t border-border flex flex-col">
+        {/* The 6 Services — Architectural Ledger Rows (Table/List Layout) */}
+        <div className="border-t border-white/[0.08] flex flex-col">
           {items.map((service) => (
-            <TiltCard
+            <div
               key={service.index}
-              className="border-b border-border transition-colors duration-200 hover:bg-elevated/60 group cursor-pointer"
+              role="button"
+              tabIndex={0}
+              onClick={() => handleApply(service.title)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handleApply(service.title);
+                }
+              }}
+              aria-label={`${service.title} - ${t("selectService")}`}
+              className="group relative grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 items-baseline py-9 px-4 sm:px-6 border-b border-white/[0.08] bg-transparent hover:bg-[#0B132B]/20 transition-all duration-300 cursor-pointer rounded-none"
             >
-              <div
-                className="py-5 sm:py-8 px-4 sm:px-6"
-                onClick={() => handleApply(service.title)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    handleApply(service.title);
-                  }
-                }}
-                aria-label={`${service.title} - ${t("selectService")}`}
-              >
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-6 items-start md:items-center">
-                  {/* Index & Title: Flex on mobile, separate grid cells on desktop */}
-                  <div className="flex items-center gap-3 md:contents">
-                    {/* Index Numeral */}
-                    <div className="md:col-span-2">
-                      <span className="font-serif text-xl sm:text-3xl font-light text-gold group-hover:gold-gradient-text transition-colors">
-                        /{service.index}
-                      </span>
-                    </div>
+              {/* Left Subtle Accent on Hover */}
+              <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-white scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top" />
 
-                    {/* Service Title */}
-                    <div className="md:col-span-4">
-                      <h3 className="font-serif text-lg sm:text-2xl text-white font-normal group-hover:text-gold transition-colors">
-                        {service.title}
-                      </h3>
-                    </div>
-                  </div>
-
-                  {/* Service Description */}
-                  <div className="md:col-span-4">
-                    <p className="text-xs sm:text-sm text-muted font-light leading-relaxed group-hover:text-muted-light transition-colors">
-                      {service.description}
-                    </p>
-                  </div>
-
-                  {/* Row Action Button */}
-                  <div className="md:col-span-2 flex md:justify-end pt-1 md:pt-0">
-                    <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium border border-border group-hover:border-gold/50 text-muted-light group-hover:text-gold group-hover:bg-gold/5 transition-all duration-200">
-                      <span>{t("selectService")}</span>
-                      <svg
-                        className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-                        />
-                      </svg>
-                    </span>
-                  </div>
-                </div>
+              {/* Column 1 (lg:col-span-1 — Index) */}
+              <div className="lg:col-span-1">
+                <span className="font-mono text-xs text-platinum group-hover:text-white transition-colors">
+                  /{service.index}
+                </span>
               </div>
-            </TiltCard>
+
+              {/* Column 2 (lg:col-span-4 — Service Title) */}
+              <div className="lg:col-span-4">
+                <h3 className="text-xl sm:text-2xl font-normal tracking-[-0.02em] text-white group-hover:translate-x-1 transition-transform duration-300">
+                  {service.title}
+                </h3>
+              </div>
+
+              {/* Column 3 (lg:col-span-5 — Concrete B2B Description) */}
+              <div className="lg:col-span-5">
+                <p className="text-sm text-neutral-300 font-light leading-relaxed">
+                  {service.description}
+                </p>
+              </div>
+
+              {/* Column 4 (lg:col-span-2 — Minimal Action Trigger) */}
+              <div className="lg:col-span-2 lg:text-right flex lg:justify-end items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-platinum group-hover:text-white transition-colors mt-2 lg:mt-0">
+                <span>{t("selectService")}</span>
+                <span className="transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
+              </div>
+            </div>
           ))}
         </div>
       </div>

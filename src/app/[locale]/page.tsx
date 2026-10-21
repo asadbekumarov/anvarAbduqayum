@@ -1,20 +1,23 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import { setRequestLocale } from "next-intl/server";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
 import { Services } from "@/components/sections/Services";
 import { EventsTour } from "@/components/sections/EventsTour";
-import { Stages } from "@/components/sections/Stages";
 import { Partners } from "@/components/sections/Partners";
 import { CtaBand } from "@/components/sections/CtaBand";
-import { Expert } from "@/components/sections/Expert";
-import { Testimonials } from "@/components/sections/Testimonials";
-import { Book } from "@/components/sections/Book";
-import { Webinars } from "@/components/sections/Webinars";
-import { Diplomas } from "@/components/sections/Diplomas";
-import { Contact } from "@/components/sections/Contact";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
+
+// Dynamic imports for heavy below-fold sections to reduce TBT
+const Stages = dynamic(() => import("@/components/sections/Stages").then((m) => m.Stages));
+const Expert = dynamic(() => import("@/components/sections/Expert").then((m) => m.Expert));
+const Testimonials = dynamic(() => import("@/components/sections/Testimonials").then((m) => m.Testimonials));
+const Book = dynamic(() => import("@/components/sections/Book").then((m) => m.Book));
+const Webinars = dynamic(() => import("@/components/sections/Webinars").then((m) => m.Webinars));
+const Diplomas = dynamic(() => import("@/components/sections/Diplomas").then((m) => m.Diplomas));
+const Contact = dynamic(() => import("@/components/sections/Contact").then((m) => m.Contact));
 
 export default async function HomePage({
   params,

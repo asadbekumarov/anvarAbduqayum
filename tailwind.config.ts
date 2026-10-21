@@ -33,6 +33,22 @@ const config: Config = {
           dark: "#9E7D3B",
           dim: "rgba(197, 168, 128, 0.15)",
         },
+        champagne: {
+          DEFAULT: "#D8C29D",
+          soft: "#E5D4B8",
+          dark: "#C5A880",
+        },
+        navy: {
+          DEFAULT: "#0B132B",
+          900: "#0B132B",
+          950: "#070D1F",
+          surface: "#0F172A",
+        },
+        platinum: {
+          DEFAULT: "#94A3B8",
+          light: "#CBD5E1",
+          dark: "#64748B",
+        },
         muted: {
           DEFAULT: "#737373",
           light: "#A3A3A3",
@@ -49,9 +65,10 @@ const config: Config = {
         full: "9999px",
       },
       fontFamily: {
-        serif: ["var(--font-outfit)", "'Outfit'", "sans-serif"],
-        sans: ["var(--font-outfit)", "'Outfit'", "sans-serif"],
-        outfit: ["var(--font-outfit)", "'Outfit'", "sans-serif"],
+        sans: ["var(--font-sans)", "var(--font-outfit)", "'Outfit'", "sans-serif"],
+        serif: ["var(--font-serif)", "Cormorant Garamond", "serif"],
+        mono: ["var(--font-mono)", "JetBrains Mono", "monospace"],
+        outfit: ["var(--font-sans)", "'Outfit'", "sans-serif"],
       },
     },
   },

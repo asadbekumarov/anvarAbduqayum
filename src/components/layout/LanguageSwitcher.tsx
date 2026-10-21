@@ -22,8 +22,8 @@ export function LanguageSwitcher() {
   return (
     <div
       role="group"
-      aria-label="Tilni tanlash"
-      className="inline-flex items-center text-xs tracking-wider uppercase font-sans font-medium"
+      aria-label="Tilni tanlash / Выбор языка"
+      className="inline-flex items-center font-mono text-xs"
     >
       {locales.map((loc, idx) => {
         const isActive = currentLocale === loc;
@@ -33,17 +33,17 @@ export function LanguageSwitcher() {
               type="button"
               disabled={isPending}
               onClick={() => handleLocaleChange(loc)}
-              className={`transition-colors py-1 px-1.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold ${
+              className={`transition-colors py-1 px-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 ${
                 isActive
-                  ? "text-gold font-semibold"
-                  : "text-muted hover:text-white"
+                  ? "text-white font-medium"
+                  : "text-neutral-500 hover:text-white"
               }`}
               aria-current={isActive ? "true" : undefined}
             >
               {loc.toUpperCase()}
             </button>
             {idx < locales.length - 1 && (
-              <span className="text-border select-none" aria-hidden="true">
+              <span className="text-white/20 select-none px-1" aria-hidden="true">
                 /
               </span>
             )}

@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { Playfair_Display, Inter, Outfit } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Outfit, Cormorant_Garamond, JetBrains_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -9,24 +9,26 @@ import { ApplyModalProvider } from "@/features/apply/context/ApplyModalContext";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 import "../globals.css";
 
-const playfair = Playfair_Display({
-  subsets: ["latin", "cyrillic"],
-  variable: "--font-playfair",
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800", "900"],
-});
-
 const outfit = Outfit({
   subsets: ["latin"],
-  variable: "--font-outfit",
+  variable: "--font-sans",
   display: "swap",
+  weight: ["300", "400", "500", "600"],
 });
 
-const inter = Inter({
+const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin", "cyrillic"],
-  variable: "--font-inter",
+  variable: "--font-serif",
   display: "swap",
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "600"],
+  style: ["normal", "italic"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+  weight: ["400"],
 });
 
 export function generateStaticParams() {
@@ -82,12 +84,24 @@ export async function generateMetadata({
         },
       ],
     },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [siteMedia.brand.ogImage],
+    },
     robots: {
       index: true,
       follow: true,
     },
   };
 }
+
+export const viewport: Viewport = {
+  themeColor: "#0A0A0A",
+  width: "device-width",
+  initialScale: 1,
+};
 
 export default async function RootLayout({
   children,
@@ -105,18 +119,40 @@ export default async function RootLayout({
   setRequestLocale(locale);
   const messages = await getMessages();
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Ilhom Begimqulov",
+    jobTitle:
+      locale === "ru"
+        ? "Бизнес-консультант и тренер"
+        : locale === "en"
+        ? "Business Consultant & Executive Trainer"
+        : "Biznes Konsultant va Amaliyotchi Trener",
+    url: `https://ilhombegimqulov.uz/${locale}`,
+    image: "https://ilhombegimqulov.uz/images/hero/portrait.webp",
+    sameAs: [
+      "https://t.me/ilhom_begimqulov",
+      "https://instagram.com/ilhom.begimqulov",
+    ],
+    worksFor: {
+      "@type": "Organization",
+      name: "Ilhom Begimqulov Consulting",
+      url: "https://ilhombegimqulov.uz",
+    },
+  };
+
   return (
-    <html lang={locale} className={`${playfair.variable} ${outfit.variable} ${inter.variable} dark`}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
-          rel="stylesheet"
+    <html
+      lang={locale}
+      className={`${outfit.variable} ${cormorantGaramond.variable} ${jetbrainsMono.variable} dark`}
+      suppressHydrationWarning
+    >
+      <body className="bg-[#0A0A0A] text-[#F5F5F0] font-sans selection:bg-[#C5A880] selection:text-[#0A0A0A] antialiased" suppressHydrationWarning>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-      </head>
-      <body className="bg-base text-white font-sans selection:bg-gold selection:text-base antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
           <ApplyModalProvider>
             <SmoothScrollProvider>{children}</SmoothScrollProvider>

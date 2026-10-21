@@ -1,268 +1,166 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/badge";
-import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
-import { siteMedia } from "@/config/siteMedia";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
+import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 
 interface HeroProps {
+  onOpenModal?: () => void;
   onOpenApply?: () => void;
 }
 
-export function Hero({ onOpenApply }: HeroProps) {
+export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
   const { openApply } = useApplyModal();
-  const handleApply = onOpenApply || openApply;
+  const handleOpenModal = onOpenModal || onOpenApply || openApply;
   const t = useTranslations("hero");
-  const common = useTranslations("common");
-  const { portrait } = siteMedia.hero;
-
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [isHoverSupported, setIsHoverSupported] = useState(false);
-
-  useEffect(() => {
-    setIsHoverSupported(window.matchMedia("(hover: hover) and (pointer: fine)").matches);
-  }, []);
-
-  // Mouse parallax motion values
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const springConfig = { damping: 24, stiffness: 140, mass: 0.6 };
-  const glowX = useSpring(useTransform(x, [-0.5, 0.5], [20, 80]), springConfig);
-  const glowY = useSpring(useTransform(y, [-0.5, 0.5], [20, 80]), springConfig);
-  const heroSpotlightBg = useTransform(
-    [glowX, glowY],
-    ([gx, gy]) =>
-      `radial-gradient(400px circle at ${gx}% ${gy}%, rgba(212, 175, 55, 0.16), transparent 50%)`
-  );
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isHoverSupported || !cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = (e.clientX - rect.left) / width - 0.5;
-    const mouseY = (e.clientY - rect.top) / height - 0.5;
-    x.set(mouseX);
-    y.set(mouseY);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  // Stagger reveal animation configs
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.14,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 24 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.85,
-        ease: [0.16, 1, 0.3, 1] as const,
-      },
-    },
-  };
 
   return (
     <section
       id="hero"
-      aria-label="Bosh sahifa"
-      className="relative min-h-[calc(100dvh-5rem)] lg:min-h-[calc(100vh-5rem)] flex items-center border-b border-border py-12 sm:py-20 lg:py-24 overflow-hidden"
+      className="relative min-h-screen bg-[#0A0A0A] text-[#F5F5F0] pt-28 pb-16 flex flex-col justify-between overflow-hidden border-b border-white/[0.07]"
     >
-      {/* Background Subtle Luxury Radial Ambient */}
+      {/* Deep midnight navy atmospheric ambient glow */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] sm:w-[600px] lg:w-[800px] h-[320px] sm:h-[500px] lg:h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(197,168,128,0.06)_0%,transparent_70%)] pointer-events-none blur-3xl"
         aria-hidden="true"
+        className="pointer-events-none absolute right-[5%] top-[10%] w-[550px] h-[550px] rounded-full bg-[#0B132B]/60 blur-[150px]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute right-[15%] top-[25%] w-[350px] h-[350px] rounded-full bg-[#0F172A]/40 blur-[100px]"
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 lg:gap-8 items-center">
-          {/* Text Content */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="show"
-            className="lg:col-span-7 space-y-6 sm:space-y-8"
-          >
+      <div className="max-w-[1360px] mx-auto w-full px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center my-auto">
+        {/* Left Column (7 columns on lg:grid-cols-12) */}
+        <div className="lg:col-span-7 z-10 space-y-8">
+          {/* Swiss Editorial Kicker */}
+          <div className="flex items-center gap-4">
+            <span className="w-8 h-[1px] bg-[#C5A880]" />
+            <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum">
+              {t("kicker")}
+            </span>
+          </div>
 
+          {/* Bespoke Editorial H1 (Sans + Serif Italic mix with Warm Champagne) */}
+          <h1 className="text-4xl sm:text-6xl lg:text-[62px] font-light tracking-[-0.03em] leading-[1.08] text-white">
+            {t("titlePrefix")}
+            <span className="font-serif italic font-normal text-champagne">
+              {t("titleHighlight")}
+            </span>
+            {t("titleSuffix")}
+          </h1>
 
-            <motion.div variants={itemVariants}>
-              <Badge
-                variant="neutral"
-                appearance="outline"
-                size="sm"
-                className="border-gold/30 text-gold bg-gold/5 uppercase tracking-[0.2em] text-[10px] sm:text-[11px] font-semibold py-1 px-3 inline-flex items-center gap-2"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-gold animate-pulse shrink-0" />
-                {t("kicker")}
-              </Badge>
-            </motion.div>
+          {/* Executive Subheadline with Platinum Tint */}
+          <p className="text-base sm:text-lg text-platinum font-light leading-relaxed max-w-xl">
+            {t("description")}
+          </p>
 
-            <motion.h1
-              variants={itemVariants}
-              className="font-serif text-3xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-white leading-[1.12] sm:leading-[1.08] max-w-3xl"
+          {/* Sharp Architectural CTAs (No rounded corners) */}
+          <div className="pt-2 flex flex-wrap items-center gap-5">
+            <button
+              type="button"
+              onClick={handleOpenModal}
+              className="group inline-flex items-center gap-4 bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] px-8 py-4 text-sm font-medium tracking-wide rounded-none transition-all duration-300 cursor-pointer"
             >
-              {t("title")}
-            </motion.h1>
+              <span>{t("ctaPrimary")}</span>
+              <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </button>
 
-            <motion.p
-              variants={itemVariants}
-              className="text-sm sm:text-lg lg:text-xl text-muted font-light leading-relaxed max-w-2xl"
+            <a
+              href="#xizmatlar"
+              className="inline-flex items-center gap-3 px-4 py-4 text-sm text-neutral-300 hover:text-white border-b border-white/15 hover:border-white/50 transition-all"
             >
-              {t("description")}
-            </motion.p>
+              <span>{t("ctaSecondary")}</span>
+              <span className="font-mono text-xs text-platinum">/06</span>
+            </a>
+          </div>
+        </div>
 
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-2 sm:pt-4"
-            >
-              <Button
-                variant="primary"
-                size="lg"
-                onClick={handleApply}
-                className="w-full sm:w-auto text-center justify-center"
-              >
-                {t("ctaPrimary")}
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                href="#xizmatlar"
-                className="w-full sm:w-auto text-center justify-center"
-              >
-                {t("ctaSecondary")}
-              </Button>
-            </motion.div>
-
-            {/* Key Metrics Strip */}
-            <motion.div
-              variants={itemVariants}
-              className="pt-6 sm:pt-10 border-t border-border-subtle grid grid-cols-3 divide-x divide-border-subtle max-w-2xl"
-            >
-              <div className="pr-1.5 sm:pr-6 min-w-0">
-                <span className="gold-gradient-text font-serif text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold block leading-none whitespace-nowrap">
-                  <AnimatedCounter value={t("stats.stat1Value")} delay={650} duration={1500} />
-                </span>
-                <span className="text-[9px] sm:text-xs text-muted uppercase tracking-normal sm:tracking-wider block mt-1 sm:mt-1.5 font-light leading-tight sm:leading-normal">
-                  {t("stats.stat1Label")}
-                </span>
-              </div>
-              <div className="px-1.5 sm:px-6 min-w-0">
-                <span className="gold-gradient-text font-serif text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold block leading-none whitespace-nowrap">
-                  <AnimatedCounter value={t("stats.stat2Value")} delay={800} duration={1700} />
-                </span>
-                <span className="text-[9px] sm:text-xs text-muted uppercase tracking-normal sm:tracking-wider block mt-1 sm:mt-1.5 font-light leading-tight sm:leading-normal">
-                  {t("stats.stat2Label")}
-                </span>
-              </div>
-              <div className="pl-1.5 sm:px-6 min-w-0">
-                <span className="gold-gradient-text font-serif text-xl sm:text-3xl md:text-4xl lg:text-5xl font-bold block leading-none whitespace-nowrap">
-                  <AnimatedCounter value={t("stats.stat3Value")} delay={950} duration={1900} />
-                </span>
-                <span className="text-[9px] sm:text-xs text-muted uppercase tracking-normal sm:tracking-wider block mt-1 sm:mt-1.5 font-light leading-tight sm:leading-normal">
-                  {t("stats.stat3Label")}
-                </span>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          {/* Portrait Column with 3D Depth & Orbital Gold Aura */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-            className="lg:col-span-5 flex justify-center lg:justify-end"
-          >
-            <div
-              ref={cardRef}
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
-              className="relative w-full max-w-sm sm:max-w-md perspective-1200 flex items-center justify-center"
-            >
-              {/* 3D Architectural Orbital Gold Wireframe Aura */}
-              <div
-                className="absolute inset-0 -m-6 sm:-m-12 flex items-center justify-center pointer-events-none preserve-3d"
-                aria-hidden="true"
-              >
-                {/* Ambient Soft Gold Radiance */}
-                <div className="absolute w-[260px] sm:w-[380px] lg:w-[480px] h-[260px] sm:h-[380px] lg:h-[480px] rounded-full bg-[radial-gradient(circle,rgba(197,168,128,0.16)_0%,rgba(197,168,128,0.04)_45%,transparent_70%)] blur-2xl" />
-
-                {/* Primary 3D Tilted Rotating Gold Ring */}
-                <div className="absolute w-[250px] sm:w-[360px] lg:w-[460px] h-[250px] sm:h-[360px] lg:h-[460px] rounded-full border border-gold/25 border-dashed animate-orbit-1" />
-
-                {/* Secondary Counter-Rotating Architectural Ring */}
-                <div className="absolute w-[220px] sm:w-[310px] lg:w-[400px] h-[220px] sm:h-[310px] lg:h-[400px] rounded-full border border-gold/20 animate-orbit-2" />
-
-                {/* Outer Fine Accent Ring */}
-                <div className="absolute w-[280px] sm:w-[400px] lg:w-[510px] h-[280px] sm:h-[400px] lg:h-[510px] rounded-full border border-border/40" />
-              </div>
-
-              {/* Portrait Frame */}
-              <div
-                className="w-full border border-border bg-elevated relative overflow-hidden group rounded-[2px] transition-all duration-500 hover:border-gold/50 shadow-[0_20px_50px_rgba(0,0,0,0.8)] hover:shadow-[0_25px_60px_-10px_rgba(197,168,128,0.22)] z-10"
-              >
-                {/* Dynamic Mouse Spotlight Glow on the Card */}
-                {isHoverSupported && (
-                  <motion.div
-                    className="absolute inset-0 pointer-events-none z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{
-                      background: heroSpotlightBg,
-                    }}
-                  />
-                )}
-
-                <div className="relative aspect-[4/5] w-full">
-                  <Image
-                    src={portrait.src}
-                    alt={portrait.alt}
-                    fill
-                    priority
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 40vw, 450px"
-                    className="object-cover grayscale contrast-105 group-hover:grayscale-0 group-hover:scale-[1.02] transition-all duration-700 ease-out"
-                  />
-                  <div
-                    className="absolute inset-0 bg-gradient-to-t from-base via-base/30 to-transparent pointer-events-none"
-                    aria-hidden="true"
-                  />
-                </div>
-
-                {/* Nameplate */}
-                <div className="p-6 border-t border-border bg-base relative z-10 flex items-center justify-between">
-                  <div>
-                    <span className="font-serif text-lg font-medium text-white block">
-                      {common("brandName")}
-                    </span>
-                    <span className="text-[11px] font-sans uppercase tracking-widest text-gold block mt-0.5">
-                      {common("brandRole")}
-                    </span>
-                  </div>
-                  <span className="text-xs font-sans text-muted tracking-widest border border-border px-2 py-0.5 bg-elevated/60">
-                    UZ / CIS
-                  </span>
-                </div>
-              </div>
+        {/* Right Column — Seamless Editorial Portrait (5 columns on lg:grid-cols-12) */}
+        <div className="lg:col-span-5 relative flex justify-center lg:justify-end">
+          <div className="relative w-full max-w-[450px] aspect-[4/5] ml-auto">
+            {/* Seamless blend into #0A0A0A background using CSS mask */}
+            <div className="relative w-full h-full overflow-hidden [mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)]">
+              <Image
+                src="/images/hero/portrait.webp"
+                alt="Ilhom Begimqulov"
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 450px"
+                className="object-cover object-top scale-[1.01] contrast-[1.04] grayscale-[10%]"
+              />
+              {/* Subtle side vignette overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/80 via-transparent to-[#0A0A0A]/30 pointer-events-none" />
             </div>
-          </motion.div>
+
+            {/* Minimalist Editorial Caption */}
+            <div className="absolute bottom-2 left-0 border-l border-white/20 pl-4 py-0.5 pointer-events-none">
+              <p className="font-serif italic text-2xl text-white/90 leading-none">
+                Ilhom Begimqulov
+              </p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-platinum-light mt-1.5">
+                {t("captionRole")}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Architectural Metrics Bar */}
+      <div className="max-w-[1360px] mx-auto w-full px-6 md:px-12 pt-10 mt-12 border-t border-white/[0.07]">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-0 sm:divide-x sm:divide-white/[0.07]">
+          {/* Metric 01 */}
+          <div className="sm:pr-10 flex items-baseline justify-between">
+            <div>
+              <span className="font-mono text-xs text-platinum block mb-1">
+                {t("metric1Label")}
+              </span>
+              <span className="text-sm text-neutral-300">
+                {t("metric1Desc")}
+              </span>
+            </div>
+            <div className="text-3xl sm:text-4xl font-light tracking-tight text-white ml-4 flex items-baseline shrink-0">
+              <AnimatedCounter value="100" />
+              <span className="text-white/40 font-serif italic ml-0.5">+</span>
+            </div>
+          </div>
+
+          {/* Metric 02 */}
+          <div className="sm:px-10 flex items-baseline justify-between">
+            <div>
+              <span className="font-mono text-xs text-platinum block mb-1">
+                {t("metric2Label")}
+              </span>
+              <span className="text-sm text-neutral-300">
+                {t("metric2Desc")}
+              </span>
+            </div>
+            <div className="text-3xl sm:text-4xl font-light tracking-tight text-white ml-4 flex items-baseline shrink-0">
+              <AnimatedCounter value="10 000" />
+              <span className="text-white/40 font-serif italic ml-0.5">+</span>
+            </div>
+          </div>
+
+          {/* Metric 03 */}
+          <div className="sm:pl-10 flex items-baseline justify-between">
+            <div>
+              <span className="font-mono text-xs text-platinum block mb-1">
+                {t("metric3Label")}
+              </span>
+              <span className="text-sm text-neutral-300">
+                {t("metric3Desc")}
+              </span>
+            </div>
+            <div className="text-3xl sm:text-4xl font-light tracking-tight text-white ml-4 flex items-baseline shrink-0">
+              <AnimatedCounter value="8" />
+              <span className="text-white/40 font-serif italic ml-0.5">+</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
 }
+
+export { Hero };

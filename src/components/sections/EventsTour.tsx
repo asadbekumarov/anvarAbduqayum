@@ -2,119 +2,144 @@
 
 import React from "react";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
-import { SectionHeader } from "@/components/ui/SectionHeader";
-import { TiltCard } from "@/components/ui/TiltCard";
+import { useTranslations, useLocale } from "next-intl";
 import { siteMedia } from "@/config/siteMedia";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
 
 interface EventsTourProps {
-  onOpenApply?: () => void;
+  onOpenApply?: (serviceName?: string) => void;
 }
+
+const countryRuMap: Record<string, string> = {
+  "Qozog'iston": "Казахстан",
+  "Qirg'iziston": "Кыргызстан",
+  "O'zbekiston": "Узбекистан",
+  "Tojikiston": "Таджикистан",
+};
+
+const cityRuMap: Record<string, string> = {
+  "Shymkent": "Шымкент",
+  "Osh": "Ош",
+  "Samarqand": "Самарканд",
+  "Xo'jand": "Худжанд",
+  "Toshkent": "Ташкент",
+  "Farg'ona": "Фергана",
+};
 
 export function EventsTour({ onOpenApply }: EventsTourProps) {
   const { openApply } = useApplyModal();
   const handleApply = onOpenApply || openApply;
   const t = useTranslations("events");
+  const locale = useLocale();
+  const isRu = locale === "ru";
   const events = siteMedia.events;
 
   return (
     <section
       id="tadbirlarimiz"
-      aria-label="Tadbirlarimiz"
-      className="py-16 sm:py-24 border-b border-border bg-base"
+      aria-label={isRu ? "География и масштаб" : "Geografiya va ko'lam"}
+      className="py-24 sm:py-32 border-b border-white/[0.08] bg-[#0A0A0A] text-[#F5F5F0] relative overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <SectionHeader
-          index="03"
-          kicker={t("kicker")}
-          title={t("title")}
-          description={t("description")}
-          className="mb-8 sm:mb-12"
-        />
+      <div className="max-w-[1360px] mx-auto px-6 md:px-12">
+        {/* Section Header (12-Column Editorial Split) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end mb-16">
+          {/* Left Column (lg:col-span-7) */}
+          <div className="lg:col-span-7">
+            {/* Swiss Kicker */}
+            <div className="flex items-center gap-4">
+              <span className="w-8 h-[1px] bg-[#C5A880]" />
+              <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum">
+                {t("kicker")}
+              </span>
+            </div>
 
-        {/* 6 City Posters Grid with 3D Tilt & Gold Spotlight */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {events.map((evt, idx) => (
-            <TiltCard
-              key={evt.id}
-              className="h-full rounded-[2px]"
-            >
-              <article className="group border border-border bg-elevated relative overflow-hidden flex flex-col justify-between transition-all duration-300 hover:border-gold/50 rounded-[2px] h-full">
-                {/* Poster Image Container - Compact Height */}
-                <div className="relative aspect-[4/3] w-full overflow-hidden bg-base">
+            {/* H2 Heading (Sans + Serif Italic mix) */}
+            <h2 className="text-3xl sm:text-5xl font-light tracking-[-0.03em] leading-[1.1] text-white mt-6">
+              {t("titlePrefix")}
+              <span className="font-serif italic font-normal text-white/90">
+                {t("titleHighlight")}
+              </span>
+            </h2>
+          </div>
+
+          {/* Right Column (lg:col-span-5) */}
+          <div className="lg:col-span-5">
+            <p className="text-sm sm:text-base text-neutral-300 font-light leading-relaxed">
+              {t("description")}
+            </p>
+          </div>
+        </div>
+
+        {/* Architectural Poster Grid (Replaces Rounded Cards) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-t border-l border-white/[0.08]">
+          {events.map((evt, idx) => {
+            const indexStr = idx < 9 ? `/0${idx + 1}` : `/${idx + 1}`;
+            const displayCountry = isRu ? countryRuMap[evt.country] || evt.country : evt.country;
+            const displayCity = isRu ? cityRuMap[evt.city] || evt.city : evt.city;
+
+            return (
+              <article
+                key={evt.id}
+                role="button"
+                tabIndex={0}
+                onClick={() => handleApply(`${displayCity} dagi biznes-tur`)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleApply(`${displayCity} dagi biznes-tur`);
+                  }
+                }}
+                aria-label={`${displayCity} - ${evt.title}`}
+                className="group relative bg-[#0A0A0A] border-r border-b border-white/[0.08] p-6 sm:p-8 flex flex-col justify-between transition-all duration-500 hover:bg-[#0B132B]/30 hover:border-platinum/20 rounded-none cursor-pointer"
+              >
+                {/* Top Index & Country Bar (Above the image, NOT floating as a pill badge) */}
+                <div className="flex items-center justify-between mb-5 font-mono text-[11px] uppercase tracking-[0.2em]">
+                  <span className="text-platinum group-hover:text-white transition-colors">
+                    {indexStr}
+                  </span>
+                  <span className="text-platinum-light">
+                    {displayCountry}
+                  </span>
+                </div>
+
+                {/* Poster Image Container */}
+                <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#141414] mb-6">
                   <Image
                     src={evt.image}
                     alt={evt.alt}
                     fill
+                    loading="lazy"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover object-top grayscale contrast-110 group-hover:scale-105 group-hover:grayscale-0 transition-all duration-500 ease-out"
+                    className="object-cover w-full h-full grayscale contrast-[1.08] group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700 ease-out"
                   />
-
-                  {/* Dark Vignette Overlay */}
+                  {/* Subtle dark gradient at the bottom of the image only */}
                   <div
-                    className="absolute inset-0 bg-gradient-to-t from-base via-base/30 to-transparent pointer-events-none"
                     aria-hidden="true"
+                    className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-transparent to-transparent opacity-80 pointer-events-none"
                   />
-
-                  {/* City Number Stamp */}
-                  <div className="absolute top-3 right-3 z-10">
-                    <span className="font-serif text-[11px] text-gold/80 tracking-widest font-semibold border border-gold/30 px-2 py-0.5 bg-base/80 backdrop-blur-xs">
-                      /0{idx + 1}
-                    </span>
-                  </div>
-
-                  {/* City & Country Typography */}
-                  <div className="absolute bottom-3.5 left-4 right-4 z-10">
-                    <span className="text-[10px] font-sans uppercase tracking-[0.2em] text-gold font-medium block mb-0.5">
-                      {evt.country}
-                    </span>
-                    <h3 className="font-serif text-2xl font-normal text-white tracking-wide leading-tight">
-                      {evt.city}
-                    </h3>
-                  </div>
+                  {/* City Name positioned cleanly at bottom-left of image */}
+                  <span className="absolute bottom-4 left-4 font-serif italic text-3xl text-white tracking-tight">
+                    {displayCity}
+                  </span>
                 </div>
 
-                {/* Poster Footer Info - Compact */}
-                <div className="p-4 sm:p-4.5 border-t border-border bg-base flex flex-col justify-between flex-1 space-y-3">
+                {/* Bottom Metadata Row (Below Image) */}
+                <div className="pt-4 border-t border-white/[0.06] flex items-end justify-between gap-4">
                   <div>
-                    <h4 className="font-sans text-xs sm:text-sm font-medium text-white line-clamp-1">
+                    <h3 className="text-base font-normal text-white tracking-tight">
                       {evt.title}
-                    </h4>
-                    <span className="text-[11px] text-muted font-light block mt-0.5">
+                    </h3>
+                    <span className="text-xs text-platinum-light font-light mt-1 block">
                       {evt.date}
                     </span>
                   </div>
-
-                  <div className="pt-2 border-t border-border-subtle flex items-center justify-between">
-                    <button
-                      type="button"
-                      onClick={handleApply}
-                      className="text-xs font-sans uppercase tracking-wider text-muted group-hover:text-gold transition-colors inline-flex items-center gap-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold py-1"
-                    >
-                      <span>{t("cta")}</span>
-                      <svg
-                        className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"
-                        />
-                      </svg>
-                    </button>
-                    <span className="text-[10px] uppercase tracking-widest text-muted-dark">
-                      CHOP ETILGAN
-                    </span>
-                  </div>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-platinum shrink-0">
+                    {t("status")}
+                  </span>
                 </div>
               </article>
-            </TiltCard>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
