@@ -11,7 +11,7 @@ import { useLockScroll } from "@/hooks/useLockScroll";
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  onOpenApply: () => void;
+  onOpenApply: (options?: { service?: string }) => void;
 }
 
 export function MobileMenu({ isOpen, onClose, onOpenApply }: MobileMenuProps) {
@@ -90,7 +90,7 @@ export function MobileMenu({ isOpen, onClose, onOpenApply }: MobileMenuProps) {
       role="dialog"
       aria-modal="true"
       aria-label={common("openMenu")}
-      className="fixed inset-0 z-50 flex flex-col bg-base text-white lg:hidden overscroll-contain"
+      className="fixed inset-0 z-50 flex flex-col bg-base text-white xl:hidden overscroll-contain"
     >
       {/* Top Bar */}
       <div className="flex items-center justify-between px-5 sm:px-6 h-20 border-b border-border shrink-0">
@@ -133,7 +133,7 @@ export function MobileMenu({ isOpen, onClose, onOpenApply }: MobileMenuProps) {
           ))}
         </nav>
 
-        <div className="pt-8 border-t border-border flex flex-col space-y-6">
+        <div className="pt-8 border-t border-border flex flex-col space-y-5">
           <div className="flex items-center justify-between">
             <span className="text-xs font-sans uppercase tracking-widest text-muted">
               Tilni o&apos;zgartirish
@@ -141,17 +141,19 @@ export function MobileMenu({ isOpen, onClose, onOpenApply }: MobileMenuProps) {
             <LanguageSwitcher direction="up" />
           </div>
 
-          <Button
-            variant="primary"
-            size="lg"
-            className="w-full"
-            onClick={() => {
-              onClose();
-              onOpenApply();
-            }}
-          >
-            {ctaT("primary")}
-          </Button>
+          <div className="flex flex-col gap-2.5">
+            <Button
+              variant="primary"
+              size="lg"
+              className="w-full"
+              onClick={() => {
+                onClose();
+                onOpenApply({ service: ctaT("mentorship") });
+              }}
+            >
+              {ctaT("mentorship")}
+            </Button>
+          </div>
         </div>
       </div>
     </div>

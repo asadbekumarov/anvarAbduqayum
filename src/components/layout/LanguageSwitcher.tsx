@@ -80,7 +80,7 @@ export function LanguageSwitcher({
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-label="Select language"
-        className="h-10 px-3.5 flex items-center gap-2 bg-[#121212] hover:bg-[#181818] border border-white/[0.14] hover:border-[#C5A880]/60 transition-all rounded-none cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#C5A880]"
+        className="h-9 xl:h-10 px-2.5 xl:px-3.5 flex items-center gap-1.5 xl:gap-2 bg-[#121212] hover:bg-[#181818] border border-white/[0.14] hover:border-[#C5A880]/60 transition-all rounded-sm cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#C5A880]"
       >
         <span className="font-mono text-xs font-medium text-white tracking-[0.16em] uppercase">
           {activeLang.code.toUpperCase()}
