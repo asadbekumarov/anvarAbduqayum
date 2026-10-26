@@ -45,14 +45,14 @@ const config: Config = {
           surface: "#0F172A",
         },
         platinum: {
-          DEFAULT: "#94A3B8",
-          light: "#CBD5E1",
-          dark: "#64748B",
+          DEFAULT: "#CBD5E1",
+          light: "#E2E8F0",
+          dark: "#94A3B8",
         },
         muted: {
-          DEFAULT: "#737373",
-          light: "#A3A3A3",
-          dark: "#525252",
+          DEFAULT: "#A3A3A3",
+          light: "#D4D4D4",
+          dark: "#737373",
         },
       },
       borderRadius: {

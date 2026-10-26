@@ -2,15 +2,14 @@
 
 import React, { useState, useRef } from "react";
 import Image from "next/image";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { YouTubeModal } from "@/components/ui/YouTubeModal";
 import { siteMedia, VideoItem } from "@/config/siteMedia";
 import { MaskedHeading } from "@/components/ui/MaskedHeading";
 
 export function Testimonials() {
   const t = useTranslations("testimonials");
-  const locale = useLocale();
-  const isRu = locale === "ru";
+  const common = useTranslations("common");
   const testimonials = siteMedia.testimonials;
   const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -27,7 +26,7 @@ export function Testimonials() {
   return (
     <section
       id="fikrlar"
-      aria-label={isRu ? "Отзывы клиентов" : "Mijozlar fikrlari"}
+      aria-label={t("title")}
       className="py-24 sm:py-32 border-b border-white/[0.08] bg-[#0A0A0A] text-[#F5F5F0] relative overflow-hidden"
     >
       {/* Header Row */}
@@ -37,7 +36,7 @@ export function Testimonials() {
           <div>
             <div className="flex items-center gap-4">
               <span className="w-8 h-[1px] bg-[#C5A880]" />
-              <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum">
+              <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum">
                 {t("kicker")}
               </span>
             </div>
@@ -57,7 +56,7 @@ export function Testimonials() {
               <button
                 type="button"
                 onClick={() => scroll("left")}
-                aria-label={isRu ? "Предыдущий отзыв" : "Oldingi fikr"}
+                aria-label={common("prev")}
                 className="w-12 h-12 flex items-center justify-center text-platinum hover:text-white hover:bg-white/[0.04] transition-colors rounded-none font-mono text-sm cursor-pointer"
               >
                 ←
@@ -65,7 +64,7 @@ export function Testimonials() {
               <button
                 type="button"
                 onClick={() => scroll("right")}
-                aria-label={isRu ? "Следующий отзыв" : "Keyingi fikr"}
+                aria-label={common("next")}
                 className="w-12 h-12 flex items-center justify-center text-platinum hover:text-white hover:bg-white/[0.04] transition-colors rounded-none font-mono text-sm cursor-pointer"
               >
                 →
@@ -80,7 +79,7 @@ export function Testimonials() {
         ref={scrollRef}
         className="flex border-t border-b border-white/[0.08] divide-x divide-white/[0.08] overflow-x-auto scroll-smooth no-scrollbar"
         tabIndex={0}
-        aria-label="Keyslar ro'yxati"
+        aria-label={t("title")}
       >
         {testimonials.map((vid, idx) => {
           const indexNum = idx < 9 ? `0${idx + 1}` : `${idx + 1}`;
@@ -101,7 +100,7 @@ export function Testimonials() {
             >
               {/* Top Index Bar */}
               <div>
-                <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-platinum mb-5">
+                <div className="flex items-center justify-between font-mono text-xs uppercase tracking-[0.2em] text-platinum mb-5">
                   <span className="group-hover:text-white transition-colors">
                     {t("tagKey")} / {indexNum}
                   </span>
@@ -115,11 +114,11 @@ export function Testimonials() {
                     alt={vid.title}
                     fill
                     loading="lazy"
-                    sizes="(max-width: 640px) 320px, 380px"
+                    sizes="(max-width: 640px) 100vw, 380px"
                     className="object-cover w-full h-full grayscale-[25%] contrast-[1.05] group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700"
                   />
                   {/* Bespoke Play Trigger */}
-                  <div className="absolute bottom-0 left-0 bg-[#070D1F]/90 border-t border-r border-white/[0.12] px-3.5 py-2 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-white group-hover:bg-white group-hover:text-[#0A0A0A] transition-colors">
+                  <div className="absolute bottom-0 left-0 bg-[#070D1F]/90 border-t border-r border-white/[0.12] px-3.5 py-2 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-white group-hover:bg-white group-hover:text-[#0A0A0A] transition-colors">
                     <span>{t("playTrigger")}</span>
                   </div>
                 </div>
@@ -131,11 +130,16 @@ export function Testimonials() {
                   {vid.title}
                 </h3>
                 <div className="font-mono text-xs text-platinum mt-1.5 uppercase tracking-wider flex items-center justify-between">
-                  <span>{vid.company || vid.author}</span>
+                  <span>{vid.client || vid.company || vid.author}</span>
                   {vid.duration && (
                     <span className="text-platinum-light">{vid.duration}</span>
                   )}
                 </div>
+                {vid.result && (
+                  <p className="text-xs text-neutral-300 mt-1 font-light">
+                    {vid.result}
+                  </p>
+                )}
               </div>
             </article>
           );

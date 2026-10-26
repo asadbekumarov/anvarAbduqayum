@@ -15,6 +15,7 @@ export function Navbar({ onOpenApply }: NavbarProps) {
   const handleApply = onOpenApply || openApply;
   const t = useTranslations("nav");
   const common = useTranslations("common");
+  const ctaT = useTranslations("cta");
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
@@ -59,53 +60,55 @@ export function Navbar({ onOpenApply }: NavbarProps) {
   );
 
   useEffect(() => {
-    const sectionIds = ["xizmatlar", "bosqichlar", "ekspert", "natijalar", "faq", "aloqa"];
-    let ticking = false;
-
     const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const scrollY = window.scrollY;
-
-          // Header shadow and compacting trigger
-          setIsScrolled(scrollY > 24);
-
-          // Active Section Calculation
-          // Near bottom edge check
-          if (
-            window.innerHeight + scrollY >=
-            document.documentElement.scrollHeight - 80
-          ) {
-            setActiveSection("aloqa");
-            ticking = false;
-            return;
-          }
-
-          let current = "";
-          for (const id of sectionIds) {
-            const el = document.getElementById(id);
-            if (el) {
-              const rect = el.getBoundingClientRect();
-              if (rect.top <= 180 && rect.bottom > 120) {
-                current = id;
-                break;
-              }
-            }
-          }
-          if (current) {
-            setActiveSection(current);
-          } else if (scrollY < 120) {
-            setActiveSection("");
-          }
-          ticking = false;
-        });
-        ticking = true;
-      }
+      setIsScrolled(window.scrollY > 24);
     };
 
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    const sectionIds = ["xizmatlar", "bosqichlar", "ekspert", "natijalar", "faq", "aloqa"];
+    const elements = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => Boolean(el));
+
+    if (!("IntersectionObserver" in window) || elements.length === 0) {
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
+
+    // Aktiv bo'lim hozirgi scroll bo'yicha IntersectionObserver orqali ajratiladi
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Sahifa eng pastiga yetganda aloqa bo'limini faollashtirish
+        if (
+          window.innerHeight + window.scrollY >=
+          document.documentElement.scrollHeight - 80
+        ) {
+          setActiveSection("aloqa");
+          return;
+        }
+
+        const intersecting = entries.filter((e) => e.isIntersecting);
+        if (intersecting.length > 0) {
+          intersecting.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+          setActiveSection(intersecting[0].target.id);
+        } else if (window.scrollY < 150) {
+          setActiveSection("");
+        }
+      },
+      {
+        root: null,
+        rootMargin: "-15% 0px -55% 0px",
+        threshold: [0, 0.25, 0.5, 0.75],
+      }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   return (
@@ -123,23 +126,23 @@ export function Navbar({ onOpenApply }: NavbarProps) {
             <a
               href="#hero"
               onClick={(e) => handleNavClick(e, "#hero")}
-              aria-label="Ilhom Begimqulov - Asosiy sahifa"
+              aria-label={common("brandAria")}
               className="group flex items-center gap-2.5 sm:gap-3 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#C5A880]/60 rounded-sm py-1 pr-1 select-none"
             >
               {/* Minimalist Monogram Badge */}
               <div className="w-8 h-8 rounded-sm bg-gradient-to-br from-[#1A1A1A] to-[#0D0D0D] border border-[#C5A880]/40 group-hover:border-[#E2C79D] flex items-center justify-center shrink-0 transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.4)] group-hover:shadow-[0_0_12px_rgba(197,168,128,0.25)]">
-                <span className="font-serif text-[11px] font-bold tracking-wider text-[#C5A880] group-hover:text-[#E2C79D] transition-colors">
+                <span className="font-serif text-xs font-bold tracking-wider text-[#C5A880] group-hover:text-[#E2C79D] transition-colors">
                   IB
                 </span>
               </div>
 
               {/* Brand Typography */}
               <div className="flex flex-col whitespace-nowrap">
-                <span className="text-[11px] sm:text-xs font-semibold tracking-[0.16em] sm:tracking-[0.2em] text-white uppercase group-hover:text-[#E2C79D] transition-colors leading-tight whitespace-nowrap">
+                <span className="text-xs font-semibold tracking-[0.16em] sm:tracking-[0.2em] text-white uppercase group-hover:text-[#E2C79D] transition-colors leading-tight whitespace-nowrap">
                   ILHOM BEGIMQULOV
                 </span>
-                <span className="text-[8px] sm:text-[9px] font-mono tracking-[0.14em] uppercase text-neutral-400 group-hover:text-neutral-300 transition-colors hidden sm:inline-block leading-tight mt-0.5 whitespace-nowrap">
-                  Business Consulting
+                <span className="text-xs font-mono tracking-[0.14em] uppercase text-neutral-400 group-hover:text-neutral-300 transition-colors hidden sm:inline-block leading-tight mt-0.5 whitespace-nowrap">
+                  {common("businessConsulting")}
                 </span>
               </div>
             </a>
@@ -147,7 +150,7 @@ export function Navbar({ onOpenApply }: NavbarProps) {
 
           {/* Navigation Links (Center — Balanced Luxury Navigation) */}
           <nav
-            aria-label="Asosiy navigatsiya"
+            aria-label={t("mainNavAria")}
             className="hidden xl:flex items-center justify-center gap-1 2xl:gap-2 shrink-0 bg-white/[0.02] border border-white/[0.04] rounded-full px-2.5 2xl:px-3.5 py-1.5 backdrop-blur-sm"
           >
             {navItems.map((item) => {
@@ -158,7 +161,7 @@ export function Navbar({ onOpenApply }: NavbarProps) {
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.href)}
                   aria-current={isActive ? "page" : undefined}
-                  className={`group relative flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] 2xl:text-xs uppercase tracking-[0.08em] 2xl:tracking-[0.1em] font-medium transition-all duration-200 select-none whitespace-nowrap ${
+                  className={`group relative flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs uppercase tracking-[0.08em] 2xl:tracking-[0.1em] font-medium transition-all duration-200 select-none whitespace-nowrap ${
                     isActive
                       ? "text-white bg-white/[0.08] shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]"
                       : "text-neutral-400 hover:text-white hover:bg-white/[0.04]"
@@ -170,18 +173,26 @@ export function Navbar({ onOpenApply }: NavbarProps) {
             })}
           </nav>
 
-          {/* Actions: Language Switcher & CTA (Right for Desktop) */}
-          <div className="hidden xl:flex shrink-0 items-center justify-end gap-3.5">
-            <LanguageSwitcher />
-
+          {/* Actions: Language Switcher, Secondary Mentorship & Primary CTA (Right for Desktop) */}
+          <div className="hidden xl:flex shrink-0 items-center justify-end gap-3">
+            {/* Secondary CTA: Ustozga shogird tushish (outline/link style, only 1 instance on page) */}
             <button
               type="button"
-              onClick={handleApply}
+              onClick={() => handleApply({ service: ctaT("mentorship") })}
+              className="h-10 shrink-0 px-3.5 2xl:px-4 rounded-sm border border-[#C5A880]/35 hover:border-[#C5A880] text-[#E2C79D] hover:text-white hover:bg-[#C5A880]/10 font-sans text-xs uppercase tracking-[0.08em] font-medium transition-all duration-200 cursor-pointer flex items-center gap-1.5 whitespace-nowrap"
+            >
+              <span>{ctaT("mentorship")}</span>
+            </button>
+
+            {/* Primary CTA: Bepul diagnostikaga yozilish */}
+            <button
+              type="button"
+              onClick={() => handleApply()}
               className="h-10 shrink-0 group relative overflow-hidden rounded-sm bg-gradient-to-r from-[#C5A880] via-[#D4B992] to-[#C5A880] hover:brightness-105 active:scale-[0.98] px-4 2xl:px-5 font-sans text-xs uppercase tracking-[0.08em] text-[#0A0A0A] font-semibold transition-all duration-200 cursor-pointer flex items-center gap-2 whitespace-nowrap shadow-[0_2px_12px_rgba(197,168,128,0.2)] hover:shadow-[0_4px_20px_rgba(197,168,128,0.35)]"
             >
               {/* Shimmer sweep effect */}
               <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full" />
-              <span className="relative z-10 whitespace-nowrap">{common("cta")}</span>
+              <span className="relative z-10 whitespace-nowrap">{ctaT("primary")}</span>
               <svg
                 className="w-3.5 h-3.5 shrink-0 relative z-10 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-[#0A0A0A]"
                 fill="none"
@@ -193,6 +204,8 @@ export function Navbar({ onOpenApply }: NavbarProps) {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
               </svg>
             </button>
+
+            <LanguageSwitcher />
           </div>
 
           {/* Tablet & Mobile Actions (Shown below XL screens) */}
@@ -200,11 +213,11 @@ export function Navbar({ onOpenApply }: NavbarProps) {
             <div className="hidden sm:block">
               <button
                 type="button"
-                onClick={handleApply}
-                className="h-9 shrink-0 group relative overflow-hidden rounded-sm bg-gradient-to-r from-[#C5A880] to-[#D4B992] px-3.5 font-sans text-[11px] uppercase tracking-[0.06em] text-[#0A0A0A] font-semibold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shadow-sm active:scale-[0.98]"
+                onClick={() => handleApply()}
+                className="h-9 shrink-0 group relative overflow-hidden rounded-sm bg-gradient-to-r from-[#C5A880] to-[#D4B992] px-3.5 font-sans text-xs uppercase tracking-[0.06em] text-[#0A0A0A] font-semibold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shadow-sm active:scale-[0.98]"
               >
-                <span className="relative z-10 whitespace-nowrap">{common("cta")}</span>
-                <span className="text-[10px] font-bold">↗</span>
+                <span className="relative z-10 whitespace-nowrap">{ctaT("primary")}</span>
+                <span className="text-xs font-bold">↗</span>
               </button>
             </div>
 

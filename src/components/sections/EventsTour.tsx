@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { siteMedia } from "@/config/siteMedia";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
 import { MaskedHeading } from "@/components/ui/MaskedHeading";
@@ -12,34 +12,33 @@ interface EventsTourProps {
   onOpenApply?: (serviceName?: string) => void;
 }
 
-const countryRuMap: Record<string, string> = {
-  "Qozog'iston": "Казахстан",
-  "Qirg'iziston": "Кыргызстан",
-  "O'zbekiston": "Узбекистан",
-  "Tojikiston": "Таджикистан",
+const countryTranslationKeys: Record<string, string> = {
+  "Qozog'iston": "countryKazakhstan",
+  "Qirg'iziston": "countryKyrgyzstan",
+  "O'zbekiston": "countryUzbekistan",
+  "Tojikiston": "countryTajikistan",
 };
 
-const cityRuMap: Record<string, string> = {
-  "Shymkent": "Шымкент",
-  "Osh": "Ош",
-  "Samarqand": "Самарканд",
-  "Xo'jand": "Худжанд",
-  "Toshkent": "Ташкент",
-  "Farg'ona": "Фергана",
+const cityTranslationKeys: Record<string, string> = {
+  "Shymkent": "cityShymkent",
+  "Osh": "cityOsh",
+  "Samarqand": "citySamarkand",
+  "Xo'jand": "cityKhujand",
+  "Toshkent": "cityTashkent",
+  "Farg'ona": "cityFergana",
 };
 
 export function EventsTour({ onOpenApply }: EventsTourProps) {
   const { openApply } = useApplyModal();
   const handleApply = onOpenApply || openApply;
   const t = useTranslations("events");
-  const locale = useLocale();
-  const isRu = locale === "ru";
+  const tArchive = useTranslations("mediaArchive");
   const events = siteMedia.events;
 
   return (
     <section
       id="tadbirlarimiz"
-      aria-label={isRu ? "География и масштаб" : "Geografiya va ko'lam"}
+      aria-label={t("title")}
       className="py-24 sm:py-32 border-b border-white/[0.08] bg-[#0A0A0A] text-[#F5F5F0] relative overflow-hidden"
     >
       <div className="max-w-[1360px] mx-auto px-6 md:px-12">
@@ -50,7 +49,7 @@ export function EventsTour({ onOpenApply }: EventsTourProps) {
             {/* Swiss Kicker */}
             <div className="flex items-center gap-4">
               <span className="w-8 h-[1px] bg-[#C5A880]" />
-              <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum">
+              <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum">
                 {t("kicker")}
               </span>
             </div>
@@ -76,26 +75,30 @@ export function EventsTour({ onOpenApply }: EventsTourProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-t border-l border-white/[0.08]">
           {events.map((evt, idx) => {
             const indexStr = idx < 9 ? `/0${idx + 1}` : `/${idx + 1}`;
-            const displayCountry = isRu ? countryRuMap[evt.country] || evt.country : evt.country;
-            const displayCity = isRu ? cityRuMap[evt.city] || evt.city : evt.city;
+            const displayCountry = countryTranslationKeys[evt.country]
+              ? tArchive(countryTranslationKeys[evt.country] as any)
+              : evt.country;
+            const displayCity = cityTranslationKeys[evt.city]
+              ? tArchive(cityTranslationKeys[evt.city] as any)
+              : evt.city;
 
             return (
               <article
                 key={evt.id}
                 role="button"
                 tabIndex={0}
-                onClick={() => handleApply(`${displayCity} dagi biznes-tur`)}
+                onClick={() => handleApply(`${displayCity} ${tArchive("businessTourSuffix")}`)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
-                    handleApply(`${displayCity} dagi biznes-tur`);
+                    handleApply(`${displayCity} ${tArchive("businessTourSuffix")}`);
                   }
                 }}
                 aria-label={`${displayCity} - ${evt.title}`}
                 className="group relative bg-[#0A0A0A] border-r border-b border-white/[0.08] p-6 sm:p-8 flex flex-col justify-between transition-all duration-500 hover:bg-[#0B132B]/30 hover:border-platinum/20 rounded-none cursor-pointer"
               >
                 {/* Top Index & Country Bar (Above the image, NOT floating as a pill badge) */}
-                <div className="flex items-center justify-between mb-5 font-mono text-[11px] uppercase tracking-[0.2em]">
+                <div className="flex items-center justify-between mb-5 font-mono text-xs uppercase tracking-[0.2em]">
                   <span className="text-platinum group-hover:text-white transition-colors">
                     {indexStr}
                   </span>
@@ -137,7 +140,7 @@ export function EventsTour({ onOpenApply }: EventsTourProps) {
                       {evt.date}
                     </span>
                   </div>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-platinum shrink-0">
+                  <span className="font-mono text-xs uppercase tracking-[0.18em] text-platinum shrink-0">
                     {t("status")}
                   </span>
                 </div>

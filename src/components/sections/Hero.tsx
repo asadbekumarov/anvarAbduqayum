@@ -18,6 +18,7 @@ export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
   const { openApply } = useApplyModal();
   const handleOpenModal = onOpenModal || onOpenApply || openApply;
   const t = useTranslations("hero");
+  const ctaT = useTranslations("cta");
 
   return (
     <section
@@ -70,7 +71,7 @@ export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
             >
               {/* Liquid Sheen Overlay */}
               <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
-              <span className="relative z-10">{t("ctaPrimary")}</span>
+              <span className="relative z-10">{ctaT("primary")}</span>
               <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1.5">
                 →
               </span>

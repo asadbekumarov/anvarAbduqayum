@@ -137,7 +137,7 @@ export function VideoStrip({
 
               {/* Duration or Index Pill Stamp */}
               {vid.duration && (
-                <div className="absolute bottom-2 right-2 bg-base/90 border border-border px-1.5 py-0.5 text-[10px] font-sans text-muted tracking-wider">
+                <div className="absolute bottom-2 right-2 bg-base/90 border border-border px-1.5 py-0.5 text-xs font-sans text-muted tracking-wider">
                   {vid.duration}
                 </div>
               )}
@@ -148,7 +148,7 @@ export function VideoStrip({
               <div className="flex items-center justify-between text-xs text-neutral-400">
                 <span className="font-serif">/0{idx + 1}</span>
                 {vid.company && (
-                  <span className="text-[11px] font-sans tracking-wider uppercase text-muted line-clamp-1 max-w-[160px]">
+                  <span className="text-xs font-sans tracking-wider uppercase text-muted line-clamp-1 max-w-[160px]">
                     {vid.company}
                   </span>
                 )}

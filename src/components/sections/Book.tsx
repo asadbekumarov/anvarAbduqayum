@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { siteMedia } from "@/config/siteMedia";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
 import { MaskedHeading } from "@/components/ui/MaskedHeading";
@@ -15,14 +15,10 @@ interface BookProps {
 export function Book({ onOpenApply }: BookProps) {
   const { openApply } = useApplyModal();
   const t = useTranslations("book");
-  const locale = useLocale();
-  const isRu = locale === "ru";
   const { cover } = siteMedia.book;
 
   const handleOrderBook = () => {
-    const bookTitle = isRu
-      ? "Книга «Бизнес шпаргалка»"
-      : "“Biznes shpargalkasi” kitobi";
+    const bookTitle = t("bookTitle");
     if (onOpenApply) {
       onOpenApply(bookTitle);
     } else {
@@ -48,7 +44,7 @@ export function Book({ onOpenApply }: BookProps) {
   return (
     <section
       id="kitob"
-      aria-label={isRu ? "Книга «Бизнес шпаргалка»" : "Biznes shpargalkasi kitobi"}
+      aria-label={t("title")}
       className="bg-gradient-to-b from-[#0A0A0A] via-[#0B132B]/25 to-[#0A0A0A] border-t border-b border-white/[0.08] py-24 sm:py-32 overflow-hidden relative"
     >
       <div className="max-w-[1360px] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -80,7 +76,7 @@ export function Book({ onOpenApply }: BookProps) {
             </div>
 
             {/* Bottom Pedestal Caption */}
-            <div className="absolute bottom-4 left-6 right-6 flex justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-platinum z-10">
+            <div className="absolute bottom-4 left-6 right-6 flex justify-between font-mono text-xs uppercase tracking-[0.2em] text-platinum z-10">
               <span>{t("pedestalLeft")}</span>
               <span className="text-platinum-light">{t("pedestalRight")}</span>
             </div>
@@ -92,7 +88,7 @@ export function Book({ onOpenApply }: BookProps) {
           {/* Swiss Kicker */}
           <div className="flex items-center gap-4">
             <span className="w-8 h-[1px] bg-[#C5A880]" />
-            <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum">
+            <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum">
               {t("kicker")}
             </span>
           </div>

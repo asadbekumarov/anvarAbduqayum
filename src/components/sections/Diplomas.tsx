@@ -24,7 +24,7 @@ export function Diplomas() {
         <div className="mb-16">
           <div className="flex items-center gap-3">
             <span className="w-8 h-[1px] bg-[#C5A880]" aria-hidden="true" />
-            <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum">
+            <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum">
               {t("kicker")}
             </span>
           </div>
@@ -87,17 +87,24 @@ export function Diplomas() {
                 </KenBurnsImage>
 
                 {/* Lightbox Trigger Overlay */}
-                <div className="absolute bottom-3 right-3 bg-[#070D1F]/90 border border-white/[0.12] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 pointer-events-none z-10">
+                <div className="absolute bottom-3 right-3 bg-[#070D1F]/90 border border-white/[0.12] px-3 py-1.5 font-mono text-xs uppercase tracking-[0.18em] text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1.5 pointer-events-none z-10">
                   <span>{t("zoomHint")}</span>
                 </div>
               </div>
 
               {/* Certificate Footer (Below Image) */}
               <div className="flex items-baseline justify-between pt-3 border-t border-white/[0.06] gap-4 transition-transform duration-500 ease-out group-hover:translate-x-1">
-                <h3 className="text-sm font-normal text-white leading-snug line-clamp-2">
-                  {doc.title}
-                </h3>
-                <span className="font-mono text-[10px] text-platinum-light uppercase tracking-wider shrink-0">
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-sm font-normal text-white leading-snug line-clamp-2">
+                    {doc.title}
+                  </h3>
+                  {doc.issuer && (
+                    <p className="text-xs text-neutral-400 font-light mt-1">
+                      {doc.issuer}
+                    </p>
+                  )}
+                </div>
+                <span className="font-mono text-xs text-platinum-light uppercase tracking-wider shrink-0">
                   {doc.year ? `${doc.year}` : t("badgeLabel")}
                 </span>
               </div>

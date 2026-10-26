@@ -3,6 +3,11 @@
 import React, { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { applySchema, type ApplyFormData } from "../schemas/applySchema";
+import {
+  formatUzbekPhone,
+  cleanUzbekPhone,
+  isUzbekPhoneComplete,
+} from "@/lib/formatPhone";
 
 interface ApplyFormProps {
   onSuccess: () => void;
@@ -27,9 +32,15 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
     honeypot: "",
   });
 
+  const [displayPhone, setDisplayPhone] = useState("+998 ");
+
   useEffect(() => {
     if (selectedService) {
-      setFormData((prev) => ({ ...prev, service: selectedService }));
+      setFormData((prev) => ({
+        ...prev,
+        service: selectedService,
+        question: prev.question || selectedService,
+      }));
     }
   }, [selectedService]);
 
@@ -50,19 +61,16 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
   const [serverError, setServerError] = useState<string | null>(null);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.replace(/[^\d+]/g, "");
-    if (!value.startsWith("+998")) {
-      value = "+998";
-    }
-    if (value.length <= 13) {
-      setFormData((prev) => ({ ...prev, phone: value }));
-      if (errors.phone) {
-        setErrors((prev) => {
-          const next = { ...prev };
-          delete next.phone;
-          return next;
-        });
-      }
+    const formatted = formatUzbekPhone(e.target.value);
+    setDisplayPhone(formatted);
+    const cleaned = cleanUzbekPhone(formatted);
+    setFormData((prev) => ({ ...prev, phone: cleaned }));
+    if (errors.phone) {
+      setErrors((prev) => {
+        const next = { ...prev };
+        delete next.phone;
+        return next;
+      });
     }
   };
 
@@ -97,6 +105,14 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setServerError(null);
+
+    if (!isUzbekPhoneComplete(displayPhone)) {
+      setErrors((prev) => ({
+        ...prev,
+        phone: "Iltimos, to'liq telefon raqamingizni kiriting (+998 (XX) XXX-XX-XX)",
+      }));
+      return;
+    }
 
     const result = applySchema.safeParse(formData);
     if (!result.success) {
@@ -159,7 +175,7 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
         {/* Ism */}
         <div>
-          <label htmlFor="apply-name" className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 block mb-2">
+          <label htmlFor="apply-name" className="font-mono text-xs uppercase tracking-[0.2em] text-neutral-400 block mb-2">
             {t("nameLabel")} <span className="text-neutral-500">*</span>
           </label>
           <input
@@ -172,7 +188,7 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
             className="w-full bg-[#111111] border border-white/[0.12] px-4 py-3 text-sm text-white placeholder:text-neutral-600 focus:border-white/50 focus:outline-none transition-colors rounded-none"
           />
           {errors.name && (
-            <span className="text-[11px] text-red-400 font-mono mt-1 block">
+            <span className="text-xs text-red-400 font-mono mt-1 block">
               {errors.name}
             </span>
           )}
@@ -180,20 +196,26 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
 
         {/* Telefon */}
         <div>
-          <label htmlFor="apply-phone" className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 block mb-2">
-            {t("phoneLabel")} <span className="text-neutral-500">*</span>
+          <label htmlFor="apply-phone" className="font-mono text-xs uppercase tracking-[0.14em] text-neutral-300 block mb-2">
+            {t("phoneLabel")} <span className="text-[#C5A880]">*</span>
           </label>
           <input
             id="apply-phone"
             type="tel"
-            value={formData.phone}
+            inputMode="tel"
+            autoComplete="tel"
+            value={displayPhone}
             onChange={handlePhoneChange}
-            placeholder="+998 90 123 45 67"
+            placeholder="+998 (90) 123-45-67"
             disabled={isSubmitting}
-            className="w-full bg-[#111111] border border-white/[0.12] px-4 py-3 text-sm text-white placeholder:text-neutral-600 focus:border-white/50 focus:outline-none transition-colors rounded-none font-mono"
+            aria-invalid={Boolean(errors.phone)}
+            aria-describedby={errors.phone ? "apply-phone-error" : undefined}
+            className={`w-full bg-[#111111] border px-4 py-3 text-sm text-white placeholder:text-neutral-600 focus:outline-none transition-colors rounded-none font-mono ${
+              errors.phone ? "border-red-500 focus:border-red-400" : "border-white/[0.12] focus:border-white/50"
+            }`}
           />
           {errors.phone && (
-            <span className="text-[11px] text-red-400 font-mono mt-1 block">
+            <span id="apply-phone-error" className="text-xs text-red-400 font-mono mt-1 block">
               {errors.phone}
             </span>
           )}
@@ -204,7 +226,7 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
         <>
           {/* Yetkazib berish manzili */}
           <div>
-            <label htmlFor="apply-address" className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 block mb-2">
+            <label htmlFor="apply-address" className="font-mono text-xs uppercase tracking-[0.2em] text-neutral-400 block mb-2">
               {t("addressLabel")} <span className="text-neutral-500">*</span>
             </label>
             <input
@@ -217,7 +239,7 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
               className="w-full bg-[#111111] border border-white/[0.12] px-4 py-3 text-sm text-white placeholder:text-neutral-600 focus:border-white/50 focus:outline-none transition-colors rounded-none"
             />
             {errors.address && (
-              <span className="text-[11px] text-red-400 font-mono mt-1 block">
+              <span className="text-xs text-red-400 font-mono mt-1 block">
                 {errors.address}
               </span>
             )}
@@ -225,7 +247,7 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
 
           {/* Kitob soni yoki izoh */}
           <div>
-            <label htmlFor="apply-book-note" className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 block mb-2">
+            <label htmlFor="apply-book-note" className="font-mono text-xs uppercase tracking-[0.2em] text-neutral-400 block mb-2">
               {t("bookNoteLabel")}
             </label>
             <textarea
@@ -243,7 +265,7 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
         <>
           {/* B2B Qualification: Kompaniya ko'lami */}
           <div>
-            <label className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#94A3B8] block mb-2">
+            <label className="font-mono text-xs uppercase tracking-[0.2em] text-[#94A3B8] block mb-2">
               {t("companyScaleLabel")}
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
@@ -266,7 +288,7 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
                     }`}
                   >
                     <span className="font-semibold text-xs tracking-wider">{opt.value}</span>
-                    <span className="text-[9px] opacity-70 tracking-normal font-sans">{opt.sub}</span>
+                    <span className="text-xs opacity-75 tracking-normal font-sans">{opt.sub}</span>
                   </button>
                 );
               })}
@@ -275,7 +297,7 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
 
           {/* Biznesingiz bormi? (Architectural Joined 2-button toggle) */}
           <div>
-            <label htmlFor="apply-business" className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 block mb-2">
+            <label htmlFor="apply-business" className="font-mono text-xs uppercase tracking-[0.2em] text-neutral-400 block mb-2">
               {t("businessLabel")} <span className="text-neutral-500">*</span>
             </label>
 
@@ -323,7 +345,7 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
             )}
 
             {errors.business && (
-              <span className="text-[11px] text-red-400 font-mono mt-1 block">
+              <span className="text-xs text-red-400 font-mono mt-1 block">
                 {errors.business}
               </span>
             )}
@@ -331,7 +353,7 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
 
           {/* Savol / Izoh */}
           <div>
-            <label htmlFor="apply-question" className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 block mb-2">
+            <label htmlFor="apply-question" className="font-mono text-xs uppercase tracking-[0.2em] text-neutral-400 block mb-2">
               {t("questionLabel")}
             </label>
             <textarea
@@ -367,7 +389,7 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
         </button>
 
         {/* Security badge */}
-        <p className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest text-center mt-3">
+        <p className="font-mono text-xs text-neutral-500 uppercase tracking-widest text-center mt-3">
           100% MAXFIYLIK KAFOLATLANADI
         </p>
       </div>

@@ -847,14 +847,33 @@ body {
   animation: marqueeReverse 35s linear infinite;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-reverse {
+    animation: none !important;
+  }
+}
+
+@keyframes preloaderFadeOut {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
 /* Sharp architectural border utilities */
 .border-grid {
   border-color: #262626;
 }
 
-/* Subtle focus ring */
+/* Radiant Champagne focus ring for WCAG 2.2 AA accessibility */
 :focus-visible {
-  outline: 1px solid rgba(255, 255, 255, 0.4);
+  outline: 2px solid #C5A880 !important;
   outline-offset: 2px;
 }
 

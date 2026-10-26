@@ -131,7 +131,7 @@ export function LanguageSwitcher({
               >
                 <div className="flex items-center gap-2.5">
                   <span
-                    className={`text-[10px] uppercase font-mono tracking-wider ${
+                    className={`text-xs uppercase font-mono tracking-wider ${
                       isSelected
                         ? "text-[#C5A880]"
                         : "text-neutral-500 group-hover:text-[#94A3B8]"

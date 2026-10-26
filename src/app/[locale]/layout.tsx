@@ -49,6 +49,9 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
+import { contactConfig } from "@/config/contact";
+import { SITE_URL } from "@/config/siteConfig";
+
 export async function generateMetadata({
   params,
 }: {
@@ -70,10 +73,12 @@ export async function generateMetadata({
     ? "Практические решения по управлению бизнесом, операционным процессам, отделу продаж и усилению команды."
     : "Practical management systems, operational excellence, sales architecture, and team empowerment by an experienced consultant.";
 
+  const isProduction = process.env.VERCEL_ENV === "production";
+
   return {
     title,
     description,
-    metadataBase: new URL("https://ilhombegimqulov.uz"),
+    metadataBase: new URL(SITE_URL),
     alternates: {
       canonical: `/${locale}`,
       languages: {
@@ -87,11 +92,11 @@ export async function generateMetadata({
       description,
       type: "website",
       locale: locale === "uz" ? "uz_UZ" : locale === "ru" ? "ru_RU" : "en_US",
-      url: `https://ilhombegimqulov.uz/${locale}`,
+      url: `${SITE_URL}/${locale}`,
       siteName: "Ilhom Begimqulov",
       images: [
         {
-          url: siteMedia.brand.ogImage,
+          url: `${SITE_URL}${siteMedia.brand.ogImage}`,
           width: 1200,
           height: 630,
           alt: "Ilhom Begimqulov",
@@ -102,12 +107,11 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: [siteMedia.brand.ogImage],
+      images: [`${SITE_URL}${siteMedia.brand.ogImage}`],
     },
-    robots: {
-      index: true,
-      follow: true,
-    },
+    robots: !isProduction
+      ? { index: false, follow: false }
+      : { index: true, follow: true },
   };
 }
 
@@ -143,16 +147,16 @@ export default async function RootLayout({
         : locale === "en"
         ? "Business Consultant & Executive Trainer"
         : "Biznes Konsultant va Amaliyotchi Trener",
-    url: `https://ilhombegimqulov.uz/${locale}`,
-    image: "https://ilhombegimqulov.uz/images/hero/portrait.webp",
+    url: `${SITE_URL}/${locale}`,
+    image: `${SITE_URL}/images/hero/portrait.webp`,
     sameAs: [
-      "https://t.me/ilhom_begimqulov",
-      "https://instagram.com/ilhom.begimqulov",
+      contactConfig.telegram.url,
+      contactConfig.instagram.url,
     ],
     worksFor: {
       "@type": "Organization",
       name: "Ilhom Begimqulov Consulting",
-      url: "https://ilhombegimqulov.uz",
+      url: SITE_URL,
     },
   };
 

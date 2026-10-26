@@ -2,6 +2,8 @@
   "common": {
     "brandName": "Ilhom Begimqulov",
     "brandRole": "Biznes konsultant va trener",
+    "businessConsulting": "Biznes Konsalting",
+    "brandAria": "Ilhom Begimqulov - Asosiy sahifa",
     "cta": "Ustozga shogird tushish",
     "learnMore": "Batafsil ma'lumot",
     "viewServices": "Xizmatlar bilan tanishish",
@@ -11,7 +13,13 @@
     "closeMenu": "Menyuni yopish",
     "watchVideo": "Video ko'rish",
     "viewDetails": "Batafsil ko'rish",
-    "participate": "Ishtirok etish"
+    "participate": "Ishtirok etish",
+    "prev": "Oldingi",
+    "next": "Keyingi"
+  },
+  "cta": {
+    "primary": "Bepul diagnostikaga yozilish",
+    "mentorship": "Ustozga shogird tushish"
   },
   "nav": {
     "home": "Bosh sahifa",
@@ -24,7 +32,8 @@
     "contact": "Aloqa",
     "book": "Kitob",
     "events": "Tadbirlarimiz",
-    "tests": "Testlar"
+    "tests": "Testlar",
+    "mainNavAria": "Asosiy navigatsiya"
   },
   "hero": {
     "kicker": "B2B Konsalting & Tizimlashtirish",
@@ -48,7 +57,7 @@
     "portraitAlt": "Ilhom Begimqulov portreti"
   },
   "services": {
-    "kicker": "02 / XIZMATLAR ARXITEKTURASI",
+    "kicker": "XIZMATLAR ARXITEKTURASI",
     "titlePrefix": "Kompaniyangiz o'sishi uchun ",
     "titleHighlight": "tizimli yechimlar.",
     "title": "Kompaniyangiz o'sishi uchun tizimli yechimlar.",
@@ -59,7 +68,7 @@
     "diagTitle": "Qaysi yechim sizning bosqichingizga mos?",
     "diagDesc": "Qisqa strategik sessiyada biznesingizning joriy \"og'riqli nuqtalarini\" tahlil qilamiz va sizga qaysi tizimlashtirish yo'nalishi eng tez natija berishini aniqlaymiz.",
     "diagPrivacy": "100% Maxfiylik kafolati",
-    "diagCta": "Tahlilga yozilish",
+    "diagCta": "Bepul diagnostikaga yozilish",
     "diagServiceApplyName": "Bepul diagnostika",
     "selectService": "Tanlash",
     "items": [
@@ -105,7 +114,7 @@
     "cta": "Ishtirok etish"
   },
   "stages": {
-    "kicker": "04 / METODOLOGIYA VA BOSQICHLAR",
+    "kicker": "METODOLOGIYA VA BOSQICHLAR",
     "titlePrefix": "Tartibsizlikdan tizimga o'tish ",
     "titleHighlight": "arxitekturasi.",
     "title": "Tartibsizlikdan tizimga o'tish arxitekturasi.",
@@ -121,7 +130,7 @@
     "stageAction": "Ushbu bosqich bo'yicha yordam olish",
     "ctaBandTitle": "Biznesingizni tizimlashtirishga tayyormisiz?",
     "ctaBandDesc": "Kompaniyangiz bosqichiga mos dastlabki audit va diagnostika bo'yicha amaliy maslahat oling.",
-    "ctaBandButton": "Konsultatsiya olish",
+    "ctaBandButton": "Bepul diagnostikaga yozilish",
     "systematization": [
       {
         "step": "01",
@@ -262,7 +271,8 @@
   "partners": {
     "kicker": "05 / ISHONCH BILDIRGAN KOMPANIYALAR",
     "count": "27+ YIRIK B2B VA B2C BRENDLAR",
-    "title": "Ishonch bildirgan kompaniyalar"
+    "title": "Ishonch bildirgan kompaniyalar",
+    "b2bPartner": "B2B Hamkor"
   },
   "ctaBand": {
     "kicker": "DIAGNOSTIK SAVOL",
@@ -270,10 +280,11 @@
     "titleHighlight": "tizimli ishlay oladimi?",
     "title": "Biznesingiz sizning doimiy ishtirokingizsiz ham tizimli ishlay oladimi?",
     "description": "Agar kompaniya egasi ta'tilga chiqqanda jarayonlar to'xtab qolsa — sizda biznes emas, yuqori mas'uliyatli ish joyi bor. Keling, buni 20 daqiqalik tahlilda o'zgartiramiz.",
-    "cta": "Strategik tahlilga yozilish"
+    "cta": "Bepul diagnostikaga yozilish",
+    "strategicAnalysis": "Strategik tahlil"
   },
   "expert": {
-    "kicker": "07 / ASOSCHI VA BOSH STRATEG",
+    "kicker": "ASOSCHI VA BOSH STRATEG",
     "name": "ILHOM BEGIMQULOV",
     "experience": "10+ YILLIK AMALIY TAJRIBA",
     "headlinePrefix": "Nazariyadan xoli, faqat ",
@@ -290,7 +301,8 @@
     "pillar2Desc": "Jamoa ichida mas'uliyat va nazorat nuqtalarini uzluksiz ta'minlash.",
     "pillar3Tag": "PRINSIP / 03",
     "pillar3Title": "Sof natijadorlik",
-    "pillar3Desc": "Har bir o'zgarishni sof foyda va egasining bo'shagan vaqti bilan o'lchash."
+    "pillar3Desc": "Har bir o'zgarishni sof foyda va egasining bo'shagan vaqti bilan o'lchash.",
+    "certificatesHint": "XALQARO SERTIFIKATLAR VA LITSENZIYALAR (Kattalashtirish uchun bosing)"
   },
   "testimonials": {
     "kicker": "08 / REAL NATIJALAR VA KEYSLAR",
@@ -302,12 +314,15 @@
     "playTrigger": "▶ KO'RISH"
   },
   "book": {
-    "kicker": "09 / AMALIY QO'LLANMA VA KITOB",
+    "kicker": "AMALIY QO'LLANMA VA KITOB",
     "pedestalLeft": "MUALLIFLIK NASHRI",
     "pedestalRight": "BIZNES SHPARGALKASI",
     "titlePrefix": "«Biznes shpargalkasi» — tadbirkorning ",
     "titleHighlight": "stolusti kitobi.",
     "title": "«Biznes shpargalkasi» kitobi",
+    "bookTitle": "«Biznes shpargalkasi» kitobi",
+    "sectionAria": "Kitob va strategik tahlil",
+    "strategicAnalysisCta": "Strategik tahlil",
     "description": "Yillar davomida 100 dan ortiq kompaniyalarni tizimlashtirish jarayonida sinalgan tayyor shablonlar, moliyaviy jadvallar va boshqaruv algoritmlari jamlanmasi. Suvsiz, faqat amaliyot.",
     "spec1Label": "01 / FORMAT",
     "spec1Value": "Bosma nashr + Audio-kitob versiyasi",
@@ -336,11 +351,12 @@
     "badgeLabel": "XALQARO LITSENZIYA"
   },
   "contact": {
-    "kicker": "12 / TO'G'RIDAN-TO'G'RI ALOQA",
+    "kicker": "TO'G'RIDAN-TO'G'RI ALOQA",
     "titlePrefix": "Kompaniyangiz taqdirini muhokama ",
     "titleHighlight": "qilamiz.",
     "title": "Kompaniyangiz taqdirini muhokama qilamiz.",
     "description": "Toshkent shahridagi bosh oromgohimizga tashrif buyuring yoki quyidagi aloqa kanallari orqali shaxsan bog'laning.",
+    "descriptionDirect": "Quyidagi aloqa kanallari orqali shaxsan bog'laning.",
     "phoneLabel": "TELEFON RAQAMI",
     "phoneValue": "+998 55 503 61 00",
     "telegramLabel": "TELEGRAM KANAL",
@@ -358,6 +374,10 @@
     "businessInputPlaceholder": "Kompaniyangiz faoliyat sohasi yoki sizni qiynayotgan savol...",
     "hoursLabel": "Ish vaqti",
     "hoursValue": "Dushanba - Shanba: 09:00 - 18:00",
+    "retry": "Qayta urinish",
+    "nameError": "Iltimos, ismingizni to'liq kiriting",
+    "phoneError": "Iltimos, to'liq telefon raqamingizni kiriting (+998 (XX) XXX-XX-XX)",
+    "submitAnother": "Yana ariza qoldirish",
     "cta": "Ariza yuborish →"
   },
   "applyModal": {
@@ -418,7 +438,7 @@
     "headline": "Frequently Asked Questions",
     "headlineUz": "Ko'p beriladigan savollar",
     "lede": "Ilhom Begimqulovning konsalting xizmatlari, biznesni tizimlashtirish, shogirdlik dasturi va hamkorlik shartlari haqidagi eng muhim savollarga javoblar.",
-    "communityBtn": "Mutaxassis bilan bog'lanish",
+    "communityBtn": "Bepul diagnostikaga yozilish",
     "searchPlaceholder": "Savollar bo'yicha qidirish...",
     "searchLabel": "Savollar qidiruvi",
     "noResults": "Qidiruvingiz bo'yicha hech qanday savol topilmadi.",
@@ -495,8 +515,34 @@
     "bottomCard": {
       "title": "Boshqa savollaringiz bormi?",
       "description": "Mutaxassisimiz bilan to'g'ridan-to'g'ri bog'laning va biznesingiz uchun individual yechimlarni bilib oling.",
-      "cta": "Diagnostikaga yozilish"
+      "cta": "Bepul diagnostikaga yozilish"
     }
+  },
+  "mediaArchive": {
+    "sectionAria": "Media va natijalar arxivi",
+    "kicker": "RAQAMLI MEDIA VA NATIJALAR",
+    "headingPrefix": "Haqiqiy keyslar, master-klasslar va ",
+    "headingHighlight": "biznes-turlar",
+    "tabTestimonials": "VIDEO KEYSLAR VA NATIJALAR",
+    "tabWebinars": "OCHIQ MASTER-KLASSLAR",
+    "tabEvents": "MINTAQAVIY BIZNES-TUR",
+    "counterCases": "TA KEYS",
+    "counterLessons": "TA DARS",
+    "counterCities": "TA SHAHAR",
+    "testimonialsListAria": "Keyslar ro'yxati",
+    "webinarsListAria": "Vebinarlar ro'yxati",
+    "eventsListAria": "Tadbirlar ro'yxati",
+    "countryUzbekistan": "O'zbekiston",
+    "countryKazakhstan": "Qozog'iston",
+    "countryKyrgyzstan": "Qirg'iziston",
+    "countryTajikistan": "Tojikiston",
+    "cityTashkent": "Toshkent",
+    "citySamarkand": "Samarqand",
+    "cityFergana": "Farg'ona",
+    "cityShymkent": "Shymkent",
+    "cityOsh": "Osh",
+    "cityKhujand": "Xo'jand",
+    "businessTourSuffix": "dagi biznes-tur"
   },
   "footer": {
     "brand": "ILHOM BEGIMQULOV",

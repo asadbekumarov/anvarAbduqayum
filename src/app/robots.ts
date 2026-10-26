@@ -1,7 +1,19 @@
 import { MetadataRoute } from "next";
+import { SITE_URL } from "@/config/siteConfig";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = "https://ilhombegimqulov.uz";
+  const isProduction = process.env.VERCEL_ENV === "production";
+
+  if (!isProduction) {
+    return {
+      rules: [
+        {
+          userAgent: "*",
+          disallow: "/",
+        },
+      ],
+    };
+  }
 
   return {
     rules: [
@@ -11,6 +23,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/*"],
       },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: `${SITE_URL}/sitemap.xml`,
   };
 }

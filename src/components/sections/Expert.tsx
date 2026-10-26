@@ -2,17 +2,15 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { siteMedia } from "@/config/siteMedia";
 import { MaskedHeading } from "@/components/ui/MaskedHeading";
 import { KenBurnsImage } from "@/components/ui/KenBurnsImage";
 import { Lightbox, LightboxMedia } from "@/components/ui/Lightbox";
+import { formatSectionKicker } from "@/config/sections";
 
 export function Expert() {
   const t = useTranslations("expert");
-  const locale = useLocale();
-  const isRu = locale === "ru";
-  const isEn = locale === "en";
   const { portrait } = siteMedia.expert;
   const diplomas = siteMedia.diplomas;
   const [activeMedia, setActiveMedia] = useState<LightboxMedia | null>(null);
@@ -20,7 +18,7 @@ export function Expert() {
   return (
     <section
       id="ekspert"
-      aria-label={isRu ? "Об эксперте" : "Ekspert haqida"}
+      aria-label={t("name")}
       className="scroll-mt-20 py-14 sm:py-20 border-b border-white/[0.08] bg-gradient-to-b from-[#0A0A0A] via-[#070D1F]/40 to-[#0A0A0A] text-[#F5F5F0] relative overflow-hidden"
     >
       {/* Subtle midnight navy atmospheric ambient glow */}
@@ -33,8 +31,8 @@ export function Expert() {
         {/* Top Section Kicker */}
         <div className="flex items-center gap-4 mb-12">
           <span className="w-8 h-[1px] bg-[#C5A880]" />
-          <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum">
-            {t("kicker")}
+          <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum">
+            {formatSectionKicker("expert", t("kicker"))}
           </span>
         </div>
 
@@ -56,7 +54,7 @@ export function Expert() {
             </div>
 
             {/* Below Image Metadata Bar */}
-            <div className="mt-4 pt-4 border-t border-white/[0.08] flex items-baseline justify-between font-mono text-[11px] uppercase tracking-[0.18em] text-platinum transition-transform duration-500 group-hover:translate-x-1">
+            <div className="mt-4 pt-4 border-t border-white/[0.08] flex items-baseline justify-between font-mono text-xs uppercase tracking-[0.18em] text-platinum transition-transform duration-500 group-hover:translate-x-1">
               <span>{t("name")}</span>
               <span className="text-platinum-light">{t("experience")}</span>
             </div>
@@ -88,39 +86,39 @@ export function Expert() {
             <div className="grid grid-cols-1 sm:grid-cols-3 border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.08] pt-0">
               {/* Pillar 1 */}
               <div className="p-6 first:pl-0 last:pr-0">
-                <span className="font-mono text-[10px] text-platinum tracking-[0.2em] block mb-2">
+                <span className="font-mono text-xs text-platinum tracking-[0.16em] block mb-2">
                   {t("pillar1Tag")}
                 </span>
                 <h3 className="text-lg font-normal text-white mb-2">
                   {t("pillar1Title")}
                 </h3>
-                <p className="text-xs text-neutral-400 font-light leading-relaxed">
+                <p className="text-xs text-neutral-300 font-light leading-relaxed">
                   {t("pillar1Desc")}
                 </p>
               </div>
 
               {/* Pillar 2 */}
               <div className="p-6 first:pl-0 last:pr-0">
-                <span className="font-mono text-[10px] text-platinum tracking-[0.2em] block mb-2">
+                <span className="font-mono text-xs text-platinum tracking-[0.16em] block mb-2">
                   {t("pillar2Tag")}
                 </span>
                 <h3 className="text-lg font-normal text-white mb-2">
                   {t("pillar2Title")}
                 </h3>
-                <p className="text-xs text-neutral-400 font-light leading-relaxed">
+                <p className="text-xs text-neutral-300 font-light leading-relaxed">
                   {t("pillar2Desc")}
                 </p>
               </div>
 
               {/* Pillar 3 */}
               <div className="p-6 first:pl-0 last:pr-0">
-                <span className="font-mono text-[10px] text-platinum tracking-[0.2em] block mb-2">
+                <span className="font-mono text-xs text-platinum tracking-[0.16em] block mb-2">
                   {t("pillar3Tag")}
                 </span>
                 <h3 className="text-lg font-normal text-white mb-2">
                   {t("pillar3Title")}
                 </h3>
-                <p className="text-xs text-neutral-400 font-light leading-relaxed">
+                <p className="text-xs text-neutral-300 font-light leading-relaxed">
                   {t("pillar3Desc")}
                 </p>
               </div>
@@ -129,14 +127,10 @@ export function Expert() {
             {/* Embedded International Certificates & Diplomas */}
             <div id="sertifikatlar" className="pt-6 border-t border-white/[0.08]">
               <div className="flex items-center justify-between mb-3">
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-platinum">
-                  {isRu
-                    ? "МЕЖДУНАРОДНЫЕ СЕРТИФИКАТЫ И ЛИЦЕНЗИИ (Нажмите для увеличения)"
-                    : isEn
-                    ? "INTERNATIONAL CERTIFICATES & LICENSES (Click to zoom)"
-                    : "XALQARO SERTIFIKATLAR VA LITSENZIYALAR (Kattalashtirish uchun bosing)"}
+                <span className="font-mono text-xs uppercase tracking-[0.16em] text-platinum">
+                  {t("certificatesHint")}
                 </span>
-                <span className="font-mono text-[10px] text-platinum-light uppercase tracking-wider">
+                <span className="font-mono text-xs text-platinum-light uppercase tracking-wider">
                   / 03
                 </span>
               </div>
@@ -180,15 +174,22 @@ export function Expert() {
                         sizes="210px"
                         className="object-contain w-full h-full grayscale-[15%] group-hover:grayscale-0 group-hover:scale-[1.04] transition-all duration-500 ease-out"
                       />
-                      <div className="absolute bottom-1 right-1 bg-[#070D1F]/90 border border-white/[0.1] px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-wider text-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                      <div className="absolute bottom-1 right-1 bg-[#070D1F]/90 border border-white/[0.1] px-1.5 py-0.5 font-mono text-xs uppercase tracking-wider text-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                         Zoom
                       </div>
                     </div>
                     <div className="pt-2 border-t border-white/[0.06] flex items-baseline justify-between gap-2">
-                      <h4 className="text-xs font-normal text-white truncate group-hover:translate-x-0.5 transition-transform">
-                        {doc.title}
-                      </h4>
-                      <span className="font-mono text-[9px] text-platinum shrink-0">
+                      <div className="min-w-0 flex-1">
+                        <h4 className="text-xs font-normal text-white truncate group-hover:translate-x-0.5 transition-transform">
+                          {doc.title}
+                        </h4>
+                        {doc.issuer && (
+                          <p className="text-xs text-neutral-300 font-light truncate mt-0.5">
+                            {doc.issuer}
+                          </p>
+                        )}
+                      </div>
+                      <span className="font-mono text-xs text-platinum shrink-0">
                         {doc.year || "CERT"}
                       </span>
                     </div>

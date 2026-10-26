@@ -11,6 +11,8 @@ export interface VideoItem {
   author?: string;
   role?: string;
   company?: string;
+  client?: string;
+  result?: string;
   thumb: string;
   duration?: string;
 }
@@ -38,7 +40,7 @@ export interface CityEvent {
 export interface DiplomaItem {
   id: string;
   title: string;
-  issuer: string;
+  issuer?: string;
   year: string;
   src: string;
   thumb: string;

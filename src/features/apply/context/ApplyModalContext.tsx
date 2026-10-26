@@ -3,10 +3,32 @@
 import React, { createContext, useContext, useState, useCallback } from "react";
 import { ApplyModal } from "../components/ApplyModal";
 
-interface ApplyModalContextValue {
+export const SERVICE_TITLES: Record<string, string> = {
+  "01": "Strategik audit va rivojlanish xaritasi",
+  "02": "Operatsion tizimlashtirish va reglamentlar",
+  "03": "B2B/B2C sotuv bo'limini qurish va marketing",
+  "04": "Korporativ boshqaruv va HR-arxitektura",
+  "05": "Muzokaralar va B2B kommunikatsiya standartlari",
+  "06": "Biznes transformatsiyasi va shaxsiy treking",
+  "service-01": "Strategik audit va rivojlanish xaritasi",
+  "service-02": "Operatsion tizimlashtirish va reglamentlar",
+  "service-03": "B2B/B2C sotuv bo'limini qurish va marketing",
+  "service-04": "Korporativ boshqaruv va HR-arxitektura",
+  "service-05": "Muzokaralar va B2B kommunikatsiya standartlari",
+  "service-06": "Biznes transformatsiyasi va shaxsiy treking",
+};
+
+export type OpenApplyOptions =
+  | string
+  | {
+      service?: string;
+      [key: string]: unknown;
+    };
+
+export interface ApplyModalContextValue {
   isOpen: boolean;
   selectedService: string | null;
-  openApply: (serviceName?: string | unknown) => void;
+  openApply: (options?: OpenApplyOptions | unknown) => void;
   closeApply: () => void;
 }
 
@@ -33,9 +55,22 @@ export function ApplyModalProvider({
   const [isOpen, setIsOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<string | null>(null);
 
-  const openApply = useCallback((serviceName?: string | unknown) => {
-    if (typeof serviceName === "string") {
-      setSelectedService(serviceName);
+  const openApply = useCallback((options?: OpenApplyOptions | unknown) => {
+    if (typeof options === "string") {
+      const resolved = SERVICE_TITLES[options] || options;
+      setSelectedService(resolved);
+    } else if (
+      options &&
+      typeof options === "object" &&
+      "service" in (options as Record<string, unknown>)
+    ) {
+      const rawService = (options as { service?: string }).service;
+      if (rawService) {
+        const resolved = SERVICE_TITLES[rawService] || rawService;
+        setSelectedService(resolved);
+      } else {
+        setSelectedService(null);
+      }
     } else {
       setSelectedService(null);
     }

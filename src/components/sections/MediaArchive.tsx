@@ -2,13 +2,14 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { YouTubeModal } from "@/components/ui/YouTubeModal";
 import { siteMedia, VideoItem } from "@/config/siteMedia";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
 import { MaskedHeading } from "@/components/ui/MaskedHeading";
 import { KenBurnsImage } from "@/components/ui/KenBurnsImage";
+import { formatSectionKicker } from "@/config/sections";
 
 const EASE_SWISS = [0.16, 1, 0.3, 1] as const;
 
@@ -16,29 +17,28 @@ interface MediaArchiveProps {
   onOpenApply?: (serviceName?: string) => void;
 }
 
-const countryRuMap: Record<string, string> = {
-  "Qozog'iston": "Казахстан",
-  "Qirg'iziston": "Кыргызстан",
-  "O'zbekiston": "Узбекистан",
-  "Tojikiston": "Таджикистан",
+const countryTranslationKeys: Record<string, string> = {
+  "Qozog'iston": "countryKazakhstan",
+  "Qirg'iziston": "countryKyrgyzstan",
+  "O'zbekiston": "countryUzbekistan",
+  "Tojikiston": "countryTajikistan",
 };
 
-const cityRuMap: Record<string, string> = {
-  Shymkent: "Шымкент",
-  Osh: "Ош",
-  Samarqand: "Самарканд",
-  "Xo'jand": "Худжанд",
-  Toshkent: "Ташкент",
-  "Farg'ona": "Фергана",
+const cityTranslationKeys: Record<string, string> = {
+  Shymkent: "cityShymkent",
+  Osh: "cityOsh",
+  Samarqand: "citySamarkand",
+  "Xo'jand": "cityKhujand",
+  Toshkent: "cityTashkent",
+  "Farg'ona": "cityFergana",
 };
 
 export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
   const { openApply } = useApplyModal();
   const handleApply = onOpenApply || openApply;
-  const locale = useLocale();
-  const isRu = locale === "ru";
-  const isEn = locale === "en";
 
+  const tArchive = useTranslations("mediaArchive");
+  const common = useTranslations("common");
   const tTestimonials = useTranslations("testimonials");
   const tWebinars = useTranslations("webinars");
   const tEvents = useTranslations("events");
@@ -72,31 +72,19 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
     {
       id: "testimonials" as const,
       index: "01",
-      label: isRu
-        ? "ВИДЕО КЕЙСЫ И РЕЗУЛЬТАТЫ"
-        : isEn
-        ? "VIDEO CASES & RESULTS"
-        : "VIDEO KEYSLAR VA NATIJALAR",
+      label: tArchive("tabTestimonials"),
       count: siteMedia.testimonials.length,
     },
     {
       id: "webinars" as const,
       index: "02",
-      label: isRu
-        ? "ОТКРЫТЫЕ МАСТЕР-КЛАССЫ"
-        : isEn
-        ? "OPEN MASTERCLASSES"
-        : "OCHIQ MASTER-KLASSLAR",
+      label: tArchive("tabWebinars"),
       count: siteMedia.webinars.length,
     },
     {
       id: "events" as const,
       index: "03",
-      label: isRu
-        ? "МИНТАҚАВИЙ БИЗНЕС-ТУР"
-        : isEn
-        ? "REGIONAL BUSINESS TOUR"
-        : "MINTAQAVIY BIZNES-TUR",
+      label: tArchive("tabEvents"),
       count: siteMedia.events.length,
     },
   ];
@@ -104,13 +92,7 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
   return (
     <section
       id="natijalar"
-      aria-label={
-        isRu
-          ? "Медиа и результаты"
-          : isEn
-          ? "Media and Results Archive"
-          : "Media va natijalar arxivi"
-      }
+      aria-label={tArchive("sectionAria")}
       className="scroll-mt-20 py-14 sm:py-20 border-b border-white/[0.08] bg-[#0A0A0A] text-[#F5F5F0] relative overflow-hidden"
     >
       {/* Anchor targets to preserve all existing links */}
@@ -126,38 +108,16 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
           <div>
             <div className="flex items-center gap-3">
               <span className="w-8 h-[1px] bg-[#C5A880]" aria-hidden="true" />
-              <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum">
-                {isRu
-                  ? "05 / МЕДИА И РЕЗУЛЬТАТЫ"
-                  : isEn
-                  ? "05 / MEDIA & PROVEN RESULTS"
-                  : "05 / RAQAMLI MEDIA VA NATIJALAR"}
+              <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum">
+                {formatSectionKicker("media", tArchive("kicker"))}
               </span>
             </div>
 
             <MaskedHeading className="text-3xl sm:text-5xl font-light tracking-[-0.03em] leading-[1.1] text-white mt-4">
-              {isRu ? (
-                <>
-                  Реальные кейсы, уроки и{" "}
-                  <span className="font-serif italic font-normal text-white/90">
-                    бизнес-туры
-                  </span>
-                </>
-              ) : isEn ? (
-                <>
-                  Proven cases, masterclasses and{" "}
-                  <span className="font-serif italic font-normal text-white/90">
-                    business tours
-                  </span>
-                </>
-              ) : (
-                <>
-                  Haqiqiy keyslar, master-klasslar va{" "}
-                  <span className="font-serif italic font-normal text-white/90">
-                    biznes-turlar
-                  </span>
-                </>
-              )}
+              {tArchive("headingPrefix")}
+              <span className="font-serif italic font-normal text-white/90">
+                {tArchive("headingHighlight")}
+              </span>
             </MaskedHeading>
           </div>
 
@@ -165,16 +125,16 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
           <div className="shrink-0 flex items-center gap-4">
             <span className="font-mono text-xs text-platinum uppercase tracking-widest hidden sm:inline-block">
               {activeTab === "testimonials"
-                ? `${siteMedia.testimonials.length} ${isRu ? "КЕЙСОВ" : "TA KEYS"}`
+                ? `${siteMedia.testimonials.length} ${tArchive("counterCases")}`
                 : activeTab === "webinars"
-                ? `${siteMedia.webinars.length} ${isRu ? "УРОКОВ" : "TA DARS"}`
-                : `${siteMedia.events.length} ${isRu ? "ГОРОДОВ" : "TA SHAHAR"}`}
+                ? `${siteMedia.webinars.length} ${tArchive("counterLessons")}`
+                : `${siteMedia.events.length} ${tArchive("counterCities")}`}
             </span>
             <div className="inline-flex border border-white/[0.12] divide-x divide-white/[0.12]">
               <button
                 type="button"
                 onClick={() => scroll("left")}
-                aria-label="Oldingi"
+                aria-label={common("prev")}
                 className="w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center text-platinum hover:text-white hover:bg-white/[0.04] transition-colors rounded-none font-mono text-sm cursor-pointer"
               >
                 ←
@@ -182,7 +142,7 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
               <button
                 type="button"
                 onClick={() => scroll("right")}
-                aria-label="Keyingi"
+                aria-label={common("next")}
                 className="w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center text-platinum hover:text-white hover:bg-white/[0.04] transition-colors rounded-none font-mono text-sm cursor-pointer"
               >
                 →
@@ -211,7 +171,7 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
                   {tab.label}
                 </span>
                 <span
-                  className={`text-[10px] px-1.5 py-0.5 font-mono ${
+                  className={`text-xs px-1.5 py-0.5 font-mono ${
                     isActive
                       ? "bg-[#C5A880] text-[#0A0A0A] font-semibold"
                       : "bg-white/[0.06] text-platinum"
@@ -249,7 +209,7 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
               ref={scrollRef}
               className="flex border-t border-b border-white/[0.08] divide-x divide-white/[0.08] overflow-x-auto scroll-smooth no-scrollbar"
               tabIndex={0}
-              aria-label="Keyslar ro'yxati"
+              aria-label={tArchive("testimonialsListAria")}
             >
               {siteMedia.testimonials.map((vid, idx) => {
                 const indexNum = idx < 9 ? `0${idx + 1}` : `${idx + 1}`;
@@ -269,7 +229,7 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
                     className="w-[300px] sm:w-[360px] shrink-0 bg-[#0A0A0A] hover:bg-[#0B132B]/35 p-5 sm:p-6 flex flex-col justify-between transition-all duration-500 cursor-pointer group rounded-none"
                   >
                     <div>
-                      <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.2em] text-platinum mb-4">
+                      <div className="flex items-center justify-between font-mono text-xs uppercase tracking-[0.2em] text-platinum mb-4">
                         <span className="group-hover:text-white transition-colors">
                           {tTestimonials("tagKey")} / {indexNum}
                         </span>
@@ -283,10 +243,10 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
                           alt={vid.title}
                           fill
                           loading="lazy"
-                          sizes="(max-width: 640px) 300px, 360px"
+                          sizes="(max-width: 640px) 100vw, 360px"
                           className="object-cover w-full h-full grayscale-[25%] contrast-[1.05] group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700"
                         />
-                        <div className="absolute bottom-0 left-0 bg-[#070D1F]/90 border-t border-r border-white/[0.12] px-3 py-1.5 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-white group-hover:bg-white group-hover:text-[#0A0A0A] transition-colors">
+                        <div className="absolute bottom-0 left-0 bg-[#070D1F]/90 border-t border-r border-white/[0.12] px-3 py-1.5 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-white group-hover:bg-white group-hover:text-[#0A0A0A] transition-colors">
                           <span>{tTestimonials("playTrigger")}</span>
                         </div>
                       </div>
@@ -297,11 +257,16 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
                         {vid.title}
                       </h3>
                       <div className="font-mono text-xs text-platinum mt-1.5 uppercase tracking-wider flex items-center justify-between">
-                        <span>{vid.company || vid.author}</span>
+                        <span>{vid.client || vid.company || vid.author}</span>
                         {vid.duration && (
                           <span className="text-platinum-light">{vid.duration}</span>
                         )}
                       </div>
+                      {vid.result && (
+                        <p className="text-xs text-neutral-300 mt-1 font-light">
+                          {vid.result}
+                        </p>
+                      )}
                     </div>
                   </article>
                 );
@@ -323,7 +288,7 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
               ref={scrollRef}
               className="flex gap-5 overflow-x-auto scroll-smooth no-scrollbar px-6 md:px-12 max-w-[1360px] mx-auto pb-4"
               tabIndex={0}
-              aria-label="Vebinarlar ro'yxati"
+              aria-label={tArchive("webinarsListAria")}
             >
               {siteMedia.webinars.map((vid, idx) => {
                 const indexNum = idx < 9 ? `0${idx + 1}` : `${idx + 1}`;
@@ -348,16 +313,16 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
                         alt={vid.title}
                         fill
                         loading="lazy"
-                        sizes="(max-width: 640px) 280px, 320px"
+                        sizes="(max-width: 640px) 100vw, 320px"
                         className="object-cover w-full h-full opacity-85 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500"
                       />
-                      <div className="absolute top-2.5 left-2.5 bg-[#070D1F]/90 px-2 py-0.5 font-mono text-[9px] tracking-[0.18em] text-platinum-light border border-white/[0.08]">
+                      <div className="absolute top-2.5 left-2.5 bg-[#070D1F]/90 px-2 py-0.5 font-mono text-xs tracking-[0.18em] text-platinum-light border border-white/[0.08]">
                         <span>
                           {tWebinars("lessonTag")} / {indexNum}
                         </span>
                       </div>
                       {vid.duration && (
-                        <div className="absolute bottom-2 right-2 bg-[#070D1F]/90 px-1.5 py-0.5 font-mono text-[9px] tracking-wider text-platinum border border-white/[0.08]">
+                        <div className="absolute bottom-2 right-2 bg-[#070D1F]/90 px-1.5 py-0.5 font-mono text-xs tracking-wider text-platinum border border-white/[0.08]">
                           {vid.duration}
                         </div>
                       )}
@@ -367,7 +332,7 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
                       <h3 className="text-sm font-normal text-white leading-snug line-clamp-2 group-hover:translate-x-1 transition-transform">
                         {vid.title}
                       </h3>
-                      <div className="mt-4 pt-2.5 border-t border-white/[0.06] flex items-center justify-between font-mono text-[9px] uppercase tracking-[0.18em] text-platinum group-hover:text-white transition-colors">
+                      <div className="mt-4 pt-2.5 border-t border-white/[0.06] flex items-center justify-between font-mono text-xs uppercase tracking-[0.18em] text-platinum group-hover:text-white transition-colors">
                         <span>{tWebinars("openLesson")}</span>
                         <span className="text-platinum-light group-hover:text-white group-hover:translate-x-1 transition-transform">
                           {tWebinars("watchTrigger")}
@@ -394,29 +359,33 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
               ref={scrollRef}
               className="flex gap-5 overflow-x-auto scroll-smooth no-scrollbar px-6 md:px-12 max-w-[1360px] mx-auto pb-4"
               tabIndex={0}
-              aria-label="Tadbirlar ro'yxati"
+              aria-label={tArchive("eventsListAria")}
             >
               {siteMedia.events.map((evt, idx) => {
                 const indexStr = idx < 9 ? `/0${idx + 1}` : `/${idx + 1}`;
-                const displayCountry = isRu ? countryRuMap[evt.country] || evt.country : evt.country;
-                const displayCity = isRu ? cityRuMap[evt.city] || evt.city : evt.city;
+                const displayCountry = countryTranslationKeys[evt.country]
+                  ? tArchive(countryTranslationKeys[evt.country] as any)
+                  : evt.country;
+                const displayCity = cityTranslationKeys[evt.city]
+                  ? tArchive(cityTranslationKeys[evt.city] as any)
+                  : evt.city;
 
                 return (
                   <article
                     key={evt.id}
                     role="button"
                     tabIndex={0}
-                    onClick={() => handleApply(`${displayCity} dagi biznes-tur`)}
+                    onClick={() => handleApply(`${displayCity} ${tArchive("businessTourSuffix")}`)}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" || e.key === " ") {
                         e.preventDefault();
-                        handleApply(`${displayCity} dagi biznes-tur`);
+                        handleApply(`${displayCity} ${tArchive("businessTourSuffix")}`);
                       }
                     }}
                     aria-label={`${displayCity} - ${evt.title}`}
                     className="w-[280px] sm:w-[320px] shrink-0 group relative bg-[#0A0A0A] border border-white/[0.08] p-5 flex flex-col justify-between transition-all duration-500 hover:bg-[#0B132B]/30 hover:border-platinum/20 rounded-none cursor-pointer"
                   >
-                    <div className="flex items-center justify-between mb-4 font-mono text-[10px] uppercase tracking-[0.2em]">
+                    <div className="flex items-center justify-between mb-4 font-mono text-xs uppercase tracking-[0.2em]">
                       <span className="text-platinum group-hover:text-white transition-colors">
                         {indexStr}
                       </span>
@@ -430,7 +399,7 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
                           alt={evt.alt}
                           fill
                           loading="lazy"
-                          sizes="(max-width: 640px) 280px, 320px"
+                          sizes="(max-width: 640px) 100vw, 320px"
                           className="object-cover w-full h-full grayscale contrast-[1.08] group-hover:grayscale-0 group-hover:scale-[1.04] transition-all duration-700 ease-out"
                         />
                       </KenBurnsImage>
@@ -452,7 +421,7 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
                           {evt.date}
                         </span>
                       </div>
-                      <span className="font-mono text-[9px] uppercase tracking-[0.18em] text-platinum shrink-0">
+                      <span className="font-mono text-xs uppercase tracking-[0.18em] text-platinum shrink-0">
                         {tEvents("status")}
                       </span>
                     </div>

@@ -289,7 +289,7 @@ export function ApplyModal({ isOpen, onClose }: ApplyModalProps) {
             <div className="space-y-1">
               <label
                 htmlFor="apply-name"
-                className="text-[11px] font-sans uppercase tracking-[0.15em] text-muted block"
+                className="text-xs font-sans uppercase tracking-[0.15em] text-muted block"
               >
                 {t("nameLabel")} *
               </label>
@@ -310,7 +310,7 @@ export function ApplyModal({ isOpen, onClose }: ApplyModalProps) {
                 }`}
               />
               {errors.name && (
-                <p className="text-[11px] text-red-400 mt-1">{errors.name}</p>
+                <p className="text-xs text-red-400 mt-1">{errors.name}</p>
               )}
             </div>
 
@@ -318,7 +318,7 @@ export function ApplyModal({ isOpen, onClose }: ApplyModalProps) {
             <div className="space-y-1">
               <label
                 htmlFor="apply-phone"
-                className="text-[11px] font-sans uppercase tracking-[0.15em] text-muted block"
+                className="text-xs font-sans uppercase tracking-[0.15em] text-muted block"
               >
                 {t("phoneLabel")} *
               </label>
@@ -338,7 +338,7 @@ export function ApplyModal({ isOpen, onClose }: ApplyModalProps) {
                 }`}
               />
               {errors.phone && (
-                <p className="text-[11px] text-red-400 mt-1">{errors.phone}</p>
+                <p className="text-xs text-red-400 mt-1">{errors.phone}</p>
               )}
             </div>
 
@@ -346,7 +346,7 @@ export function ApplyModal({ isOpen, onClose }: ApplyModalProps) {
             <div className="space-y-1">
               <label
                 htmlFor="apply-business"
-                className="text-[11px] font-sans uppercase tracking-[0.15em] text-muted block"
+                className="text-xs font-sans uppercase tracking-[0.15em] text-muted block"
               >
                 {t("businessLabel")} *
               </label>
@@ -366,7 +366,7 @@ export function ApplyModal({ isOpen, onClose }: ApplyModalProps) {
                 }`}
               />
               {errors.business && (
-                <p className="text-[11px] text-red-400 mt-1">
+                <p className="text-xs text-red-400 mt-1">
                   {errors.business}
                 </p>
               )}
@@ -376,7 +376,7 @@ export function ApplyModal({ isOpen, onClose }: ApplyModalProps) {
             <div className="space-y-1">
               <label
                 htmlFor="apply-question"
-                className="text-[11px] font-sans uppercase tracking-[0.15em] text-muted block"
+                className="text-xs font-sans uppercase tracking-[0.15em] text-muted block"
               >
                 {t("questionLabel")}
               </label>
@@ -395,7 +395,7 @@ export function ApplyModal({ isOpen, onClose }: ApplyModalProps) {
                 }`}
               />
               {errors.question && (
-                <p className="text-[11px] text-red-400 mt-1">
+                <p className="text-xs text-red-400 mt-1">
                   {errors.question}
                 </p>
               )}

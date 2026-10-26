@@ -70,7 +70,7 @@ export function ApplyModal({
       {isSuccess ? (
         <div className="py-2 text-left animate-in fade-in duration-300">
           {/* Top Status Indicator */}
-          <div className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-[#C5A880] mb-4">
+          <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.25em] text-[#C5A880] mb-4">
             <span className="w-2 h-2 rounded-full bg-[#C5A880] animate-pulse" />
             <span>{t("thankYouBadge")}</span>
           </div>

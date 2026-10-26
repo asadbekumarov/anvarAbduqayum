@@ -3,6 +3,13 @@
 import React, { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { MaskedHeading } from "@/components/ui/MaskedHeading";
+import { contactConfig } from "@/config/contact";
+import { formatSectionKicker } from "@/config/sections";
+import {
+  formatUzbekPhone,
+  cleanUzbekPhone,
+  isUzbekPhoneComplete,
+} from "@/lib/formatPhone";
 
 export function Contact() {
   const t = useTranslations("contact");
@@ -11,50 +18,69 @@ export function Contact() {
 
   const [formData, setFormData] = useState({
     name: "",
-    phone: "+998",
     companySize: "10–50",
     business: "",
     honeypot: "",
   });
+
+  const [displayPhone, setDisplayPhone] = useState("+998 ");
+  const [fieldErrors, setFieldErrors] = useState<{
+    name?: string;
+    phone?: string;
+  }>({});
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let val = e.target.value.replace(/[^\d+]/g, "");
-    if (!val.startsWith("+998")) {
-      val = "+998";
-    }
-    if (val.length <= 13) {
-      setFormData((prev) => ({ ...prev, phone: val }));
+    const formatted = formatUzbekPhone(e.target.value);
+    setDisplayPhone(formatted);
+    if (fieldErrors.phone) {
+      setFieldErrors((prev) => ({ ...prev, phone: undefined }));
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, name: e.target.value }));
+    if (fieldErrors.name) {
+      setFieldErrors((prev) => ({ ...prev, name: undefined }));
+    }
+  };
+
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     setErrorMessage(null);
 
+    const errors: { name?: string; phone?: string } = {};
+
     if (formData.name.trim().length < 2) {
-      setErrorMessage("Iltimos, ismingizni to'liq kiriting.");
+      errors.name = t("nameError");
+    }
+
+    if (!isUzbekPhoneComplete(displayPhone)) {
+      errors.phone = t("phoneError");
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
       return;
     }
 
-    if (formData.phone.length < 13) {
-      setErrorMessage("Iltimos, to'liq telefon raqamingizni kiriting (+998 ...)");
-      return;
-    }
+    setFieldErrors({});
 
     try {
       setIsSubmitting(true);
+      const cleanedPhone = cleanUzbekPhone(displayPhone);
+
       const res = await fetch("/api/apply", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
+          name: formData.name.trim(),
+          phone: cleanedPhone,
           companySize: formData.companySize || "10–50",
-          business: formData.business || "Tezkor murojaat formasi",
+          business: formData.business.trim() || "Tezkor murojaat formasi",
           service: "Tezkor murojaat (Kontaktlar bo'limi)",
           locale,
           pageUrl: typeof window !== "undefined" ? window.location.href : undefined,
@@ -64,24 +90,36 @@ export function Contact() {
 
       const data = await res.json();
       if (!res.ok || !data.ok) {
-        setErrorMessage(data.error || "Arizani yuborishda xatolik yuz berdi.");
+        setErrorMessage(
+          data.error || "Arizani yuborishda xatolik yuz berdi. Iltimos, qayta urinib ko'ring."
+        );
         return;
       }
 
       setIsSuccess(true);
+      // Success holatida forma tozalanishi mumkin
       setFormData({
         name: "",
-        phone: "+998",
         companySize: "10–50",
         business: "",
         honeypot: "",
       });
+      setDisplayPhone("+998 ");
     } catch {
-      setErrorMessage("Aloqa xatosi yuz berdi. Internetni tekshirib qayta urinib ko'ring.");
+      setErrorMessage(
+        "Aloqa xatosi yuz berdi. Internetni tekshirib qayta urinib ko'ring."
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  const officeAddress =
+    locale === "ru"
+      ? contactConfig.office.addressRu
+      : locale === "en"
+      ? contactConfig.office.addressEn
+      : contactConfig.office.addressUz;
 
   return (
     <section
@@ -105,8 +143,8 @@ export function Contact() {
           <div>
             <div className="flex items-center gap-3">
               <span className="w-8 h-[1px] bg-[#C5A880]" aria-hidden="true" />
-              <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum">
-                {t("kicker")}
+              <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum">
+                {formatSectionKicker("contact", t("kicker"))}
               </span>
             </div>
 
@@ -118,8 +156,9 @@ export function Contact() {
               </span>
             </MaskedHeading>
 
+            {/* TODO(confirm): Aniq manzil/xarita tasdiqlanmaguncha "tashrif buyuring" jumlasi yashirilgan (contactConfig.office.hasExactAddress: false) */}
             <p className="text-sm sm:text-base text-neutral-300 font-light leading-relaxed mt-4 max-w-xl">
-              {t("description")}
+              {contactConfig.office.hasExactAddress ? t("description") : t("descriptionDirect")}
             </p>
           </div>
 
@@ -131,10 +170,11 @@ export function Contact() {
                 {t("phoneLabel")}
               </span>
               <a
-                href={`tel:${t("phoneValue").replace(/\s+/g, "")}`}
+                href={contactConfig.phone.href}
+                aria-label={contactConfig.phone.ariaLabel}
                 className="text-base font-light text-white hover:text-white/80 transition-colors font-mono"
               >
-                {t("phoneValue")}
+                {contactConfig.phone.display}
               </a>
             </div>
 
@@ -144,12 +184,13 @@ export function Contact() {
                 {t("telegramLabel")}
               </span>
               <a
-                href="https://t.me/Ilxombegimkulov"
+                href={contactConfig.telegram.url}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={contactConfig.telegram.ariaLabel}
                 className="text-base font-light text-white hover:text-white/80 transition-colors font-mono"
               >
-                {t("telegramValue")}
+                {contactConfig.telegram.handle}
               </a>
             </div>
 
@@ -159,7 +200,7 @@ export function Contact() {
                 {t("addressLabel")}
               </span>
               <span className="text-base font-light text-white text-right">
-                {t("addressValue")}
+                {officeAddress}
               </span>
             </div>
           </div>
@@ -170,6 +211,8 @@ export function Contact() {
           <h3 className="font-serif italic text-2xl text-white mb-2">
             {t("formTitle")}
           </h3>
+
+          {/* TODO(confirm): "15 daqiqada aloqaga chiqamiz" va "100% maxfiylik" matnlari rasmiy xizmat ko'rsatish reglamenti (SLA) bo'yicha tasdiqlansin */}
           <p className="text-xs text-platinum-light font-light mb-8">
             {t("formSubtitle")}
           </p>
@@ -177,7 +220,7 @@ export function Contact() {
           {isSuccess ? (
             <div className="py-4 text-left animate-in fade-in duration-300">
               {/* Top Status Indicator */}
-              <div className="inline-flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.25em] text-[#C5A880] mb-4">
+              <div className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.25em] text-[#C5A880] mb-4">
                 <span className="w-2 h-2 rounded-full bg-[#C5A880] animate-pulse" />
                 <span>{applyT("thankYouBadge")}</span>
               </div>
@@ -211,9 +254,10 @@ export function Contact() {
               {/* Value-Add Action */}
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                 <a
-                  href="https://t.me/ilhombegimqulov"
+                  href={contactConfig.telegram.url}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={contactConfig.telegram.ariaLabel}
                   className="group inline-flex items-center justify-center gap-2 px-5 py-3 border border-[#C5A880]/60 hover:border-[#C5A880] bg-[#C5A880]/10 hover:bg-[#C5A880]/20 text-[#E2C79D] hover:text-white font-mono text-xs uppercase tracking-[0.14em] transition-all rounded-none"
                 >
                   <span>{applyT("actionTelegram")}</span>
@@ -224,95 +268,190 @@ export function Contact() {
                   onClick={() => setIsSuccess(false)}
                   className="inline-flex items-center justify-center gap-2 px-5 py-3 border border-white/[0.12] hover:border-white/40 text-neutral-300 hover:text-white font-mono text-xs uppercase tracking-[0.14em] transition-all rounded-none cursor-pointer"
                 >
-                  <span>Yana ariza qoldirish</span>
+                  <span>{t("submitAnother")}</span>
                 </button>
               </div>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-5">
-              {/* Anti-spam honeypot */}
-              <input
-                type="text"
-                name="honeypot"
-                value={formData.honeypot}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, honeypot: e.target.value }))
-                }
-                className="hidden"
-                tabIndex={-1}
-                autoComplete="off"
-                aria-hidden="true"
-              />
+            <form onSubmit={handleSubmit} noValidate className="space-y-5">
+              {/* Anti-spam honeypot (Spamdan himoya) */}
+              <div className="hidden" aria-hidden="true">
+                <label htmlFor="contact-website" className="sr-only">
+                  Website (leave blank)
+                </label>
+                <input
+                  id="contact-website"
+                  type="text"
+                  name="website"
+                  value={formData.honeypot}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, honeypot: e.target.value }))
+                  }
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
 
+              {/* Error Alert with Retry button — user data is preserved */}
               {errorMessage && (
-                <div className="p-3 border border-red-500/30 bg-red-950/20 text-red-400 text-xs font-light">
-                  {errorMessage}
+                <div
+                  role="alert"
+                  id="contact-form-error"
+                  className="p-3.5 border border-red-500/40 bg-red-950/30 text-red-300 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-in fade-in"
+                >
+                  <div className="flex items-center gap-2">
+                    <svg
+                      className="w-4 h-4 text-red-400 shrink-0"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                      />
+                    </svg>
+                    <span>{errorMessage}</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleSubmit()}
+                    disabled={isSubmitting}
+                    className="self-start sm:self-auto shrink-0 px-3 py-1.5 border border-red-400/50 hover:border-red-400 bg-red-900/40 hover:bg-red-900/70 text-red-100 text-xs font-mono uppercase tracking-wider transition-colors cursor-pointer disabled:opacity-50"
+                  >
+                    {t("retry")}
+                  </button>
                 </div>
               )}
 
               {/* Ism-familiya */}
               <div>
-                <label htmlFor="contact-name" className="font-mono text-[10px] uppercase tracking-[0.2em] text-platinum block mb-2">
+                <label
+                  htmlFor="contact-name"
+                  className="font-mono text-xs uppercase tracking-[0.14em] text-neutral-300 block mb-2"
+                >
                   {t("nameLabel")}
                 </label>
                 <input
                   id="contact-name"
                   type="text"
+                  autoComplete="name"
                   required
                   value={formData.name}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, name: e.target.value }))
-                  }
+                  onChange={handleNameChange}
                   placeholder={t("namePlaceholder")}
                   disabled={isSubmitting}
-                  className="w-full bg-[#0A0A0A]/70 border border-white/[0.12] px-4 py-3.5 text-sm text-white placeholder:text-neutral-500 focus:border-platinum/50 focus:outline-none transition-colors rounded-none"
+                  aria-invalid={Boolean(fieldErrors.name)}
+                  aria-describedby={
+                    fieldErrors.name
+                      ? "contact-name-error"
+                      : errorMessage
+                      ? "contact-form-error"
+                      : undefined
+                  }
+                  className={`w-full bg-[#0A0A0A]/70 border px-4 py-3.5 text-sm text-white placeholder:text-neutral-500 focus:outline-none transition-colors rounded-none ${
+                    fieldErrors.name
+                      ? "border-red-500 focus:border-red-400"
+                      : "border-white/[0.12] focus:border-platinum/50"
+                  }`}
                 />
+                {fieldErrors.name && (
+                  <p
+                    id="contact-name-error"
+                    className="mt-1.5 text-xs text-red-400 font-light flex items-center gap-1.5"
+                  >
+                    <span aria-hidden="true">⚠</span>
+                    <span>{fieldErrors.name}</span>
+                  </p>
+                )}
               </div>
 
-              {/* Telefon raqami */}
+              {/* Telefon raqami (+998 (XX) XXX-XX-XX maskasi) */}
               <div>
-                <label htmlFor="contact-phone" className="font-mono text-[10px] uppercase tracking-[0.2em] text-platinum block mb-2">
+                <label
+                  htmlFor="contact-phone"
+                  className="font-mono text-xs uppercase tracking-[0.14em] text-neutral-300 block mb-2"
+                >
                   {t("phoneInputLabel")}
                 </label>
                 <input
                   id="contact-phone"
                   type="tel"
+                  inputMode="tel"
+                  autoComplete="tel"
                   required
-                  value={formData.phone}
+                  value={displayPhone}
                   onChange={handlePhoneChange}
                   disabled={isSubmitting}
-                  className="w-full bg-[#0A0A0A]/70 border border-white/[0.12] px-4 py-3.5 text-sm text-white placeholder:text-neutral-500 focus:border-platinum/50 focus:outline-none transition-colors rounded-none font-mono"
+                  aria-invalid={Boolean(fieldErrors.phone)}
+                  aria-describedby={
+                    fieldErrors.phone
+                      ? "contact-phone-error"
+                      : errorMessage
+                      ? "contact-form-error"
+                      : undefined
+                  }
+                  placeholder="+998 (90) 123-45-67"
+                  className={`w-full bg-[#0A0A0A]/70 border px-4 py-3.5 text-sm text-white placeholder:text-neutral-500 focus:outline-none transition-colors rounded-none font-mono ${
+                    fieldErrors.phone
+                      ? "border-red-500 focus:border-red-400"
+                      : "border-white/[0.12] focus:border-platinum/50"
+                  }`}
                 />
+                {fieldErrors.phone && (
+                  <p
+                    id="contact-phone-error"
+                    className="mt-1.5 text-xs text-red-400 font-light flex items-center gap-1.5"
+                  >
+                    <span aria-hidden="true">⚠</span>
+                    <span>{fieldErrors.phone}</span>
+                  </p>
+                )}
               </div>
 
-              {/* B2B Qualification: Kompaniya ko'lami */}
+              {/* B2B Qualification: Kompaniya hajmi variantlari (Startap / Yangi loyiha bir xil tuzilishda) */}
               <div>
-                <label className="font-mono text-[10px] uppercase tracking-[0.2em] text-platinum block mb-2">
+                <span
+                  id="contact-scale-label"
+                  className="font-mono text-xs uppercase tracking-[0.14em] text-neutral-300 block mb-2"
+                >
                   {applyT("companyScaleLabel")}
-                </label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2">
+                </span>
+                <div
+                  role="radiogroup"
+                  aria-labelledby="contact-scale-label"
+                  className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-2"
+                >
                   {[
-                    { value: "1–10", sub: applyT("scale1Sub") },
-                    { value: "10–50", sub: applyT("scale2Sub") },
-                    { value: "50–200+", sub: applyT("scale3Sub") },
-                    { value: "Startap", sub: applyT("scale4Sub") },
+                    { value: "1–10", title: "1–10", sub: applyT("scale1Sub") },
+                    { value: "10–50", title: "10–50", sub: applyT("scale2Sub") },
+                    { value: "50–200+", title: "50–200+", sub: applyT("scale3Sub") },
+                    { value: "Startap", title: "Startap", sub: applyT("scale4Sub") },
                   ].map((opt) => {
                     const isSelected = (formData.companySize || "10–50") === opt.value;
                     return (
                       <button
                         key={opt.value}
                         type="button"
+                        role="radio"
+                        aria-checked={isSelected}
                         onClick={() =>
                           setFormData((prev) => ({ ...prev, companySize: opt.value }))
                         }
-                        className={`py-2 px-2 font-mono text-xs transition-all rounded-none text-center cursor-pointer flex flex-col items-center justify-center gap-0.5 border ${
+                        disabled={isSubmitting}
+                        className={`py-3 px-2 font-mono text-xs transition-all rounded-none text-center cursor-pointer flex flex-col items-center justify-center gap-1 border ${
                           isSelected
-                            ? "bg-[#0B132B]/80 border-[#C5A880] text-[#E2C79D] shadow-[0_0_15px_rgba(197,168,128,0.15)]"
+                            ? "bg-[#0B132B]/90 border-[#C5A880] text-[#E2C79D] shadow-[0_0_15px_rgba(197,168,128,0.18)] ring-1 ring-[#C5A880]/50"
                             : "bg-[#0A0A0A]/70 border-white/[0.1] text-neutral-400 hover:text-white hover:border-white/25"
                         }`}
                       >
-                        <span className="font-semibold text-xs tracking-wider">{opt.value}</span>
-                        <span className="text-[9px] opacity-70 tracking-normal font-sans">{opt.sub}</span>
+                        <span className="font-semibold text-xs tracking-wider">{opt.title}</span>
+                        <span className="text-xs opacity-75 tracking-normal font-sans text-center leading-tight">
+                          {opt.sub}
+                        </span>
                       </button>
                     );
                   })}
@@ -321,7 +460,10 @@ export function Contact() {
 
               {/* Biznes sohasi va savol */}
               <div>
-                <label htmlFor="contact-business" className="font-mono text-[10px] uppercase tracking-[0.2em] text-platinum block mb-2">
+                <label
+                  htmlFor="contact-business"
+                  className="font-mono text-xs uppercase tracking-[0.14em] text-neutral-300 block mb-2"
+                >
                   {t("businessInputLabel")}
                 </label>
                 <textarea
@@ -337,15 +479,44 @@ export function Contact() {
                 />
               </div>
 
-              {/* Submit Button */}
+              {/* Submit Button with Spinner & Disabled State */}
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="group relative overflow-hidden w-full bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] py-4 text-xs uppercase tracking-[0.2em] font-medium transition-colors rounded-none mt-2 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                className="group relative overflow-hidden w-full bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] py-4 text-xs uppercase tracking-[0.2em] font-semibold transition-colors rounded-none mt-2 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_20px_rgba(197,168,128,0.25)]"
               >
                 {/* Liquid Sheen */}
                 <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
-                <span className="relative z-10">{isSubmitting ? "Yuborilmoqda..." : t("formSubmit")}</span>
+                {isSubmitting ? (
+                  <span className="relative z-10 flex items-center gap-2">
+                    <svg
+                      className="animate-spin h-4 w-4 text-[#0A0A0A]"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      />
+                    </svg>
+                    <span>{applyT("submitting")}</span>
+                  </span>
+                ) : (
+                  <span className="relative z-10 flex items-center gap-2">
+                    <span>{t("formSubmit")}</span>
+                  </span>
+                )}
               </button>
             </form>
           )}

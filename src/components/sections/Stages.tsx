@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
 import { GridLine } from "@/components/ui/GridLine";
 import { MaskedHeading } from "@/components/ui/MaskedHeading";
+import { formatSectionKicker } from "@/config/sections";
 
 interface StageItemRaw {
   step: string;
@@ -24,8 +25,7 @@ export function Stages({ onOpenApply }: StagesProps) {
   const { openApply } = useApplyModal();
   const handleApply = onOpenApply || openApply;
   const t = useTranslations("stages");
-  const locale = useLocale();
-  const isRu = locale === "ru";
+  const ctaT = useTranslations("cta");
 
   const [activeTab, setActiveTab] = useState<string>("tab-systematization");
   const [openItem, setOpenItem] = useState<string>("");
@@ -75,7 +75,7 @@ export function Stages({ onOpenApply }: StagesProps) {
   return (
     <section
       id="bosqichlar"
-      aria-label={isRu ? "Методология и этапы" : "Metodologiya va bosqichlar"}
+      aria-label={t("title")}
       className="scroll-mt-20 py-14 sm:py-20 border-b border-white/[0.08] bg-[#0A0A0A] text-[#F5F5F0] relative overflow-hidden"
     >
       <div className="max-w-[1360px] mx-auto px-6 md:px-12">
@@ -86,8 +86,8 @@ export function Stages({ onOpenApply }: StagesProps) {
               {/* Swiss Kicker */}
               <div className="flex items-center gap-4">
                 <span className="w-8 h-[1px] bg-[#C5A880]" />
-                <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum">
-                  {t("kicker")}
+                <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum">
+                  {formatSectionKicker("stages", t("kicker"))}
                 </span>
               </div>
 
@@ -118,7 +118,7 @@ export function Stages({ onOpenApply }: StagesProps) {
                       }`}
                     >
                       <div>
-                        <span className="font-mono text-[10px] uppercase tracking-[0.2em] block text-platinum mb-0.5">
+                        <span className="font-mono text-xs uppercase tracking-[0.14em] block text-platinum mb-0.5">
                           {tab.direction}
                         </span>
                         <span className="text-sm sm:text-base font-normal tracking-tight">
@@ -156,7 +156,7 @@ export function Stages({ onOpenApply }: StagesProps) {
                 >
                   {/* Liquid Sheen */}
                   <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover/cta:translate-x-full" />
-                  <span className="relative z-10 font-medium">{t("ctaBandButton")}</span>
+                  <span className="relative z-10 font-medium">{ctaT("primary")}</span>
                   <span className="relative z-10 transition-transform duration-300 group-hover/cta:translate-x-1.5">
                     →
                   </span>
@@ -189,7 +189,9 @@ export function Stages({ onOpenApply }: StagesProps) {
                         type="button"
                         onClick={() => toggleItem(item.id)}
                         aria-expanded={isOpen}
-                        className="w-full py-5 flex items-baseline justify-between gap-6 text-left group rounded-none cursor-pointer"
+                        aria-controls={`stage-content-${item.id}`}
+                        id={`stage-button-${item.id}`}
+                        className="w-full py-5 flex items-baseline justify-between gap-6 text-left group rounded-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]"
                       >
                         <span className="font-mono text-xs text-platinum group-hover:text-white shrink-0 w-12 transition-colors duration-300">
                           /{item.step}
@@ -205,6 +207,9 @@ export function Stages({ onOpenApply }: StagesProps) {
                       <AnimatePresence initial={false}>
                         {isOpen && (
                           <motion.div
+                            id={`stage-content-${item.id}`}
+                            role="region"
+                            aria-labelledby={`stage-button-${item.id}`}
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}

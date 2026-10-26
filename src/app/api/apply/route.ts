@@ -14,14 +14,14 @@ export async function POST(req: NextRequest) {
       ? forwardedFor.split(",")[0].trim()
       : realIp || "127.0.0.1";
 
-    // 2. Rate limit: 5 requests per 10 minutes per IP
-    const rateLimit = checkRateLimit(clientIp);
+    // 2. Rate limit: 3 requests per 1 minute per IP (oddiy rate limit)
+    const rateLimit = checkRateLimit(clientIp, 3, 60 * 1000);
     if (!rateLimit.success) {
       return NextResponse.json(
         {
           ok: false,
           error:
-            "Juda ko'p so'rov yuborildi. Iltimos, bir ozdan so'ng qayta urinib ko'ring.",
+            "Juda ko'p so'rov yuborildi. Iltimos, 1 daqiqadan so'ng qayta urinib ko'ring.",
         },
         {
           status: 429,
@@ -61,8 +61,21 @@ export async function POST(req: NextRequest) {
     // 6. Dispatch message to Telegram Bot API
     const telegramResult = await sendTelegramLead(validData, clientIp);
     if (!telegramResult.success) {
-      console.error("[Apply Telegram Warning]", telegramResult.error);
-      // We still log for admin audit
+      console.error("[Apply Telegram Dispatch Failed]", {
+        error: telegramResult.error,
+        name: validData.name,
+        phone: validData.phone,
+        clientIp,
+      });
+      // Clientga hech qachon bot token yoki chat ID chiqmasin, tushunarli xabar qaytarilsin
+      return NextResponse.json(
+        {
+          ok: false,
+          error:
+            "Arizani qabul qilishda texnik xatolik yuz berdi. Iltimos, qayta urinib ko'ring yoki to'g'ridan-to'g'ri telefon orqali bog'laning.",
+        },
+        { status: 502 }
+      );
     }
 
     // 7. Audit log in server console

@@ -2,15 +2,14 @@
 
 import React, { useState, useRef } from "react";
 import Image from "next/image";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { YouTubeModal } from "@/components/ui/YouTubeModal";
 import { siteMedia, VideoItem } from "@/config/siteMedia";
 import { MaskedHeading } from "@/components/ui/MaskedHeading";
 
 export function Webinars() {
   const t = useTranslations("webinars");
-  const locale = useLocale();
-  const isRu = locale === "ru";
+  const common = useTranslations("common");
   const webinars = siteMedia.webinars;
   const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -24,14 +23,10 @@ export function Webinars() {
     });
   };
 
-  const counterText = isRu
-    ? `${webinars.length} УРОКОВ`
-    : `${webinars.length} TA DARS`;
-
   return (
     <section
       id="vebinarlar"
-      aria-label={isRu ? "База знаний и открытые уроки" : "Ochiq bilimlar bazasi va vebinarlar"}
+      aria-label={t("title")}
       className="bg-[#0A0A0A] py-24 sm:py-32 border-b border-white/[0.07] text-[#F5F5F0] relative overflow-hidden"
     >
       {/* Header Row */}
@@ -40,7 +35,7 @@ export function Webinars() {
         <div>
           <div className="flex items-center gap-4">
             <span className="w-8 h-[1px] bg-[#C5A880]" />
-            <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum">
+            <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum">
               {t("kicker")}
             </span>
           </div>
@@ -57,13 +52,13 @@ export function Webinars() {
         {/* Right Column: Counter Badge & Custom Architectural Scroll Controls */}
         <div className="shrink-0 flex items-center gap-4">
           <span className="font-mono text-xs text-platinum uppercase tracking-widest hidden sm:inline-block">
-            {counterText}
+            {webinars.length} {t("lessonTag")}
           </span>
           <div className="inline-flex border border-white/[0.12] divide-x divide-white/[0.12]">
             <button
               type="button"
               onClick={() => scroll("left")}
-              aria-label={isRu ? "Предыдущий урок" : "Oldingi dars"}
+              aria-label={common("prev")}
               className="w-12 h-12 flex items-center justify-center text-platinum hover:text-white hover:bg-white/[0.04] transition-colors rounded-none font-mono text-sm cursor-pointer"
             >
               ←
@@ -71,7 +66,7 @@ export function Webinars() {
             <button
               type="button"
               onClick={() => scroll("right")}
-              aria-label={isRu ? "Следующий урок" : "Keyingi dars"}
+              aria-label={common("next")}
               className="w-12 h-12 flex items-center justify-center text-platinum hover:text-white hover:bg-white/[0.04] transition-colors rounded-none font-mono text-sm cursor-pointer"
             >
               →
@@ -85,7 +80,7 @@ export function Webinars() {
         ref={scrollRef}
         className="flex gap-6 overflow-x-auto scroll-smooth no-scrollbar px-6 md:px-12 max-w-[1360px] mx-auto pb-4"
         tabIndex={0}
-        aria-label="Vebinarlar ro'yxati"
+        aria-label={t("title")}
       >
         {webinars.map((vid, idx) => {
           const indexNum = idx < 9 ? `0${idx + 1}` : `${idx + 1}`;
@@ -111,18 +106,18 @@ export function Webinars() {
                   alt={vid.title}
                   fill
                   loading="lazy"
-                  sizes="(max-width: 640px) 290px, 330px"
+                  sizes="(max-width: 640px) 100vw, 330px"
                   className="object-cover w-full h-full opacity-85 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-500"
                 />
                 {/* Top-left Episode Tag */}
-                <div className="absolute top-3 left-3 bg-[#070D1F]/90 px-2.5 py-1 font-mono text-[10px] tracking-[0.18em] text-platinum-light border border-white/[0.08]">
+                <div className="absolute top-3 left-3 bg-[#070D1F]/90 px-2.5 py-1 font-mono text-xs tracking-[0.18em] text-platinum-light border border-white/[0.08]">
                   <span>
                     {t("lessonTag")} / {indexNum}
                   </span>
                 </div>
                 {/* Duration Tag if available */}
                 {vid.duration && (
-                  <div className="absolute bottom-2.5 right-2.5 bg-[#070D1F]/90 px-2 py-0.5 font-mono text-[10px] tracking-wider text-platinum border border-white/[0.08]">
+                  <div className="absolute bottom-2.5 right-2.5 bg-[#070D1F]/90 px-2 py-0.5 font-mono text-xs tracking-wider text-platinum border border-white/[0.08]">
                     {vid.duration}
                   </div>
                 )}
@@ -135,7 +130,7 @@ export function Webinars() {
                 </h3>
 
                 {/* Bottom Trigger Row */}
-                <div className="mt-5 pt-3 border-t border-white/[0.06] flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.18em] text-platinum group-hover:text-white transition-colors">
+                <div className="mt-5 pt-3 border-t border-white/[0.06] flex items-center justify-between font-mono text-xs uppercase tracking-[0.18em] text-platinum group-hover:text-white transition-colors">
                   <span>{t("openLesson")}</span>
                   <span className="text-platinum-light group-hover:text-white group-hover:translate-x-1 transition-transform">
                     {t("watchTrigger")}

@@ -134,6 +134,7 @@ export const siteMedia = {
     },
   ] as CityEvent[],
 
+  // TODO(confirm): Matnda "27+ brend" aytilgan, biroq bu yerda 11 ta logotip bor. Shuningdek, haqiqiy nomlar ("Odezhda", "Logistika", "Way" brend nomiga o'xshamaydi) tasdiqlansin.
   partners: [
     { id: "mir", name: "Mir", logo: "/images/partners/mir.webp", width: 140, height: 48 },
     { id: "nafis", name: "Nafis", logo: "/images/partners/nafis.webp", width: 140, height: 48 },

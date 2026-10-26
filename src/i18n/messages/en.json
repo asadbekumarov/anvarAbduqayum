@@ -2,6 +2,8 @@
   "common": {
     "brandName": "Ilhom Begimqulov",
     "brandRole": "Business Consultant & Executive Trainer",
+    "businessConsulting": "Business Consulting",
+    "brandAria": "Ilhom Begimqulov - Main page",
     "cta": "Apply for Mentorship",
     "learnMore": "Learn More",
     "viewServices": "Explore Services",
@@ -11,7 +13,13 @@
     "closeMenu": "Close Menu",
     "watchVideo": "Watch Video",
     "viewDetails": "View Details",
-    "participate": "Participate"
+    "participate": "Participate",
+    "prev": "Previous",
+    "next": "Next"
+  },
+  "cta": {
+    "primary": "Book a Free Diagnostic",
+    "mentorship": "Apply for Mentorship"
   },
   "nav": {
     "home": "Home",
@@ -24,7 +32,8 @@
     "contact": "Contact",
     "book": "Book",
     "events": "Events",
-    "tests": "Tests"
+    "tests": "Tests",
+    "mainNavAria": "Main navigation"
   },
   "hero": {
     "kicker": "B2B Consulting & Systematization",
@@ -48,7 +57,7 @@
     "portraitAlt": "Portrait of Ilhom Begimqulov"
   },
   "services": {
-    "kicker": "02 / EXPERTISE & DIRECTIONS",
+    "kicker": "EXPERTISE & DIRECTIONS",
     "titlePrefix": "Systematic solutions for ",
     "titleHighlight": "company growth.",
     "title": "Systematic solutions for company growth.",
@@ -59,7 +68,7 @@
     "diagTitle": "Which solution fits your current stage?",
     "diagDesc": "In a focused strategic session, we audit your company's core pain points and pinpoint which systematization track will yield rapid measurable ROI.",
     "diagPrivacy": "100% Confidentiality Guarantee",
-    "diagCta": "Book Diagnostic Session",
+    "diagCta": "Book a Free Diagnostic",
     "diagServiceApplyName": "Free Strategic Diagnostic",
     "selectService": "Select Track",
     "items": [
@@ -105,7 +114,7 @@
     "cta": "Participate"
   },
   "stages": {
-    "kicker": "04 / METHODOLOGY & STAGES",
+    "kicker": "METHODOLOGY & STAGES",
     "titlePrefix": "The architecture of transition ",
     "titleHighlight": "from chaos to system.",
     "title": "The architecture of transition from chaos to system.",
@@ -121,7 +130,7 @@
     "stageAction": "Inquire About This Stage",
     "ctaBandTitle": "Ready to systematize your business?",
     "ctaBandDesc": "Receive targeted preliminary auditing and diagnostic advisory tailored for your enterprise phase.",
-    "ctaBandButton": "Book Consultation",
+    "ctaBandButton": "Book a Free Diagnostic",
     "systematization": [
       {
         "step": "01",
@@ -262,7 +271,8 @@
   "partners": {
     "kicker": "05 / COMPANIES THAT TRUST OUR SYSTEMATIZATION",
     "count": "27+ MAJOR B2B AND B2C BRANDS",
-    "title": "Companies that trust our systematization"
+    "title": "Companies that trust our systematization",
+    "b2bPartner": "B2B Partner"
   },
   "ctaBand": {
     "kicker": "DIAGNOSTIC QUESTION",
@@ -270,10 +280,11 @@
     "titleHighlight": "without your constant involvement?",
     "title": "Can your business systematically operate without your constant involvement?",
     "description": "If operations freeze when the owner takes a vacation, you don't have a business — you have a high-stress job. Let's transform this in a 20-minute strategic analysis.",
-    "cta": "Book a Strategic Diagnostic"
+    "cta": "Book a Free Diagnostic",
+    "strategicAnalysis": "Strategic Business Review"
   },
   "expert": {
-    "kicker": "07 / FOUNDER & CHIEF STRATEGIST",
+    "kicker": "FOUNDER & CHIEF STRATEGIST",
     "name": "ILHOM BEGIMQULOV",
     "experience": "10+ YEARS OF PRACTICAL EXPERIENCE",
     "headlinePrefix": "Zero abstract theory, only ",
@@ -290,7 +301,8 @@
     "pillar2Desc": "Ensuring continuous executive accountability and unambiguous control points.",
     "pillar3Tag": "PRINCIPLE / 03",
     "pillar3Title": "Net Results",
-    "pillar3Desc": "Measuring every intervention by bottom-line net profit and owner's liberated time."
+    "pillar3Desc": "Measuring every intervention by bottom-line net profit and owner's liberated time.",
+    "certificatesHint": "INTERNATIONAL CERTIFICATES & LICENSES (Click to zoom)"
   },
   "testimonials": {
     "kicker": "08 / REAL RESULTS & CASE STUDIES",
@@ -302,12 +314,15 @@
     "playTrigger": "▶ WATCH"
   },
   "book": {
-    "kicker": "09 / PRACTICAL GUIDE & BOOK",
+    "kicker": "PRACTICAL GUIDE & BOOK",
     "pedestalLeft": "AUTHOR'S EDITION",
     "pedestalRight": "BUSINESS CHEAT SHEET",
     "titlePrefix": "«Business Cheat Sheet» — the entrepreneur's ",
     "titleHighlight": "essential handbook.",
     "title": "«Business Cheat Sheet» Book",
+    "bookTitle": "«Business Cheat Sheet» Book",
+    "sectionAria": "Book and Strategic Review",
+    "strategicAnalysisCta": "Strategic Business Review",
     "description": "A field-tested collection of ready-to-use regulations, financial matrices, and executive frameworks proven across 100+ enterprises. No fluff, pure execution.",
     "spec1Label": "01 / FORMAT",
     "spec1Value": "Printed Hardcover + Complete Audiobook Included",
@@ -336,11 +351,12 @@
     "badgeLabel": "INTERNATIONAL LICENSE"
   },
   "contact": {
-    "kicker": "12 / DIRECT COMMUNICATION",
+    "kicker": "DIRECT COMMUNICATION",
     "titlePrefix": "Let's discuss the strategic future of ",
     "titleHighlight": "your enterprise.",
     "title": "Let's discuss the strategic future of your enterprise.",
     "description": "Visit our headquarters in Tashkent or reach out personally through the direct communication channels below.",
+    "descriptionDirect": "Reach out personally through the direct communication channels below.",
     "phoneLabel": "PHONE NUMBER",
     "phoneValue": "+998 55 503 61 00",
     "telegramLabel": "TELEGRAM CHANNEL",
@@ -358,6 +374,10 @@
     "businessInputPlaceholder": "Your company's industry or the primary challenge you are facing...",
     "hoursLabel": "Business Hours",
     "hoursValue": "Monday - Saturday: 09:00 - 18:00",
+    "retry": "Retry",
+    "nameError": "Please enter your full name",
+    "phoneError": "Please enter a complete phone number (+998 (XX) XXX-XX-XX)",
+    "submitAnother": "Submit another inquiry",
     "cta": "Submit Inquiry →"
   },
   "applyModal": {
@@ -418,7 +438,7 @@
     "headline": "Frequently Asked Questions",
     "headlineUz": "Frequently Asked Questions",
     "lede": "Find answers to the most common questions about Ilhom Begimqulov's business consulting, systematization, executive mentorship, and conditions.",
-    "communityBtn": "Contact Specialist",
+    "communityBtn": "Book a Free Diagnostic",
     "searchPlaceholder": "Search for your queries...",
     "searchLabel": "Search questions",
     "noResults": "No questions match your search.",
@@ -495,8 +515,34 @@
     "bottomCard": {
       "title": "Have custom questions about your enterprise?",
       "description": "Speak directly with our consulting team to explore bespoke systematization solutions for your company.",
-      "cta": "Book Strategic Diagnostic"
+      "cta": "Book a Free Diagnostic"
     }
+  },
+  "mediaArchive": {
+    "sectionAria": "Media and Results Archive",
+    "kicker": "MEDIA & PROVEN RESULTS",
+    "headingPrefix": "Proven cases, masterclasses and ",
+    "headingHighlight": "business tours",
+    "tabTestimonials": "VIDEO CASES & RESULTS",
+    "tabWebinars": "OPEN MASTERCLASSES",
+    "tabEvents": "REGIONAL BUSINESS TOUR",
+    "counterCases": "CASES",
+    "counterLessons": "LESSONS",
+    "counterCities": "CITIES",
+    "testimonialsListAria": "Cases list",
+    "webinarsListAria": "Webinars list",
+    "eventsListAria": "Events list",
+    "countryUzbekistan": "Uzbekistan",
+    "countryKazakhstan": "Kazakhstan",
+    "countryKyrgyzstan": "Kyrgyzstan",
+    "countryTajikistan": "Tajikistan",
+    "cityTashkent": "Tashkent",
+    "citySamarkand": "Samarkand",
+    "cityFergana": "Fergana",
+    "cityShymkent": "Shymkent",
+    "cityOsh": "Osh",
+    "cityKhujand": "Khujand",
+    "businessTourSuffix": " business tour in "
   },
   "footer": {
     "brand": "ILHOM BEGIMQULOV",

@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
-import { useTranslations, useLocale } from "next-intl";
-import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
+import { useTranslations } from "next-intl";
+import { useApplyModal, type OpenApplyOptions } from "@/features/apply/context/ApplyModalContext";
 import { GridLine } from "@/components/ui/GridLine";
 import { MaskedHeading } from "@/components/ui/MaskedHeading";
+import { formatSectionKicker } from "@/config/sections";
 
 interface ServiceItem {
   index: string;
@@ -13,21 +14,20 @@ interface ServiceItem {
 }
 
 interface ServicesProps {
-  onOpenApply?: (serviceName?: string) => void;
+  onOpenApply?: (options?: OpenApplyOptions) => void;
 }
 
 export function Services({ onOpenApply }: ServicesProps) {
   const { openApply } = useApplyModal();
   const handleApply = onOpenApply || openApply;
   const t = useTranslations("services");
-  const locale = useLocale();
-  const isRu = locale === "ru";
+  const ctaT = useTranslations("cta");
   const items = t.raw("items") as ServiceItem[];
 
   return (
     <section
       id="xizmatlar"
-      aria-label={isRu ? "Архитектура услуг" : "Xizmatlar arxitekturasi"}
+      aria-label={t("title")}
       className="scroll-mt-20 py-14 sm:py-20 border-b border-white/[0.08] bg-[#0A0A0A] text-[#F5F5F0] relative overflow-hidden"
     >
       <div className="max-w-[1360px] mx-auto px-6 md:px-12">
@@ -38,8 +38,8 @@ export function Services({ onOpenApply }: ServicesProps) {
             {/* Swiss Kicker */}
             <div className="flex items-center gap-4">
               <span className="w-8 h-[1px] bg-[#C5A880]" />
-              <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum">
-                {t("kicker")}
+              <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum">
+                {formatSectionKicker("services", t("kicker"))}
               </span>
             </div>
 
@@ -76,7 +76,7 @@ export function Services({ onOpenApply }: ServicesProps) {
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-platinum shrink-0" />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-platinum">
+                  <span className="font-mono text-xs uppercase tracking-[0.18em] text-platinum">
                     {t("diagKicker")}
                   </span>
                 </div>
@@ -97,11 +97,11 @@ export function Services({ onOpenApply }: ServicesProps) {
 
               {/* Bottom Action Row */}
               <div className="mt-8 pt-5 border-t border-white/[0.08] flex items-center justify-between">
-                <span className="font-mono text-[11px] text-platinum uppercase tracking-wider">
+                <span className="font-mono text-xs text-platinum uppercase tracking-wider">
                   {t("diagPrivacy")}
                 </span>
                 <span className="text-xs font-medium uppercase tracking-[0.15em] text-white flex items-center gap-2">
-                  <span>{t("diagCta")}</span>
+                  <span>{ctaT("primary")}</span>
                   <span className="transition-transform duration-300 group-hover:translate-x-1.5">
                     →
                   </span>
@@ -121,11 +121,11 @@ export function Services({ onOpenApply }: ServicesProps) {
               key={service.index}
               role="button"
               tabIndex={0}
-              onClick={() => handleApply(service.title)}
+              onClick={() => handleApply({ service: service.index })}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault();
-                  handleApply(service.title);
+                  handleApply({ service: service.index });
                 }
               }}
               aria-label={`${service.title} - ${t("selectService")}`}
@@ -159,7 +159,7 @@ export function Services({ onOpenApply }: ServicesProps) {
               </div>
 
               {/* Column 4 (lg:col-span-2 — Minimal Action Trigger) */}
-              <div className="lg:col-span-2 lg:text-right flex lg:justify-end items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-platinum group-hover:text-white transition-colors duration-300 mt-2 lg:mt-0">
+              <div className="lg:col-span-2 lg:text-right flex lg:justify-end items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-platinum group-hover:text-white transition-colors duration-300 mt-2 lg:mt-0">
                 <span>{t("selectService")}</span>
                 <span className="transition-transform duration-300 group-hover:translate-x-1.5">
                   →

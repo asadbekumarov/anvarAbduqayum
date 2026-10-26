@@ -2,15 +2,32 @@
 
 import React from "react";
 import { useTranslations } from "next-intl";
+import { contactConfig } from "@/config/contact";
 
 export function Footer() {
   const t = useTranslations("footer");
 
   const socialLinks = [
-    { label: "Telegram", href: "https://t.me/Ilxombegimkulov" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/ilhom-begimqulov" },
-    { label: "Instagram", href: "https://www.instagram.com/ilxom.begimkulov" },
-    { label: "YouTube", href: "https://www.youtube.com/@IlxomBegimkulov" },
+    {
+      label: "Telegram",
+      href: contactConfig.telegram.url,
+      ariaLabel: contactConfig.telegram.ariaLabel,
+    },
+    {
+      label: "LinkedIn",
+      href: contactConfig.linkedin.url,
+      ariaLabel: contactConfig.linkedin.ariaLabel,
+    },
+    {
+      label: "Instagram",
+      href: contactConfig.instagram.url,
+      ariaLabel: contactConfig.instagram.ariaLabel,
+    },
+    {
+      label: "YouTube",
+      href: contactConfig.youtube.url,
+      ariaLabel: contactConfig.youtube.ariaLabel,
+    },
   ];
 
   return (
@@ -34,6 +51,7 @@ export function Footer() {
                 href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={item.ariaLabel}
                 className="hover:text-white transition-colors"
               >
                 {item.label}

@@ -30,7 +30,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       "relative inline-flex items-center justify-center font-medium uppercase tracking-wider text-xs focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 disabled:opacity-50 disabled:pointer-events-none rounded-[2px] overflow-hidden group select-none transition-colors duration-200";
 
     const sizeStyles = {
-      sm: "h-9 px-4 text-[11px]",
+      sm: "h-9 px-4 text-xs",
       md: "h-11 px-6 text-xs",
       lg: "h-14 px-8 text-sm",
     };

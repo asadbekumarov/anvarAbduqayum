@@ -7,6 +7,8 @@ import { siteMedia } from "@/config/siteMedia";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
 import { MaskedHeading } from "@/components/ui/MaskedHeading";
 import { KenBurnsImage } from "@/components/ui/KenBurnsImage";
+import { formatSectionKicker } from "@/config/sections";
+import { bookConfig } from "@/config/book";
 
 interface BookCtaSplitProps {
   onOpenApply?: (serviceName?: string) => void;
@@ -17,27 +19,50 @@ export function BookCtaSplit({ onOpenApply }: BookCtaSplitProps) {
   const handleApply = onOpenApply || openApply;
   const tBook = useTranslations("book");
   const tCta = useTranslations("ctaBand");
+  const ctaCommon = useTranslations("cta");
   const locale = useLocale();
-  const isRu = locale === "ru";
   const { cover } = siteMedia.book;
 
+  // TODO(confirm): narx va buyurtma usuli (Telegram buyurtma havolasi yoki sayt formasi) rasman tasdiqlansin
   const handleOrderBook = () => {
-    const bookTitle = isRu
-      ? "Книга «Бизнес шпаргалка»"
-      : "“Biznes shpargalkasi” kitobi";
-    handleApply(bookTitle);
+    if (bookConfig.orderUrl && bookConfig.orderUrl.trim().length > 0) {
+      window.open(bookConfig.orderUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
+    handleApply(`${tBook("bookTitle")} (${ctaCommon("primary")})`);
   };
+
+  const priceValue = bookConfig.price
+    ? locale === "ru"
+      ? bookConfig.price.ru
+      : locale === "en"
+      ? bookConfig.price.en
+      : bookConfig.price.uz
+    : null;
 
   const specs = [
     { label: tBook("spec1Label"), value: tBook("spec1Value") },
     { label: tBook("spec2Label"), value: tBook("spec2Value") },
     { label: tBook("spec3Label"), value: tBook("spec3Value") },
+    ...(priceValue
+      ? [
+          {
+            label:
+              locale === "ru"
+                ? "04 / ЦЕНА"
+                : locale === "en"
+                ? "04 / PRICE"
+                : "04 / NARXI",
+            value: priceValue,
+          },
+        ]
+      : []),
   ];
 
   return (
     <section
       id="kitob"
-      aria-label={isRu ? "Книга и стратегический разбор" : "Kitob va strategik tahlil"}
+      aria-label={tBook("sectionAria")}
       className="scroll-mt-20 py-14 sm:py-20 border-t border-b border-white/[0.08] bg-gradient-to-b from-[#0A0A0A] via-[#070D1F]/30 to-[#0A0A0A] relative overflow-hidden"
     >
       {/* Anchor for CtaBand */}
@@ -57,8 +82,8 @@ export function BookCtaSplit({ onOpenApply }: BookCtaSplitProps) {
               {/* Kicker */}
               <div className="flex items-center gap-3 mb-4">
                 <span className="w-8 h-[1px] bg-[#C5A880]" aria-hidden="true" />
-                <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum">
-                  {tBook("kicker")}
+                <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum">
+                  {formatSectionKicker("book", tBook("kicker"))}
                 </span>
               </div>
 
@@ -99,7 +124,7 @@ export function BookCtaSplit({ onOpenApply }: BookCtaSplitProps) {
                       key={i}
                       className="py-2.5 flex items-baseline justify-between gap-3 font-mono text-xs"
                     >
-                      <span className="uppercase tracking-[0.16em] text-platinum shrink-0 text-[11px]">
+                      <span className="uppercase tracking-[0.16em] text-platinum shrink-0 text-xs">
                         {spec.label}
                       </span>
                       <span className="text-neutral-300 font-sans text-xs text-right font-light">
@@ -113,8 +138,8 @@ export function BookCtaSplit({ onOpenApply }: BookCtaSplitProps) {
 
             {/* Action Row */}
             <div className="mt-6 pt-5 border-t border-white/[0.08] flex items-center justify-between">
-              <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-platinum">
-                ORIGINAL NASHR
+              <span className="font-mono text-xs uppercase tracking-[0.18em] text-platinum">
+                {tBook("pedestalLeft")}
               </span>
               <button
                 type="button"
@@ -135,7 +160,7 @@ export function BookCtaSplit({ onOpenApply }: BookCtaSplitProps) {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <span className="w-1.5 h-1.5 rounded-full bg-platinum" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-platinum">
+                <span className="font-mono text-xs uppercase tracking-[0.22em] text-platinum">
                   {tCta("kicker")}
                 </span>
               </div>
@@ -156,12 +181,12 @@ export function BookCtaSplit({ onOpenApply }: BookCtaSplitProps) {
               <button
                 type="button"
                 onClick={() =>
-                  handleApply(isRu ? "Стратегический разбор бизнеса" : "Strategik tahlil")
+                  handleApply(tCta("strategicAnalysis"))
                 }
                 className="group relative overflow-hidden inline-flex items-center justify-between gap-4 w-full bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] px-6 py-4 text-xs uppercase tracking-[0.16em] font-medium rounded-none transition-colors duration-300 cursor-pointer"
               >
                 <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
-                <span className="relative z-10">{tCta("cta")}</span>
+                <span className="relative z-10">{ctaCommon("primary")}</span>
                 <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1.5">
                   →
                 </span>

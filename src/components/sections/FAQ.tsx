@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
+import { formatSectionKicker } from "@/config/sections";
 
 type CategoryKey = "all" | "systematization" | "consulting" | "mentorship" | "guarantees";
 
@@ -15,8 +16,10 @@ interface FAQItem {
 
 export function FAQ() {
   const t = useTranslations("faq");
+  const ctaT = useTranslations("cta");
   const locale = useLocale();
   const isUz = locale === "uz";
+  const isRu = locale === "ru";
   const { openApply } = useApplyModal();
 
   const [searchQuery, setSearchQuery] = useState("");
@@ -106,11 +109,39 @@ export function FAQ() {
     setOpenId("");
   };
 
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = {
+      systematization: 0,
+      consulting: 0,
+      mentorship: 0,
+      guarantees: 0,
+    };
+    rawItems.forEach((item) => {
+      if (item.category && item.category in counts) {
+        counts[item.category] = (counts[item.category] || 0) + 1;
+      }
+    });
+    return counts;
+  }, [rawItems]);
+
+  const formatCount = (count: number) => {
+    if (isUz) return `${count} ta savol`;
+    if (isRu) {
+      const mod10 = count % 10;
+      const mod100 = count % 100;
+      if (mod10 === 1 && mod100 !== 11) return `${count} ответ`;
+      if (mod10 >= 2 && mod10 <= 4 && (mod100 < 10 || mod100 >= 20)) return `${count} ответа`;
+      return `${count} ответов`;
+    }
+    return `${count} ${count === 1 ? "answer" : "answers"}`;
+  };
+
   const categories = [
     {
       key: "systematization" as CategoryKey,
       title: t("categories.systematization.title"),
-      count: t("categories.systematization.count"),
+      count: formatCount(categoryCounts.systematization || 0),
+      countNum: categoryCounts.systematization || 0,
       glyph: (
         // Candlesticks / System architecture glyph
         <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#C5A880] group-hover:text-[#E2C79D] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
@@ -121,7 +152,8 @@ export function FAQ() {
     {
       key: "consulting" as CategoryKey,
       title: t("categories.consulting.title"),
-      count: t("categories.consulting.count"),
+      count: formatCount(categoryCounts.consulting || 0),
+      countNum: categoryCounts.consulting || 0,
       glyph: (
         // Target / Strategic Diagnostics glyph
         <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#C5A880] group-hover:text-[#E2C79D] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
@@ -135,7 +167,8 @@ export function FAQ() {
     {
       key: "mentorship" as CategoryKey,
       title: t("categories.mentorship.title"),
-      count: t("categories.mentorship.count"),
+      count: formatCount(categoryCounts.mentorship || 0),
+      countNum: categoryCounts.mentorship || 0,
       glyph: (
         // Executive Mentorship / Star glyph
         <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#C5A880] group-hover:text-[#E2C79D] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
@@ -146,7 +179,8 @@ export function FAQ() {
     {
       key: "guarantees" as CategoryKey,
       title: t("categories.guarantees.title"),
-      count: t("categories.guarantees.count"),
+      count: formatCount(categoryCounts.guarantees || 0),
+      countNum: categoryCounts.guarantees || 0,
       glyph: (
         // Trending Growth / ROI glyph
         <svg className="w-8 h-8 sm:w-10 sm:h-10 text-[#C5A880] group-hover:text-[#E2C79D] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
@@ -155,6 +189,8 @@ export function FAQ() {
       ),
     },
   ];
+
+  const visibleCategories = categories.filter((c) => c.countNum > 0);
 
   return (
     <section
@@ -250,8 +286,8 @@ export function FAQ() {
           {/* Pill Tag (Gold tinted glass, matching brand identity) */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#C5A880]/35 bg-[#C5A880]/10 backdrop-blur-md shadow-[0_0_16px_rgba(197,168,128,0.15)]">
             <span className="w-1.5 h-1.5 rounded-full bg-[#C5A880] shadow-[0_0_6px_#C5A880]" />
-            <span className="font-mono text-[11px] tracking-[0.22em] uppercase text-[#E2C79D] font-medium">
-              {t("kicker")}
+            <span className="font-mono text-xs tracking-[0.22em] uppercase text-[#E2C79D] font-medium">
+              {formatSectionKicker("faq", t("kicker"))}
             </span>
           </div>
 
@@ -272,7 +308,7 @@ export function FAQ() {
             className="mt-7 group relative overflow-hidden h-[48px] sm:h-[50px] px-7 rounded-sm bg-gradient-to-r from-[#C5A880] via-[#D4B992] to-[#C5A880] hover:brightness-105 active:scale-[0.98] text-[#0A0A0A] font-sans text-xs sm:text-sm uppercase tracking-[0.08em] font-semibold flex items-center justify-center gap-2.5 shadow-[0_4px_20px_rgba(197,168,128,0.3)] transition-all cursor-pointer"
           >
             <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full" />
-            <span className="relative z-10">{t("communityBtn")}</span>
+            <span className="relative z-10">{ctaT("primary")}</span>
             <svg className="w-4 h-4 relative z-10 text-[#0A0A0A] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
             </svg>
@@ -323,7 +359,7 @@ export function FAQ() {
 
         {/* CATEGORIES (2×2 grid with site's gold & navy cards) */}
         <div className="mt-10 sm:mt-14 grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
-          {categories.map((cat) => {
+          {visibleCategories.map((cat) => {
             const isSelected = selectedCategory === cat.key;
             return (
               <button
@@ -418,7 +454,9 @@ export function FAQ() {
                     type="button"
                     onClick={() => toggleAccordion(item.id)}
                     aria-expanded={isOpen}
-                    className="w-full text-left min-h-[68px] sm:min-h-[76px] px-6 sm:px-8 py-5 flex items-center justify-between gap-6 cursor-pointer select-none group"
+                    aria-controls={`faq-answer-${item.id}`}
+                    id={`faq-question-${item.id}`}
+                    className="w-full text-left min-h-[68px] sm:min-h-[76px] px-6 sm:px-8 py-5 flex items-center justify-between gap-6 cursor-pointer select-none group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]"
                   >
                     <span className="text-base sm:text-lg font-medium text-white group-hover:text-[#E2C79D] transition-colors leading-snug">
                       {item.question}
@@ -446,6 +484,9 @@ export function FAQ() {
 
                   {/* Smooth Animated Answer (grid-template-rows: 0fr -> 1fr) */}
                   <div
+                    id={`faq-answer-${item.id}`}
+                    role="region"
+                    aria-labelledby={`faq-question-${item.id}`}
                     className="grid transition-all duration-300 ease-out"
                     style={{
                       gridTemplateRows: isOpen ? "1fr" : "0fr",

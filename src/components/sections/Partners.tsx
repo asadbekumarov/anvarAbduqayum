@@ -2,20 +2,18 @@
 
 import React from "react";
 import Image from "next/image";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Marquee } from "@/components/ui/Marquee";
 import { siteMedia } from "@/config/siteMedia";
 
 export function Partners() {
   const t = useTranslations("partners");
-  const locale = useLocale();
-  const isRu = locale === "ru";
   const partners = siteMedia.partners;
 
   return (
     <section
       id="hamkorlar"
-      aria-label={isRu ? "Партнеры" : "Hamkorlar"}
+      aria-label={t("title")}
       className="bg-[#0A0A0A] border-t border-b border-white/[0.07] py-16 sm:py-20 overflow-hidden"
     >
       {/* Minimalist Single Bar Header Row */}
@@ -23,7 +21,7 @@ export function Partners() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center">
             <span className="w-8 h-[1px] bg-[#C5A880] inline-block mr-4" />
-            <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum">
+            <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum">
               {t("kicker")}
             </span>
           </div>
@@ -58,8 +56,8 @@ export function Partners() {
                 <span className="text-base sm:text-lg font-medium text-white tracking-tight group-hover:text-white transition-colors whitespace-nowrap">
                   {p.name}
                 </span>
-                <span className="font-mono text-[10px] text-platinum-light uppercase tracking-widest mt-0.5 whitespace-nowrap">
-                  {isRu ? "B2B Партнер" : "B2B Hamkor"}
+                <span className="font-mono text-xs text-platinum-light uppercase tracking-widest mt-0.5 whitespace-nowrap">
+                  {t("b2bPartner")}
                 </span>
               </div>
             </div>

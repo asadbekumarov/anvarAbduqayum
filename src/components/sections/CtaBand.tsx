@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
 import { MaskedHeading } from "@/components/ui/MaskedHeading";
 
@@ -14,13 +14,12 @@ export function CtaBand({ onOpenApply, onOpenModal }: CtaBandProps) {
   const { openApply } = useApplyModal();
   const handleApply = onOpenApply || onOpenModal || openApply;
   const t = useTranslations("ctaBand");
-  const locale = useLocale();
-  const isRu = locale === "ru";
+  const ctaT = useTranslations("cta");
 
   return (
     <section
       id="cta-band"
-      aria-label={isRu ? "Диагностический вопрос" : "Diagnostik savol"}
+      aria-label={t("title")}
       className="relative bg-gradient-to-r from-[#070D1F] via-[#0B132B]/50 to-[#0A0A0A] border-b border-white/[0.08] py-20 sm:py-28 overflow-hidden"
     >
       {/* Subtle deep navy depth glow */}
@@ -34,7 +33,7 @@ export function CtaBand({ onOpenApply, onOpenModal }: CtaBandProps) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
             {/* Left Column (lg:col-span-8) */}
             <div className="lg:col-span-8">
-              <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum block mb-4">
+              <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum block mb-4">
                 {t("kicker")}
               </span>
 
@@ -55,12 +54,12 @@ export function CtaBand({ onOpenApply, onOpenModal }: CtaBandProps) {
             <div className="lg:col-span-4 lg:flex lg:justify-end">
               <button
                 type="button"
-                onClick={() => handleApply(isRu ? "Стратегический разбор бизнеса" : "Strategik tahlil")}
+                onClick={() => handleApply(t("strategicAnalysis"))}
                 className="group relative overflow-hidden inline-flex items-center justify-between gap-6 bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] px-8 py-5 text-sm font-medium tracking-wide rounded-none transition-all duration-300 w-full sm:w-auto cursor-pointer"
               >
                 {/* Liquid Sheen */}
                 <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
-                <span className="relative z-10">{t("cta")}</span>
+                <span className="relative z-10">{ctaT("primary")}</span>
                 <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1.5">
                   →
                 </span>
