@@ -12,6 +12,7 @@ const Stages = dynamic(() => import("@/components/sections/Stages").then((m) => 
 const Expert = dynamic(() => import("@/components/sections/Expert").then((m) => m.Expert));
 const MediaArchive = dynamic(() => import("@/components/sections/MediaArchive").then((m) => m.MediaArchive));
 const BookCtaSplit = dynamic(() => import("@/components/sections/BookCtaSplit").then((m) => m.BookCtaSplit));
+const FAQ = dynamic(() => import("@/components/sections/FAQ").then((m) => m.FAQ));
 const Contact = dynamic(() => import("@/components/sections/Contact").then((m) => m.Contact));
 
 export default async function HomePage({
@@ -55,7 +56,12 @@ export default async function HomePage({
           <BookCtaSplit />
         </RevealOnScroll>
 
-        {/* Section 07: Executive Contact Channels & Quick Consultation Form */}
+        {/* Section 07: High-Impact FAQ Architecture with Live Search & Categories */}
+        <RevealOnScroll>
+          <FAQ />
+        </RevealOnScroll>
+
+        {/* Section 08: Executive Contact Channels & Quick Consultation Form */}
         <RevealOnScroll>
           <Contact />
         </RevealOnScroll>

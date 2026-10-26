@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ilhom Begimqulov — B2B Biznes Tizimlashtirish & Strategiya</title>
+  <meta name="description" content="Ilhom Begimqulov. Biznes tizimlashtirish va amaliy konsalting. Matoni ushlab torting — 3D interaktiv tajriba.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,400;1,500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0A0A0A;
+      --bg-edge: #050505;
+      --paper: #121214;
+      --paper-edge: #09090b;
+      --gold: #C5A880;
+      --gold-deep: #a88a62;
+      --gold-light: #e5d5c0;
+      --white: #F5F5F0;
+      --ink-soft: rgba(245, 245, 240, 0.45);
+      --gutter: clamp(20px, 3.2vw, 46px);
+      --display: clamp(40px, min(6.8vw, 12vh), 136px);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      height: 100svh;
+      min-height: 520px;
+      overflow: hidden;
+      isolation: isolate;
+      background: radial-gradient(120% 95% at 58% 38%, #16181d 0%, var(--bg) 50%, var(--bg-edge) 100%);
+    }
+
+    /* Ambient atmospheric glow */
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: 15%;
+      left: 30%;
+      width: 50vw;
+      height: 50vh;
+      background: radial-gradient(circle, rgba(197, 168, 128, 0.08) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero__cloth {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      z-index: 1;
+      touch-action: pan-y;
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+    }
+
+    .hero__cloth.is-over {
+      cursor: grab;
+    }
+
+    .hero__cloth.is-held {
+      cursor: grabbing;
+    }
+
+    .hero__cloth:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: -6px;
+    }
+
+    /* Fallback image when WebGL is unavailable */
+    .hero__still {
+      position: absolute;
+      left: 40%;
+      top: 48.5%;
+      width: min(64vw, 84vh);
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      transform: translate(-50%, -50%) rotate(2.5deg);
+      box-shadow: -18px 40px 70px rgba(0, 0, 0, 0.6);
+      display: none;
+      z-index: 1;
+      border: 1px solid rgba(197, 168, 128, 0.2);
+    }
+
+    .hero.no-cloth .hero__cloth {
+      display: none;
+    }
+
+    .hero.no-cloth .hero__still {
+      display: block;
+    }
+
+    /* Top Navigation */
+    .nav {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px var(--gutter) 0;
+      pointer-events: none;
+    }
+
+    .nav > * {
+      pointer-events: auto;
+    }
+
+    .nav__logo {
+      font-size: 19px;
+      font-weight: 500;
+      letter-spacing: -0.035em;
+      line-height: 36px;
+      color: var(--white);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav__logo-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--gold);
+      display: inline-block;
+    }
+
+    .nav__actions {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      height: 38px;
+      padding: 0 20px;
+      border: none;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -0.025em;
+      line-height: 1;
+      color: var(--white);
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.2s, border-color 0.2s;
+    }
+
+    .pill:hover {
+      transform: translateY(-1px);
+    }
+
+    .pill:active {
+      transform: scale(0.98);
+    }
+
+    .pill--menu {
+      background: #17181c;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding-left: 16px;
+    }
+
+    .pill--menu:hover {
+      background: #222329;
+      border-color: rgba(197, 168, 128, 0.4);
+    }
+
+    .pill--start {
+      background: var(--gold);
+      color: #0A0A0A;
+      font-weight: 600;
+    }
+
+    .pill--start:hover {
+      background: var(--gold-light);
+    }
+
+    .burger {
+      display: grid;
+      gap: 4px;
+      width: 18px;
+    }
+
+    .burger i {
+      display: block;
+      height: 1.5px;
+      background: var(--white);
+      border-radius: 1px;
+      transition: transform 0.25s ease;
+    }
+
+    .pill--menu:hover .burger i:first-child {
+      transform: translateX(-2px);
+    }
+
+    .pill--menu:hover .burger i:last-child {
+      transform: translateX(2px);
+    }
+
+    .pill:focus-visible, .nav__logo:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
+    }
+
+    /* Main Editorial Headline */
+    .hero__title {
+      position: absolute;
+      z-index: 2;
+      left: 64.5%;
+      top: 48.5%;
+      transform: translateY(-50%);
+      margin: 0;
+      font-size: var(--display);
+      font-weight: 400;
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .hero__title span {
+      display: block;
+    }
+
+    .hero__title .serif-accent {
+      font-family: "Playfair Display", Georgia, serif;
+      font-style: italic;
+      color: var(--gold);
+      font-weight: 400;
+    }
+
+    .hero__title .soft {
+      color: var(--ink-soft);
+      font-weight: 300;
+    }
+
+    /* Hint Pill */
+    .hero__hint {
+      position: absolute;
+      bottom: 28px;
+      left: var(--gutter);
+      z-index: 5;
+      font-family: monospace;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .hero__hint span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: inline-block;
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.15); }
+    }
+
+    /* Entrance Rise Animation */
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .nav {
+      animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    }
+
+    .hero__title span:first-child {
+      animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both 0.05s;
+    }
+
+    .hero__title span.soft {
+      animation: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both 0.14s;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .nav, .hero__title span, .pill, .burger i {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 1099px), (max-aspect-ratio: 5/4) {
+      :root {
+        --display: clamp(38px, min(10.5vw, 9vh), 96px);
+      }
+
+      .hero__title {
+        left: var(--gutter);
+        top: auto;
+        bottom: clamp(32px, 5vh, 60px);
+        transform: none;
+      }
+
+      .hero__still {
+        left: 50%;
+        top: 42%;
+        width: min(78vw, 55vh);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .pill--start {
+        display: none;
+      }
+
+      .nav__logo {
+        font-size: 17px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero" id="hero" aria-label="Ilhom Begimqulov">
+    <!-- 1. WebGL Cloth Canvas -->
+    <canvas 
+      class="hero__cloth" 
+      id="cloth" 
+      role="img" 
+      tabindex="-1" 
+      aria-label="Ilhom Begimqulovning 3D oltin va shoyi matodagi portreti. Sichqoncha yoki barmoq bilan ushlab torting.">
+    </canvas>
+
+    <!-- 2. Fallback still image -->
+    <img 
+      class="hero__still" 
+      id="still" 
+      alt="Ilhom Begimqulov" 
+      decoding="async" 
+      src="/images/hero/portrait.webp">
+
+    <!-- 3. Header Navigation -->
+    <header class="nav">
+      <a class="nav__logo" href="#hero">
+        <span class="nav__logo-dot"></span>
+        Ilhom Begimqulov
+      </a>
+      <div class="nav__actions">
+        <button class="pill pill--menu" type="button" aria-haspopup="true" aria-expanded="false">
+          <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span>
+          Menu
+        </button>
+        <a class="pill pill--start" href="#aloqa">Strategik sessiya</a>
+      </div>
+    </header>
+
+    <!-- 4. Hero Title -->
+    <h1 class="hero__title">
+      <span>Biznesni <span class="serif-accent">tizimlashtirish</span></span>
+      <span class="soft">Avtonom boshqaruv</span>
+    </h1>
+
+    <!-- 5. Tug hint -->
+    <div class="hero__hint">
+      <span class="dot"></span>
+      <span>Matoni ushlab torting • 3D interaktiv</span>
+    </div>
+  </section>
+
+  <script>
+    (function() {
+      'use strict';
+
+      var hero = document.getElementById('hero');
+      var canvas = document.getElementById('cloth');
+      if (!canvas || !hero) return;
+
+      var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // WebGL Context
+      var gl;
+      try {
+        gl = canvas.getContext('webgl', {
+          alpha: true,
+          antialias: true,
+          premultipliedAlpha: true,
+          powerPreference: 'high-performance'
+        });
+      } catch(e) {
+        gl = null;
+      }
+
+      if (!gl) {
+        hero.classList.add('no-cloth');
+        return;
+      }
+
+      // Settings matching specifications
+      var COLS = 46;
+      var ROWS = 42;
+      var NUM_POINTS = COLS * ROWS;
+      var size = 0.88;
+      var aspect = 0.82;
+      var spread = 0.98;
+      var pinRoll = 5.5 * Math.PI / 180;
+      var flutter = prefersReducedMotion ? 0 : 0.35;
+      var damping = 0.30;
+      var crumple = 0.55;
+      var grabRadius = 0.14;
+      var carryRadius = 0.22;
+      var gravity = 2.6;
+      var tilt = -10 * Math.PI / 180;
+      var turn = -12 * Math.PI / 180;
+      var perspective = 0.45;
+      var maxSpeed = 12;
+      var steps = 8;
+
+      var CH = size;
+      var CW = size * aspect;
+
+      // Camera
+      var cosT = Math.cos(tilt), sinT = Math.sin(tilt);
+      var cosR = Math.cos(turn), sinR = Math.sin(turn);
+
+      var R0 = [cosR, 0, sinR];
+      var R1 = [sinT * sinR, cosT, -sinT * cosR];
+      var R2 = [-cosT * sinR, sinT, cosT * cosR];
+
+      var CAM = Math.exp(Math.log(18) * (1 - perspective) + Math.log(1.7) * perspective);
+
+      function pIdx(c, r) { return r * COLS + c; }
+
+      var pos = new Float32Array(NUM_POINTS * 3);
+      var prev = new Float32Array(NUM_POINTS * 3);
+      var normals = new Float32Array(NUM_POINTS * 3);
+      var uvs = new Float32Array(NUM_POINTS * 2);
+
+      function ridge(x) { return Math.sqrt(Math.sin(x) * Math.sin(x) + 0.03) - 0.64; }
+      function crease(u, v) {
+        return crumple * 0.045 * CH * (
+          ridge(2.7 * u + 2.9 * v + 0.7) +
+          0.8 * ridge(-2.6 * u + 3.3 * v + 2.1) +
+          0.5 * Math.sin(4.9 * u - 1.4 * v + 2.2) +
+          0.55 * ridge(1.1 * u + 6.4 * v + 1.3) +
+          0.4 * ridge(8.3 * u + 3.9 * v + 0.2) +
+          0.3 * ridge(-5.7 * u + 9.1 * v + 1.6)
+        );
+      }
+
+      var halfW = 0.5 * CW * spread;
+      var topY = 0.5 * CH;
+      var leftPin = [-halfW * Math.cos(pinRoll), topY + halfW * Math.sin(pinRoll), 0];
+      var rightPin = [halfW * Math.cos(pinRoll), topY - halfW * Math.sin(pinRoll), 0];
+
+      var leftPinIdx = pIdx(0, ROWS - 1);
+      var rightPinIdx = pIdx(COLS - 1, ROWS - 1);
+
+      var flatDistLeft = new Float32Array(NUM_POINTS);
+      var flatDistRight = new Float32Array(NUM_POINTS);
+
+      // Starting pose
+      for (var r = 0; r < ROWS; r++) {
+        for (var c = 0; c < COLS; c++) {
+          var i = pIdx(c, r);
+          var u = c / (COLS - 1);
+          var v = r / (ROWS - 1);
+
+          uvs[i * 2 + 0] = u;
+          uvs[i * 2 + 1] = 1.0 - v;
+
+          var px = (u - 0.5) * CW;
+          var py = (v - 0.5) * CH;
+          var pz = crease(u, v);
+
+          flatDistLeft[i] = Math.hypot(px - (-halfW), py - topY);
+          flatDistRight[i] = Math.hypot(px - halfW, py - topY);
+
+          px *= spread + (1 - spread) * (1 - v) * (1 - v);
+
+          var dx = px;
+          var dy = py - topY;
+          var rx = dx * Math.cos(pinRoll) - dy * Math.sin(pinRoll);
+          var ry = topY + dx * Math.sin(pinRoll) + dy * Math.cos(pinRoll);
+
+          pos[i * 3 + 0] = rx;
+          pos[i * 3 + 1] = ry;
+          pos[i * 3 + 2] = pz;
+
+          prev[i * 3 + 0] = rx;
+          prev[i * 3 + 1] = ry;
+          prev[i * 3 + 2] = pz;
+        }
+      }
+
+      pos[leftPinIdx * 3 + 0] = leftPin[0];
+      pos[leftPinIdx * 3 + 1] = leftPin[1];
+      pos[leftPinIdx * 3 + 2] = leftPin[2];
+      prev[leftPinIdx * 3 + 0] = leftPin[0];
+      prev[leftPinIdx * 3 + 1] = leftPin[1];
+      prev[leftPinIdx * 3 + 2] = leftPin[2];
+
+      pos[rightPinIdx * 3 + 0] = rightPin[0];
+      pos[rightPinIdx * 3 + 1] = rightPin[1];
+      pos[rightPinIdx * 3 + 2] = rightPin[2];
+      prev[rightPinIdx * 3 + 0] = rightPin[0];
+      prev[rightPinIdx * 3 + 1] = rightPin[1];
+      prev[rightPinIdx * 3 + 2] = rightPin[2];
+
+      // Links
+      var links = [];
+      function addLink(c1, r1, c2, r2, st) {
+        if (c2 >= COLS || r2 >= ROWS || c2 < 0 || r2 < 0) return;
+        var p1 = pIdx(c1, r1);
+        var p2 = pIdx(c2, r2);
+        var dist = Math.hypot(
+          pos[p1 * 3] - pos[p2 * 3],
+          pos[p1 * 3 + 1] - pos[p2 * 3 + 1],
+          pos[p1 * 3 + 2] - pos[p2 * 3 + 2]
+        );
+        links.push({ i: p1, j: p2, restLen: dist, stiffness: st });
+      }
+
+      var bendStiffness = 0.02 + (0.60 - 0.02) * 0.60;
+
+      for (var r = 0; r < ROWS; r++) {
+        for (var c = 0; c < COLS; c++) {
+          addLink(c, r, c + 1, r, 1.0);
+          addLink(c, r, c, r + 1, 1.0);
+          addLink(c, r, c + 1, r + 1, 0.5);
+          addLink(c + 1, r, c, r + 1, 0.5);
+          addLink(c, r, c + 2, r, bendStiffness);
+          addLink(c, r, c, r + 2, bendStiffness);
+          addLink(c, r, c + 5, r, bendStiffness * 0.5);
+          addLink(c, r, c, r + 5, bendStiffness * 0.5);
+        }
+      }
+
+      var indices = [];
+      for (var r = 0; r < ROWS - 1; r++) {
+        for (var c = 0; c < COLS - 1; c++) {
+          var i0 = pIdx(c, r);
+          var i1 = pIdx(c + 1, r);
+          var i2 = pIdx(c, r + 1);
+          var i3 = pIdx(c + 1, r + 1);
+          indices.push(i0, i1, i2);
+          indices.push(i1, i3, i2);
+        }
+      }
+      var indexArray = new Uint16Array(indices);
+
+      // Pre-warm 360 sub-steps
+      var warmH = 1 / 240;
+      for (var s = 0; s < 360; s++) {
+        for (var i = 0; i < NUM_POINTS; i++) {
+          if (i === leftPinIdx || i === rightPinIdx) continue;
+          var px = pos[i * 3];
+          var py = pos[i * 3 + 1];
+          var pz = pos[i * 3 + 2];
+          var vx = (px - prev[i * 3]) * 0.96;
+          var vy = (py - prev[i * 3 + 1]) * 0.96 - gravity * warmH * warmH;
+          var vz = (pz - prev[i * 3 + 2]) * 0.96;
+          prev[i * 3] = px; prev[i * 3 + 1] = py; prev[i * 3 + 2] = pz;
+          pos[i * 3] = px + vx; pos[i * 3 + 1] = py + vy; pos[i * 3 + 2] = pz + vz;
+        }
+
+        for (var l = 0; l < links.length; l++) {
+          var L = links[l];
+          var pA = L.i, pB = L.j;
+          var dX = pos[pB * 3] - pos[pA * 3];
+          var dY = pos[pB * 3 + 1] - pos[pA * 3 + 1];
+          var dZ = pos[pB * 3 + 2] - pos[pA * 3 + 2];
+          var curD = Math.hypot(dX, dY, dZ);
+          if (curD < 1e-6) continue;
+          var diff = ((curD - L.restLen) / curD) * L.stiffness;
+          var wA = (pA === leftPinIdx || pA === rightPinIdx) ? 0 : 1;
+          var wB = (pB === leftPinIdx || pB === rightPinIdx) ? 0 : 1;
+          var sum = wA + wB;
+          if (sum === 0) continue;
+          if (wA > 0) {
+            pos[pA * 3] += dX * diff * (wA / sum);
+            pos[pA * 3 + 1] += dY * diff * (wA / sum);
+            pos[pA * 3 + 2] += dZ * diff * (wA / sum);
+          }
+          if (wB > 0) {
+            pos[pB * 3] -= dX * diff * (wB / sum);
+            pos[pB * 3 + 1] -= dY * diff * (wB / sum);
+            pos[pB * 3 + 2] -= dZ * diff * (wB / sum);
+          }
+        }
+
+        for (var i = 0; i < NUM_POINTS; i++) {
+          if (i === leftPinIdx || i === rightPinIdx) continue;
+          var maxL = 1.02 * flatDistLeft[i];
+          var dLx = pos[i * 3] - leftPin[0];
+          var dLy = pos[i * 3 + 1] - leftPin[1];
+          var dLz = pos[i * 3 + 2] - leftPin[2];
+          var distL = Math.hypot(dLx, dLy, dLz);
+          if (distL > maxL && distL > 1e-6) {
+            var rL = maxL / distL;
+            pos[i * 3] = leftPin[0] + dLx * rL;
+            pos[i * 3 + 1] = leftPin[1] + dLy * rL;
+            pos[i * 3 + 2] = leftPin[2] + dLz * rL;
+          }
+
+          var maxR = 1.02 * flatDistRight[i];
+          var dRx = pos[i * 3] - rightPin[0];
+          var dRy = pos[i * 3 + 1] - rightPin[1];
+          var dRz = pos[i * 3 + 2] - rightPin[2];
+          var distR = Math.hypot(dRx, dRy, dRz);
+          if (distR > maxR && distR > 1e-6) {
+            var rR = maxR / distR;
+            pos[i * 3] = rightPin[0] + dRx * rR;
+            pos[i * 3 + 1] = rightPin[1] + dRy * rR;
+            pos[i * 3 + 2] = rightPin[2] + dRz * rR;
+          }
+        }
+      }
+
+      function computeNormals() {
+        for (var r = 0; r < ROWS; r++) {
+          for (var c = 0; c < COLS; c++) {
+            var i = pIdx(c, r);
+            var leftI = pIdx(c > 0 ? c - 1 : c, r);
+            var rightI = pIdx(c < COLS - 1 ? c + 1 : c, r);
+            var botI = pIdx(c, r > 0 ? r - 1 : r);
+            var topI = pIdx(c, r < ROWS - 1 ? r + 1 : r);
+
+            var dxX = pos[rightI * 3] - pos[leftI * 3];
+            var dxY = pos[rightI * 3 + 1] - pos[leftI * 3 + 1];
+            var dxZ = pos[rightI * 3 + 2] - pos[leftI * 3 + 2];
+
+            var dyX = pos[topI * 3] - pos[botI * 3];
+            var dyY = pos[topI * 3 + 1] - pos[botI * 3 + 1];
+            var dyZ = pos[topI * 3 + 2] - pos[botI * 3 + 2];
+
+            var nx = dxY * dyZ - dxZ * dyY;
+            var ny = dxZ * dyX - dxX * dyZ;
+            var nz = dxX * dyY - dxY * dyX;
+
+            var len = Math.hypot(nx, ny, nz);
+            if (len > 1e-6) {
+              normals[i * 3] = nx / len;
+              normals[i * 3 + 1] = ny / len;
+              normals[i * 3 + 2] = nz / len;
+            } else {
+              normals[i * 3] = 0;
+              normals[i * 3 + 1] = 0;
+              normals[i * 3 + 2] = 1;
+            }
+          }
+        }
+      }
+
+      var vsSource = [
+        'precision highp float;',
+        'attribute vec3 a_position;',
+        'attribute vec3 a_normal;',
+        'attribute vec2 a_texcoord;',
+        'uniform mat3 u_R;',
+        'uniform float u_cam;',
+        'uniform float u_zoom;',
+        'uniform float u_cx;',
+        'uniform float u_cy;',
+        'uniform float u_aspect;',
+        'varying vec3 v_viewPos;',
+        'varying vec3 v_viewNormal;',
+        'varying vec2 v_uv;',
+        'void main() {',
+        '  vec3 q = u_R * a_position;',
+        '  float scale = u_cam / max(u_cam - q.z, 0.001);',
+        '  vec2 screen = q.xy * scale * u_zoom;',
+        '  float clipX = 2.0 * (u_cx + screen.x / u_aspect) - 1.0;',
+        '  float clipY = 1.0 - 2.0 * (u_cy - screen.y);',
+        '  float clipZ = -q.z * 0.5;',
+        '  gl_Position = vec4(clipX, clipY, clipZ, 1.0);',
+        '  v_viewPos = q;',
+        '  v_viewNormal = normalize(u_R * a_normal);',
+        '  v_uv = a_texcoord;',
+        '}'
+      ].join('\n');
+
+      var fsSource = [
+        'precision highp float;',
+        'varying vec3 v_viewPos;',
+        'varying vec3 v_viewNormal;',
+        'varying vec2 v_uv;',
+        'uniform sampler2D u_texture;',
+        'uniform float u_cam;',
+        'uniform float u_hasTexture;',
+        'float box(vec3 dir, vec3 center, vec2 halfSize, float soft) {',
+        '  vec3 d = dir - center;',
+        '  vec2 diff = abs(vec2(dot(d, vec3(1.0, 0.0, 0.0)), dot(d, vec3(0.0, 1.0, 0.0)))) - halfSize;',
+        '  float dist = max(diff.x, diff.y);',
+        '  return 1.0 - smoothstep(-soft, soft, dist);',
+        '}',
+        'void main() {',
+        '  vec3 n = normalize(v_viewNormal);',
+        '  bool back = n.z < 0.0;',
+        '  if (back) n = -n;',
+        '  vec3 V = normalize(vec3(0.0, 0.0, u_cam) - v_viewPos);',
+        '  vec3 Rf = reflect(-V, n);',
+        '  vec3 KEY = normalize(vec3(-0.42, 0.45, 0.79));',
+        '  float nv = clamp(dot(n, V), 0.0, 1.0);',
+        '  float nl = max(dot(n, KEY), 0.0);',
+        '  vec3 print = u_hasTexture > 0.5 ? pow(texture2D(u_texture, v_uv).rgb, vec3(2.2)) : vec3(0.08, 0.07, 0.06);',
+        '  float shade = 0.46 + 0.68 * nl + 0.08 * n.y;',
+        '  float key = pow(max(dot(Rf, KEY), 0.0), 26.0);',
+        '  float strip = box(Rf, normalize(vec3(0.08, 0.93, 0.36)), vec2(1.1, 0.07), 0.22);',
+        '  float side = box(Rf, normalize(vec3(0.86, 0.12, 0.50)), vec2(0.06, 0.85), 0.20);',
+        '  float fill = box(Rf, KEY, vec2(0.42, 0.30), 0.35);',
+        '  float phase = 3.0 * (0.85 * dot(n.xy, vec2(0.6, 0.8)) + 0.75 * (1.0 - nv) + 0.3 * dot(Rf.xy, vec2(-0.8, 0.6))) + 0.4 * sin(5.0 * v_uv.x + 7.0 * v_uv.y);',
+        '  vec3 goldRainbow = clamp(vec3(0.80, 0.68, 0.48) + vec3(0.20, 0.18, 0.12) * cos(6.28318 * (phase + vec3(0.0, 0.06, 0.16))), 0.0, 1.0);',
+        '  vec3 holo = mix(vec3(1.0), pow(goldRainbow, vec3(2.2)), 0.75);',
+        '  float lum = dot(print, vec3(0.299, 0.587, 0.114));',
+        '  float gloss = mix(1.0, 0.45, smoothstep(0.55, 0.9, lum));',
+        '  vec3 spec = holo * gloss * mix(vec3(1.0), print * 2.2 + vec3(0.12, 0.10, 0.06), 0.65) * (0.34 * key + 0.11 * strip + 0.07 * side + 0.02 * fill);',
+        '  vec3 color = print * shade + spec + holo * print * 0.45 * pow(1.0 - nv, 3.0);',
+        '  vec3 foil = vec3(0.18, 0.15, 0.12) * (0.35 + 0.9 * nl) + spec * 1.1;',
+        '  if (back) color = mix(foil, print * shade, 0.38);',
+        '  color = min(color, vec3(0.8)) + 0.2 * (1.0 - exp(-max(color - vec3(0.8), 0.0) / 0.2));',
+        '  gl_FragColor = vec4(pow(color, vec3(1.0 / 2.2)), 1.0);',
+        '}'
+      ].join('\n');
+
+      function makeShader(type, src) {
+        var s = gl.createShader(type);
+        gl.shaderSource(s, src);
+        gl.compileShader(s);
+        if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+          hero.classList.add('no-cloth');
+          return null;
+        }
+        return s;
+      }
+
+      var vs = makeShader(gl.VERTEX_SHADER, vsSource);
+      var fs = makeShader(gl.FRAGMENT_SHADER, fsSource);
+      if (!vs || !fs) return;
+
+      var program = gl.createProgram();
+      gl.attachShader(program, vs);
+      gl.attachShader(program, fs);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        hero.classList.add('no-cloth');
+        return;
+      }
+
+      gl.useProgram(program);
+
+      var posBuffer = gl.createBuffer();
+      var normBuffer = gl.createBuffer();
+      var uvBuffer = gl.createBuffer();
+      var idxBuffer = gl.createBuffer();
+
+      gl.bindBuffer(gl.ARRAY_BUFFER, uvBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, uvs, gl.STATIC_DRAW);
+
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, idxBuffer);
+      gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indexArray, gl.STATIC_DRAW);
+
+      var aPos = gl.getAttribLocation(program, 'a_position');
+      var aNorm = gl.getAttribLocation(program, 'a_normal');
+      var aUV = gl.getAttribLocation(program, 'a_texcoord');
+
+      var uRLoc = gl.getUniformLocation(program, 'u_R');
+      var uCamLoc = gl.getUniformLocation(program, 'u_cam');
+      var uZoomLoc = gl.getUniformLocation(program, 'u_zoom');
+      var uCxLoc = gl.getUniformLocation(program, 'u_cx');
+      var uCyLoc = gl.getUniformLocation(program, 'u_cy');
+      var uAspectLoc = gl.getUniformLocation(program, 'u_aspect');
+      var uTexLoc = gl.getUniformLocation(program, 'u_texture');
+      var uHasTexLoc = gl.getUniformLocation(program, 'u_hasTexture');
+
+      // Texture loading
+      var texture = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, texture);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([26, 24, 20, 255]));
+
+      var hasImage = false;
+      var img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.src = '/images/hero/portrait.webp';
+      img.onload = function() {
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 0);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        hasImage = true;
+      };
+      img.onerror = function() {
+        // Fallback remains active
+      };
+
+      // Layout View
+      var viewAspect = 1;
+      var cx = 0.402;
+      var cy = 0.485;
+      var zoom = 1.0;
+
+      function updateView() {
+        var w = hero.clientWidth;
+        var h = hero.clientHeight;
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+        canvas.width = Math.round(w * dpr);
+        canvas.height = Math.round(h * dpr);
+        gl.viewport(0, 0, canvas.width, canvas.height);
+
+        viewAspect = w / h;
+        var isWide = (w >= 1100 && viewAspect >= 1.25);
+
+        if (isWide) {
+          cx = 0.402;
+          cy = 0.485;
+          zoom = Math.min(1.0, (0.58 * viewAspect) / (CW * 1.12));
+        } else {
+          cx = 0.50;
+          cy = (viewAspect < 0.75) ? 0.41 : 0.43;
+          var maxZ = (viewAspect < 0.75) ? 0.60 : 0.66;
+          zoom = Math.min(1.0, (0.92 * viewAspect) / (CW * 1.12), maxZ / CH);
+        }
+      }
+
+      window.addEventListener('resize', updateView);
+      if (window.ResizeObserver) {
+        new ResizeObserver(updateView).observe(hero);
+      }
+      updateView();
+
+      // Interaction
+      var grabbedPoint = -1;
+      var grabbedDepth = 0;
+      var grabOffset = [0, 0, 0];
+      var carryWeights = new Float32Array(NUM_POINTS);
+      var pointerClientX = 0, pointerClientY = 0;
+
+      function unproject(screenX, screenY, depthZ) {
+        var scale = CAM / Math.max(CAM - depthZ, 0.001);
+        var qx = screenX / (scale * zoom);
+        var qy = screenY / (scale * zoom);
+        var qz = depthZ;
+        return [
+          R0[0] * qx + R1[0] * qy + R2[0] * qz,
+          R0[1] * qx + R1[1] * qy + R2[1] * qz,
+          R0[2] * qx + R1[2] * qy + R2[2] * qz
+        ];
+      }
+
+      function getPointerScreen(clientX, clientY) {
+        var rect = canvas.getBoundingClientRect();
+        return {
+          x: (((clientX - rect.left) / rect.width - cx) * viewAspect) / zoom,
+          y: (cy - (clientY - rect.top) / rect.height) / zoom
+        };
+      }
+
+      canvas.addEventListener('pointerdown', function(e) {
+        if (e.button !== 0 && e.pointerType === 'mouse') return;
+        var pt = getPointerScreen(e.clientX, e.clientY);
+        var bestScore = Infinity;
+        var bestIdx = -1;
+        var bestDepth = 0;
+
+        for (var i = 0; i < NUM_POINTS; i++) {
+          var px = pos[i * 3], py = pos[i * 3 + 1], pz = pos[i * 3 + 2];
+          var qx = R0[0] * px + R0[1] * py + R0[2] * pz;
+          var qy = R1[0] * px + R1[1] * py + R1[2] * pz;
+          var qz = R2[0] * px + R2[1] * py + R2[2] * pz;
+          var scale = CAM / Math.max(CAM - qz, 0.001);
+          var sx = qx * scale * zoom;
+          var sy = qy * scale * zoom;
+          var dist = Math.hypot(pt.x * zoom - sx, pt.y * zoom - sy) / zoom;
+          if (dist < grabRadius / zoom) {
+            var score = dist - 0.08 * qz;
+            if (score < bestScore) {
+              bestScore = score;
+              bestIdx = i;
+              bestDepth = qz;
+            }
+          }
+        }
+
+        if (bestIdx >= 0) {
+          grabbedPoint = bestIdx;
+          grabbedDepth = bestDepth;
+          canvas.setPointerCapture(e.pointerId);
+          canvas.classList.add('is-held');
+
+          var target = unproject(pt.x * zoom, pt.y * zoom, grabbedDepth);
+          grabOffset[0] = pos[bestIdx * 3] - target[0];
+          grabOffset[1] = pos[bestIdx * 3 + 1] - target[1];
+          grabOffset[2] = pos[bestIdx * 3 + 2] - target[2];
+
+          var cX = pos[bestIdx * 3], cY = pos[bestIdx * 3 + 1];
+          for (var i = 0; i < NUM_POINTS; i++) {
+            if (i === leftPinIdx || i === rightPinIdx) {
+              carryWeights[i] = 0;
+              continue;
+            }
+            if (i === bestIdx) {
+              carryWeights[i] = 1.0;
+              continue;
+            }
+            var d = Math.hypot(pos[i * 3] - cX, pos[i * 3 + 1] - cY) / (carryRadius * CH);
+            carryWeights[i] = d < 1.0 ? Math.pow(1.0 - d * d, 2) : 0;
+          }
+        }
+      });
+
+      window.addEventListener('pointermove', function(e) {
+        pointerClientX = e.clientX;
+        pointerClientY = e.clientY;
+
+        if (grabbedPoint === -1) {
+          var pt = getPointerScreen(e.clientX, e.clientY);
+          var hover = false;
+          for (var i = 0; i < NUM_POINTS; i += 3) {
+            var px = pos[i * 3], py = pos[i * 3 + 1], pz = pos[i * 3 + 2];
+            var qx = R0[0] * px + R0[1] * py + R0[2] * pz;
+            var qy = R1[0] * px + R1[1] * py + R1[2] * pz;
+            var qz = R2[0] * px + R2[1] * py + R2[2] * pz;
+            var scale = CAM / Math.max(CAM - qz, 0.001);
+            var sx = qx * scale * zoom;
+            var sy = qy * scale * zoom;
+            if (Math.hypot(pt.x * zoom - sx, pt.y * zoom - sy) / zoom < (grabRadius * 0.9) / zoom) {
+              hover = true;
+              break;
+            }
+          }
+          if (hover) {
+            canvas.classList.add('is-over');
+          } else {
+            canvas.classList.remove('is-over');
+          }
+        }
+      });
+
+      function releaseGrab(e) {
+        if (grabbedPoint >= 0) {
+          try { canvas.releasePointerCapture(e.pointerId); } catch(err) {}
+          grabbedPoint = -1;
+          canvas.classList.remove('is-held');
+        }
+      }
+
+      window.addEventListener('pointerup', releaseGrab);
+      window.addEventListener('pointercancel', releaseGrab);
+
+      canvas.addEventListener('touchstart', function(e) {
+        if (e.touches.length === 1) {
+          var t = e.touches[0];
+          var pt = getPointerScreen(t.clientX, t.clientY);
+          for (var i = 0; i < NUM_POINTS; i += 4) {
+            var px = pos[i * 3], py = pos[i * 3 + 1], pz = pos[i * 3 + 2];
+            var qx = R0[0] * px + R0[1] * py + R0[2] * pz;
+            var qy = R1[0] * px + R1[1] * py + R1[2] * pz;
+            var qz = R2[0] * px + R2[1] * py + R2[2] * pz;
+            var scale = CAM / Math.max(CAM - qz, 0.001);
+            if (Math.hypot(pt.x * zoom - qx * scale * zoom, pt.y * zoom - qy * scale * zoom) / zoom < grabRadius / zoom) {
+              e.preventDefault();
+              break;
+            }
+          }
+        }
+      }, { passive: false });
+
+      canvas.addEventListener('touchmove', function(e) {
+        if (grabbedPoint >= 0) e.preventDefault();
+      }, { passive: false });
+
+      // Loop & simulation
+      var isVisible = true;
+      var io = new IntersectionObserver(function(entries) {
+        isVisible = entries[0].isIntersecting;
+      }, { threshold: 0.05 });
+      io.observe(hero);
+
+      document.addEventListener('visibilitychange', function() {
+        isVisible = !document.hidden;
+      });
+
+      var lastTime = performance.now();
+      var simTime = 0;
+      var forwardSweep = true;
+
+      function frame(now) {
+        requestAnimationFrame(frame);
+        if (!isVisible) return;
+
+        var elapsed = (now - lastTime) / 1000;
+        lastTime = now;
+        var dt = Math.min(elapsed, 1 / 30);
+        var h = dt / steps;
+
+        for (var s = 0; s < steps; s++) {
+          simTime += h;
+          var damp = Math.exp(-(0.15 + 5.85 * damping) * h);
+          var gust = 0.6 + 0.4 * Math.sin(0.37 * simTime) * Math.sin(0.23 * simTime + 1.0);
+          var wind = flutter * 2.4 * gust * (gravity / 2.6);
+
+          for (var i = 0; i < NUM_POINTS; i++) {
+            if (i === leftPinIdx || i === rightPinIdx) continue;
+            if (grabbedPoint >= 0 && carryWeights[i] >= 0.98) continue;
+
+            var u = uvs[i * 2], v = 1.0 - uvs[i * 2 + 1];
+            var s1 = Math.sin(9.1 * u - 3.7 * v + 3.1 * simTime);
+            var s2 = Math.sin(6.3 * u + 7.9 * v - 2.3 * simTime + 1.3);
+            var s3 = Math.sin(2.9 * u + 1.7 * simTime + 0.8 * Math.sin(0.5 * simTime)) * Math.cos(2.3 * v - 0.9 * simTime);
+
+            var ax = wind * 0.25 * Math.sin(3.3 * v + 1.1 * simTime + u);
+            var ay = wind * 0.1 * s2 - gravity;
+            var az = wind * (0.45 * s1 + 0.35 * s2 + 0.3 * s3);
+
+            var px = pos[i * 3], py = pos[i * 3 + 1], pz = pos[i * 3 + 2];
+            var vx = (px - prev[i * 3]) * damp + ax * h * h;
+            var vy = (py - prev[i * 3 + 1]) * damp + ay * h * h;
+            var vz = (pz - prev[i * 3 + 2]) * damp + az * h * h;
+
+            var spd = Math.hypot(vx, vy, vz);
+            var maxH = maxSpeed * h;
+            if (spd > maxH && spd > 1e-6) {
+              var sc = maxH / spd;
+              vx *= sc; vy *= sc; vz *= sc;
+            }
+
+            prev[i * 3] = px; prev[i * 3 + 1] = py; prev[i * 3 + 2] = pz;
+            pos[i * 3] = px + vx; pos[i * 3 + 1] = py + vy; pos[i * 3 + 2] = pz + vz;
+          }
+
+          if (grabbedPoint >= 0) {
+            var pt = getPointerScreen(pointerClientX, pointerClientY);
+            var target = unproject(pt.x * zoom, pt.y * zoom, grabbedDepth);
+            target[0] += grabOffset[0];
+            target[1] += grabOffset[1];
+            target[2] += grabOffset[2];
+
+            var maxL = 1.02 * flatDistLeft[grabbedPoint];
+            var dLx = target[0] - leftPin[0], dLy = target[1] - leftPin[1], dLz = target[2] - leftPin[2];
+            var distL = Math.hypot(dLx, dLy, dLz);
+            if (distL > maxL && distL > 1e-6) {
+              var rL = maxL / distL;
+              target[0] = leftPin[0] + dLx * rL;
+              target[1] = leftPin[1] + dLy * rL;
+              target[2] = leftPin[2] + dLz * rL;
+            }
+
+            var maxR = 1.02 * flatDistRight[grabbedPoint];
+            var dRx = target[0] - rightPin[0], dRy = target[1] - rightPin[1], dRz = target[2] - rightPin[2];
+            var distR = Math.hypot(dRx, dRy, dRz);
+            if (distR > maxR && distR > 1e-6) {
+              var rR = maxR / distR;
+              target[0] = rightPin[0] + dRx * rR;
+              target[1] = rightPin[1] + dRy * rR;
+              target[2] = rightPin[2] + dRz * rR;
+            }
+
+            var dX = target[0] - pos[grabbedPoint * 3];
+            var dY = target[1] - pos[grabbedPoint * 3 + 1];
+            var dZ = target[2] - pos[grabbedPoint * 3 + 2];
+
+            for (var i = 0; i < NUM_POINTS; i++) {
+              var w = carryWeights[i];
+              if (w <= 0) continue;
+              if (w >= 0.98) {
+                pos[i * 3] += dX; pos[i * 3 + 1] += dY; pos[i * 3 + 2] += dZ;
+                prev[i * 3] = pos[i * 3]; prev[i * 3 + 1] = pos[i * 3 + 1]; prev[i * 3 + 2] = pos[i * 3 + 2];
+              } else {
+                pos[i * 3] += dX * w; pos[i * 3 + 1] += dY * w; pos[i * 3 + 2] += dZ * w;
+                prev[i * 3] += dX * w; prev[i * 3 + 1] += dY * w; prev[i * 3 + 2] += dZ * w;
+              }
+            }
+          }
+
+          // Solve links
+          var nL = links.length;
+          var sL = forwardSweep ? 0 : nL - 1;
+          var eL = forwardSweep ? nL : -1;
+          var incL = forwardSweep ? 1 : -1;
+
+          for (var l = sL; l !== eL; l += incL) {
+            var link = links[l];
+            var iA = link.i, iB = link.j;
+            var dx = pos[iB * 3] - pos[iA * 3];
+            var dy = pos[iB * 3 + 1] - pos[iA * 3 + 1];
+            var dz = pos[iB * 3 + 2] - pos[iA * 3 + 2];
+            var d = Math.hypot(dx, dy, dz);
+            if (d < 1e-6) continue;
+
+            var diff = ((d - link.restLen) / d) * link.stiffness;
+            var fA = (iA === leftPinIdx || iA === rightPinIdx || (grabbedPoint >= 0 && carryWeights[iA] >= 0.98));
+            var fB = (iB === leftPinIdx || iB === rightPinIdx || (grabbedPoint >= 0 && carryWeights[iB] >= 0.98));
+            var wA = fA ? 0 : 1;
+            var wB = fB ? 0 : 1;
+            var sum = wA + wB;
+            if (sum === 0) continue;
+
+            if (wA > 0) {
+              pos[iA * 3] += dx * diff * (wA / sum);
+              pos[iA * 3 + 1] += dy * diff * (wA / sum);
+              pos[iA * 3 + 2] += dz * diff * (wA / sum);
+            }
+            if (wB > 0) {
+              pos[iB * 3] -= dx * diff * (wB / sum);
+              pos[iB * 3 + 1] -= dy * diff * (wB / sum);
+              pos[iB * 3 + 2] -= dz * diff * (wB / sum);
+            }
+          }
+          forwardSweep = !forwardSweep;
+
+          // Clamp tethers
+          for (var i = 0; i < NUM_POINTS; i++) {
+            if (i === leftPinIdx || i === rightPinIdx) continue;
+            if (grabbedPoint >= 0 && carryWeights[i] >= 0.98) continue;
+
+            var maxL = 1.02 * flatDistLeft[i];
+            var dLx = pos[i * 3] - leftPin[0], dLy = pos[i * 3 + 1] - leftPin[1], dLz = pos[i * 3 + 2] - leftPin[2];
+            var distL = Math.hypot(dLx, dLy, dLz);
+            if (distL > maxL && distL > 1e-6) {
+              var rL = maxL / distL;
+              pos[i * 3] = leftPin[0] + dLx * rL;
+              pos[i * 3 + 1] = leftPin[1] + dLy * rL;
+              pos[i * 3 + 2] = leftPin[2] + dLz * rL;
+            }
+
+            var maxR = 1.02 * flatDistRight[i];
+            var dRx = pos[i * 3] - rightPin[0], dRy = pos[i * 3 + 1] - rightPin[1], dRz = pos[i * 3 + 2] - rightPin[2];
+            var distR = Math.hypot(dRx, dRy, dRz);
+            if (distR > maxR && distR > 1e-6) {
+              var rR = maxR / distR;
+              pos[i * 3] = rightPin[0] + dRx * rR;
+              pos[i * 3 + 1] = rightPin[1] + dRy * rR;
+              pos[i * 3 + 2] = rightPin[2] + dRz * rR;
+            }
+          }
+        }
+
+        computeNormals();
+
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        gl.enable(gl.DEPTH_TEST);
+        gl.depthFunc(gl.LEQUAL);
+        gl.disable(gl.CULL_FACE);
+
+        gl.useProgram(program);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, pos, gl.DYNAMIC_DRAW);
+        gl.enableVertexAttribArray(aPos);
+        gl.vertexAttribPointer(aPos, 3, gl.FLOAT, false, 0, 0);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, normBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, normals, gl.DYNAMIC_DRAW);
+        gl.enableVertexAttribArray(aNorm);
+        gl.vertexAttribPointer(aNorm, 3, gl.FLOAT, false, 0, 0);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, uvBuffer);
+        gl.enableVertexAttribArray(aUV);
+        gl.vertexAttribPointer(aUV, 2, gl.FLOAT, false, 0, 0);
+
+        var rMat = new Float32Array([
+          R0[0], R1[0], R2[0],
+          R0[1], R1[1], R2[1],
+          R0[2], R1[2], R2[2]
+        ]);
+        gl.uniformMatrix3fv(uRLoc, false, rMat);
+        gl.uniform1f(uCamLoc, CAM);
+        gl.uniform1f(uZoomLoc, zoom);
+        gl.uniform1f(uCxLoc, cx);
+        gl.uniform1f(uCyLoc, cy);
+        gl.uniform1f(uAspectLoc, viewAspect);
+        gl.uniform1f(uHasTexLoc, hasImage ? 1.0 : 0.0);
+
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+        gl.uniform1i(uTexLoc, 0);
+
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, idxBuffer);
+        gl.drawElements(gl.TRIANGLES, indexArray.length, gl.UNSIGNED_SHORT, 0);
+      }
+
+      requestAnimationFrame(frame);
+    })();
+  </script>
+</body>
+</html>

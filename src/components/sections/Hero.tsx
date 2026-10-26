@@ -2,11 +2,12 @@
 
 import React from "react";
 import Image from "next/image";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
 import { AnimatedCounter } from "@/components/ui/AnimatedCounter";
 import { Marquee } from "@/components/ui/Marquee";
 import { siteMedia } from "@/config/siteMedia";
+import InteractiveCloth from "@/components/ui/InteractiveCloth";
 
 interface HeroProps {
   onOpenModal?: () => void;
@@ -17,14 +18,11 @@ export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
   const { openApply } = useApplyModal();
   const handleOpenModal = onOpenModal || onOpenApply || openApply;
   const t = useTranslations("hero");
-  const locale = useLocale();
-  const isRu = locale === "ru";
-  const isEn = locale === "en";
 
   return (
     <section
       id="hero"
-      className="scroll-mt-20 relative min-h-screen bg-[#0A0A0A] text-[#F5F5F0] pt-28 pb-16 flex flex-col justify-between overflow-hidden border-b border-white/[0.07]"
+      className="scroll-mt-20 relative min-h-[100svh] bg-[#0A0A0A] text-[#F5F5F0] pt-28 pb-16 flex flex-col justify-between overflow-hidden border-b border-white/[0.07]"
     >
       {/* Deep midnight navy atmospheric ambient glow */}
       <div
@@ -42,13 +40,13 @@ export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
           {/* Swiss Editorial Kicker */}
           <div className="flex items-center gap-4">
             <span className="w-8 h-[1px] bg-[#C5A880]" />
-            <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-platinum">
+            <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum">
               {t("kicker")}
             </span>
           </div>
 
           {/* Bespoke Editorial H1 (Sans + Serif Italic mix with Warm Champagne) */}
-          <div className="overflow-hidden">
+          <div className="overflow-hidden pb-[0.12em]">
             <h1 className="text-4xl sm:text-6xl lg:text-[62px] font-light tracking-[-0.03em] leading-[1.08] text-white animate-hero-mask-reveal will-change-transform">
               {t("titlePrefix")}
               <span className="font-serif italic font-normal text-champagne">
@@ -88,33 +86,18 @@ export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
           </div>
         </div>
 
-        {/* Right Column — Seamless Editorial Portrait (5 columns on lg:grid-cols-12) */}
+        {/* Right Column — 3D Interactive Cloth Portrait (5 columns on lg:grid-cols-12) */}
         <div className="lg:col-span-5 relative flex justify-center lg:justify-end">
-          <div className="relative w-full max-w-[450px] aspect-[4/5] ml-auto">
-            {/* Seamless blend into #0A0A0A background using CSS mask */}
-            <div className="relative w-full h-full overflow-hidden [mask-image:linear-gradient(to_bottom,black_75%,transparent_100%)]">
-              <Image
-                src="/images/hero/portrait.webp"
-                alt="Ilhom Begimqulov"
-                fill
-                priority
-                sizes="(max-width: 768px) 100vw, 450px"
-                className="object-cover object-top scale-[1.01] contrast-[1.04] grayscale-[10%]"
-              />
-              {/* Subtle side vignette overlay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A]/80 via-transparent to-[#0A0A0A]/30 pointer-events-none" />
-            </div>
-
-            {/* Minimalist Editorial Caption */}
-            <div className="absolute bottom-2 left-0 border-l border-white/20 pl-4 py-0.5 pointer-events-none">
-              <p className="font-serif italic text-2xl text-white/90 leading-none">
-                Ilhom Begimqulov
-              </p>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-platinum-light mt-1.5">
-                {t("captionRole")}
-              </p>
-            </div>
-          </div>
+          <InteractiveCloth
+            imageSrc="/images/hero/portrait.webp"
+            fallbackSrc="/images/hero/portrait.webp"
+            captionName="Ilhom Begimqulov"
+            captionRole={t("captionRole")}
+            hintText={t("clothHint")}
+            ariaLabel={t("clothAriaLabel")}
+            fallbackAlt={t("portraitAlt")}
+            className="w-full max-w-[460px] mx-auto lg:ml-auto lg:mr-0"
+          />
         </div>
       </div>
 
@@ -179,12 +162,8 @@ export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
         <div className="max-w-[1360px] mx-auto px-6 md:px-12 flex flex-col md:flex-row md:items-center gap-3 sm:gap-6">
           <div className="flex items-center gap-2.5 shrink-0">
             <span className="w-1.5 h-1.5 rounded-full bg-[#C5A880]" />
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-platinum whitespace-nowrap">
-              {isRu
-                ? "27+ БРЕНДОВ, ДОВЕРИВШИХ НАМ СИСТЕМАТИЗАЦИЮ"
-                : isEn
-                ? "27+ BRANDS THAT TRUSTED OUR EXPERTISE"
-                : "ISHONCH BILDIRGAN 27+ BRENDLAR"}
+            <span className="font-mono text-xs uppercase tracking-[0.22em] text-platinum whitespace-nowrap">
+              {t("partnersLabel")}
             </span>
           </div>
 
@@ -193,19 +172,19 @@ export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
               {siteMedia.partners.map((p, idx) => (
                 <div
                   key={`${p.id}-${idx}`}
-                  className="flex items-center gap-3 px-3 py-1.5 bg-[#0F172A]/40 hover:bg-[#0B132B]/60 border border-white/[0.08] hover:border-platinum/30 transition-all rounded-none shrink-0 group cursor-default"
+                  className="flex items-center gap-3.5 px-4 py-2 bg-[#0F172A]/40 hover:bg-[#0B132B]/60 border border-white/[0.08] hover:border-platinum/30 transition-all rounded-none shrink-0 group cursor-default"
                 >
-                  <div className="w-12 h-8 sm:w-14 sm:h-9 bg-white flex items-center justify-center p-1 rounded-none shrink-0 overflow-hidden shadow-xs">
+                  <div className="w-16 h-10 sm:w-20 sm:h-12 flex items-center justify-center shrink-0">
                     <Image
                       src={p.logo}
                       alt={p.name}
-                      width={80}
-                      height={48}
+                      width={120}
+                      height={64}
                       loading="lazy"
-                      className="max-h-full max-w-full object-contain scale-[1.18] group-hover:scale-[1.28] transition-transform duration-300"
+                      className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
                     />
                   </div>
-                  <span className="text-xs sm:text-sm font-normal text-white tracking-tight whitespace-nowrap pr-1">
+                  <span className="text-xs sm:text-sm font-medium text-white tracking-tight whitespace-nowrap pr-1">
                     {p.name}
                   </span>
                 </div>

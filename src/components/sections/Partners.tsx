@@ -41,15 +41,15 @@ export function Partners() {
               key={`${p.id}-${idx}`}
               className="flex items-center gap-4 sm:gap-5 px-5 sm:px-6 py-3.5 bg-[#0F172A]/40 hover:bg-[#0B132B]/70 border border-white/[0.08] hover:border-platinum/30 transition-all duration-300 rounded-none shrink-0 group cursor-default"
             >
-              {/* Crisp High-Contrast Logo Badge */}
-              <div className="w-20 h-14 sm:w-24 sm:h-16 bg-white flex items-center justify-center p-2 rounded-none shrink-0 overflow-hidden shadow-sm">
+              {/* Logo Badge without white box */}
+              <div className="w-24 h-14 sm:w-28 sm:h-16 flex items-center justify-center shrink-0">
                 <Image
                   src={p.logo}
                   alt={p.name}
                   width={140}
                   height={80}
                   loading="lazy"
-                  className="max-h-full max-w-full object-contain scale-[1.25] group-hover:scale-[1.35] transition-transform duration-300"
+                  className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
                 />
               </div>
 

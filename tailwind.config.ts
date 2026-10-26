@@ -69,6 +69,8 @@ const config: Config = {
         serif: ["var(--font-serif)", "Cormorant Garamond", "serif"],
         mono: ["var(--font-mono)", "JetBrains Mono", "monospace"],
         outfit: ["var(--font-sans)", "'Outfit'", "sans-serif"],
+        figtree: ["var(--font-figtree)", "var(--font-sans)", "sans-serif"],
+        lexend: ["var(--font-lexend)", "var(--font-sans)", "sans-serif"],
       },
     },
   },

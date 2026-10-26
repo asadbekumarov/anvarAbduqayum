@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Outfit, Cormorant_Garamond, JetBrains_Mono } from "next/font/google";
+import { Outfit, Cormorant_Garamond, JetBrains_Mono, Figtree, Lexend } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -14,6 +14,20 @@ const outfit = Outfit({
   variable: "--font-sans",
   display: "swap",
   weight: ["300", "400", "500", "600"],
+});
+
+const figtree = Figtree({
+  subsets: ["latin"],
+  variable: "--font-figtree",
+  display: "swap",
+  weight: ["400", "500", "600", "800"],
+});
+
+const lexend = Lexend({
+  subsets: ["latin"],
+  variable: "--font-lexend",
+  display: "swap",
+  weight: ["300"],
 });
 
 const cormorantGaramond = Cormorant_Garamond({
@@ -145,7 +159,7 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${outfit.variable} ${cormorantGaramond.variable} ${jetbrainsMono.variable} dark`}
+      className={`${outfit.variable} ${cormorantGaramond.variable} ${jetbrainsMono.variable} ${figtree.variable} ${lexend.variable} dark`}
       suppressHydrationWarning
     >
       <body className="bg-[#0A0A0A] text-[#F5F5F0] font-sans selection:bg-[#C5A880] selection:text-[#0A0A0A] antialiased" suppressHydrationWarning>

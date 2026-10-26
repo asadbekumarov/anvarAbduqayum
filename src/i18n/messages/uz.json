@@ -20,6 +20,7 @@
     "stages": "Metodologiya",
     "expert": "Ekspert",
     "media": "Keyslar va Media",
+    "faq": "Savol-javoblar",
     "contact": "Aloqa",
     "book": "Kitob",
     "events": "Tadbirlarimiz",
@@ -40,7 +41,11 @@
     "metric2Label": "02 / AUDITORIYA",
     "metric2Desc": "Seminar va dasturlarda qatnashgan tadbirkorlar",
     "metric3Label": "03 / GEOGRAFIYA",
-    "metric3Desc": "Markaziy Osiyo bo'ylab yirik biznes-turlar"
+    "metric3Desc": "Markaziy Osiyo bo'ylab yirik biznes-turlar",
+    "clothHint": "Matoni torting",
+    "partnersLabel": "ISHONCH BILDIRGAN 27+ BRENDLAR",
+    "clothAriaLabel": "Ilhom Begimqulov interaktiv 3D mato portreti",
+    "portraitAlt": "Ilhom Begimqulov portreti"
   },
   "services": {
     "kicker": "02 / XIZMATLAR ARXITEKTURASI",
@@ -406,6 +411,92 @@
     "timelineStep3Text": "Shaxsiy strategik diagnostika sessiyasi",
     "actionTelegram": "Telegram kanalga o'tish",
     "actionWebinars": "Bepul master-klasslarni ko'rish"
+  },
+  "faq": {
+    "tag": "FAQ",
+    "kicker": "KO'P BERILADIGAN SAVOLLAR",
+    "headline": "Frequently Asked Questions",
+    "headlineUz": "Ko'p beriladigan savollar",
+    "lede": "Ilhom Begimqulovning konsalting xizmatlari, biznesni tizimlashtirish, shogirdlik dasturi va hamkorlik shartlari haqidagi eng muhim savollarga javoblar.",
+    "communityBtn": "Mutaxassis bilan bog'lanish",
+    "searchPlaceholder": "Savollar bo'yicha qidirish...",
+    "searchLabel": "Savollar qidiruvi",
+    "noResults": "Qidiruvingiz bo'yicha hech qanday savol topilmadi.",
+    "clearSearch": "Filtrni tozalash",
+    "allCategories": "Barchasi",
+    "categories": {
+      "systematization": {
+        "title": "Biznesni tizimlashtirish",
+        "count": "14 ta javob"
+      },
+      "consulting": {
+        "title": "Strategik konsalting",
+        "count": "18 ta javob"
+      },
+      "mentorship": {
+        "title": "Ustozga shogirdlik",
+        "count": "12 ta javob"
+      },
+      "guarantees": {
+        "title": "Natijalar va kafolatlar",
+        "count": "16 ta javob"
+      }
+    },
+    "items": [
+      {
+        "id": "q1",
+        "category": "systematization",
+        "question": "Biznesni tizimlashtirish jarayoni qanday kechadi va u qancha vaqt oladi?",
+        "answer": "Tizimlashtirish jarayoni kompaniyaning ko'lami va joriy holatiga qarab 1 oydan 3 oygacha davom etadi. Dastlab kompaniyadagi barcha jarayonlar (sotuv, moliya, HR, operatsiyalar) chuqur audit qilinadi. So'ngra har bir lavozim uchun aniq reglamentlar, KPI ko'rsatkichlari, boshqaruv iyerarxiyasi va avtomatlashtirilgan hisobot tizimi joriy etiladi."
+      },
+      {
+        "id": "q2",
+        "category": "systematization",
+        "question": "Kompaniya rahbari tizimlashtirishdan keyin biznesdan butunlay chiqib keta oladimi?",
+        "answer": "Ha, tizimlashtirishning bosh maqsadi — kompaniyani avtonom va egasining kundalik aralashuvisiz barqaror ishlaydigan qilishdir. Rahbar operatsion mayda-chuyda ishlardan chiqib, o'z e'tiborini faqat strategik rivojlanish, yangi bozorlarni egallash va yuqori darajadagi investitsiyalarga qarata oladi."
+      },
+      {
+        "id": "q3",
+        "category": "consulting",
+        "question": "Konsalting xizmati qaysi sohadagi bizneslar uchun mos keladi?",
+        "answer": "Ilhom Begimqulov metodologiyasi universal tizimli boshqaruv qonuniyatlariga tayanadi: ishlab chiqarish, yirik ulgurji va chakana savdo, xizmat ko'rsatish, logistika va qurilish sohalari. 27 dan ortiq yirik brendlar (Texno Dunyosi, Ata Plast, Nik Rattan va boshqalar) bilan amalga oshirilgan keyslar buning amaliy isbotidir."
+      },
+      {
+        "id": "q4",
+        "category": "consulting",
+        "question": "Dastlabki diagnostika sessiyasi nima va u qanday o'tkaziladi?",
+        "answer": "20 daqiqalik individual diagnostika sessiyasi bepul o'tkaziladi. Unda ekspertimiz biznesingizning joriy 'og'riqli nuqtalari', operatsion teshiklari va moliyaviy yo'qotishlarini tahlil qiladi hamda aynan sizning bosqichingiz uchun eng tez natija beruvchi qadamlar xaritasini tuzib beradi."
+      },
+      {
+        "id": "q5",
+        "category": "mentorship",
+        "question": "'Ustozga shogird tushish' dasturi qanday formatda o'tadi va kimlar qabul qilinadi?",
+        "answer": "Bu Ilhom Begimqulov bilan shaxsiy yakkama-yakka yoki yopiq eksklyuziv guruhda amalga oshiriladigan mentorlik dasturidir. Unga faqat saralashdan o'tgan, o'z biznesini bir necha barobar masshtablashtirishga tayyor bo'lgan mas'uliyatli tadbirkorlar qabul qilinadi."
+      },
+      {
+        "id": "q6",
+        "category": "mentorship",
+        "question": "Shogirdlik jarayonida qanday ko'nikmalar va tayyor resurslar beriladi?",
+        "answer": "Shogirdlar Ilhom Begimqulovning 10+ yillik amaliy boshqaruv andozalari, moliyaviy jadvallari, yopiq biznes klubiga a'zolik, investorlar bilan uchrashuvlar hamda xalqaro biznes-turlarda bevosita birgalikda ishtirok etish imkoniyatiga ega bo'ladilar."
+      },
+      {
+        "id": "q7",
+        "category": "guarantees",
+        "question": "Konsalting natijasi qanday o'lchanadi va qanday kafolatlar beriladi?",
+        "answer": "Barcha bosqichlar va natijalar shartnomada aniq KPI ko'rsatkichlari bilan belgilanadi: operatsion xarajatlarni qisqartirish, rahbarning operatsion bandligini 70% gacha kamaytirish, xodimlar samaradorligini oshirish va sof foydani barqarorlashtirish. Biz faqat o'lchana oladigan amaliy natija uchun ishlaymiz."
+      },
+      {
+        "id": "q8",
+        "category": "guarantees",
+        "question": "Tizimlashtirish davrida jamoa qarshilik ko'rsatsa nima qilinadi?",
+        "answer": "Har qanday o'zgarishga jamoada tabiiy qarshilik bo'lishi mumkin. Metodologiyamiz xodimlarni to'g'ri motivatsiyalash, ularning mas'uliyatini shaffof KPI va bonuslar orqali rag'batlantirish hamda jamoani boshqaruv jarayoniga bosqichma-bosqich, silliq adaptatsiya qilish vositalarini o'z ichiga oladi."
+      }
+    ],
+    "bottomCard": {
+      "title": "Boshqa savollaringiz bormi?",
+      "description": "Mutaxassisimiz bilan to'g'ridan-to'g'ri bog'laning va biznesingiz uchun individual yechimlarni bilib oling.",
+      "cta": "Diagnostikaga yozilish"
+    }
   },
   "footer": {
     "brand": "ILHOM BEGIMQULOV",

@@ -19,13 +19,13 @@ export function Navbar({ onOpenApply }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
   const [isScrolled, setIsScrolled] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
 
   const navItems = [
     { href: "#xizmatlar", label: t("services") },
     { href: "#bosqichlar", label: t("methodology") },
     { href: "#ekspert", label: t("expert") },
     { href: "#natijalar", label: t("media") },
+    { href: "#faq", label: t("faq") },
     { href: "#aloqa", label: t("contact") },
   ];
 
@@ -59,7 +59,7 @@ export function Navbar({ onOpenApply }: NavbarProps) {
   );
 
   useEffect(() => {
-    const sectionIds = ["xizmatlar", "bosqichlar", "ekspert", "natijalar", "aloqa"];
+    const sectionIds = ["xizmatlar", "bosqichlar", "ekspert", "natijalar", "faq", "aloqa"];
     let ticking = false;
 
     const handleScroll = () => {
@@ -69,12 +69,6 @@ export function Navbar({ onOpenApply }: NavbarProps) {
 
           // Header shadow and compacting trigger
           setIsScrolled(scrollY > 24);
-
-          // Calculate reading progress percentage
-          const totalHeight =
-            document.documentElement.scrollHeight - window.innerHeight;
-          const progress = totalHeight > 0 ? (scrollY / totalHeight) * 100 : 0;
-          setScrollProgress(Math.min(100, Math.max(0, progress)));
 
           // Active Section Calculation
           // Near bottom edge check
@@ -171,11 +165,6 @@ export function Navbar({ onOpenApply }: NavbarProps) {
                   }`}
                 >
                   <span>{item.label}</span>
-
-                  {/* Active Indicator Micro-dot */}
-                  {isActive && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#C5A880] shadow-[0_0_6px_#C5A880]" />
-                  )}
                 </a>
               );
             })}
@@ -240,14 +229,6 @@ export function Navbar({ onOpenApply }: NavbarProps) {
               </svg>
             </button>
           </div>
-        </div>
-
-        {/* Dynamic Reading / Scroll Progress Bar */}
-        <div className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-transparent overflow-hidden pointer-events-none">
-          <div
-            className="h-full bg-gradient-to-r from-[#C5A880] via-[#E2C79D] to-[#9E7D3B] transition-all duration-150 ease-out"
-            style={{ width: `${scrollProgress}%` }}
-          />
         </div>
       </header>
 

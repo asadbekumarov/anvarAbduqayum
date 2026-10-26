@@ -46,6 +46,7 @@ export function MobileMenu({ isOpen, onClose, onOpenApply }: MobileMenuProps) {
     { href: "#bosqichlar", label: t("methodology") },
     { href: "#ekspert", label: t("expert") },
     { href: "#natijalar", label: t("media") },
+    { href: "#faq", label: t("faq") },
     { href: "#aloqa", label: t("contact") },
   ];
 

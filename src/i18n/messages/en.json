@@ -20,6 +20,7 @@
     "stages": "Methodology",
     "expert": "Expert",
     "media": "Cases & Media",
+    "faq": "FAQ",
     "contact": "Contact",
     "book": "Book",
     "events": "Events",
@@ -40,7 +41,11 @@
     "metric2Label": "02 / AUDIENCE",
     "metric2Desc": "Entrepreneurs trained in seminars & programs",
     "metric3Label": "03 / GEOGRAPHY",
-    "metric3Desc": "Large-scale business tours across Central Asia"
+    "metric3Desc": "Large-scale business tours across Central Asia",
+    "clothHint": "Tug the cloth",
+    "partnersLabel": "27+ BRANDS THAT TRUSTED OUR EXPERTISE",
+    "clothAriaLabel": "Ilhom Begimqulov 3D interactive cloth portrait",
+    "portraitAlt": "Portrait of Ilhom Begimqulov"
   },
   "services": {
     "kicker": "02 / EXPERTISE & DIRECTIONS",
@@ -406,6 +411,92 @@
     "timelineStep3Text": "Personal strategic diagnostic session",
     "actionTelegram": "Join Telegram Channel",
     "actionWebinars": "Watch Free Masterclasses"
+  },
+  "faq": {
+    "tag": "FAQ",
+    "kicker": "FREQUENTLY ASKED QUESTIONS",
+    "headline": "Frequently Asked Questions",
+    "headlineUz": "Frequently Asked Questions",
+    "lede": "Find answers to the most common questions about Ilhom Begimqulov's business consulting, systematization, executive mentorship, and conditions.",
+    "communityBtn": "Contact Specialist",
+    "searchPlaceholder": "Search for your queries...",
+    "searchLabel": "Search questions",
+    "noResults": "No questions match your search.",
+    "clearSearch": "Clear filter",
+    "allCategories": "All",
+    "categories": {
+      "systematization": {
+        "title": "Business Systematization",
+        "count": "14 articles"
+      },
+      "consulting": {
+        "title": "Strategic Consulting",
+        "count": "18 articles"
+      },
+      "mentorship": {
+        "title": "Executive Mentorship",
+        "count": "12 articles"
+      },
+      "guarantees": {
+        "title": "Results & Guarantees",
+        "count": "16 articles"
+      }
+    },
+    "items": [
+      {
+        "id": "q1",
+        "category": "systematization",
+        "question": "How does the business systematization process work and how long does it take?",
+        "answer": "The systematization roadmap typically spans 1 to 3 months depending on enterprise scale. We begin with a rigorous operational audit across sales, finance, operations, and HR. Next, we implement actionable regulations, transparent KPIs, chain-of-command structure, and automated reporting, freeing the founder from micromanagement."
+      },
+      {
+        "id": "q2",
+        "category": "systematization",
+        "question": "Can the business owner fully step away from day-to-day operations after implementation?",
+        "answer": "Yes, the primary objective of systematization is to make the company autonomous and sustainable without routine founder intervention. The founder transitions from routine fire-fighting to high-level strategic growth, new market expansions, and investment decisions."
+      },
+      {
+        "id": "q3",
+        "category": "consulting",
+        "question": "Which industries benefit most from Ilhom Begimqulov's methodology?",
+        "answer": "Our methodology is rooted in universal organizational engineering: manufacturing, B2B wholesale and retail networks, logistics, real estate development, and services. Over 100 enterprise implementations (Texno Dunyosi, Ata Plast, Nik Rattan, etc.) validate this."
+      },
+      {
+        "id": "q4",
+        "category": "consulting",
+        "question": "What is included in the complimentary 20-minute strategic diagnostic session?",
+        "answer": "During this diagnostic briefing, our lead strategist pinpoints your business's critical bottlenecks, cash drain vulnerabilities, and operational friction, providing a tailored strategic action plan for your current growth phase."
+      },
+      {
+        "id": "q5",
+        "category": "mentorship",
+        "question": "How does the Executive Mentorship program work and who qualifies?",
+        "answer": "This is an elite 1-on-1 or closed master-circle mentorship directly with Ilhom Begimqulov. Acceptance is strictly selective, reserved for committed entrepreneurs ready to scale their enterprise 2x–5x and take ownership of rigorous execution."
+      },
+      {
+        "id": "q6",
+        "category": "mentorship",
+        "question": "What proprietary assets and frameworks do mentees gain access to?",
+        "answer": "Mentees receive direct access to 10+ years of battle-tested management frameworks, financial models, executive compensation playbooks, membership in our private founders club, and invitations to international business delegations."
+      },
+      {
+        "id": "q7",
+        "category": "guarantees",
+        "question": "How are consulting outcomes measured and what commitments are guaranteed?",
+        "answer": "Every project phase is defined by contractual measurable metrics: operational overhead reduction, owner routine dependency cut by up to 70%, team productivity acceleration, and bottom-line stability. We commit strictly to measurable performance."
+      },
+      {
+        "id": "q8",
+        "category": "guarantees",
+        "question": "How do you handle team resistance during corporate restructuring?",
+        "answer": "Employee resistance to change is natural. Our methodology includes proven change-management frameworks, transparent incentive systems, and gentle onboarding protocols that align staff interests with corporate performance."
+      }
+    ],
+    "bottomCard": {
+      "title": "Have custom questions about your enterprise?",
+      "description": "Speak directly with our consulting team to explore bespoke systematization solutions for your company.",
+      "cta": "Book Strategic Diagnostic"
+    }
   },
   "footer": {
     "brand": "ILHOM BEGIMQULOV",
