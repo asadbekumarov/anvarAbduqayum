@@ -21,7 +21,9 @@ export const siteConfig = {
   },
 
   socials: {
-    telegram: contactConfig.telegram.url,
+    telegram: contactConfig.telegramChannel.url,
+    telegramChannel: contactConfig.telegramChannel.url,
+    telegramDirect: contactConfig.telegramDirect.url,
     instagram: contactConfig.instagram.url,
     youtube: contactConfig.youtube.url,
     linkedin: contactConfig.linkedin.url,

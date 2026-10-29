@@ -77,7 +77,7 @@ export function Expert() {
             </blockquote>
 
             {/* Biography Prose */}
-            <div className="text-sm sm:text-base text-neutral-300 font-light leading-relaxed space-y-4">
+            <div className="text-base sm:text-lg text-neutral-200 font-normal leading-relaxed space-y-4">
               <p>{t("bio1")}</p>
               <p>{t("bio2")}</p>
             </div>
@@ -86,39 +86,39 @@ export function Expert() {
             <div className="grid grid-cols-1 sm:grid-cols-3 border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.08] pt-0">
               {/* Pillar 1 */}
               <div className="p-6 first:pl-0 last:pr-0">
-                <span className="font-mono text-xs text-platinum tracking-[0.16em] block mb-2">
+                <span className="font-mono text-xs text-[#C5A880] tracking-[0.16em] block mb-2">
                   {t("pillar1Tag")}
                 </span>
                 <h3 className="text-lg font-normal text-white mb-2">
                   {t("pillar1Title")}
                 </h3>
-                <p className="text-xs text-neutral-300 font-light leading-relaxed">
+                <p className="text-sm text-neutral-200 font-normal leading-relaxed">
                   {t("pillar1Desc")}
                 </p>
               </div>
 
               {/* Pillar 2 */}
               <div className="p-6 first:pl-0 last:pr-0">
-                <span className="font-mono text-xs text-platinum tracking-[0.16em] block mb-2">
+                <span className="font-mono text-xs text-[#C5A880] tracking-[0.16em] block mb-2">
                   {t("pillar2Tag")}
                 </span>
                 <h3 className="text-lg font-normal text-white mb-2">
                   {t("pillar2Title")}
                 </h3>
-                <p className="text-xs text-neutral-300 font-light leading-relaxed">
+                <p className="text-sm text-neutral-200 font-normal leading-relaxed">
                   {t("pillar2Desc")}
                 </p>
               </div>
 
               {/* Pillar 3 */}
               <div className="p-6 first:pl-0 last:pr-0">
-                <span className="font-mono text-xs text-platinum tracking-[0.16em] block mb-2">
+                <span className="font-mono text-xs text-[#C5A880] tracking-[0.16em] block mb-2">
                   {t("pillar3Tag")}
                 </span>
                 <h3 className="text-lg font-normal text-white mb-2">
                   {t("pillar3Title")}
                 </h3>
-                <p className="text-xs text-neutral-300 font-light leading-relaxed">
+                <p className="text-sm text-neutral-200 font-normal leading-relaxed">
                   {t("pillar3Desc")}
                 </p>
               </div>
@@ -126,7 +126,7 @@ export function Expert() {
 
             {/* Embedded International Certificates & Diplomas */}
             <div id="sertifikatlar" className="pt-6 border-t border-white/[0.08]">
-              <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center justify-between mb-4">
                 <span className="font-mono text-xs uppercase tracking-[0.16em] text-platinum">
                   {t("certificatesHint")}
                 </span>
@@ -135,7 +135,7 @@ export function Expert() {
                 </span>
               </div>
 
-              <div className="flex gap-4 overflow-x-auto pb-2 scroll-smooth no-scrollbar">
+              <div className="flex gap-4 overflow-x-auto pb-3 scroll-smooth no-scrollbar">
                 {diplomas.map((doc, idx) => (
                   <div
                     key={doc.id || idx}
@@ -163,33 +163,33 @@ export function Expert() {
                       }
                     }}
                     aria-label={`${doc.title} — zoom`}
-                    className="group relative w-[180px] sm:w-[210px] shrink-0 bg-[#0B132B]/25 hover:bg-[#0B132B]/50 border border-white/[0.08] hover:border-platinum/30 p-3 transition-all duration-300 rounded-none cursor-pointer flex flex-col justify-between"
+                    className="group relative w-[200px] sm:w-[230px] shrink-0 bg-[#0B132B]/25 hover:bg-[#0B132B]/50 border border-white/[0.1] hover:border-[#C5A880]/50 p-3.5 transition-all duration-300 rounded-none cursor-pointer flex flex-col justify-between"
                   >
-                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#141414] mb-2 border border-white/[0.04] flex items-center justify-center p-1.5">
+                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#141414] mb-3 border border-white/[0.06] flex items-center justify-center p-1.5">
                       <Image
                         src={doc.thumb}
                         alt={doc.alt}
                         fill
                         loading="lazy"
-                        sizes="210px"
+                        sizes="230px"
                         className="object-contain w-full h-full grayscale-[15%] group-hover:grayscale-0 group-hover:scale-[1.04] transition-all duration-500 ease-out"
                       />
                       <div className="absolute bottom-1 right-1 bg-[#070D1F]/90 border border-white/[0.1] px-1.5 py-0.5 font-mono text-xs uppercase tracking-wider text-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                         Zoom
                       </div>
                     </div>
-                    <div className="pt-2 border-t border-white/[0.06] flex items-baseline justify-between gap-2">
+                    <div className="pt-2.5 border-t border-white/[0.08] flex items-start justify-between gap-2">
                       <div className="min-w-0 flex-1">
-                        <h4 className="text-xs font-normal text-white truncate group-hover:translate-x-0.5 transition-transform">
+                        <h4 className="text-xs font-medium text-white line-clamp-2 leading-snug group-hover:text-[#C5A880] transition-colors">
                           {doc.title}
                         </h4>
                         {doc.issuer && (
-                          <p className="text-xs text-neutral-300 font-light truncate mt-0.5">
+                          <p className="text-xs text-neutral-300 font-normal line-clamp-1 mt-1">
                             {doc.issuer}
                           </p>
                         )}
                       </div>
-                      <span className="font-mono text-xs text-platinum shrink-0">
+                      <span className="font-mono text-xs text-platinum shrink-0 mt-0.5">
                         {doc.year || "CERT"}
                       </span>
                     </div>

@@ -107,7 +107,7 @@ export function VideoStrip({
             className="group flex-none w-[250px] xs:w-[280px] sm:w-[340px] border border-border bg-elevated/40 p-3.5 sm:p-4 flex flex-col justify-between cursor-pointer hover:border-white/30 transition-all duration-200 snap-start rounded-[2px]"
           >
             {/* Thumbnail Box */}
-            <div className="relative aspect-video w-full bg-base border border-border-subtle overflow-hidden mb-4">
+            <div className="relative aspect-video w-full bg-obsidian border border-border-subtle overflow-hidden mb-4">
               <Image
                 src={vid.thumb}
                 alt={vid.title}
@@ -119,7 +119,7 @@ export function VideoStrip({
 
               {/* Dark Gradient Overlay */}
               <div
-                className="absolute inset-0 bg-base/40 group-hover:bg-base/10 transition-colors duration-200"
+                className="absolute inset-0 bg-obsidian/40 group-hover:bg-obsidian/10 transition-colors duration-200"
                 aria-hidden="true"
               />
 
@@ -137,7 +137,7 @@ export function VideoStrip({
 
               {/* Duration or Index Pill Stamp */}
               {vid.duration && (
-                <div className="absolute bottom-2 right-2 bg-base/90 border border-border px-1.5 py-0.5 text-xs font-sans text-muted tracking-wider">
+                <div className="absolute bottom-2 right-2 bg-obsidian/90 border border-border px-1.5 py-0.5 text-xs font-sans text-muted tracking-wider">
                   {vid.duration}
                 </div>
               )}

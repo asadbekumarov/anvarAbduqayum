@@ -390,7 +390,7 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
 
         {/* Security badge */}
         <p className="font-mono text-xs text-neutral-500 uppercase tracking-widest text-center mt-3">
-          100% MAXFIYLIK KAFOLATLANADI
+          {t("privacyBadge")}
         </p>
       </div>
     </form>

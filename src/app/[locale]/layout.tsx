@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Outfit, Cormorant_Garamond, JetBrains_Mono, Figtree, Lexend } from "next/font/google";
+import { Outfit, Cormorant_Garamond, JetBrains_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -14,20 +14,6 @@ const outfit = Outfit({
   variable: "--font-sans",
   display: "swap",
   weight: ["300", "400", "500", "600"],
-});
-
-const figtree = Figtree({
-  subsets: ["latin"],
-  variable: "--font-figtree",
-  display: "swap",
-  weight: ["400", "500", "600", "800"],
-});
-
-const lexend = Lexend({
-  subsets: ["latin"],
-  variable: "--font-lexend",
-  display: "swap",
-  weight: ["300"],
 });
 
 const cormorantGaramond = Cormorant_Garamond({
@@ -85,6 +71,7 @@ export async function generateMetadata({
         uz: "/uz",
         ru: "/ru",
         en: "/en",
+        "x-default": "/uz",
       },
     },
     openGraph: {
@@ -130,7 +117,7 @@ export default async function RootLayout({
 }) {
   const { locale } = await params;
 
-  if (!routing.locales.includes(locale as any)) {
+  if (!routing.locales.includes(locale as (typeof routing.locales)[number])) {
     notFound();
   }
 
@@ -139,7 +126,7 @@ export default async function RootLayout({
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Person",
+    "@type": ["Person", "ProfessionalService"],
     name: "Ilhom Begimqulov",
     jobTitle:
       locale === "ru"
@@ -149,9 +136,19 @@ export default async function RootLayout({
         : "Biznes Konsultant va Amaliyotchi Trener",
     url: `${SITE_URL}/${locale}`,
     image: `${SITE_URL}/images/hero/portrait.webp`,
+    telephone: contactConfig.phone.clean,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Furkat ko'chasi 18",
+      addressLocality: "Tashkent",
+      addressCountry: "UZ",
+    },
     sameAs: [
-      contactConfig.telegram.url,
+      contactConfig.telegramChannel.url,
+      contactConfig.telegramDirect.url,
       contactConfig.instagram.url,
+      contactConfig.youtube.url,
+      contactConfig.linkedin.url,
     ],
     worksFor: {
       "@type": "Organization",
@@ -163,7 +160,7 @@ export default async function RootLayout({
   return (
     <html
       lang={locale}
-      className={`${outfit.variable} ${cormorantGaramond.variable} ${jetbrainsMono.variable} ${figtree.variable} ${lexend.variable} dark`}
+      className={`${outfit.variable} ${cormorantGaramond.variable} ${jetbrainsMono.variable} dark`}
       suppressHydrationWarning
     >
       <body className="bg-[#0A0A0A] text-[#F5F5F0] font-sans selection:bg-[#C5A880] selection:text-[#0A0A0A] antialiased" suppressHydrationWarning>

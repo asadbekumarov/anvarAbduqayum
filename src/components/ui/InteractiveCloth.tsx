@@ -1468,7 +1468,7 @@ export default function InteractiveCloth({
   return (
     <div
       ref={containerRef}
-      className={`relative w-full aspect-[4/5] max-w-[480px] max-h-[70svh] select-none group ${
+      className={`relative w-full aspect-[4/5] max-w-[480px] max-h-[48svh] sm:max-h-[70svh] select-none group ${
         !hasCustomMargin ? "mx-auto" : ""
       } ${className}`}
     >

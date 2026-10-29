@@ -11,7 +11,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        base: {
+        obsidian: {
           DEFAULT: "#0A0A0A",
           dark: "#050505",
           light: "#121212",

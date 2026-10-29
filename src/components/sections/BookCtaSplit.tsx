@@ -95,7 +95,7 @@ export function BookCtaSplit({ onOpenApply }: BookCtaSplitProps) {
                 </span>
               </MaskedHeading>
 
-              <p className="text-sm text-neutral-300 font-light mt-3 leading-relaxed max-w-xl">
+              <p className="text-sm sm:text-base text-neutral-200 font-normal mt-3 leading-relaxed max-w-xl">
                 {tBook("description")}
               </p>
 
@@ -124,10 +124,10 @@ export function BookCtaSplit({ onOpenApply }: BookCtaSplitProps) {
                       key={i}
                       className="py-2.5 flex items-baseline justify-between gap-3 font-mono text-xs"
                     >
-                      <span className="uppercase tracking-[0.16em] text-platinum shrink-0 text-xs">
+                      <span className="uppercase tracking-[0.16em] text-[#C5A880] shrink-0 text-xs">
                         {spec.label}
                       </span>
-                      <span className="text-neutral-300 font-sans text-xs text-right font-light">
+                      <span className="text-neutral-200 font-sans text-xs sm:text-sm text-right font-normal">
                         {spec.value}
                       </span>
                     </div>
@@ -172,7 +172,7 @@ export function BookCtaSplit({ onOpenApply }: BookCtaSplitProps) {
                 </span>
               </MaskedHeading>
 
-              <p className="text-sm text-neutral-300 font-light mt-4 leading-relaxed">
+              <p className="text-sm sm:text-base text-neutral-200 font-normal mt-4 leading-relaxed">
                 {tCta("description")}
               </p>
             </div>

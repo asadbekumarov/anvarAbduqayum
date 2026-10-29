@@ -19,7 +19,7 @@ export function RevealOnScroll({
   delay = 0,
   yOffset = 24,
   className,
-  margin = "-80px",
+  margin = "-20px",
 }: RevealOnScrollProps) {
   return (
     <motion.div

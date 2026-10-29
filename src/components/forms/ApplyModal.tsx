@@ -190,7 +190,7 @@ export function ApplyModal({ isOpen, onClose }: ApplyModalProps) {
       onClick={onClose}
     >
       <div
-        className="relative max-w-xl w-full border border-border bg-base p-6 sm:p-10 rounded-[2px] my-8"
+        className="relative max-w-xl w-full border border-border bg-obsidian p-6 sm:p-10 rounded-[2px] my-8"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}

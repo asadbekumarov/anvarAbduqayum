@@ -52,7 +52,7 @@ export function Services({ onOpenApply }: ServicesProps) {
             </MaskedHeading>
 
             {/* Subheadline */}
-            <p className="text-base text-neutral-300 font-light leading-relaxed max-w-xl mt-5">
+            <p className="text-base sm:text-lg text-neutral-200 font-normal leading-relaxed max-w-xl mt-5">
               {t("description")}
             </p>
           </div>
@@ -70,12 +70,12 @@ export function Services({ onOpenApply }: ServicesProps) {
                 }
               }}
               aria-label={`${t("diagTitle")} - ${t("diagCta")}`}
-              className="relative bg-gradient-to-br from-[#0F172A]/80 via-[#0B132B]/60 to-[#0A0A0A] border border-white/[0.1] hover:border-platinum/30 p-8 sm:p-10 rounded-none transition-all duration-300 hover:bg-[#0F172A]/90 shadow-[0_15px_35px_rgba(7,13,31,0.45)] cursor-pointer group"
+              className="relative bg-gradient-to-br from-[#0F172A]/90 via-[#0B132B]/80 to-[#0A0A0A] border border-white/[0.12] hover:border-[#C5A880]/50 p-7 sm:p-9 rounded-none transition-all duration-300 hover:bg-[#0F172A] shadow-[0_15px_35px_rgba(7,13,31,0.5)] cursor-pointer group"
             >
               {/* Top Meta Row */}
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-platinum shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#C5A880] shrink-0" />
                   <span className="font-mono text-xs uppercase tracking-[0.18em] text-platinum">
                     {t("diagKicker")}
                   </span>
@@ -91,17 +91,17 @@ export function Services({ onOpenApply }: ServicesProps) {
               </h3>
 
               {/* Description */}
-              <p className="text-sm text-neutral-300 font-light leading-relaxed mt-3">
+              <p className="text-sm sm:text-base text-neutral-200 font-normal leading-relaxed mt-3">
                 {t("diagDesc")}
               </p>
 
-              {/* Bottom Action Row */}
-              <div className="mt-8 pt-5 border-t border-white/[0.08] flex items-center justify-between">
+              {/* Bottom Action Row - Wrap-safe for long Russian translations */}
+              <div className="mt-8 pt-5 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <span className="font-mono text-xs text-platinum uppercase tracking-wider">
                   {t("diagPrivacy")}
                 </span>
-                <span className="text-xs font-medium uppercase tracking-[0.15em] text-white flex items-center gap-2">
-                  <span>{ctaT("primary")}</span>
+                <span className="text-xs font-medium uppercase tracking-[0.15em] text-[#C5A880] group-hover:text-white flex items-center gap-2 transition-colors">
+                  <span>{ctaT("primaryShort")}</span>
                   <span className="transition-transform duration-300 group-hover:translate-x-1.5">
                     →
                   </span>
@@ -112,56 +112,53 @@ export function Services({ onOpenApply }: ServicesProps) {
         </div>
 
         {/* The 6 Services — Architectural Ledger Rows (Table/List Layout) */}
-        <div className="relative flex flex-col group/list">
+        <div className="relative flex flex-col group/list mt-6 border-b border-white/[0.08]">
           {/* Top Divider Architectural Line Draw */}
           <GridLine />
 
-          {items.map((service, idx) => (
+          {items.map((service) => (
             <div
               key={service.index}
               role="button"
               tabIndex={0}
-              onClick={() => handleApply({ service: service.index })}
+              onClick={() => handleApply({ service: service.title })}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault();
-                  handleApply({ service: service.index });
+                  handleApply({ service: service.title });
                 }
               }}
               aria-label={`${service.title} - ${t("selectService")}`}
-              className="group relative grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 items-baseline py-5 px-4 sm:px-6 bg-transparent hover:bg-[#0B132B]/25 transition-all duration-500 group-hover/list:opacity-40 hover:!opacity-100 cursor-pointer rounded-none"
+              className="group relative grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-8 items-baseline py-7 min-h-[64px] px-4 sm:px-6 bg-transparent hover:bg-[#0B132B]/35 border-t border-white/[0.08] transition-all duration-300 group-hover/list:opacity-50 hover:!opacity-100 cursor-pointer rounded-none touch-manipulation"
             >
               {/* Left Subtle Gold Accent Indicator on Hover - expanding from bottom */}
-              <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-[#C5A880] scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
-
-              {/* Architectural Grid Line for this row with staggered draw */}
-              <GridLine delay={idx * 0.08} className="absolute bottom-0 left-0 right-0" />
+              <div className="absolute left-0 top-0 bottom-0 w-[2px] bg-[#C5A880] scale-y-0 group-hover:scale-y-100 origin-bottom transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]" />
 
               {/* Column 1 (lg:col-span-1 — Index) */}
               <div className="lg:col-span-1">
-                <span className="font-mono text-xs text-platinum group-hover:text-white transition-colors duration-300">
+                <span className="font-mono text-xs text-[#C5A880] group-hover:text-white transition-colors duration-300">
                   /{service.index}
                 </span>
               </div>
 
               {/* Column 2 (lg:col-span-4 — Service Title with translate-x-2) */}
               <div className="lg:col-span-4">
-                <h3 className="text-xl sm:text-2xl font-normal tracking-[-0.02em] text-white transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2">
+                <h3 className="text-xl sm:text-2xl font-normal tracking-[-0.02em] text-white transition-transform duration-300 ease-out group-hover:translate-x-1.5">
                   {service.title}
                 </h3>
               </div>
 
               {/* Column 3 (lg:col-span-5 — Concrete B2B Description) */}
               <div className="lg:col-span-5">
-                <p className="text-sm text-neutral-300 font-light leading-relaxed">
+                <p className="text-sm sm:text-base text-neutral-200 font-normal leading-relaxed">
                   {service.description}
                 </p>
               </div>
 
-              {/* Column 4 (lg:col-span-2 — Minimal Action Trigger) */}
-              <div className="lg:col-span-2 lg:text-right flex lg:justify-end items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-platinum group-hover:text-white transition-colors duration-300 mt-2 lg:mt-0">
+              {/* Column 4 (lg:col-span-2 — Minimal Action Trigger with >=44px touch target) */}
+              <div className="lg:col-span-2 lg:text-right flex lg:justify-end items-center gap-2 font-mono text-xs uppercase tracking-[0.14em] text-platinum group-hover:text-[#C5A880] transition-colors duration-300 mt-2 lg:mt-0 min-h-[44px]">
                 <span>{t("selectService")}</span>
-                <span className="transition-transform duration-300 group-hover:translate-x-1.5">
+                <span className="transition-transform duration-300 group-hover:translate-x-1.5 font-mono">
                   →
                 </span>
               </div>

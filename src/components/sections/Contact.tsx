@@ -80,8 +80,19 @@ export function Contact() {
           name: formData.name.trim(),
           phone: cleanedPhone,
           companySize: formData.companySize || "10–50",
-          business: formData.business.trim() || "Tezkor murojaat formasi",
-          service: "Tezkor murojaat (Kontaktlar bo'limi)",
+          business:
+            formData.business.trim() ||
+            (locale === "ru"
+              ? "Форма быстрого обращения"
+              : locale === "en"
+              ? "Rapid inquiry form"
+              : "Tezkor murojaat formasi"),
+          service:
+            locale === "ru"
+              ? "Быстрое обращение (Раздел контактов)"
+              : locale === "en"
+              ? "Rapid inquiry (Contact section)"
+              : "Tezkor murojaat (Kontaktlar bo'limi)",
           locale,
           pageUrl: typeof window !== "undefined" ? window.location.href : undefined,
           honeypot: formData.honeypot,
@@ -125,7 +136,7 @@ export function Contact() {
     <section
       id="aloqa"
       aria-label={t("title")}
-      className="scroll-mt-20 relative bg-gradient-to-b from-[#0A0A0A] via-[#070D1F]/50 to-[#0A0A0A] border-t border-white/[0.08] py-14 sm:py-20 overflow-hidden"
+      className="scroll-mt-20 relative bg-gradient-to-b from-[#0A0A0A] via-[#0D1017] to-[#0A0A0A] border-t border-white/[0.08] py-16 sm:py-24 pb-28 sm:pb-32 overflow-hidden"
     >
       {/* Anchor aliases */}
       <span id="kontakt" className="absolute -top-24 pointer-events-none" />
@@ -157,7 +168,7 @@ export function Contact() {
             </MaskedHeading>
 
             {/* TODO(confirm): Aniq manzil/xarita tasdiqlanmaguncha "tashrif buyuring" jumlasi yashirilgan (contactConfig.office.hasExactAddress: false) */}
-            <p className="text-sm sm:text-base text-neutral-300 font-light leading-relaxed mt-4 max-w-xl">
+            <p className="text-base sm:text-lg text-neutral-200 font-normal leading-relaxed mt-4 max-w-xl">
               {contactConfig.office.hasExactAddress ? t("description") : t("descriptionDirect")}
             </p>
           </div>
@@ -178,19 +189,45 @@ export function Contact() {
               </a>
             </div>
 
-            {/* Telegram Row */}
-            <div className="py-5 border-b border-white/[0.08] flex items-baseline justify-between gap-4">
-              <span className="font-mono text-xs text-platinum uppercase tracking-widest shrink-0">
-                {t("telegramLabel")}
-              </span>
+            {/* Telegram Channel Row (News & Updates) */}
+            <div className="py-5 border-b border-white/[0.08] flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 sm:gap-4">
+              <div className="flex items-center gap-2 shrink-0">
+                <span className="font-mono text-xs text-platinum uppercase tracking-widest">
+                  {t("telegramChannelLabel")}
+                </span>
+                <span className="font-mono text-[10px] text-[#C5A880]/90 uppercase tracking-wider px-1.5 py-0.5 border border-[#C5A880]/30 rounded-xs bg-[#C5A880]/5">
+                  {t("telegramChannelBadge")}
+                </span>
+              </div>
               <a
-                href={contactConfig.telegram.url}
+                href={contactConfig.telegramChannel.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={contactConfig.telegram.ariaLabel}
-                className="text-base font-light text-white hover:text-white/80 transition-colors font-mono"
+                aria-label={contactConfig.telegramChannel.ariaLabel}
+                className="text-base font-light text-white hover:text-[#E2C79D] transition-colors font-mono"
               >
-                {contactConfig.telegram.handle}
+                {contactConfig.telegramChannel.display}
+              </a>
+            </div>
+
+            {/* Telegram Direct Row (Personal direct chat) */}
+            <div className="py-5 border-b border-white/[0.08] flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 sm:gap-4">
+              <div className="flex items-center gap-2 shrink-0">
+                <span className="font-mono text-xs text-platinum uppercase tracking-widest">
+                  {t("telegramDirectLabel")}
+                </span>
+                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider px-1.5 py-0.5 border border-white/[0.1] rounded-xs bg-white/[0.03]">
+                  {t("telegramDirectBadge")}
+                </span>
+              </div>
+              <a
+                href={contactConfig.telegramDirect.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={contactConfig.telegramDirect.ariaLabel}
+                className="text-base font-light text-white hover:text-[#E2C79D] transition-colors font-mono"
+              >
+                {contactConfig.telegramDirect.display}
               </a>
             </div>
 
@@ -442,14 +479,14 @@ export function Contact() {
                           setFormData((prev) => ({ ...prev, companySize: opt.value }))
                         }
                         disabled={isSubmitting}
-                        className={`py-3 px-2 font-mono text-xs transition-all rounded-none text-center cursor-pointer flex flex-col items-center justify-center gap-1 border ${
+                        className={`min-h-[52px] py-2 px-2 font-mono text-xs transition-all rounded-none text-center cursor-pointer flex flex-col items-center justify-center gap-0.5 border ${
                           isSelected
-                            ? "bg-[#0B132B]/90 border-[#C5A880] text-[#E2C79D] shadow-[0_0_15px_rgba(197,168,128,0.18)] ring-1 ring-[#C5A880]/50"
-                            : "bg-[#0A0A0A]/70 border-white/[0.1] text-neutral-400 hover:text-white hover:border-white/25"
+                            ? "bg-[#0B132B] border-[#C5A880] text-[#E2C79D] shadow-[0_0_15px_rgba(197,168,128,0.2)] ring-1 ring-[#C5A880]/60"
+                            : "bg-[#0A0A0A]/80 border-white/[0.12] text-neutral-300 hover:text-white hover:border-white/30"
                         }`}
                       >
                         <span className="font-semibold text-xs tracking-wider">{opt.title}</span>
-                        <span className="text-xs opacity-75 tracking-normal font-sans text-center leading-tight">
+                        <span className="text-[11px] opacity-80 tracking-normal font-sans text-center leading-tight">
                           {opt.sub}
                         </span>
                       </button>

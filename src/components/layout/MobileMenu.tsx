@@ -90,7 +90,7 @@ export function MobileMenu({ isOpen, onClose, onOpenApply }: MobileMenuProps) {
       role="dialog"
       aria-modal="true"
       aria-label={common("openMenu")}
-      className="fixed inset-0 z-50 flex flex-col bg-base text-white xl:hidden overscroll-contain"
+      className="fixed inset-0 z-50 flex flex-col bg-obsidian text-white xl:hidden overscroll-contain"
     >
       {/* Top Bar */}
       <div className="flex items-center justify-between px-5 sm:px-6 h-20 border-b border-border shrink-0">
@@ -123,7 +123,7 @@ export function MobileMenu({ isOpen, onClose, onOpenApply }: MobileMenuProps) {
               key={link.href}
               href={link.href}
               onClick={handleLinkClick}
-              className="group flex items-center justify-between text-lg sm:text-2xl font-serif text-neutral-300 hover:text-white transition-colors py-3 border-b border-white/[0.08]"
+              className="group flex items-center justify-between min-h-[48px] text-lg sm:text-2xl font-serif text-neutral-300 hover:text-white transition-colors py-3.5 border-b border-white/[0.08] touch-manipulation"
             >
               <span>{link.label}</span>
               <span className="text-xs font-mono text-muted tracking-widest group-hover:translate-x-1 transition-transform">
@@ -136,7 +136,7 @@ export function MobileMenu({ isOpen, onClose, onOpenApply }: MobileMenuProps) {
         <div className="pt-8 border-t border-border flex flex-col space-y-5">
           <div className="flex items-center justify-between">
             <span className="text-xs font-sans uppercase tracking-widest text-muted">
-              Tilni o&apos;zgartirish
+              {common("changeLanguage")}
             </span>
             <LanguageSwitcher direction="up" />
           </div>

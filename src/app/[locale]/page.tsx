@@ -3,17 +3,45 @@ import dynamic from "next/dynamic";
 import { setRequestLocale } from "next-intl/server";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { MobileStickyBar } from "@/components/layout/MobileStickyBar";
 import { Hero } from "@/components/sections/Hero";
 import { Services } from "@/components/sections/Services";
 import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
 
-// Dynamic imports for heavy below-fold sections to reduce TBT
-const Stages = dynamic(() => import("@/components/sections/Stages").then((m) => m.Stages));
-const Expert = dynamic(() => import("@/components/sections/Expert").then((m) => m.Expert));
-const MediaArchive = dynamic(() => import("@/components/sections/MediaArchive").then((m) => m.MediaArchive));
-const BookCtaSplit = dynamic(() => import("@/components/sections/BookCtaSplit").then((m) => m.BookCtaSplit));
-const FAQ = dynamic(() => import("@/components/sections/FAQ").then((m) => m.FAQ));
-const Contact = dynamic(() => import("@/components/sections/Contact").then((m) => m.Contact));
+import {
+  StagesSkeleton,
+  ExpertSkeleton,
+  MediaArchiveSkeleton,
+  BookCtaSkeleton,
+  FAQSkeleton,
+  ContactSkeleton,
+} from "@/components/ui/skeletons";
+
+// Dynamic imports for heavy below-fold sections with bespoke luxury skeletons to prevent CLS
+const Stages = dynamic(
+  () => import("@/components/sections/Stages").then((m) => m.Stages),
+  { loading: () => <StagesSkeleton /> }
+);
+const Expert = dynamic(
+  () => import("@/components/sections/Expert").then((m) => m.Expert),
+  { loading: () => <ExpertSkeleton /> }
+);
+const MediaArchive = dynamic(
+  () => import("@/components/sections/MediaArchive").then((m) => m.MediaArchive),
+  { loading: () => <MediaArchiveSkeleton /> }
+);
+const BookCtaSplit = dynamic(
+  () => import("@/components/sections/BookCtaSplit").then((m) => m.BookCtaSplit),
+  { loading: () => <BookCtaSkeleton /> }
+);
+const FAQ = dynamic(
+  () => import("@/components/sections/FAQ").then((m) => m.FAQ),
+  { loading: () => <FAQSkeleton /> }
+);
+const Contact = dynamic(
+  () => import("@/components/sections/Contact").then((m) => m.Contact),
+  { loading: () => <ContactSkeleton /> }
+);
 
 export default async function HomePage({
   params,
@@ -24,7 +52,7 @@ export default async function HomePage({
   setRequestLocale(locale);
 
   return (
-    <div className="min-h-screen flex flex-col bg-base text-white">
+    <div className="min-h-screen flex flex-col bg-obsidian text-white">
       <Navbar />
 
       <main className="flex-1 pt-20">
@@ -68,6 +96,7 @@ export default async function HomePage({
       </main>
 
       <Footer />
+      <MobileStickyBar />
     </div>
   );
 }

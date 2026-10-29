@@ -29,7 +29,7 @@ export function MaskedHeading({
       <motion.div
         initial={{ y: "100%" }}
         whileInView={{ y: "0%" }}
-        viewport={{ once: true, margin: "-10%" }}
+        viewport={{ once: true, margin: "0px" }}
         transition={{
           duration: 0.9,
           ease: EASE_SWISS,

@@ -58,7 +58,7 @@ export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
           </div>
 
           {/* Executive Subheadline with Platinum Tint */}
-          <p className="text-base sm:text-lg text-platinum font-light leading-relaxed max-w-xl">
+          <p className="text-base sm:text-lg text-platinum-light font-normal leading-relaxed max-w-xl">
             {t("description")}
           </p>
 
@@ -79,10 +79,12 @@ export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
 
             <a
               href="#xizmatlar"
-              className="inline-flex items-center gap-3 px-4 py-4 text-sm text-neutral-300 hover:text-white border-b border-white/15 hover:border-white/50 transition-all"
+              className="inline-flex items-center gap-3 px-4 py-4 text-sm text-neutral-200 hover:text-white border-b border-white/20 hover:border-[#C5A880] transition-all group font-normal"
             >
               <span>{t("ctaSecondary")}</span>
-              <span className="font-mono text-xs text-platinum">/06</span>
+              <span className="font-mono text-xs text-[#C5A880] transition-transform duration-300 group-hover:translate-y-0.5">
+                ↓
+              </span>
             </a>
           </div>
         </div>
@@ -111,13 +113,13 @@ export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
               <span className="font-mono text-xs text-platinum block mb-1">
                 {t("metric1Label")}
               </span>
-              <span className="text-sm text-neutral-300">
+              <span className="text-sm sm:text-base text-neutral-200 font-normal">
                 {t("metric1Desc")}
               </span>
             </div>
             <div className="text-3xl sm:text-4xl font-light tracking-tight text-white ml-4 flex items-baseline shrink-0">
               <AnimatedCounter value="100" />
-              <span className="text-white/40 font-serif italic ml-0.5">+</span>
+              <span className="text-[#C5A880] font-serif italic ml-0.5">+</span>
             </div>
           </div>
 
@@ -127,13 +129,13 @@ export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
               <span className="font-mono text-xs text-platinum block mb-1">
                 {t("metric2Label")}
               </span>
-              <span className="text-sm text-neutral-300">
+              <span className="text-sm sm:text-base text-neutral-200 font-normal">
                 {t("metric2Desc")}
               </span>
             </div>
             <div className="text-3xl sm:text-4xl font-light tracking-tight text-white ml-4 flex items-baseline shrink-0">
               <AnimatedCounter value="10 000" />
-              <span className="text-white/40 font-serif italic ml-0.5">+</span>
+              <span className="text-[#C5A880] font-serif italic ml-0.5">+</span>
             </div>
           </div>
 
@@ -143,24 +145,24 @@ export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
               <span className="font-mono text-xs text-platinum block mb-1">
                 {t("metric3Label")}
               </span>
-              <span className="text-sm text-neutral-300">
+              <span className="text-sm sm:text-base text-neutral-200 font-normal">
                 {t("metric3Desc")}
               </span>
             </div>
             <div className="text-3xl sm:text-4xl font-light tracking-tight text-white ml-4 flex items-baseline shrink-0">
               <AnimatedCounter value="8" />
-              <span className="text-white/40 font-serif italic ml-0.5">+</span>
+              <span className="text-[#C5A880] font-serif italic ml-0.5">+</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Embedded Compact Partner Logos Credibility Marquee Strip */}
+      {/* Embedded Streamlined Partner Logos Credibility Marquee Strip */}
       <div
         id="hamkorlar"
-        className="w-full border-t border-white/[0.07] mt-8 py-4 sm:py-5 bg-[#0B132B]/15 relative"
+        className="w-full border-t border-white/[0.07] mt-8 py-5 bg-[#0B132B]/10 relative"
       >
-        <div className="max-w-[1360px] mx-auto px-6 md:px-12 flex flex-col md:flex-row md:items-center gap-3 sm:gap-6">
+        <div className="max-w-[1360px] mx-auto px-6 md:px-12 flex flex-col md:flex-row md:items-center gap-3 sm:gap-8">
           <div className="flex items-center gap-2.5 shrink-0">
             <span className="w-1.5 h-1.5 rounded-full bg-[#C5A880]" />
             <span className="font-mono text-xs uppercase tracking-[0.22em] text-platinum whitespace-nowrap">
@@ -169,25 +171,22 @@ export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
           </div>
 
           <div className="flex-1 overflow-hidden relative [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
-            <Marquee speed={32} pauseOnHover innerClassName="gap-3 sm:gap-4 pr-3 sm:pr-4">
+            <Marquee speed={28} pauseOnHover innerClassName="gap-8 sm:gap-12 items-center pr-8 sm:pr-12">
               {siteMedia.partners.map((p, idx) => (
                 <div
                   key={`${p.id}-${idx}`}
-                  className="flex items-center gap-3.5 px-4 py-2 bg-[#0F172A]/40 hover:bg-[#0B132B]/60 border border-white/[0.08] hover:border-platinum/30 transition-all rounded-none shrink-0 group cursor-default"
+                  className="h-9 sm:h-11 flex items-center justify-center shrink-0 opacity-70 hover:opacity-100 transition-opacity duration-300 group cursor-default"
+                  title={p.name}
                 >
-                  <div className="w-16 h-10 sm:w-20 sm:h-12 flex items-center justify-center shrink-0">
-                    <Image
-                      src={p.logo}
-                      alt={p.name}
-                      width={120}
-                      height={64}
-                      loading="lazy"
-                      className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
-                    />
-                  </div>
-                  <span className="text-xs sm:text-sm font-medium text-white tracking-tight whitespace-nowrap pr-1">
-                    {p.name}
-                  </span>
+                  <Image
+                    src={p.logo}
+                    alt={p.name}
+                    width={140}
+                    height={52}
+                    sizes="(max-width: 640px) 100px, 140px"
+                    loading="lazy"
+                    className="max-h-full w-auto max-w-[130px] sm:max-w-[160px] object-contain transition-transform duration-300 group-hover:scale-105"
+                  />
                 </div>
               ))}
             </Marquee>

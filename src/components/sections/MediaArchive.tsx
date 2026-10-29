@@ -152,7 +152,7 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
         </div>
 
         {/* Swiss Architectural Tab Switcher */}
-        <div className="mt-8 border-b border-white/[0.08] flex items-center gap-2 sm:gap-6 overflow-x-auto no-scrollbar">
+        <div className="mt-8 border-b border-white/[0.08] flex items-center gap-2 sm:gap-6 overflow-x-auto no-scrollbar pb-0.5">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id;
             return (
@@ -161,10 +161,10 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
                 className={`group relative pb-4 px-2 sm:px-3 text-left font-mono text-xs tracking-wider uppercase transition-colors shrink-0 cursor-pointer flex items-center gap-2.5 ${
-                  isActive ? "text-white" : "text-neutral-400 hover:text-white"
+                  isActive ? "text-white" : "text-neutral-300 hover:text-white"
                 }`}
               >
-                <span className={isActive ? "text-[#C5A880]" : "text-platinum/60"}>
+                <span className={isActive ? "text-[#C5A880]" : "text-platinum"}>
                   /{tab.index}
                 </span>
                 <span className="font-sans font-medium text-xs sm:text-sm tracking-wide">

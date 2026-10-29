@@ -10,8 +10,8 @@ export function Footer() {
   const socialLinks = [
     {
       label: "Telegram",
-      href: contactConfig.telegram.url,
-      ariaLabel: contactConfig.telegram.ariaLabel,
+      href: contactConfig.telegramChannel.url,
+      ariaLabel: contactConfig.telegramChannel.ariaLabel,
     },
     {
       label: "LinkedIn",
@@ -31,7 +31,7 @@ export function Footer() {
   ];
 
   return (
-    <footer className="bg-gradient-to-t from-[#070D1F]/40 to-[#0A0A0A] border-t border-white/[0.08] py-12">
+    <footer className="bg-gradient-to-t from-[#070D1F]/40 to-[#0A0A0A] border-t border-white/[0.08] py-12 pb-24 md:pb-12">
       <div className="max-w-[1360px] mx-auto px-6 md:px-12 flex flex-col sm:flex-row items-center justify-between gap-6">
         {/* Left: Brand & Copyright */}
         <div className="flex flex-col sm:flex-row items-center sm:items-baseline gap-2 sm:gap-4 text-center sm:text-left">

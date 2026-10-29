@@ -16,17 +16,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
         uz: `${baseUrl}/uz`,
         ru: `${baseUrl}/ru`,
         en: `${baseUrl}/en`,
+        "x-default": `${baseUrl}/uz`,
       },
     },
   }));
-
-  // Root entry
-  entries.unshift({
-    url: baseUrl,
-    lastModified,
-    changeFrequency: "weekly" as const,
-    priority: 1.0,
-  });
 
   return entries;
 }

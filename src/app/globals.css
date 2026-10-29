@@ -43,7 +43,7 @@ body {
   --font-sans: var(--font-sans, "Outfit", sans-serif);
   --font-serif: var(--font-serif, "Cormorant Garamond", serif);
   --font-mono: var(--font-mono, "JetBrains Mono", monospace);
-  --color-base: #0A0A0A;
+  --color-obsidian: #0A0A0A;
   --color-elevated: #141414;
   --color-border: #262626;
   --color-gold: #C5A880;
@@ -1964,9 +1964,45 @@ body {
   will-change: transform;
 }
 
+/* Luxury Skeleton Shimmer Animation (Obsidian + Warm Gold/Champagne highlights) */
+@keyframes luxuryShimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.03) 25%,
+    rgba(197, 168, 128, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 75%,
+    transparent 100%
+  );
+  animation: luxuryShimmer 2s infinite ease-in-out;
+  pointer-events: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-hero-mask-reveal {
     animation: none !important;
     transform: none !important;
+  }
+  .animate-shimmer::after {
+    animation: none !important;
+    display: none !important;
   }
 }

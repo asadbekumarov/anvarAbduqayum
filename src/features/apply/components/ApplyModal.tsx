@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Modal } from "@/components/ui/Modal";
 import { ApplyForm } from "./ApplyForm";
+import { contactConfig } from "@/config/contact";
 
 interface ApplyModalProps {
   isOpen: boolean;
@@ -17,6 +18,7 @@ export function ApplyModal({
   selectedService,
 }: ApplyModalProps) {
   const t = useTranslations("applyModal");
+  const commonT = useTranslations("common");
   const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
@@ -35,6 +37,8 @@ export function ApplyModal({
 
   const modalTitle = isBook
     ? t("bookTitle") || "«Biznes shpargalkasi» kitobi"
+    : selectedService
+    ? `${selectedService} — ${t("title")}`
     : t("title");
 
   return (
@@ -52,7 +56,7 @@ export function ApplyModal({
         <button
           type="button"
           onClick={onClose}
-          aria-label="Yopish"
+          aria-label={commonT("close")}
           className="font-mono text-xl text-platinum hover:text-white transition-colors p-1 cursor-pointer"
         >
           ✕
@@ -82,9 +86,7 @@ export function ApplyModal({
 
           {/* Body Copy */}
           <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed mb-6">
-            {isBook
-              ? "Tez orada operatorimiz siz bilan bog'lanadi va yetkazib berish tafsilotlarini kelishib oladi."
-              : t("thankYouBody")}
+            {isBook ? t("bookSuccessBody") : t("thankYouBody")}
           </p>
 
           {/* What Happens Next (3-Step Mini Timeline inside Thank You screen) */}
@@ -106,9 +108,10 @@ export function ApplyModal({
           {/* Value-Add Action (Replaces PDF Lead Magnet) */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <a
-              href="https://t.me/ilhombegimqulov"
+              href={contactConfig.telegramChannel.url}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={contactConfig.telegramChannel.ariaLabel}
               className="group inline-flex items-center justify-center gap-2 px-5 py-3 border border-[#C5A880]/60 hover:border-[#C5A880] bg-[#C5A880]/10 hover:bg-[#C5A880]/20 text-[#E2C79D] hover:text-white font-mono text-xs uppercase tracking-[0.14em] transition-all rounded-none"
             >
               <span>{t("actionTelegram")}</span>

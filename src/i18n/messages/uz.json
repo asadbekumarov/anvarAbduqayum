@@ -15,7 +15,8 @@
     "viewDetails": "Batafsil ko'rish",
     "participate": "Ishtirok etish",
     "prev": "Oldingi",
-    "next": "Keyingi"
+    "next": "Keyingi",
+    "changeLanguage": "Tilni o'zgartirish"
   },
   "cta": {
     "primary": "Bepul diagnostikaga yozilish",
@@ -40,9 +41,9 @@
     "kicker": "B2B Konsalting & Tizimlashtirish",
     "titlePrefix": "Biznesingizni operatsion tartibsizlikdan — ",
     "titleHighlight": "avtonom tizimga",
-    "titleSuffix": " olib chiqamiz.",
-    "title": "Biznesingizni operatsion tartibsizlikdan — avtonom tizimga olib chiqamiz.",
-    "description": "Ilhom Begimqulovning amaliy metodologiyasi asosida kompaniyangizda boshqaruv, moliya va sotuv jarayonlarini egasining doimiy ishtirokisiz ham barqaror ishlaydigan holatga keltiramiz.",
+    "titleSuffix": " olib chiqaman.",
+    "title": "Biznesingizni operatsion tartibsizlikdan — avtonom tizimga olib chiqaman.",
+    "description": "Mening amaliy metodologiyam asosida kompaniyangizda boshqaruv, moliya va sotuv jarayonlarini egasining doimiy ishtirokisiz ham barqaror ishlaydigan holatga keltiraman.",
     "ctaPrimary": "Bepul diagnostikaga yozilish",
     "ctaSecondary": "Xizmatlar yo'nalishi",
     "captionRole": "Asoschi & Bosh strateg · 10+ yillik tajriba",
@@ -62,7 +63,7 @@
     "titlePrefix": "Kompaniyangiz o'sishi uchun ",
     "titleHighlight": "tizimli yechimlar.",
     "title": "Kompaniyangiz o'sishi uchun tizimli yechimlar.",
-    "description": "Biz shunchaki maslahat bermaymiz — biznesingizdagi operatsion uzilishlarni topib, ularni aniq reglamentlar, moliyaviy nazorat va mustaqil ishlaydigan jamoa tizimiga aylantiramiz.",
+    "description": "Men shunchaki maslahat bermayman — biznesingizdagi operatsion uzilishlarni topib, ularni aniq reglamentlar, moliyaviy nazorat va mustaqil ishlaydigan jamoa tizimiga aylantiraman.",
     "tagDirection": "6 ta asosiy yo'nalish",
     "diagKicker": "INDIVIDUAL RAZVEDKA",
     "diagTime": "20 DAQIQA · BEPUL",
@@ -270,7 +271,7 @@
     ]
   },
   "partners": {
-    "kicker": "05 / ISHONCH BILDIRGAN KOMPANIYALAR",
+    "kicker": "ISHONCH BILDIRGAN KOMPANIYALAR",
     "count": "27+ YIRIK B2B VA B2C BRENDLAR",
     "title": "Ishonch bildirgan kompaniyalar",
     "b2bPartner": "B2B Hamkor"
@@ -306,7 +307,7 @@
     "certificatesHint": "XALQARO SERTIFIKATLAR VA LITSENZIYALAR (Kattalashtirish uchun bosing)"
   },
   "testimonials": {
-    "kicker": "08 / REAL NATIJALAR VA KEYSLAR",
+    "kicker": "REAL NATIJALAR VA KEYSLAR",
     "titlePrefix": "Tizimlashtirishdan so'ng o'zgargan ",
     "titleHighlight": "bizneslar tarixi.",
     "title": "Tizimlashtirishdan so'ng o'zgargan bizneslar tarixi.",
@@ -334,7 +335,7 @@
     "cta": "Kitobga buyurtma berish"
   },
   "webinars": {
-    "kicker": "10 / OCHIQ BILIMLAR BAZASI",
+    "kicker": "OCHIQ BILIMLAR BAZASI",
     "titlePrefix": "Bepul master-klasslar va ",
     "titleHighlight": "tahliliy darslar.",
     "title": "Bepul master-klasslar va tahliliy darslar.",
@@ -343,7 +344,7 @@
     "watchTrigger": "TOMOSHA QILISH →"
   },
   "diplomas": {
-    "kicker": "11 / XALQARO EʼTIROF",
+    "kicker": "XALQARO EʼTIROF",
     "titlePrefix": "Ekspertiza va xalqaro ",
     "titleHighlight": "sertifikatlar.",
     "title": "Ekspertiza va xalqaro sertifikatlar.",
@@ -356,12 +357,14 @@
     "titlePrefix": "Kompaniyangiz taqdirini muhokama ",
     "titleHighlight": "qilamiz.",
     "title": "Kompaniyangiz taqdirini muhokama qilamiz.",
-    "description": "Toshkent shahridagi bosh oromgohimizga tashrif buyuring yoki quyidagi aloqa kanallari orqali shaxsan bog'laning.",
+    "description": "Toshkent shahridagi ofisimga tashrif buyuring yoki quyidagi aloqa kanallari orqali to'g'ridan-to'g'ri bog'laning.",
     "descriptionDirect": "Quyidagi aloqa kanallari orqali shaxsan bog'laning.",
     "phoneLabel": "TELEFON RAQAMI",
     "phoneValue": "+998 55 503 61 00",
-    "telegramLabel": "TELEGRAM KANAL",
-    "telegramValue": "@ilhom_begimqulov",
+    "telegramChannelLabel": "Telegram kanal",
+    "telegramChannelBadge": "yangiliklar uchun",
+    "telegramDirectLabel": "Telegramda yozish",
+    "telegramDirectBadge": "to'g'ridan-to'g'ri",
     "addressLabel": "MANZIL",
     "addressValue": "Toshkent shahri, O'zbekiston",
     "formTitle": "Tezkor murojaat yuborish",
@@ -411,6 +414,7 @@
     "bookNotePlaceholder": "Masalan: 1 dona yoki yetkazish vaqti bo'yicha izoh (ixtiyoriy)...",
     "bookSubmit": "Kitobga buyurtma berish",
     "bookSuccessMessage": "Buyurtmangiz qabul qilindi! Tez orada operator siz bilan bog'lanadi.",
+    "bookSuccessBody": "Tez orada operatorimiz siz bilan bog'lanadi va yetkazib berish tafsilotlarini kelishib oladi.",
     "submit": "Ariza yuborish",
     "submitButton": "Ariza yuborish",
     "submitting": "Yuborilmoqda...",
@@ -431,12 +435,13 @@
     "timelineStep3Prefix": "03 / UCHRASHUV:",
     "timelineStep3Text": "Shaxsiy strategik diagnostika sessiyasi",
     "actionTelegram": "Telegram kanalga o'tish",
-    "actionWebinars": "Bepul master-klasslarni ko'rish"
+    "actionWebinars": "Bepul master-klasslarni ko'rish",
+    "privacyBadge": "100% MAXFIYLIK KAFOLATLANADI"
   },
   "faq": {
     "tag": "FAQ",
     "kicker": "KO'P BERILADIGAN SAVOLLAR",
-    "headline": "Frequently Asked Questions",
+    "headline": "Ko'p beriladigan savollar",
     "headlineUz": "Ko'p beriladigan savollar",
     "lede": "Ilhom Begimqulovning konsalting xizmatlari, biznesni tizimlashtirish, shogirdlik dasturi va hamkorlik shartlari haqidagi eng muhim savollarga javoblar.",
     "communityBtn": "Bepul diagnostikaga yozilish",

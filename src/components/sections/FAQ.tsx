@@ -4,6 +4,13 @@ import React, { useState, useMemo } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
 import { formatSectionKicker } from "@/config/sections";
+import { FAQSkeleton } from "@/components/ui/skeletons";
+
+export { FAQSkeleton };
+
+export interface FAQProps {
+  isLoading?: boolean;
+}
 
 type CategoryKey = "all" | "systematization" | "consulting" | "mentorship" | "guarantees";
 
@@ -14,9 +21,8 @@ interface FAQItem {
   answer: string;
 }
 
-export function FAQ() {
+export function FAQ({ isLoading = false }: FAQProps = {}) {
   const t = useTranslations("faq");
-  const ctaT = useTranslations("cta");
   const locale = useLocale();
   const isUz = locale === "uz";
   const isRu = locale === "ru";
@@ -123,6 +129,10 @@ export function FAQ() {
     });
     return counts;
   }, [rawItems]);
+
+  if (isLoading) {
+    return <FAQSkeleton />;
+  }
 
   const formatCount = (count: number) => {
     if (isUz) return `${count} ta savol`;
@@ -297,26 +307,13 @@ export function FAQ() {
           </h2>
 
           {/* Lede: Clean readable text */}
-          <p className="mt-4 text-sm sm:text-base leading-relaxed max-w-[680px]" style={{ color: '#CBD5E1' }}>
+          <p className="mt-4 text-base sm:text-lg text-neutral-200 font-normal leading-relaxed max-w-[680px]">
             {t("lede")}
           </p>
-
-          {/* Gold Shimmer Button (Site brand signature) */}
-          <button
-            type="button"
-            onClick={openApply}
-            className="mt-7 group relative overflow-hidden h-[48px] sm:h-[50px] px-7 rounded-sm bg-gradient-to-r from-[#C5A880] via-[#D4B992] to-[#C5A880] hover:brightness-105 active:scale-[0.98] text-[#0A0A0A] font-sans text-xs sm:text-sm uppercase tracking-[0.08em] font-semibold flex items-center justify-center gap-2.5 shadow-[0_4px_20px_rgba(197,168,128,0.3)] transition-all cursor-pointer"
-          >
-            <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full" />
-            <span className="relative z-10">{ctaT("primary")}</span>
-            <svg className="w-4 h-4 relative z-10 text-[#0A0A0A] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-            </svg>
-          </button>
         </div>
 
-        {/* SEARCH BAR (74px tall, frosted glass with gold focus) */}
-        <div className="mt-14 sm:mt-18 max-w-[1224px] mx-auto">
+        {/* SEARCH BAR (Sharp frosted glass with gold focus) */}
+        <div className="mt-12 sm:mt-16 max-w-[1224px] mx-auto">
           <div className="relative group">
             {/* Magnifier icon */}
             <div className="absolute inset-y-0 left-0 pl-6 sm:pl-7 flex items-center pointer-events-none z-10">
@@ -338,7 +335,7 @@ export function FAQ() {
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder={t("searchPlaceholder")}
               aria-label={t("searchLabel")}
-              className="w-full h-[58px] sm:h-[68px] pl-[58px] sm:pl-[72px] pr-14 rounded-full bg-[#0F172A]/50 hover:bg-[#0F172A]/70 text-white placeholder:text-neutral-400 text-sm sm:text-base border border-white/[0.12] focus:border-[#C5A880] focus:ring-4 focus:ring-[#C5A880]/20 backdrop-blur-xl outline-none transition-all shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+              className="w-full h-[58px] sm:h-[66px] pl-[58px] sm:pl-[72px] pr-14 rounded-none bg-[#0E121A]/85 hover:bg-[#121722] text-white placeholder:text-neutral-400 text-sm sm:text-base border border-white/[0.14] focus:border-[#C5A880] focus:ring-2 focus:ring-[#C5A880]/20 backdrop-blur-xl outline-none transition-all shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
             />
 
             {/* Clear Button */}
@@ -349,7 +346,7 @@ export function FAQ() {
                 aria-label={t("clearSearch")}
                 className="absolute inset-y-0 right-0 pr-6 flex items-center text-neutral-400 hover:text-white transition-colors cursor-pointer"
               >
-                <div className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-xs">
+                <div className="w-7 h-7 rounded-none bg-white/10 hover:bg-white/20 flex items-center justify-center text-xs">
                   ✕
                 </div>
               </button>
@@ -357,8 +354,8 @@ export function FAQ() {
           </div>
         </div>
 
-        {/* CATEGORIES (2×2 grid with site's gold & navy cards) */}
-        <div className="mt-10 sm:mt-14 grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+        {/* CATEGORIES (2×2 grid with sharp architectural obsidian & navy cards) */}
+        <div className="mt-8 sm:mt-12 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
           {visibleCategories.map((cat) => {
             const isSelected = selectedCategory === cat.key;
             return (
@@ -366,18 +363,18 @@ export function FAQ() {
                 key={cat.key}
                 type="button"
                 onClick={() => handleCategoryClick(cat.key)}
-                className={`w-full h-[106px] sm:h-[129px] rounded-full flex items-center gap-5 sm:gap-6 px-4 sm:px-6 transition-all duration-300 text-left cursor-pointer border group ${
+                className={`w-full min-h-[92px] sm:min-h-[104px] rounded-none flex items-center gap-5 sm:gap-6 px-5 sm:px-7 py-3 transition-all duration-300 text-left cursor-pointer border group ${
                   isSelected
-                    ? "bg-[#0F172A]/95 border-[#C5A880] shadow-[0_0_24px_rgba(197,168,128,0.25)] scale-[1.01]"
-                    : "bg-[#131B2E]/60 hover:bg-[#1A243D]/80 border-white/[0.12] hover:border-[#C5A880]/50 shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
+                    ? "bg-[#0F172A] border-[#C5A880] shadow-[0_0_24px_rgba(197,168,128,0.2)] scale-[1.005]"
+                    : "bg-[#111726]/70 hover:bg-[#151D30] border-white/[0.1] hover:border-[#C5A880]/50 shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
                 }`}
               >
-                {/* 99u round icon disc */}
+                {/* Sharp icon container */}
                 <div
-                  className={`w-[74px] h-[74px] sm:w-[99px] sm:h-[99px] rounded-full flex items-center justify-center shrink-0 border transition-all ${
+                  className={`w-12 h-12 sm:w-14 sm:h-14 rounded-none flex items-center justify-center shrink-0 border transition-all ${
                     isSelected
-                      ? "bg-[#C5A880]/15 border-[#C5A880]/50"
-                      : "bg-white/[0.04] border-white/12 group-hover:border-[#C5A880]/40 group-hover:bg-[#C5A880]/10"
+                      ? "bg-[#C5A880]/15 border-[#C5A880]/60 text-[#C5A880]"
+                      : "bg-white/[0.04] border-white/10 group-hover:border-[#C5A880]/40 group-hover:bg-[#C5A880]/10 text-platinum"
                   }`}
                 >
                   {cat.glyph}
@@ -386,7 +383,7 @@ export function FAQ() {
                 {/* Card text */}
                 <div className="flex flex-col min-w-0 pr-3 sm:pr-4 justify-center">
                   <span
-                    className="text-sm sm:text-base md:text-lg lg:text-xl font-medium tracking-tight transition-colors line-clamp-2 leading-snug"
+                    className="text-base sm:text-lg font-medium tracking-tight transition-colors line-clamp-2 leading-snug"
                     style={{ color: isSelected ? "#E2C79D" : "#FFFFFF" }}
                   >
                     {cat.title}

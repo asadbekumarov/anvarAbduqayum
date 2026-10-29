@@ -51,7 +51,7 @@ export function YouTubeModal({
       onClick={onClose}
     >
       <div
-        className="relative max-w-4xl w-full border border-border bg-base p-3.5 sm:p-6 rounded-[2px]"
+        className="relative max-w-4xl w-full border border-border bg-obsidian p-3.5 sm:p-6 rounded-[2px]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Bar */}

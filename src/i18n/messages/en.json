@@ -15,7 +15,8 @@
     "viewDetails": "View Details",
     "participate": "Participate",
     "prev": "Previous",
-    "next": "Next"
+    "next": "Next",
+    "changeLanguage": "Change language"
   },
   "cta": {
     "primary": "Book a Free Diagnostic",
@@ -38,11 +39,11 @@
   },
   "hero": {
     "kicker": "B2B Consulting & Systematization",
-    "titlePrefix": "Transform your business from operational chaos — into an ",
+    "titlePrefix": "I will take your business from operational chaos — to an ",
     "titleHighlight": "autonomous system",
     "titleSuffix": ".",
-    "title": "Transform your business from operational chaos — into an autonomous system.",
-    "description": "Using Ilhom Begimqulov's practical methodology, we structure your management, finance, and sales processes to run sustainably without constant founder intervention.",
+    "title": "I will take your business from operational chaos — to an autonomous system.",
+    "description": "Based on my practical methodology, I structure management, financial, and sales processes in your company to run sustainably without the constant involvement of the owner.",
     "ctaPrimary": "Book a Free Diagnostic",
     "ctaSecondary": "Service Directions",
     "captionRole": "Founder & Principal Strategist · 10+ Years of Experience",
@@ -62,7 +63,7 @@
     "titlePrefix": "Systematic solutions for ",
     "titleHighlight": "company growth.",
     "title": "Systematic solutions for company growth.",
-    "description": "We do not merely give advice — we identify operational bottlenecks and translate them into strict regulations, financial controls, and an autonomous team.",
+    "description": "I do not merely give advice — I identify operational bottlenecks and translate them into strict regulations, financial controls, and an autonomous team.",
     "tagDirection": "6 Core Verticals",
     "diagKicker": "INDIVIDUAL DIAGNOSTIC",
     "diagTime": "20 MIN · COMPLIMENTARY",
@@ -270,7 +271,7 @@
     ]
   },
   "partners": {
-    "kicker": "05 / COMPANIES THAT TRUST OUR SYSTEMATIZATION",
+    "kicker": "COMPANIES THAT TRUST OUR SYSTEMATIZATION",
     "count": "27+ MAJOR B2B AND B2C BRANDS",
     "title": "Companies that trust our systematization",
     "b2bPartner": "B2B Partner"
@@ -306,7 +307,7 @@
     "certificatesHint": "INTERNATIONAL CERTIFICATES & LICENSES (Click to zoom)"
   },
   "testimonials": {
-    "kicker": "08 / REAL RESULTS & CASE STUDIES",
+    "kicker": "REAL RESULTS & CASE STUDIES",
     "titlePrefix": "Real business transformations ",
     "titleHighlight": "after systematization.",
     "title": "Real business transformations after systematization.",
@@ -334,7 +335,7 @@
     "cta": "Order the Book"
   },
   "webinars": {
-    "kicker": "10 / OPEN KNOWLEDGE BASE",
+    "kicker": "OPEN KNOWLEDGE BASE",
     "titlePrefix": "Complimentary masterclasses & ",
     "titleHighlight": "in-depth analytical lectures.",
     "title": "Complimentary masterclasses & in-depth analytical lectures.",
@@ -343,7 +344,7 @@
     "watchTrigger": "WATCH NOW →"
   },
   "diplomas": {
-    "kicker": "11 / INTERNATIONAL ACCREDITATION",
+    "kicker": "INTERNATIONAL ACCREDITATION",
     "titlePrefix": "Recognized expertise & ",
     "titleHighlight": "global certifications.",
     "title": "Recognized expertise & global certifications.",
@@ -356,14 +357,16 @@
     "titlePrefix": "Let's discuss the strategic future of ",
     "titleHighlight": "your enterprise.",
     "title": "Let's discuss the strategic future of your enterprise.",
-    "description": "Visit our headquarters in Tashkent or reach out personally through the direct communication channels below.",
+    "description": "Visit my office in Tashkent or reach out directly through the communication channels below.",
     "descriptionDirect": "Reach out personally through the direct communication channels below.",
     "phoneLabel": "PHONE NUMBER",
     "phoneValue": "+998 55 503 61 00",
-    "telegramLabel": "TELEGRAM CHANNEL",
-    "telegramValue": "@ilhom_begimqulov",
+    "telegramChannelLabel": "Telegram Channel",
+    "telegramChannelBadge": "for news & updates",
+    "telegramDirectLabel": "Message on Telegram",
+    "telegramDirectBadge": "direct",
     "addressLabel": "ADDRESS",
-    "addressValue": "Tashkent, Uzbekistan",
+    "addressValue": "Tashkent, Furkat Street 18",
     "formTitle": "Submit a Rapid Inquiry",
     "formSubtitle": "Your information is 100% confidential. An advisor will contact you within 15 minutes.",
     "formSubmit": "Submit Inquiry →",
@@ -411,6 +414,7 @@
     "bookNotePlaceholder": "e.g., 1 copy or delivery notes (optional)...",
     "bookSubmit": "Order the Book",
     "bookSuccessMessage": "Your order has been received! Our operator will contact you shortly.",
+    "bookSuccessBody": "Our operator will contact you shortly to coordinate delivery details.",
     "submit": "Submit Application",
     "submitButton": "Submit Application",
     "submitting": "Submitting...",
@@ -431,7 +435,8 @@
     "timelineStep3Prefix": "03 / SESSION:",
     "timelineStep3Text": "Personal strategic diagnostic session",
     "actionTelegram": "Join Telegram Channel",
-    "actionWebinars": "Watch Free Masterclasses"
+    "actionWebinars": "Watch Free Masterclasses",
+    "privacyBadge": "100% CONFIDENTIALITY GUARANTEED"
   },
   "faq": {
     "tag": "FAQ",

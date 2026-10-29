@@ -111,21 +111,21 @@ export function Stages({ onOpenApply }: StagesProps) {
                         setActiveTab(tab.id);
                         setOpenItem("");
                       }}
-                      className={`group flex items-center justify-between py-3.5 px-4 border-b border-white/[0.08] text-left transition-all rounded-none cursor-pointer w-full ${
+                      className={`group flex items-center justify-between py-4 px-4 border-b border-white/[0.08] text-left transition-all rounded-none cursor-pointer w-full ${
                         isActive
-                          ? "bg-gradient-to-r from-[#0B132B]/60 to-white/[0.02] border-l-2 border-l-[#C5A880] pl-5 text-white"
-                          : "text-neutral-400 hover:text-white hover:bg-[#0B132B]/20"
+                          ? "bg-gradient-to-r from-[#0B132B]/70 to-white/[0.02] border-l-2 border-l-[#C5A880] pl-5 text-white"
+                          : "text-neutral-200 hover:text-white hover:bg-[#0B132B]/30"
                       }`}
                     >
                       <div>
-                        <span className="font-mono text-xs uppercase tracking-[0.14em] block text-platinum mb-0.5">
+                        <span className="font-mono text-xs uppercase tracking-[0.14em] block text-[#C5A880] mb-0.5">
                           {tab.direction}
                         </span>
-                        <span className="text-sm sm:text-base font-normal tracking-tight">
+                        <span className="text-base sm:text-lg font-normal tracking-tight text-white">
                           {tab.title}
                         </span>
                       </div>
-                      <span className="font-mono text-xs transition-transform duration-300 group-hover:translate-x-1.5">
+                      <span className="font-mono text-xs transition-transform duration-300 group-hover:translate-x-1.5 text-platinum">
                         →
                       </span>
                     </button>
@@ -135,11 +135,11 @@ export function Stages({ onOpenApply }: StagesProps) {
             </div>
 
             {/* Contextual CTA Monolith fitted into Left Column, aligned flush with bottom of right column */}
-            <div className="mt-8 lg:mt-0 p-5 sm:p-6 border border-white/[0.08] bg-gradient-to-br from-[#070D1F] via-[#0B132B]/40 to-[#0A0A0A] rounded-none shadow-[0_15px_35px_rgba(7,13,31,0.4)]">
-              <h3 className="font-serif italic text-base sm:text-lg text-white font-normal leading-snug">
+            <div className="mt-8 lg:mt-0 p-6 sm:p-7 border border-white/[0.1] bg-gradient-to-br from-[#070D1F] via-[#0B132B]/50 to-[#0A0A0A] rounded-none shadow-[0_15px_35px_rgba(7,13,31,0.5)]">
+              <h3 className="font-serif italic text-lg sm:text-xl text-white font-normal leading-snug">
                 {t("ctaBandTitle")}
               </h3>
-              <p className="text-xs text-neutral-300 mt-1.5 font-light leading-relaxed">
+              <p className="text-sm text-neutral-200 mt-2 font-normal leading-relaxed">
                 {t("ctaBandDesc")}
               </p>
               <div className="mt-4">
@@ -217,7 +217,7 @@ export function Stages({ onOpenApply }: StagesProps) {
                             className="overflow-hidden"
                           >
                             <div className="pb-8 pl-0 sm:pl-12 pr-4 space-y-4">
-                              <p className="text-sm sm:text-base text-neutral-300 font-light leading-relaxed">
+                              <p className="text-base text-neutral-200 font-normal leading-relaxed">
                                 {item.description}
                               </p>
 
@@ -225,10 +225,10 @@ export function Stages({ onOpenApply }: StagesProps) {
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                                   {item.points.map((pt, pIdx) => (
                                     <div key={pIdx} className="flex items-start gap-2.5">
-                                      <span className="text-platinum/60 font-mono text-xs shrink-0 mt-0.5">
+                                      <span className="text-[#C5A880] font-mono text-xs shrink-0 mt-0.5">
                                         —
                                       </span>
-                                      <span className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
+                                      <span className="text-sm text-neutral-200 font-normal leading-relaxed">
                                         {pt}
                                       </span>
                                     </div>
@@ -240,10 +240,10 @@ export function Stages({ onOpenApply }: StagesProps) {
                                 <button
                                   type="button"
                                   onClick={() => handleApply(`${item.title} bosqichi`)}
-                                  className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-platinum hover:text-white transition-colors cursor-pointer group/btn"
+                                  className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-[#C5A880] hover:text-white transition-colors cursor-pointer group/btn min-h-[44px]"
                                 >
                                   <span>{t("stageAction")}</span>
-                                  <span className="transition-transform duration-300 group-hover/btn:translate-x-1.5">
+                                  <span className="transition-transform duration-300 group-hover/btn:translate-x-1.5 font-mono">
                                     →
                                   </span>
                                 </button>
