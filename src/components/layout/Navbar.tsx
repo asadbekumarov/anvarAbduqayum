@@ -201,14 +201,15 @@ export function Navbar({ onOpenApply }: NavbarProps) {
 
           {/* Tablet & Mobile Actions (Shown below XL screens) */}
           <div className="flex shrink-0 items-center gap-2 sm:gap-3 xl:hidden">
-            <div className="hidden sm:block">
+            <div className="hidden sm:block" aria-hidden="true">
               <button
                 type="button"
+                tabIndex={-1}
                 onClick={() => handleApply({ service: ctaT("mentorship") })}
                 className="h-9 shrink-0 group relative overflow-hidden rounded-sm bg-gradient-to-r from-[#C5A880] to-[#D4B992] px-3.5 font-sans text-xs uppercase tracking-[0.06em] text-[#0A0A0A] font-semibold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shadow-sm active:scale-[0.98]"
               >
                 <span className="relative z-10 whitespace-nowrap">{ctaT("mentorship")}</span>
-                <span className="text-xs font-bold">↗</span>
+                <span className="text-xs font-bold" aria-hidden="true">↗</span>
               </button>
             </div>
 
