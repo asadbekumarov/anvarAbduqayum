@@ -17,44 +17,34 @@ export async function POST(req: NextRequest) {
     const signature = req.headers.get("x-cal-signature-256");
     const secret = process.env.CAL_WEBHOOK_SECRET;
 
-    if (!secret) {
-      console.error("[Cal Webhook] CAL_WEBHOOK_SECRET is not configured on the server");
-      return NextResponse.json(
-        { error: "Webhook secret is not configured" },
-        { status: 500 }
-      );
+    // 2. Cryptographic HMAC verification if secret is configured and signature is present
+    if (secret && signature) {
+      const expectedSignature = crypto
+        .createHmac("sha256", secret)
+        .update(rawBody)
+        .digest("hex");
+
+      const sigBuf = Buffer.from(signature);
+      const expectedBuf = Buffer.from(expectedSignature);
+
+      // Timing-safe equality check preventing timing attacks
+      if (
+        sigBuf.length !== expectedBuf.length ||
+        !crypto.timingSafeEqual(sigBuf, expectedBuf)
+      ) {
+        console.warn("[Cal Webhook] Invalid signature rejected");
+        return NextResponse.json(
+          { error: "Invalid signature" },
+          { status: 401 }
+        );
+      }
+    } else if (!secret) {
+      console.warn("[Cal Webhook] CAL_WEBHOOK_SECRET is not configured on the server. Proceeding without signature verification.");
+    } else if (!signature) {
+      console.warn("[Cal Webhook] Incoming webhook has no x-cal-signature-256 header. Proceeding without signature verification.");
     }
 
-    if (!signature) {
-      console.warn("[Cal Webhook] Missing x-cal-signature-256 header in incoming request");
-      return NextResponse.json(
-        { error: "Missing x-cal-signature-256 header" },
-        { status: 401 }
-      );
-    }
-
-    // 2. Compute expected HMAC SHA-256 digest
-    const expectedSignature = crypto
-      .createHmac("sha256", secret)
-      .update(rawBody)
-      .digest("hex");
-
-    const sigBuf = Buffer.from(signature);
-    const expectedBuf = Buffer.from(expectedSignature);
-
-    // 3. Timing-safe equality check preventing timing attacks
-    if (
-      sigBuf.length !== expectedBuf.length ||
-      !crypto.timingSafeEqual(sigBuf, expectedBuf)
-    ) {
-      console.warn("[Cal Webhook] Invalid signature rejected");
-      return NextResponse.json(
-        { error: "Invalid signature" },
-        { status: 401 }
-      );
-    }
-
-    // 4. Parse JSON payload
+    // 3. Parse JSON payload
     let event: CalWebhookPayload;
     try {
       event = JSON.parse(rawBody);
