@@ -191,14 +191,9 @@ export function Contact() {
 
             {/* Telegram Channel Row (News & Updates) */}
             <div className="py-5 border-b border-white/[0.08] flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 sm:gap-4">
-              <div className="flex items-center gap-2 shrink-0">
-                <span className="font-mono text-xs text-platinum uppercase tracking-widest">
-                  {t("telegramChannelLabel")}
-                </span>
-                <span className="font-mono text-[10px] text-[#C5A880]/90 uppercase tracking-wider px-1.5 py-0.5 border border-[#C5A880]/30 rounded-xs bg-[#C5A880]/5">
-                  {t("telegramChannelBadge")}
-                </span>
-              </div>
+              <span className="font-mono text-xs text-platinum uppercase tracking-widest shrink-0">
+                {t("telegramChannelLabel")}
+              </span>
               <a
                 href={contactConfig.telegramChannel.url}
                 target="_blank"
@@ -212,14 +207,9 @@ export function Contact() {
 
             {/* Telegram Direct Row (Personal direct chat) */}
             <div className="py-5 border-b border-white/[0.08] flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 sm:gap-4">
-              <div className="flex items-center gap-2 shrink-0">
-                <span className="font-mono text-xs text-platinum uppercase tracking-widest">
-                  {t("telegramDirectLabel")}
-                </span>
-                <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider px-1.5 py-0.5 border border-white/[0.1] rounded-xs bg-white/[0.03]">
-                  {t("telegramDirectBadge")}
-                </span>
-              </div>
+              <span className="font-mono text-xs text-platinum uppercase tracking-widest shrink-0">
+                {t("telegramDirectLabel")}
+              </span>
               <a
                 href={contactConfig.telegramDirect.url}
                 target="_blank"

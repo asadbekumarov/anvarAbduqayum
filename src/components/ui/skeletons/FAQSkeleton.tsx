@@ -27,7 +27,7 @@ export function FAQSkeleton() {
             >
               <div className="flex items-center justify-between">
                 <Skeleton className="w-8 h-8 rounded-lg" />
-                <Skeleton className="w-12 h-4 rounded-full" />
+                <Skeleton className="w-10 h-3" />
               </div>
               <Skeleton className="w-24 h-4" />
             </div>
@@ -47,10 +47,7 @@ export function FAQSkeleton() {
               className="p-6 rounded-xl border border-white/[0.08] bg-white/[0.02] flex items-center justify-between gap-4"
             >
               <div className="space-y-2 flex-1">
-                <div className="flex items-center gap-3">
-                  <Skeleton className="w-20 h-4 rounded-full" />
-                  <Skeleton className="w-12 h-3 font-mono opacity-60" />
-                </div>
+                <Skeleton className="w-12 h-3 font-mono opacity-60" />
                 <Skeleton className="w-3/4 h-5" />
               </div>
               <Skeleton className="w-8 h-8 rounded-full flex-shrink-0" />

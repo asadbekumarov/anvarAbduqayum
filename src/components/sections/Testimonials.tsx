@@ -1,4 +1,4 @@
-"use client";
+  "use client";
 
 import React, { useState, useRef } from "react";
 import Image from "next/image";
@@ -9,19 +9,9 @@ import { MaskedHeading } from "@/components/ui/MaskedHeading";
 
 export function Testimonials() {
   const t = useTranslations("testimonials");
-  const common = useTranslations("common");
   const testimonials = siteMedia.testimonials;
   const [selectedVideo, setSelectedVideo] = useState<VideoItem | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  const scroll = (direction: "left" | "right") => {
-    if (!scrollRef.current) return;
-    const scrollAmount = scrollRef.current.clientWidth * 0.75;
-    scrollRef.current.scrollBy({
-      left: direction === "left" ? -scrollAmount : scrollAmount,
-      behavior: "smooth",
-    });
-  };
 
   return (
     <section
@@ -49,40 +39,31 @@ export function Testimonials() {
               </span>
             </MaskedHeading>
           </div>
-
-          {/* Right Column: Custom Architectural Scroll Controls */}
-          <div className="shrink-0 flex items-center">
-            <div className="inline-flex border border-white/[0.12] divide-x divide-white/[0.12]">
-              <button
-                type="button"
-                onClick={() => scroll("left")}
-                aria-label={common("prev")}
-                className="w-12 h-12 flex items-center justify-center text-platinum hover:text-white hover:bg-white/[0.04] transition-colors rounded-none font-mono text-sm cursor-pointer"
-              >
-                ←
-              </button>
-              <button
-                type="button"
-                onClick={() => scroll("right")}
-                aria-label={common("next")}
-                className="w-12 h-12 flex items-center justify-center text-platinum hover:text-white hover:bg-white/[0.04] transition-colors rounded-none font-mono text-sm cursor-pointer"
-              >
-                →
-              </button>
-            </div>
-          </div>
         </div>
       </div>
 
-      {/* Horizontal Filmstrip Cards */}
-      <div
-        ref={scrollRef}
-        className="flex border-t border-b border-white/[0.08] divide-x divide-white/[0.08] overflow-x-auto scroll-smooth no-scrollbar"
-        tabIndex={0}
-        aria-label={t("title")}
-      >
+      {/* Horizontal Filmstrip Cards Constrained to Container with Blur Fades */}
+      <div className="max-w-[1360px] mx-auto px-6 md:px-12">
+        <div className="relative w-full overflow-hidden">
+          {/* Left Edge Blur & Gradient Overlay */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute left-0 top-0 bottom-0 w-12 sm:w-24 z-20 bg-gradient-to-r from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent backdrop-blur-[2px]"
+          />
+
+          {/* Right Edge Blur & Gradient Overlay */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 sm:w-24 z-20 bg-gradient-to-l from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent backdrop-blur-[2px]"
+          />
+
+          <div
+            ref={scrollRef}
+            className="flex border-t border-b border-white/[0.08] divide-x divide-white/[0.08] overflow-x-auto scroll-smooth no-scrollbar [mask-image:linear-gradient(to_right,transparent,black_32px,black_calc(100%-32px),transparent)]"
+            tabIndex={0}
+            aria-label={t("title")}
+          >
         {testimonials.map((vid, idx) => {
-          const indexNum = idx < 9 ? `0${idx + 1}` : `${idx + 1}`;
           return (
             <article
               key={vid.id === "REPLACE_ME" ? `vid-${idx}` : vid.id}
@@ -98,15 +79,8 @@ export function Testimonials() {
               aria-label={`${vid.title} - ${t("playTrigger")}`}
               className="w-[320px] sm:w-[380px] shrink-0 bg-[#0A0A0A] hover:bg-[#0B132B]/35 p-6 sm:p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer group rounded-none"
             >
-              {/* Top Index Bar */}
+              {/* Video Card Content */}
               <div>
-                <div className="flex items-center justify-between font-mono text-xs uppercase tracking-[0.2em] text-platinum mb-5">
-                  <span className="group-hover:text-white transition-colors">
-                    {t("tagKey")} / {indexNum}
-                  </span>
-                  <span className="text-platinum-light">{t("tagFormat")}</span>
-                </div>
-
                 {/* Thumbnail Container */}
                 <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#141414] mb-6 border border-white/[0.06]">
                   <Image
@@ -144,6 +118,8 @@ export function Testimonials() {
             </article>
           );
         })}
+          </div>
+        </div>
       </div>
 
       {/* Accessible YouTube Modal */}

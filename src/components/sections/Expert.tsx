@@ -123,80 +123,83 @@ export function Expert() {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
 
-            {/* Embedded International Certificates & Diplomas */}
-            <div id="sertifikatlar" className="pt-6 border-t border-white/[0.08]">
-              <div className="flex items-center justify-between mb-4">
-                <span className="font-mono text-xs uppercase tracking-[0.16em] text-platinum">
-                  {t("certificatesHint")}
-                </span>
-                <span className="font-mono text-xs text-platinum-light uppercase tracking-wider">
-                  / 03
-                </span>
-              </div>
-
-              <div className="flex gap-4 overflow-x-auto pb-3 scroll-smooth no-scrollbar">
-                {diplomas.map((doc, idx) => (
-                  <div
-                    key={doc.id || idx}
-                    role="button"
-                    tabIndex={0}
-                    onClick={() =>
-                      setActiveMedia({
-                        src: doc.src,
-                        title: doc.title,
-                        issuer: doc.issuer,
-                        year: doc.year,
-                        alt: doc.alt,
-                      })
-                    }
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        setActiveMedia({
-                          src: doc.src,
-                          title: doc.title,
-                          issuer: doc.issuer,
-                          year: doc.year,
-                          alt: doc.alt,
-                        });
-                      }
-                    }}
-                    aria-label={`${doc.title} — zoom`}
-                    className="group relative w-[200px] sm:w-[230px] shrink-0 bg-[#0B132B]/25 hover:bg-[#0B132B]/50 border border-white/[0.1] hover:border-[#C5A880]/50 p-3.5 transition-all duration-300 rounded-none cursor-pointer flex flex-col justify-between"
-                  >
-                    <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#141414] mb-3 border border-white/[0.06] flex items-center justify-center p-1.5">
-                      <Image
-                        src={doc.thumb}
-                        alt={doc.alt}
-                        fill
-                        loading="lazy"
-                        sizes="230px"
-                        className="object-contain w-full h-full grayscale-[15%] group-hover:grayscale-0 group-hover:scale-[1.04] transition-all duration-500 ease-out"
-                      />
-                      <div className="absolute bottom-1 right-1 bg-[#070D1F]/90 border border-white/[0.1] px-1.5 py-0.5 font-mono text-xs uppercase tracking-wider text-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                        Zoom
-                      </div>
-                    </div>
-                    <div className="pt-2.5 border-t border-white/[0.08] flex items-start justify-between gap-2">
-                      <div className="min-w-0 flex-1">
-                        <h4 className="text-xs font-medium text-white line-clamp-2 leading-snug group-hover:text-[#C5A880] transition-colors">
-                          {doc.title}
-                        </h4>
-                        {doc.issuer && (
-                          <p className="text-xs text-neutral-300 font-normal line-clamp-1 mt-1">
-                            {doc.issuer}
-                          </p>
-                        )}
-                      </div>
-                      <span className="font-mono text-xs text-platinum shrink-0 mt-0.5">
-                        {doc.year || "CERT"}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
+        {/* Full Width International Certificates & Diplomas */}
+        <div id="sertifikatlar" className="mt-14 sm:mt-20 pt-10 sm:pt-14 border-t border-white/[0.08] w-full">
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-3">
+              <span className="w-8 h-[1px] bg-[#C5A880]" aria-hidden="true" />
+              <span className="font-mono text-xs uppercase tracking-[0.2em] text-platinum">
+                {t("certificatesHint")}
+              </span>
             </div>
+            <span className="font-mono text-xs text-platinum-light uppercase tracking-wider">
+              / 03
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 w-full">
+            {diplomas.map((doc, idx) => (
+              <div
+                key={doc.id || idx}
+                role="button"
+                tabIndex={0}
+                onClick={() =>
+                  setActiveMedia({
+                    src: doc.src,
+                    title: doc.title,
+                    issuer: doc.issuer,
+                    year: doc.year,
+                    alt: doc.alt,
+                  })
+                }
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setActiveMedia({
+                      src: doc.src,
+                      title: doc.title,
+                      issuer: doc.issuer,
+                      year: doc.year,
+                      alt: doc.alt,
+                    });
+                  }
+                }}
+                aria-label={`${doc.title} — zoom`}
+                className="group relative w-full bg-[#0B132B]/25 hover:bg-[#0B132B]/50 border border-white/[0.1] hover:border-[#C5A880]/50 p-4 sm:p-5 transition-all duration-300 cursor-pointer flex flex-col justify-between"
+              >
+                <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#141414] mb-4 border border-white/[0.06] flex items-center justify-center p-2">
+                  <Image
+                    src={doc.thumb}
+                    alt={doc.alt}
+                    fill
+                    loading="lazy"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+                    className="object-contain w-full h-full grayscale-[15%] group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-500 ease-out"
+                  />
+                  <div className="absolute bottom-2 right-2 bg-[#070D1F]/90 border border-white/[0.1] px-2 py-0.5 font-mono text-xs uppercase tracking-wider text-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                    Zoom
+                  </div>
+                </div>
+                <div className="pt-3 border-t border-white/[0.08] flex items-start justify-between gap-3">
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-sm font-medium text-white line-clamp-2 leading-snug group-hover:text-[#C5A880] transition-colors">
+                      {doc.title}
+                    </h4>
+                    {doc.issuer && (
+                      <p className="text-xs text-neutral-300 font-normal line-clamp-1 mt-1">
+                        {doc.issuer}
+                      </p>
+                    )}
+                  </div>
+                  <span className="font-mono text-xs text-platinum shrink-0 mt-0.5">
+                    {doc.year || "CERT"}
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

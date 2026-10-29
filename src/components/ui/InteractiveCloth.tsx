@@ -22,7 +22,7 @@ export default function InteractiveCloth({
   aspectRatio = 0.84,
   captionName,
   captionRole,
-  hintText = "Tug the cloth",
+  hintText = "",
   ariaLabel,
   fallbackAlt,
 }: InteractiveClothProps) {
@@ -1504,7 +1504,7 @@ export default function InteractiveCloth({
       )}
 
       {/* Floating Interactive Hint Tag */}
-      {showHint && !prefersReducedMotion && (
+      {Boolean(hintText) && showHint && !prefersReducedMotion && (
         <div
           aria-hidden="true"
           className={`pointer-events-none absolute top-4 right-4 z-20 transition-all duration-300 ${

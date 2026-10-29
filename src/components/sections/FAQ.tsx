@@ -293,12 +293,13 @@ export function FAQ({ isLoading = false }: FAQProps = {}) {
       <div className="relative z-10 max-w-[1224px] mx-auto px-5 sm:px-8">
         {/* HERO AREA (Centred) */}
         <div className="flex flex-col items-center text-center max-w-[860px] mx-auto">
-          {/* Pill Tag (Gold tinted glass, matching brand identity) */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#C5A880]/35 bg-[#C5A880]/10 backdrop-blur-md shadow-[0_0_16px_rgba(197,168,128,0.15)]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#C5A880] shadow-[0_0_6px_#C5A880]" />
-            <span className="font-mono text-xs tracking-[0.22em] uppercase text-[#E2C79D] font-medium">
+          {/* Section Kicker */}
+          <div className="flex items-center justify-center gap-4">
+            <span className="w-8 h-[1px] bg-[#C5A880]" />
+            <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum">
               {formatSectionKicker("faq", t("kicker"))}
             </span>
+            <span className="w-8 h-[1px] bg-[#C5A880]" />
           </div>
 
           {/* Headline: Serif luxury display heading */}

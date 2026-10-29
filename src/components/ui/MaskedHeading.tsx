@@ -25,20 +25,18 @@ export function MaskedHeading({
   }
 
   return (
-    <div className="overflow-hidden">
-      <motion.div
-        initial={{ y: "100%" }}
-        whileInView={{ y: "0%" }}
-        viewport={{ once: true, margin: "0px" }}
-        transition={{
-          duration: 0.9,
-          ease: EASE_SWISS,
-          delay,
-        }}
-        className="will-change-transform"
-      >
-        <Tag className={className}>{children}</Tag>
-      </motion.div>
-    </div>
+    <motion.div
+      initial={{ opacity: 0.4, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0, margin: "150px 0px" }}
+      transition={{
+        duration: 0.6,
+        ease: EASE_SWISS,
+        delay,
+      }}
+      className="will-change-transform"
+    >
+      <Tag className={className}>{children}</Tag>
+    </motion.div>
   );
 }

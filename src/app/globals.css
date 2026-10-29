@@ -1950,18 +1950,18 @@ body {
 /* Swiss Editorial Micro-Animations (Zero CLS / Zero TBT) */
 @keyframes heroMaskReveal {
   0% {
-    transform: translateY(100%);
-    opacity: 1;
+    opacity: 0.3;
+    transform: translateY(14px);
   }
   100% {
-    transform: translateY(0);
     opacity: 1;
+    transform: translateY(0);
   }
 }
 
 .animate-hero-mask-reveal {
-  animation: heroMaskReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  will-change: transform;
+  animation: heroMaskReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
 }
 
 /* Luxury Skeleton Shimmer Animation (Obsidian + Warm Gold/Champagne highlights) */

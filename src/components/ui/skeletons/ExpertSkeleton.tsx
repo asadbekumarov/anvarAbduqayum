@@ -50,21 +50,30 @@ export function ExpertSkeleton() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
 
-            {/* Diplomas Strip */}
-            <div className="pt-6 border-t border-white/[0.08] space-y-4">
-              <Skeleton className="w-44 h-4" />
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {[1, 2, 3, 4].map((d) => (
-                  <div
-                    key={d}
-                    className="aspect-[4/3] rounded-lg border border-white/[0.08] overflow-hidden"
-                  >
-                    <Skeleton className="w-full h-full" />
-                  </div>
-                ))}
+        {/* Diplomas Strip Full Width */}
+        <div className="mt-14 sm:mt-20 pt-10 sm:pt-14 border-t border-white/[0.08] w-full space-y-6">
+          <div className="flex items-center justify-between">
+            <Skeleton className="w-48 h-4 font-mono" />
+            <Skeleton className="w-12 h-3 font-mono opacity-60" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 w-full">
+            {[1, 2, 3].map((d) => (
+              <div
+                key={d}
+                className="w-full bg-[#0B132B]/25 border border-white/[0.1] p-4 sm:p-5 flex flex-col justify-between"
+              >
+                <div className="aspect-[4/3] w-full rounded-sm overflow-hidden mb-4">
+                  <Skeleton className="w-full h-full" />
+                </div>
+                <div className="pt-3 border-t border-white/[0.08] flex items-center justify-between">
+                  <Skeleton className="w-3/4 h-4" />
+                  <Skeleton className="w-10 h-3 font-mono" />
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

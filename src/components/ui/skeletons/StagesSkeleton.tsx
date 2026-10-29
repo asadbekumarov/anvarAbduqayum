@@ -39,7 +39,6 @@ export function StagesSkeleton() {
                 </div>
               </div>
               <div className="flex items-center gap-4 self-end md:self-center">
-                <Skeleton className="w-24 h-7 rounded-full" />
                 <Skeleton className="w-6 h-6 rounded-full" />
               </div>
             </div>

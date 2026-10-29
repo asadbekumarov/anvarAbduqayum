@@ -38,7 +38,6 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
   const handleApply = onOpenApply || openApply;
 
   const tArchive = useTranslations("mediaArchive");
-  const common = useTranslations("common");
   const tTestimonials = useTranslations("testimonials");
   const tWebinars = useTranslations("webinars");
   const tEvents = useTranslations("events");
@@ -58,15 +57,6 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
       setActiveTab("events");
     }
   }, []);
-
-  const scroll = (direction: "left" | "right") => {
-    if (!scrollRef.current) return;
-    const scrollAmount = scrollRef.current.clientWidth * 0.75;
-    scrollRef.current.scrollBy({
-      left: direction === "left" ? -scrollAmount : scrollAmount,
-      behavior: "smooth",
-    });
-  };
 
   const tabs = [
     {
@@ -119,35 +109,6 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
                 {tArchive("headingHighlight")}
               </span>
             </MaskedHeading>
-          </div>
-
-          {/* Custom Architectural Scroll Controls */}
-          <div className="shrink-0 flex items-center gap-4">
-            <span className="font-mono text-xs text-platinum uppercase tracking-widest hidden sm:inline-block">
-              {activeTab === "testimonials"
-                ? `${siteMedia.testimonials.length} ${tArchive("counterCases")}`
-                : activeTab === "webinars"
-                ? `${siteMedia.webinars.length} ${tArchive("counterLessons")}`
-                : `${siteMedia.events.length} ${tArchive("counterCities")}`}
-            </span>
-            <div className="inline-flex border border-white/[0.12] divide-x divide-white/[0.12]">
-              <button
-                type="button"
-                onClick={() => scroll("left")}
-                aria-label={common("prev")}
-                className="w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center text-platinum hover:text-white hover:bg-white/[0.04] transition-colors rounded-none font-mono text-sm cursor-pointer"
-              >
-                ←
-              </button>
-              <button
-                type="button"
-                onClick={() => scroll("right")}
-                aria-label={common("next")}
-                className="w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center text-platinum hover:text-white hover:bg-white/[0.04] transition-colors rounded-none font-mono text-sm cursor-pointer"
-              >
-                →
-              </button>
-            </div>
           </div>
         </div>
 
@@ -204,73 +165,80 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3, ease: EASE_SWISS }}
+            className="max-w-[1360px] mx-auto px-6 md:px-12"
           >
-            <div
-              ref={scrollRef}
-              className="flex border-t border-b border-white/[0.08] divide-x divide-white/[0.08] overflow-x-auto scroll-smooth no-scrollbar"
-              tabIndex={0}
-              aria-label={tArchive("testimonialsListAria")}
-            >
-              {siteMedia.testimonials.map((vid, idx) => {
-                const indexNum = idx < 9 ? `0${idx + 1}` : `${idx + 1}`;
-                return (
-                  <article
-                    key={vid.id === "REPLACE_ME" ? `vid-${idx}` : vid.id}
-                    role="button"
-                    tabIndex={0}
-                    onClick={() => setSelectedVideo(vid)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        setSelectedVideo(vid);
-                      }
-                    }}
-                    aria-label={`${vid.title} - ${tTestimonials("playTrigger")}`}
-                    className="w-[300px] sm:w-[360px] shrink-0 bg-[#0A0A0A] hover:bg-[#0B132B]/35 p-5 sm:p-6 flex flex-col justify-between transition-all duration-500 cursor-pointer group rounded-none"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between font-mono text-xs uppercase tracking-[0.2em] text-platinum mb-4">
-                        <span className="group-hover:text-white transition-colors">
-                          {tTestimonials("tagKey")} / {indexNum}
-                        </span>
-                        <span className="text-platinum-light">{tTestimonials("tagFormat")}</span>
-                      </div>
+            <div className="relative w-full overflow-hidden">
+              {/* Left Edge Blur & Gradient Overlay */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute left-0 top-0 bottom-0 w-12 sm:w-24 z-20 bg-gradient-to-r from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent backdrop-blur-[2px]"
+              />
 
-                      {/* Thumbnail Container */}
-                      <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#141414] mb-4 border border-white/[0.06]">
-                        <Image
-                          src={vid.thumb}
-                          alt={vid.title}
-                          fill
-                          loading="lazy"
-                          sizes="(max-width: 640px) 100vw, 360px"
-                          className="object-cover w-full h-full grayscale-[25%] contrast-[1.05] group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700"
-                        />
-                        <div className="absolute bottom-0 left-0 bg-[#070D1F]/90 border-t border-r border-white/[0.12] px-3 py-1.5 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-white group-hover:bg-white group-hover:text-[#0A0A0A] transition-colors">
-                          <span>{tTestimonials("playTrigger")}</span>
+              {/* Right Edge Blur & Gradient Overlay */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute right-0 top-0 bottom-0 w-12 sm:w-24 z-20 bg-gradient-to-l from-[#0A0A0A] via-[#0A0A0A]/80 to-transparent backdrop-blur-[2px]"
+              />
+
+              <div
+                ref={scrollRef}
+                className="flex border-t border-b border-white/[0.08] divide-x divide-white/[0.08] overflow-x-auto scroll-smooth no-scrollbar [mask-image:linear-gradient(to_right,transparent,black_32px,black_calc(100%-32px),transparent)]"
+                tabIndex={0}
+                aria-label={tArchive("testimonialsListAria")}
+              >
+                {siteMedia.testimonials.map((vid, idx) => {
+                  return (
+                    <article
+                      key={vid.id === "REPLACE_ME" ? `vid-${idx}` : vid.id}
+                      role="button"
+                      tabIndex={0}
+                      onClick={() => setSelectedVideo(vid)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          setSelectedVideo(vid);
+                        }
+                      }}
+                      aria-label={`${vid.title} - ${tTestimonials("playTrigger")}`}
+                      className="w-[300px] sm:w-[360px] shrink-0 bg-[#0A0A0A] hover:bg-[#0B132B]/35 p-5 sm:p-6 flex flex-col justify-between transition-all duration-500 cursor-pointer group rounded-none"
+                    >
+                      <div>
+                        {/* Thumbnail Container */}
+                        <div className="relative aspect-[16/10] w-full overflow-hidden bg-[#141414] mb-4 border border-white/[0.06]">
+                          <Image
+                            src={vid.thumb}
+                            alt={vid.title}
+                            fill
+                            loading="lazy"
+                            sizes="(max-width: 640px) 100vw, 360px"
+                            className="object-cover w-full h-full grayscale-[25%] contrast-[1.05] group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700"
+                          />
+                          <div className="absolute bottom-0 left-0 bg-[#070D1F]/90 border-t border-r border-white/[0.12] px-3 py-1.5 flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-white group-hover:bg-white group-hover:text-[#0A0A0A] transition-colors">
+                            <span>{tTestimonials("playTrigger")}</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div className="pt-2">
-                      <h3 className="text-base font-normal text-white tracking-tight group-hover:translate-x-1 transition-transform line-clamp-2">
-                        {vid.title}
-                      </h3>
-                      <div className="font-mono text-xs text-platinum mt-1.5 uppercase tracking-wider flex items-center justify-between">
-                        <span>{vid.client || vid.company || vid.author}</span>
-                        {vid.duration && (
-                          <span className="text-platinum-light">{vid.duration}</span>
+                      <div className="pt-2">
+                        <h3 className="text-base font-normal text-white tracking-tight group-hover:translate-x-1 transition-transform line-clamp-2">
+                          {vid.title}
+                        </h3>
+                        <div className="font-mono text-xs text-platinum mt-1.5 uppercase tracking-wider flex items-center justify-between">
+                          <span>{vid.client || vid.company || vid.author}</span>
+                          {vid.duration && (
+                            <span className="text-platinum-light">{vid.duration}</span>
+                          )}
+                        </div>
+                        {vid.result && (
+                          <p className="text-xs text-neutral-300 mt-1 font-light">
+                            {vid.result}
+                          </p>
                         )}
                       </div>
-                      {vid.result && (
-                        <p className="text-xs text-neutral-300 mt-1 font-light">
-                          {vid.result}
-                        </p>
-                      )}
-                    </div>
-                  </article>
-                );
-              })}
+                    </article>
+                  );
+                })}
+              </div>
             </div>
           </motion.div>
         )}

@@ -38,19 +38,12 @@ export function MediaArchiveSkeleton() {
                 <div className="relative z-10 w-14 h-14 rounded-full border border-white/20 bg-black/40 flex items-center justify-center">
                   <div className="w-0 h-0 border-y-[6px] border-y-transparent border-l-[10px] border-l-white/60 ml-1" />
                 </div>
-                {/* Duration badge */}
-                <div className="absolute bottom-3 right-3 z-10">
-                  <Skeleton className="w-12 h-5 rounded bg-black/70" />
-                </div>
               </div>
 
               {/* Card Meta Content */}
               <div className="p-6 space-y-4 flex-1 flex flex-col justify-between">
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <Skeleton className="w-16 h-4 rounded-full" />
-                    <Skeleton className="w-20 h-4 rounded-full" />
-                  </div>
+                  <Skeleton className="w-28 h-3.5 opacity-60" />
                   <Skeleton className="w-full h-5 mt-2" />
                   <Skeleton className="w-4/5 h-4 opacity-70" />
                 </div>

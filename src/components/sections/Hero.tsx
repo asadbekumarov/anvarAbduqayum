@@ -23,17 +23,17 @@ export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
   return (
     <section
       id="hero"
-      className="scroll-mt-20 relative min-h-[100svh] bg-[#0A0A0A] text-[#F5F5F0] pt-28 pb-16 flex flex-col justify-between overflow-hidden border-b border-white/[0.07]"
+      className="scroll-mt-20 relative min-h-[100svh] bg-[#0A0A0A] text-[#F5F5F0] pt-24 sm:pt-28 pb-12 sm:pb-16 flex flex-col justify-between border-b border-white/[0.07]"
     >
-      {/* Deep midnight navy atmospheric ambient glow */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute right-[5%] top-[10%] w-[550px] h-[550px] rounded-full bg-[#0B132B]/60 blur-[150px]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute right-[15%] top-[25%] w-[350px] h-[350px] rounded-full bg-[#0F172A]/40 blur-[100px]"
-      />
+      {/* Deep midnight navy atmospheric ambient glow (contained to prevent horizontal overflow) */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div
+          className="absolute right-[5%] top-[10%] w-[550px] h-[550px] rounded-full bg-[#0B132B]/60 blur-[150px]"
+        />
+        <div
+          className="absolute right-[15%] top-[25%] w-[350px] h-[350px] rounded-full bg-[#0F172A]/40 blur-[100px]"
+        />
+      </div>
 
       <div className="max-w-[1360px] mx-auto w-full px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center my-auto">
         {/* Left Column (7 columns on lg:grid-cols-12) */}
@@ -47,7 +47,7 @@ export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
           </div>
 
           {/* Bespoke Editorial H1 (Sans + Serif Italic mix with Warm Champagne) */}
-          <div className="overflow-hidden pb-[0.12em]">
+          <div className="pb-[0.12em]">
             <h1 className="text-4xl sm:text-6xl lg:text-[62px] font-light tracking-[-0.03em] leading-[1.08] text-white animate-hero-mask-reveal will-change-transform">
               {t("titlePrefix")}
               <span className="font-serif italic font-normal text-champagne">
@@ -96,7 +96,6 @@ export default function Hero({ onOpenModal, onOpenApply }: HeroProps = {}) {
             fallbackSrc="/images/hero/portrait.webp"
             captionName="Ilhom Begimqulov"
             captionRole={t("captionRole")}
-            hintText={t("clothHint")}
             ariaLabel={t("clothAriaLabel")}
             fallbackAlt={t("portraitAlt")}
             className="w-full max-w-[460px] mx-auto lg:ml-auto lg:mr-0"
