@@ -4,7 +4,6 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { siteMedia } from "@/config/siteMedia";
 import { ApplyModalProvider } from "@/features/apply/context/ApplyModalContext";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 import "../globals.css";
@@ -83,9 +82,11 @@ export async function generateMetadata({
       siteName: "Ilhom Begimqulov",
       images: [
         {
-          url: `${SITE_URL}${siteMedia.brand.ogImage}`,
+          url: `${SITE_URL}/og-image.png`,
+          secureUrl: `${SITE_URL}/og-image.png`,
           width: 1200,
           height: 630,
+          type: "image/png",
           alt: "Ilhom Begimqulov",
         },
       ],
@@ -94,7 +95,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: [`${SITE_URL}${siteMedia.brand.ogImage}`],
+      images: [`${SITE_URL}/og-image.png`],
     },
     icons: {
       icon: [
