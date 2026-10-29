@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { useTranslations, useLocale } from "next-intl";
+import { Link } from "@/i18n/routing";
 import { siteMedia } from "@/config/siteMedia";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
 import { MaskedHeading } from "@/components/ui/MaskedHeading";
@@ -177,17 +178,26 @@ export function BookCtaSplit({ onOpenApply }: BookCtaSplitProps) {
               </p>
             </div>
 
-            <div className="mt-8 pt-5 border-t border-white/[0.08]">
+            <div className="mt-8 pt-5 border-t border-white/[0.08] flex flex-col gap-3">
+              <Link
+                href="/test"
+                className="group relative overflow-hidden inline-flex items-center justify-between gap-4 w-full bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] px-5 sm:px-6 py-3.5 sm:py-4 text-[11px] sm:text-xs uppercase tracking-[0.12em] sm:tracking-[0.16em] font-medium rounded-none transition-colors duration-300 cursor-pointer shadow-[0_4px_16px_rgba(197,168,128,0.2)] whitespace-nowrap"
+              >
+                <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
+                <span className="relative z-10 whitespace-nowrap">{tCta("startTest")}</span>
+                <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1.5 shrink-0">
+                  →
+                </span>
+              </Link>
               <button
                 type="button"
                 onClick={() =>
                   handleApply(tCta("strategicAnalysis"))
                 }
-                className="group relative overflow-hidden inline-flex items-center justify-between gap-4 w-full bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] px-6 py-4 text-xs uppercase tracking-[0.16em] font-medium rounded-none transition-colors duration-300 cursor-pointer"
+                className="group relative inline-flex items-center justify-between gap-3 w-full bg-transparent hover:bg-white/[0.04] text-neutral-200 hover:text-white border border-white/20 hover:border-[#C5A880]/60 px-5 sm:px-6 py-3.5 sm:py-4 text-[11px] sm:text-xs uppercase tracking-[0.10em] sm:tracking-[0.14em] font-medium rounded-none transition-all duration-300 cursor-pointer whitespace-nowrap"
               >
-                <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
-                <span className="relative z-10">{ctaCommon("primary")}</span>
-                <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1.5">
+                <span className="relative z-10 whitespace-nowrap">{ctaCommon("primary")}</span>
+                <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1 text-platinum/70 group-hover:text-platinum shrink-0">
                   →
                 </span>
               </button>

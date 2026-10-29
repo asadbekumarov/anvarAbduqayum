@@ -10,6 +10,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
+    "@calcom/embed-react": "^1.5.3",
     "@create-ui/assets": "^0.6.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

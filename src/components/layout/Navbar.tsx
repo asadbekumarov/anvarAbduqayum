@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { MobileMenu } from "./MobileMenu";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
@@ -30,6 +30,8 @@ export function Navbar({ onOpenApply }: NavbarProps) {
     { href: "#aloqa", label: t("contact") },
   ];
 
+  const locale = useLocale();
+
   // Smooth scroll handler with header height offset
   const handleNavClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -54,9 +56,12 @@ export function Navbar({ onOpenApply }: NavbarProps) {
         if (window.history.pushState) {
           window.history.pushState(null, "", href);
         }
+      } else {
+        const homePrefix = locale === "uz" ? "" : `/${locale}`;
+        window.location.href = `${homePrefix}/${targetId === "hero" ? "" : href}`;
       }
     },
-    []
+    [locale]
   );
 
   useEffect(() => {

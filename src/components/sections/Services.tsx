@@ -2,6 +2,7 @@
 
 import React from "react";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 import { useApplyModal, type OpenApplyOptions } from "@/features/apply/context/ApplyModalContext";
 import { GridLine } from "@/components/ui/GridLine";
 import { MaskedHeading } from "@/components/ui/MaskedHeading";
@@ -59,19 +60,7 @@ export function Services({ onOpenApply }: ServicesProps) {
 
           {/* Right Column (lg:col-span-5 — "Bepul Diagnostika" Bespoke Midnight Navy Monolith) */}
           <div className="lg:col-span-5">
-            <div
-              role="button"
-              tabIndex={0}
-              onClick={() => handleApply(t("diagServiceApplyName"))}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  handleApply(t("diagServiceApplyName"));
-                }
-              }}
-              aria-label={`${t("diagTitle")} - ${t("diagCta")}`}
-              className="relative bg-gradient-to-br from-[#0F172A]/90 via-[#0B132B]/80 to-[#0A0A0A] border border-white/[0.12] hover:border-[#C5A880]/50 p-7 sm:p-9 rounded-none transition-all duration-300 hover:bg-[#0F172A] shadow-[0_15px_35px_rgba(7,13,31,0.5)] cursor-pointer group"
-            >
+            <div className="relative bg-gradient-to-br from-[#0F172A]/90 via-[#0B132B]/80 to-[#0A0A0A] border border-white/[0.12] hover:border-[#C5A880]/50 p-7 sm:p-9 rounded-none transition-all duration-300 hover:bg-[#0F172A] shadow-[0_15px_35px_rgba(7,13,31,0.5)] group">
               {/* Top Meta Row */}
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2">
@@ -95,17 +84,32 @@ export function Services({ onOpenApply }: ServicesProps) {
                 {t("diagDesc")}
               </p>
 
-              {/* Bottom Action Row - Wrap-safe for long Russian translations */}
-              <div className="mt-8 pt-5 border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              {/* Bottom Action Row with Privacy badge & Dual CTAs */}
+              <div className="mt-8 pt-5 border-t border-white/[0.08] flex flex-col gap-4">
                 <span className="font-mono text-xs text-platinum uppercase tracking-wider">
                   {t("diagPrivacy")}
                 </span>
-                <span className="text-xs font-medium uppercase tracking-[0.15em] text-[#C5A880] group-hover:text-white flex items-center gap-2 transition-colors">
-                  <span>{ctaT("primaryShort")}</span>
-                  <span className="transition-transform duration-300 group-hover:translate-x-1.5">
-                    →
-                  </span>
-                </span>
+
+                <div className="flex flex-col sm:flex-row gap-3 items-stretch">
+                  <Link
+                    href="/bron"
+                    className="group/btn relative overflow-hidden inline-flex items-center justify-center gap-3 bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] px-5 py-3.5 text-xs uppercase tracking-[0.15em] font-medium transition-all duration-300 shadow-[0_4px_16px_rgba(197,168,128,0.2)] text-center cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
+                  >
+                    <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover/btn:translate-x-full" />
+                    <span className="relative z-10">{t("bookTimeCta")}</span>
+                    <span className="relative z-10 transition-transform duration-300 group-hover/btn:translate-x-1">
+                      →
+                    </span>
+                  </Link>
+
+                  <button
+                    type="button"
+                    onClick={() => handleApply(t("diagServiceApplyName"))}
+                    className="inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/[0.04] text-neutral-200 hover:text-white border border-white/20 hover:border-[#C5A880]/60 px-5 py-3.5 text-xs uppercase tracking-[0.14em] font-medium transition-all duration-300 text-center cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C5A880]"
+                  >
+                    <span>{ctaT("primaryShort")}</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

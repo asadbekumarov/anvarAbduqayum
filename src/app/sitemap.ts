@@ -6,7 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = SITE_URL;
   const lastModified = new Date();
 
-  const entries: MetadataRoute.Sitemap = routing.locales.map((locale) => ({
+  const homeEntries: MetadataRoute.Sitemap = routing.locales.map((locale) => ({
     url: `${baseUrl}/${locale}`,
     lastModified,
     changeFrequency: "weekly" as const,
@@ -21,5 +21,35 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   }));
 
-  return entries;
+  const testEntries: MetadataRoute.Sitemap = routing.locales.map((locale) => ({
+    url: `${baseUrl}/${locale}/test`,
+    lastModified,
+    changeFrequency: "weekly" as const,
+    priority: locale === "uz" ? 0.9 : 0.7,
+    alternates: {
+      languages: {
+        uz: `${baseUrl}/uz/test`,
+        ru: `${baseUrl}/ru/test`,
+        en: `${baseUrl}/en/test`,
+        "x-default": `${baseUrl}/uz/test`,
+      },
+    },
+  }));
+
+  const bronEntries: MetadataRoute.Sitemap = routing.locales.map((locale) => ({
+    url: `${baseUrl}/${locale}/bron`,
+    lastModified,
+    changeFrequency: "weekly" as const,
+    priority: locale === "uz" ? 0.9 : 0.7,
+    alternates: {
+      languages: {
+        uz: `${baseUrl}/uz/bron`,
+        ru: `${baseUrl}/ru/bron`,
+        en: `${baseUrl}/en/bron`,
+        "x-default": `${baseUrl}/uz/bron`,
+      },
+    },
+  }));
+
+  return [...homeEntries, ...testEntries, ...bronEntries];
 }

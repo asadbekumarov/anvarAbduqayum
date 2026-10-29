@@ -71,6 +71,7 @@
     "diagPrivacy": "100% Maxfiylik kafolati",
     "diagCta": "Bepul diagnostikaga yozilish",
     "diagServiceApplyName": "Bepul diagnostika",
+    "bookTimeCta": "Vaqtni tanlash",
     "selectService": "Tanlash",
     "items": [
       {
@@ -282,6 +283,7 @@
     "title": "Biznesingiz sizning doimiy ishtirokingizsiz ham tizimli ishlay oladimi?",
     "description": "Agar kompaniya egasi ta'tilga chiqqanda jarayonlar to'xtab qolsa — sizda biznes emas, yuqori mas'uliyatli ish joyi bor. Keling, buni 20 daqiqalik tahlilda o'zgartiramiz.",
     "cta": "Bepul diagnostikaga yozilish",
+    "startTest": "Bepul testni boshlash",
     "strategicAnalysis": "Strategik tahlil"
   },
   "expert": {
@@ -555,5 +557,54 @@
     "phone": "+998 55 503 61 00",
     "rights": "© 2026. Barcha huquqlar himoyalangan.",
     "backToTop": "Yuqoriga qaytish"
+  },
+  "quiz": {
+    "badge": "EKSPRESS DIAGNOSTIKA",
+    "metaTitle": "Biznes diagnostika testi | Ilhom Begimqulov",
+    "metaDescription": "Biznesingiz egasisiz ishlay oladimi? 10 ta savol orqali operatsion boshqaruv tizimingizni 2 daqiqada tahlil qiling va darhol natija oling.",
+    "introTitle": "Biznesingiz egasisiz ishlay oladimi?",
+    "introSubtitle": "10 ta savol, 2 daqiqa, natija darhol.",
+    "introDescription": "Kompaniyangiz boshqaruv tizimi, xodimlar javobgarligi va operatsion mustaqilligini 10 ta mezon bo'yicha mustaqil baholang.",
+    "startAction": "Testni boshlash",
+    "backAction": "Orqaga",
+    "questionOf": "{current} / {total}",
+    "stepAria": "Savol {current} dan {total} gacha",
+    "leadTitle": "Natijangizni ko'rish uchun aloqa ma'lumotlarini qoldiring",
+    "leadSubtitle": "Ballar hisoblandi. Individual tahlil va tavsiyalarni olish uchun ma'lumotlaringizni tasdiqlang.",
+    "nameLabel": "Ism va familiya",
+    "namePlaceholder": "Ismingizni kiriting",
+    "phoneLabel": "Telefon raqami",
+    "companyScaleLabel": "Kompaniya ko'lami",
+    "viewResultAction": "Natijani ko'rish",
+    "submittingAction": "Hisoblanmoqda...",
+    "resultScoreLabel": "UMUMIY NATIJA",
+    "resultScoreOutOf": "30 dan",
+    "levelLabel": "DIAGNOSTIKA DARAJASI",
+    "recommendationHeading": "Amaliy tavsiya",
+    "ctaTelegram": "Bepul diagnostikaga yozilish",
+    "telegramDirectAction": "Telegram orqali yozish",
+    "retakeAction": "Testni qayta yechish",
+    "nameError": "Ismingizni to'liq kiriting (kamida 2 ta belgi)",
+    "phoneError": "Telefon raqamini to'liq kiriting (+998)",
+    "scaleError": "Kompaniya ko'lamini tanlang",
+    "scale1Sub": "xodim",
+    "scale2Sub": "xodim",
+    "scale3Sub": "xodim",
+    "scale4Sub": "boshlang'ich"
+  },
+  "booking": {
+    "kicker": "BEPUL DIAGNOSTIKA",
+    "title": "20 daqiqalik bepul diagnostika",
+    "description": "Biznesingizning og'riqli nuqtalarini tahlil qilamiz va qaysi yo'nalish eng tez natija berishini aniqlaymiz. Vaqtni tanlang, qolganini biz hal qilamiz.",
+    "badgeDuration": "20 daqiqa",
+    "badgePrice": "Bepul",
+    "badgePrivacy": "Maxfiy",
+    "successTitle": "Uchrashuv vaqti tasdiqlandi",
+    "successMessage": "Rahmat! Uchrashuv vaqti tasdiqlandi. Tafsilotlar emailingizga yuborildi, shuningdek biz siz bilan telefon orqali bog'lanamiz.",
+    "errorTitle": "Kalendar yuklanmadi",
+    "errorDesc": "Kalendar yuklanmadi. Telegram orqali yozib vaqtni kelishib olishingiz mumkin.",
+    "errorTelegramCta": "Telegram orqali yozish",
+    "metaTitle": "Bepul diagnostika uchun vaqtni tanlang | Ilhom Begimqulov",
+    "metaDescription": "Biznesingizning og'riqli nuqtalarini tahlil qilamiz va qaysi yo'nalish eng tez natija berishini aniqlaymiz. Vaqtni tanlang, qolganini biz hal qilamiz."
   }
 }

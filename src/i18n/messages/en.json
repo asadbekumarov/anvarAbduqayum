@@ -71,6 +71,7 @@
     "diagPrivacy": "100% Confidentiality Guarantee",
     "diagCta": "Book a Free Diagnostic",
     "diagServiceApplyName": "Free Strategic Diagnostic",
+    "bookTimeCta": "Choose Time",
     "selectService": "Select Track",
     "items": [
       {
@@ -282,6 +283,7 @@
     "title": "Can your business systematically operate without your constant involvement?",
     "description": "If operations freeze when the owner takes a vacation, you don't have a business — you have a high-stress job. Let's transform this in a 20-minute strategic analysis.",
     "cta": "Book a Free Diagnostic",
+    "startTest": "Start Free Test",
     "strategicAnalysis": "Strategic Business Review"
   },
   "expert": {
@@ -555,5 +557,54 @@
     "phone": "+998 55 503 61 00",
     "rights": "© 2026. All rights reserved.",
     "backToTop": "Back to top"
+  },
+  "quiz": {
+    "badge": "EXPRESS DIAGNOSTIC",
+    "metaTitle": "Business Diagnostic Test | Ilhom Begimqulov",
+    "metaDescription": "Can your enterprise run autonomously? Evaluate your operational management in 2 minutes across 10 critical pillars and get an immediate diagnostic.",
+    "introTitle": "Can your business run without you?",
+    "introSubtitle": "10 questions, 2 minutes, immediate results.",
+    "introDescription": "Assess your company's operational independence, team accountability, and workflow documentation across 10 benchmarks.",
+    "startAction": "Start Test",
+    "backAction": "Back",
+    "questionOf": "{current} / {total}",
+    "stepAria": "Question {current} of {total}",
+    "leadTitle": "Leave your contact details to view your diagnostic result",
+    "leadSubtitle": "Your score has been tallied. Confirm your contact details to unlock your tailored audit and recommendations.",
+    "nameLabel": "Full Name",
+    "namePlaceholder": "Enter your name",
+    "phoneLabel": "Phone Number",
+    "companyScaleLabel": "Company Scale",
+    "viewResultAction": "View Results",
+    "submittingAction": "Calculating...",
+    "resultScoreLabel": "OVERALL SCORE",
+    "resultScoreOutOf": "out of 30",
+    "levelLabel": "SYSTEMIC MATURITY",
+    "recommendationHeading": "Practical Recommendation",
+    "ctaTelegram": "Book a Free Diagnostic",
+    "telegramDirectAction": "Message on Telegram",
+    "retakeAction": "Retake Test",
+    "nameError": "Enter your full name (at least 2 characters)",
+    "phoneError": "Enter valid phone number (+998)",
+    "scaleError": "Select company scale",
+    "scale1Sub": "staff",
+    "scale2Sub": "staff",
+    "scale3Sub": "staff",
+    "scale4Sub": "startup"
+  },
+  "booking": {
+    "kicker": "FREE DIAGNOSTIC",
+    "title": "20-minute free diagnostic",
+    "description": "We'll analyze your company's friction points and determine which direction yields results fastest. Choose a time, we'll take care of the rest.",
+    "badgeDuration": "20 minutes",
+    "badgePrice": "Free",
+    "badgePrivacy": "Confidential",
+    "successTitle": "Meeting time confirmed",
+    "successMessage": "Thank you! Your meeting time has been confirmed. Details have been sent to your email, and we will also follow up via phone.",
+    "errorTitle": "Calendar failed to load",
+    "errorDesc": "The calendar could not be loaded. You can message us directly on Telegram to schedule.",
+    "errorTelegramCta": "Message on Telegram",
+    "metaTitle": "Choose a time for free diagnostic | Ilhom Begimqulov",
+    "metaDescription": "Analyze pain points in your business and identify high-impact systems. Select a convenient time for your 20-minute free diagnostic."
   }
 }

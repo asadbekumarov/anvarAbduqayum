@@ -24,7 +24,7 @@ export const metadata: Metadata = {
         alt: "Ilhom Begimqulov",
       },
     ],
-  },
+  },  
   twitter: {
     card: "summary_large_image",
     title: "Ilhom Begimqulov | Biznes Konsultant va Amaliyotchi Trener",
