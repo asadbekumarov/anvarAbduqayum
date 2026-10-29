@@ -110,9 +110,10 @@ export function LanguageSwitcher({
         <div
           role="listbox"
           aria-label="Languages"
-          className={`absolute right-0 z-50 min-w-[140px] py-1 bg-[#111111]/98 backdrop-blur-xl border border-white/[0.14] shadow-[0_15px_35px_rgba(0,0,0,0.9)] rounded-none ${
+          className={`absolute right-0 z-50 min-w-[150px] py-1.5 bg-[#121212] border border-white/[0.14] shadow-[0_15px_35px_rgba(0,0,0,0.95)] rounded-none ${
             direction === "up" ? "bottom-full mb-1.5" : "top-full mt-1.5"
           }`}
+          style={{ backgroundColor: "#121212" }}
         >
           {LANGUAGES.map((lang) => {
             const isSelected = lang.code === currentLocale;
@@ -134,7 +135,7 @@ export function LanguageSwitcher({
                     className={`text-xs uppercase font-mono tracking-wider ${
                       isSelected
                         ? "text-[#C5A880]"
-                        : "text-neutral-500 group-hover:text-[#94A3B8]"
+                        : "text-neutral-400 group-hover:text-white"
                     }`}
                   >
                     {lang.code.toUpperCase()}
