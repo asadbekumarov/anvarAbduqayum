@@ -35,7 +35,6 @@ const radioGroupVariants = cva("", {
     variant: "primary",
   },
 })
-// div
 
 type RadioGroupSize = "xs" | "sm" | "md"
 
