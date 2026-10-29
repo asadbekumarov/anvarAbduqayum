@@ -96,6 +96,16 @@ export async function generateMetadata({
       description,
       images: [`${SITE_URL}${siteMedia.brand.ogImage}`],
     },
+    icons: {
+      icon: [
+        { url: "/favicon.ico" },
+        { url: "/icon.png", type: "image/png" },
+      ],
+      shortcut: "/favicon.ico",
+      apple: [
+        { url: "/apple-icon.png", type: "image/png" },
+      ],
+    },
     robots: !isProduction
       ? { index: false, follow: false }
       : { index: true, follow: true },
