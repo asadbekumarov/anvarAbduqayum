@@ -18,7 +18,8 @@ export function BookingView() {
   const [hasError, setHasError] = useState(false);
   const [isBooked, setIsBooked] = useState(false);
 
-  const rawCalLink = process.env.NEXT_PUBLIC_CAL_LINK;
+  const rawCalLink =
+    process.env.NEXT_PUBLIC_CAL_LINK || "asadbek-umarov-klqsdt/15min";
   const calLink = rawCalLink
     ? rawCalLink
         .trim()
