@@ -1,0 +1,354 @@
+{
+  "viewportsTested": [
+    {
+      "viewport": {
+        "name": "Mobile Mini",
+        "width": 320,
+        "height": 600
+      },
+      "hasOverflow": false,
+      "scrollWidth": 320
+    },
+    {
+      "viewport": {
+        "name": "Mobile Standard",
+        "width": 360,
+        "height": 740
+      },
+      "hasOverflow": false,
+      "scrollWidth": 360
+    },
+    {
+      "viewport": {
+        "name": "Mobile Modern",
+        "width": 390,
+        "height": 844
+      },
+      "hasOverflow": false,
+      "scrollWidth": 390
+    },
+    {
+      "viewport": {
+        "name": "Tablet Portrait",
+        "width": 768,
+        "height": 1024
+      },
+      "hasOverflow": false,
+      "scrollWidth": 768
+    },
+    {
+      "viewport": {
+        "name": "Tablet/Laptop",
+        "width": 1024,
+        "height": 768
+      },
+      "hasOverflow": false,
+      "scrollWidth": 1024
+    },
+    {
+      "viewport": {
+        "name": "Desktop Large",
+        "width": 1440,
+        "height": 900
+      },
+      "hasOverflow": false,
+      "scrollWidth": 1440
+    }
+  ],
+  "overflowIssues": [],
+  "brokenImages": [
+    "[404] https://img.youtube.com/vi/vB43H4y_3Zk/hqdefault.jpg",
+    "[404] https://img.youtube.com/vi/dFq5z_x3A_I/hqdefault.jpg",
+    "[404] https://img.youtube.com/vi/vB43H4y_3Zk/hqdefault.jpg",
+    "[404] https://img.youtube.com/vi/dFq5z_x3A_I/hqdefault.jpg",
+    "[404] https://img.youtube.com/vi/vB43H4y_3Zk/hqdefault.jpg",
+    "[404] https://img.youtube.com/vi/dFq5z_x3A_I/hqdefault.jpg",
+    "[404] https://img.youtube.com/vi/vB43H4y_3Zk/hqdefault.jpg",
+    "[404] https://img.youtube.com/vi/dFq5z_x3A_I/hqdefault.jpg",
+    "[404] https://img.youtube.com/vi/vB43H4y_3Zk/hqdefault.jpg",
+    "[404] https://img.youtube.com/vi/dFq5z_x3A_I/hqdefault.jpg",
+    "[404] https://img.youtube.com/vi/vB43H4y_3Zk/hqdefault.jpg",
+    "[404] https://img.youtube.com/vi/dFq5z_x3A_I/hqdefault.jpg",
+    "[404] https://img.youtube.com/vi/vB43H4y_3Zk/hqdefault.jpg",
+    "[404] https://img.youtube.com/vi/dFq5z_x3A_I/hqdefault.jpg",
+    "[404] https://img.youtube.com/vi/vB43H4y_3Zk/hqdefault.jpg",
+    "[404] https://img.youtube.com/vi/dFq5z_x3A_I/hqdefault.jpg",
+    "[404] https://img.youtube.com/vi/vB43H4y_3Zk/hqdefault.jpg",
+    "[404] https://img.youtube.com/vi/dFq5z_x3A_I/hqdefault.jpg",
+    "[404] https://img.youtube.com/vi/vB43H4y_3Zk/hqdefault.jpg",
+    "[404] https://img.youtube.com/vi/dFq5z_x3A_I/hqdefault.jpg"
+  ],
+  "consoleErrors": [
+    "[Console Error] Failed to load resource: the server responded with a status of 404 ()",
+    "[Console Error] Failed to load resource: the server responded with a status of 404 ()",
+    "[Console Error] Failed to load resource: the server responded with a status of 404 ()",
+    "[Console Error] Failed to load resource: the server responded with a status of 404 ()",
+    "[Console Error] Failed to load resource: the server responded with a status of 404 ()",
+    "[Console Error] Failed to load resource: the server responded with a status of 404 ()",
+    "[Console Error] Failed to load resource: the server responded with a status of 404 ()",
+    "[Console Error] Failed to load resource: the server responded with a status of 404 ()",
+    "[Console Error] Failed to load resource: the server responded with a status of 404 ()",
+    "[Console Error] Failed to load resource: the server responded with a status of 404 ()",
+    "[Console Error] Failed to load resource: the server responded with a status of 404 ()",
+    "[Console Error] Failed to load resource: the server responded with a status of 404 ()",
+    "[Console Error] Failed to load resource: the server responded with a status of 404 ()",
+    "[Console Error] Failed to load resource: the server responded with a status of 404 ()",
+    "[Console Error] Failed to load resource: the server responded with a status of 404 ()",
+    "[Console Error] Failed to load resource: the server responded with a status of 404 ()",
+    "[Console Error] Failed to load resource: the server responded with a status of 404 ()",
+    "[Console Error] Failed to load resource: the server responded with a status of 404 ()",
+    "[Console Error] Failed to load resource: the server responded with a status of 404 ()",
+    "[Console Error] Failed to load resource: the server responded with a status of 404 ()"
+  ],
+  "touchTargetViolations": [
+    {
+      "tag": "A",
+      "text": "ANVAR ABDUQAYUM",
+      "width": 155,
+      "height": 20,
+      "class": "group flex items-center gap-2.5 rounded-",
+      "isInline": false
+    },
+    {
+      "tag": "BUTTON",
+      "text": "UZ",
+      "width": 24,
+      "height": 19,
+      "class": "px-1.5 py-0.5 uppercase rounded-[2px] fo",
+      "isInline": false
+    },
+    {
+      "tag": "BUTTON",
+      "text": "RU",
+      "width": 24,
+      "height": 19,
+      "class": "px-1.5 py-0.5 uppercase rounded-[2px] fo",
+      "isInline": false
+    },
+    {
+      "tag": "BUTTON",
+      "text": "EN",
+      "width": 24,
+      "height": 19,
+      "class": "px-1.5 py-0.5 uppercase rounded-[2px] fo",
+      "isInline": false
+    },
+    {
+      "tag": "BUTTON",
+      "text": "BARCHASI (7)",
+      "width": 116,
+      "height": 35,
+      "class": "font-mono text-[11px] font-semibold uppe",
+      "isInline": false
+    },
+    {
+      "tag": "BUTTON",
+      "text": "ISHLAB CHIQARISH (3)",
+      "width": 173,
+      "height": 35,
+      "class": "font-mono text-[11px] font-semibold uppe",
+      "isInline": false
+    },
+    {
+      "tag": "BUTTON",
+      "text": "HORECA & RESTORANLAR (2)",
+      "width": 202,
+      "height": 35,
+      "class": "font-mono text-[11px] font-semibold uppe",
+      "isInline": false
+    },
+    {
+      "tag": "BUTTON",
+      "text": "B2B SERVIS & IT (1)",
+      "width": 166,
+      "height": 35,
+      "class": "font-mono text-[11px] font-semibold uppe",
+      "isInline": false
+    },
+    {
+      "tag": "BUTTON",
+      "text": "SANOAT KENGASHI (1)",
+      "width": 166,
+      "height": 35,
+      "class": "font-mono text-[11px] font-semibold uppe",
+      "isInline": false
+    },
+    {
+      "tag": "A",
+      "text": "+998 55 503 61 00",
+      "width": 122,
+      "height": 16,
+      "class": "font-bold text-[#1C1A17] hover:text-[#E2",
+      "isInline": false
+    },
+    {
+      "tag": "A",
+      "text": "Biznes portfeli",
+      "width": 81,
+      "height": 15,
+      "class": "text-[#1C1A17]/80 hover:text-[#E2541B] t",
+      "isInline": false
+    },
+    {
+      "tag": "A",
+      "text": "Yo'l xronologiyasi",
+      "width": 98,
+      "height": 15,
+      "class": "text-[#1C1A17]/80 hover:text-[#E2541B] t",
+      "isInline": false
+    },
+    {
+      "tag": "A",
+      "text": "Qolip tamoyili",
+      "width": 79,
+      "height": 15,
+      "class": "text-[#1C1A17]/80 hover:text-[#E2541B] t",
+      "isInline": false
+    },
+    {
+      "tag": "A",
+      "text": "Raqamlar va metrikalar",
+      "width": 128,
+      "height": 15,
+      "class": "text-[#1C1A17]/80 hover:text-[#E2541B] t",
+      "isInline": false
+    },
+    {
+      "tag": "A",
+      "text": "Eksport & UZBIC",
+      "width": 94,
+      "height": 15,
+      "class": "text-[#1C1A17]/80 hover:text-[#E2541B] t",
+      "isInline": false
+    },
+    {
+      "tag": "A",
+      "text": "Mening xatolarim",
+      "width": 96,
+      "height": 15,
+      "class": "text-[#1C1A17]/80 hover:text-[#E2541B] t",
+      "isInline": false
+    },
+    {
+      "tag": "A",
+      "text": "Media va OAV",
+      "width": 77,
+      "height": 15,
+      "class": "text-[#1C1A17]/80 hover:text-[#E2541B] t",
+      "isInline": false
+    },
+    {
+      "tag": "A",
+      "text": "To'g'ridan-to'g'ri aloqa",
+      "width": 129,
+      "height": 15,
+      "class": "text-[#1C1A17]/80 hover:text-[#E2541B] t",
+      "isInline": false
+    }
+  ],
+  "stickyBarOverlap": [],
+  "modalChecks": {
+    "found": true,
+    "dialogRect": {
+      "width": 390,
+      "height": 844,
+      "top": 0
+    },
+    "hasCloseButton": true,
+    "closeButtonVisible": true,
+    "closeButtonSize": {
+      "width": 36,
+      "height": 36
+    },
+    "bodyOverflow": "hidden",
+    "escapeDismissed": true
+  },
+  "navigationChecks": {
+    "navLinks": [
+      {
+        "text": "ANVAR ABDUQAYUM",
+        "href": "/uz"
+      },
+      {
+        "text": "01\nXizmatlar",
+        "href": "#xizmatlar"
+      },
+      {
+        "text": "02\nBizneslar",
+        "href": "#portfel"
+      },
+      {
+        "text": "03\nFaoliyat yo‘li",
+        "href": "#yol"
+      },
+      {
+        "text": "04\nMedia",
+        "href": "#media"
+      },
+      {
+        "text": "05\nAloqa",
+        "href": "#aloqa"
+      },
+      {
+        "text": "Uchrashuv bronlash\n→",
+        "href": "/uz/bron"
+      }
+    ],
+    "hasPortfolioAnchor": true,
+    "hasServicesAnchor": true,
+    "bookingCtas": [
+      {
+        "tag": "A",
+        "text": "Uchrashuv bronlash\n→",
+        "href": "/uz/bron"
+      },
+      {
+        "tag": "A",
+        "text": "Uchrashuv bronlash→",
+        "href": "/uz/bron"
+      },
+      {
+        "tag": "A",
+        "text": "Uchrashuv bronlash\n→",
+        "href": "/uz/bron"
+      },
+      {
+        "tag": "A",
+        "text": "Konsultatsiyaga yozilish",
+        "href": "/uz/bron"
+      },
+      {
+        "tag": "A",
+        "text": "Konsultatsiyaga yozilish",
+        "href": "/uz/bron"
+      }
+    ]
+  },
+  "i18nChecks": {
+    "uz": {
+      "status": 200,
+      "title": "Anvar Abduqayum | Sanoatchi, Ishlab Chiqaruvchi va Asoschi",
+      "heroHeading": "Egasisiz ishlaydigan  tizimlar va sanoat darajasid"
+    },
+    "ru": {
+      "status": 200,
+      "title": "Анвар Абдукаюм | Промышленник, Производитель и Основатель",
+      "heroHeading": "Работающие без владельца  системы и промышленное у"
+    },
+    "en": {
+      "status": 200,
+      "title": "Anvar Abduqayum | Industrialist, Manufacturer & Founder",
+      "heroHeading": "Owner-independent  systems and industrial-grade ma"
+    }
+  },
+  "contrastNotes": [],
+  "stickyBarStatus": {
+    "present": true,
+    "zIndex": "40",
+    "height": 65,
+    "bottom": 844,
+    "top": 779,
+    "display": "block",
+    "visibility": "visible"
+  }
+}

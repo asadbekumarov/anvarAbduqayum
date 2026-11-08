@@ -19,7 +19,7 @@ export function Expert() {
     <section
       id="ekspert"
       aria-label={t("name")}
-      className="scroll-mt-20 py-14 sm:py-20 border-b border-white/[0.08] bg-gradient-to-b from-[#0A0A0A] via-[#070D1F]/40 to-[#0A0A0A] text-[#F5F5F0] relative overflow-hidden"
+      className="scroll-mt-20 py-14 sm:py-20 border-b border-white/[0.08] bg-[#070707] text-[#E5E5E5] relative overflow-hidden"
     >
       {/* Subtle midnight navy atmospheric ambient glow */}
       <div
@@ -30,8 +30,8 @@ export function Expert() {
       <div className="max-w-[1360px] mx-auto px-6 md:px-12 relative z-10">
         {/* Top Section Kicker */}
         <div className="flex items-center gap-4 mb-12">
-          <span className="w-8 h-[1px] bg-[#C5A880]" />
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum">
+          <span className="w-8 h-[1px] bg-[#D4AF37]" />
+          <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#D4AF37]">
             {formatSectionKicker("expert", t("kicker"))}
           </span>
         </div>
@@ -40,7 +40,7 @@ export function Expert() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column — Editorial Portrait (lg:col-span-5) */}
           <div className="lg:col-span-5 group">
-            <div className="relative aspect-[3/4] w-full bg-[#0F172A]/40 overflow-hidden border border-white/[0.08] shadow-[0_20px_50px_rgba(7,13,31,0.5)]">
+            <div className="relative aspect-[3/4] w-full bg-[#121212] overflow-hidden border border-[#1E1E1E] shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
               <KenBurnsImage>
                 <Image
                   src={portrait.src}
@@ -54,9 +54,9 @@ export function Expert() {
             </div>
 
             {/* Below Image Metadata Bar */}
-            <div className="mt-4 pt-4 border-t border-white/[0.08] flex items-baseline justify-between font-mono text-xs uppercase tracking-[0.18em] text-platinum transition-transform duration-500 group-hover:translate-x-1">
-              <span>{t("name")}</span>
-              <span className="text-platinum-light">{t("experience")}</span>
+            <div className="mt-4 pt-4 border-t border-[#1E1E1E] flex items-baseline justify-between font-mono text-xs uppercase tracking-[0.18em] text-[#9A9A9A] transition-transform duration-500 group-hover:translate-x-1">
+              <span className="text-[#E5E5E5]">{t("name")}</span>
+              <span className="text-[#D4AF37]">{t("experience")}</span>
             </div>
           </div>
 
@@ -72,50 +72,50 @@ export function Expert() {
             </MaskedHeading>
 
             {/* Editorial Pull-Quote */}
-            <blockquote className="border-l border-platinum/40 pl-6 py-1 font-serif italic text-xl sm:text-2xl text-neutral-200 leading-relaxed">
+            <blockquote className="border-l border-[#D4AF37]/50 pl-6 py-1 font-serif italic text-xl sm:text-2xl text-[#E5E5E5] leading-relaxed">
               &ldquo;{t("quote")}&rdquo;
             </blockquote>
 
             {/* Biography Prose */}
-            <div className="text-base sm:text-lg text-neutral-200 font-normal leading-relaxed space-y-4">
+            <div className="text-base sm:text-lg text-[#9A9A9A] font-normal leading-relaxed space-y-4">
               <p>{t("bio1")}</p>
               <p>{t("bio2")}</p>
             </div>
 
             {/* The 3 Philosophy Pillars */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 border-t border-b border-white/[0.08] divide-y sm:divide-y-0 sm:divide-x divide-white/[0.08] pt-0">
+            <div className="grid grid-cols-1 sm:grid-cols-3 border-t border-b border-[#1E1E1E] divide-y sm:divide-y-0 sm:divide-x divide-[#1E1E1E] pt-0">
               {/* Pillar 1 */}
               <div className="p-6 first:pl-0 last:pr-0">
-                <span className="font-mono text-xs text-[#C5A880] tracking-[0.16em] block mb-2">
+                <span className="font-mono text-xs text-[#D4AF37] tracking-[0.16em] block mb-2">
                   {t("pillar1Tag")}
                 </span>
-                <h3 className="text-lg font-normal text-white mb-2">
+                <h3 className="text-lg font-normal text-[#E5E5E5] mb-2">
                   {t("pillar1Title")}
                 </h3>
-                <p className="text-sm text-neutral-200 font-normal leading-relaxed">
+                <p className="text-sm text-[#9A9A9A] font-normal leading-relaxed">
                   {t("pillar1Desc")}
                 </p>
               </div>
 
               {/* Pillar 2 */}
               <div className="p-6 first:pl-0 last:pr-0">
-                <span className="font-mono text-xs text-[#C5A880] tracking-[0.16em] block mb-2">
+                <span className="font-mono text-xs text-[#D4AF37] tracking-[0.16em] block mb-2">
                   {t("pillar2Tag")}
                 </span>
-                <h3 className="text-lg font-normal text-white mb-2">
+                <h3 className="text-lg font-normal text-[#E5E5E5] mb-2">
                   {t("pillar2Title")}
                 </h3>
-                <p className="text-sm text-neutral-200 font-normal leading-relaxed">
+                <p className="text-sm text-[#9A9A9A] font-normal leading-relaxed">
                   {t("pillar2Desc")}
                 </p>
               </div>
 
               {/* Pillar 3 */}
               <div className="p-6 first:pl-0 last:pr-0">
-                <span className="font-mono text-xs text-[#C5A880] tracking-[0.16em] block mb-2">
+                <span className="font-mono text-xs text-[#D4AF37] tracking-[0.16em] block mb-2">
                   {t("pillar3Tag")}
                 </span>
-                <h3 className="text-lg font-normal text-white mb-2">
+                <h3 className="text-lg font-normal text-[#E5E5E5] mb-2">
                   {t("pillar3Title")}
                 </h3>
                 <p className="text-sm text-neutral-200 font-normal leading-relaxed">

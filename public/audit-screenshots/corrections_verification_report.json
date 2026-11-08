@@ -1,0 +1,119 @@
+{
+  "timestamp": "2026-11-08T20:56:34.442Z",
+  "networkErrors": [],
+  "brokenImages": [],
+  "consoleErrors": [],
+  "tapTargets": {
+    "mobileLanguageSwitcher": [
+      {
+        "text": "UZ",
+        "width": 36,
+        "height": 44,
+        "passes44": false,
+        "passesHeight44": true
+      },
+      {
+        "text": "RU",
+        "width": 36,
+        "height": 44,
+        "passes44": false,
+        "passesHeight44": true
+      },
+      {
+        "text": "EN",
+        "width": 36,
+        "height": 44,
+        "passes44": false,
+        "passesHeight44": true
+      }
+    ],
+    "categoryFilterPills": [
+      {
+        "text": "BARCHASI (7)",
+        "width": 116,
+        "height": 44,
+        "passes44": true
+      },
+      {
+        "text": "ISHLAB CHIQARISH (3)",
+        "width": 173,
+        "height": 44,
+        "passes44": true
+      },
+      {
+        "text": "HORECA & RESTORANLAR (2)",
+        "width": 202,
+        "height": 44,
+        "passes44": true
+      },
+      {
+        "text": "B2B SERVIS & IT (1)",
+        "width": 166,
+        "height": 44,
+        "passes44": true
+      },
+      {
+        "text": "SANOAT KENGASHI (1)",
+        "width": 166,
+        "height": 44,
+        "passes44": true
+      }
+    ],
+    "modalCloseButton": {
+      "closeBtnSize": {
+        "width": 44,
+        "height": 44
+      },
+      "passes44": true
+    }
+  },
+  "stickyBarVerification": {
+    "found": true,
+    "stickyBarRect": {
+      "top": 779,
+      "bottom": 844,
+      "height": 65,
+      "zIndex": "40"
+    },
+    "cardIsClickable": true
+  },
+  "viewportsTested": [
+    {
+      "viewport": "320x600 (Mobile Mini)",
+      "scrollWidth": 320,
+      "innerWidth": 320,
+      "hasOverflow": false
+    },
+    {
+      "viewport": "360x740 (Mobile Standard)",
+      "scrollWidth": 360,
+      "innerWidth": 360,
+      "hasOverflow": false
+    },
+    {
+      "viewport": "390x844 (Mobile Modern)",
+      "scrollWidth": 390,
+      "innerWidth": 390,
+      "hasOverflow": false
+    },
+    {
+      "viewport": "768x1024 (Tablet Portrait)",
+      "scrollWidth": 768,
+      "innerWidth": 768,
+      "hasOverflow": false
+    },
+    {
+      "viewport": "1024x768 (Tablet/Laptop)",
+      "scrollWidth": 1024,
+      "innerWidth": 1024,
+      "hasOverflow": false
+    },
+    {
+      "viewport": "1440x900 (Desktop Large)",
+      "scrollWidth": 1440,
+      "innerWidth": 1440,
+      "hasOverflow": false
+    }
+  ],
+  "videoBehavior": {}
+}

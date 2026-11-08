@@ -1,5 +1,5 @@
 /**
- * Markazlashtirilgan aloqa ma'lumotlari
+ * Markazlashtirilgan aloqa ma'lumotlari - Anvar Abduqayum
  */
 
 export interface TelegramAccount {
@@ -30,47 +30,47 @@ export const contactConfig = {
     ariaLabel: "Telefon orqali bog'lanish: +998 55 503 61 00",
   },
   // Rasmiy blog va yangiliklar kanali
-  telegramChannel: buildTelegramAccount("Ilxombegimkulov", {
+  telegramChannel: buildTelegramAccount("anvar_abduqayum", {
     uz: "Rasmiy blog va yangiliklar kanali",
     ru: "Официальный канал новостей и аналитики",
     en: "Official blog and news channel",
   }),
-  // To'g'ridan-to'g'ri shaxsiy lichka
-  telegramDirect: buildTelegramAccount("IlhomBegimqulov", {
-    uz: "To'g'ridan-to'g'ri shaxsiy aloqa",
-    ru: "Прямая личная связь",
-    en: "Direct personal contact",
+  // To'g'ridan-to'g'ri shaxsiy lichka / admin
+  telegramDirect: buildTelegramAccount("anvar_abduqayum_admin", {
+    uz: "To'g'ridan-to'g'ri murojaat va qabul",
+    ru: "Прямая связь и прием заявок",
+    en: "Direct inquiry and admissions",
   }),
   // Backward compatibility: umumiy telegram kanali
   get telegram() {
     return this.telegramChannel;
   },
   instagram: {
-    url: "https://www.instagram.com/ilxom.begimkulov",
-    handle: "@ilxom.begimkulov",
-    display: "@ilxom.begimkulov",
+    url: "https://www.instagram.com/anvar_abduqayum",
+    handle: "@anvar_abduqayum",
+    display: "@anvar_abduqayum",
     ariaLabel: "Instagram profiliga o'tish",
   },
   youtube: {
-    url: "https://www.youtube.com/@IlxomBegimkulov",
-    handle: "@IlxomBegimkulov",
-    display: "@IlxomBegimkulov",
+    url: "https://www.youtube.com/@AnvarAbduqayum",
+    handle: "@AnvarAbduqayum",
+    display: "@AnvarAbduqayum",
     ariaLabel: "YouTube kanaliga o'tish",
   },
   linkedin: {
-    url: "https://www.linkedin.com/in/ilhom-begimqulov",
-    display: "Ilhom Begimqulov",
+    url: "https://www.linkedin.com/in/anvar-abduqayum",
+    display: "Anvar Abduqayum",
     ariaLabel: "LinkedIn profiliga o'tish",
   },
   email: {
-    address: "info@ilhombegimqulov.uz",
-    href: "mailto:info@ilhombegimqulov.uz",
-    ariaLabel: "Email orqali bog'lanish: info@ilhombegimqulov.uz",
+    address: "info@anvarabduqayum.uz",
+    href: "mailto:info@anvarabduqayum.uz",
+    ariaLabel: "Email orqali bog'lanish: info@anvarabduqayum.uz",
   },
   office: {
     hasExactAddress: true,
-    addressUz: "Toshkent shahri, Furkat ko'chasi 18",
-    addressRu: "г. Ташкент, ул. Фуркат 18",
-    addressEn: "Tashkent, Furkat Street 18",
+    addressUz: "Toshkent shahri, Bosh ofis va «Toy Bola» biznes majmuasi",
+    addressRu: "г. Ташкент, Главный офис и бизнес-комплекс «Toy Bola»",
+    addressEn: "Tashkent, Headquarters & «Toy Bola» business complex",
   },
 };

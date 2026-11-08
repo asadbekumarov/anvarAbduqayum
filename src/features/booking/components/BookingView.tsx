@@ -47,12 +47,12 @@ export function BookingView() {
         const cal = await getCalApi();
         if (!isMounted) return;
 
-        // Configure theme, brand color token (#C5A880), and layout
+        // Configure theme, brand color token (#D4AF37), and layout
         cal("ui", {
           theme: "dark",
           styles: {
             branding: {
-              brandColor: "#C5A880",
+              brandColor: "#D4AF37",
             },
           },
           hideEventTypeDetails: false,
@@ -106,8 +106,8 @@ export function BookingView() {
       <div className="mb-8 sm:mb-12 max-w-3xl">
         {/* Swiss Architectural Kicker */}
         <div className="flex items-center gap-3 mb-4">
-          <span className="w-8 h-[1px] bg-[#C5A880]" />
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum">
+          <span className="w-8 h-[1px] bg-[#D4AF37]" />
+          <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#D4AF37]">
             {t("kicker")}
           </span>
         </div>
@@ -118,29 +118,29 @@ export function BookingView() {
         </h1>
 
         {/* Narrative Description */}
-        <p className="mt-4 sm:mt-5 text-sm sm:text-base text-neutral-300 font-normal leading-relaxed max-w-2xl">
+        <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#9A9A9A] font-normal leading-relaxed max-w-2xl">
           {t("description")}
         </p>
 
         {/* 3 Value Pillars / Badges */}
-        <div className="mt-6 sm:mt-8 pt-6 border-t border-white/[0.08] flex flex-wrap items-center gap-6 sm:gap-8">
+        <div className="mt-6 sm:mt-8 pt-6 border-t border-[#1E1E1E] flex flex-wrap items-center gap-6 sm:gap-8">
           <div className="flex items-center gap-2.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#C5A880] shrink-0" />
-            <span className="font-mono text-xs uppercase tracking-[0.18em] text-platinum">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] shrink-0 animate-pulse" />
+            <span className="font-mono text-xs uppercase tracking-[0.18em] text-[#9A9A9A]">
               {t("badgeDuration")}
             </span>
           </div>
 
           <div className="flex items-center gap-2.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#C5A880] shrink-0" />
-            <span className="font-mono text-xs uppercase tracking-[0.18em] text-platinum">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] shrink-0 animate-pulse" />
+            <span className="font-mono text-xs uppercase tracking-[0.18em] text-[#9A9A9A]">
               {t("badgePrice")}
             </span>
           </div>
 
           <div className="flex items-center gap-2.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#C5A880] shrink-0" />
-            <span className="font-mono text-xs uppercase tracking-[0.18em] text-platinum">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] shrink-0 animate-pulse" />
+            <span className="font-mono text-xs uppercase tracking-[0.18em] text-[#9A9A9A]">
               {t("badgePrivacy")}
             </span>
           </div>
@@ -152,9 +152,9 @@ export function BookingView() {
         <div
           role="status"
           aria-live="polite"
-          className="mb-8 p-6 sm:p-8 bg-gradient-to-r from-[#0B132B]/95 via-[#0F172A]/90 to-[#0A0A0A] border border-[#C5A880] shadow-[0_12px_40px_rgba(197,168,128,0.2)] flex flex-col sm:flex-row items-start sm:items-center gap-5 transition-all duration-500 animate-in fade-in"
+          className="mb-8 p-6 sm:p-8 bg-[#121212] border border-[#D4AF37] shadow-[0_12px_40px_rgba(212,175,55,0.2)] flex flex-col sm:flex-row items-start sm:items-center gap-5 transition-all duration-500 animate-in fade-in"
         >
-          <div className="w-10 h-10 rounded-none bg-[#C5A880]/15 border border-[#C5A880] flex items-center justify-center text-[#C5A880] shrink-0">
+          <div className="w-10 h-10 rounded-none bg-[#D4AF37]/15 border border-[#D4AF37] flex items-center justify-center text-[#D4AF37] shrink-0">
             <svg
               className="w-5 h-5"
               fill="none"
@@ -177,7 +177,7 @@ export function BookingView() {
       )}
 
       {/* Calendar Area or Fallback */}
-      <div className="relative w-full border border-white/[0.1] bg-[#0A0A0A] shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden">
+      <div className="relative w-full border border-[#1E1E1E] bg-[#121212] shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden">
         {hasError || !calLink ? (
           /* Fallback Error Card if Calendar fails or env var missing */
           <div className="py-16 sm:py-24 px-6 text-center max-w-lg mx-auto">
@@ -203,7 +203,7 @@ export function BookingView() {
               {t("errorDesc")}
             </p>
             <a
-              href="https://t.me/IlhomBegimqulov"
+              href="https://t.me/anvar_abduqayum"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-3 bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] px-7 py-4 text-xs uppercase tracking-[0.16em] font-medium transition-all duration-300 shadow-[0_4px_20px_rgba(197,168,128,0.25)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C5A880]"

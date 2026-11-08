@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 2.3 — Portfolio / Biznes Ekotizimi Konseptsiyalari</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --dark-canvas: #090A0D;
+      --dark-surface: #111318;
+      --dark-card: #151820;
+      --dark-subtle: #1C202B;
+      --dark-line: rgba(255, 255, 255, 0.09);
+      --dark-line-hover: rgba(217, 119, 54, 0.45);
+      
+      --light-canvas: #F6F3EC;
+      --light-surface: #FFFFFF;
+      --light-ink: #14161A;
+      --light-muted: #666C7A;
+      --light-line: rgba(20, 22, 26, 0.1);
+
+      --amber: #D97736;
+      --amber-hover: #E88545;
+      --amber-glow: rgba(217, 119, 54, 0.18);
+
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--dark-canvas);
+      color: #F5F4F0;
+      font-family: var(--font-sans);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* Top Control Bar */
+    .control-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(9, 10, 13, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--dark-line);
+      padding: 14px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .control-title {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--amber);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .control-tabs {
+      display: flex;
+      gap: 8px;
+      background: var(--dark-surface);
+      padding: 4px;
+      border-radius: 6px;
+      border: 1px solid var(--dark-line);
+    }
+
+    .btn-tab {
+      background: transparent;
+      border: none;
+      color: #8E95A5;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-tab.active {
+      background: var(--amber);
+      color: #090A0D;
+    }
+
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Section Header */
+    .section-header {
+      margin-bottom: 48px;
+    }
+
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--amber);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .section-eyebrow .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--amber);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 700;
+      line-height: 1.15;
+      color: #F5F4F0;
+      max-width: 840px;
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      font-size: clamp(14px, 1.2vw, 17px);
+      color: #8E95A5;
+      max-width: 720px;
+      line-height: 1.6;
+    }
+
+    /* Category Filter Pills */
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .filter-pill {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 7px 16px;
+      border-radius: 20px;
+      background: var(--dark-surface);
+      border: 1px solid var(--dark-line);
+      color: #8E95A5;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-pill:hover, .filter-pill.active {
+      background: var(--dark-subtle);
+      border-color: var(--amber);
+      color: #F5F4F0;
+    }
+
+    /* =========================================================================
+       VARIANT A: EDITORIAL BUSINESS GRID
+       ========================================================================= */
+    .editorial-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+    }
+
+    .card-entity {
+      background: var(--dark-card);
+      border: 1px solid var(--dark-line);
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .card-entity:hover {
+      border-color: var(--dark-line-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), 0 0 20px var(--amber-glow);
+    }
+
+    /* Column spans for hierarchy */
+    .col-major {
+      grid-column: span 6;
+    }
+
+    .col-standard {
+      grid-column: span 4;
+    }
+
+    .col-strategic {
+      grid-column: span 6;
+    }
+
+    /* Card Visual Frame */
+    .entity-visual-frame {
+      height: 190px;
+      background: var(--dark-subtle);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--dark-line);
+    }
+
+    .entity-visual-frame.compact {
+      height: 150px;
+    }
+
+    .entity-blueprint-grid {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 24px 24px;
+      opacity: 0.6;
+    }
+
+    .entity-brand-center {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .entity-badge-top {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 3;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: rgba(9, 10, 13, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--amber);
+      backdrop-filter: blur(4px);
+    }
+
+    .entity-year-top {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 3;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      color: #8E95A5;
+      background: rgba(9, 10, 13, 0.85);
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .brand-mark-box {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: 0.05em;
+      padding: 10px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(9, 10, 13, 0.6);
+      border-radius: 6px;
+    }
+
+    .placeholder-hint {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: #8E95A5;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* Card Content Body */
+    .entity-content {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .entity-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .entity-role {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--amber);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .entity-name {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: #F5F4F0;
+      margin-bottom: 8px;
+      line-height: 1.25;
+    }
+
+    .entity-activity {
+      font-size: 13px;
+      color: #8E95A5;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .entity-desc {
+      font-size: 13px;
+      color: #B2B8C4;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    .entity-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .entity-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #8E95A5;
+      background: var(--dark-subtle);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+
+    .entity-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .entity-category-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #8E95A5;
+    }
+
+    .entity-link {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--amber);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: color 0.2s ease;
+    }
+
+    .entity-link:hover {
+      color: var(--amber-hover);
+    }
+
+    /* =========================================================================
+       VARIANT B: INTERACTIVE SHOWCASE STAGE
+       ========================================================================= */
+    .showcase-layout {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* Main Showcase Stage (Left) */
+    .showcase-stage {
+      background: var(--dark-card);
+      border: 1px solid var(--dark-line);
+      border-radius: 12px;
+      overflow: hidden;
+      position: sticky;
+      top: 90px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .stage-media-cover {
+      height: 240px;
+      background: var(--dark-subtle);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--dark-line);
+    }
+
+    .stage-content {
+      padding: 32px;
+    }
+
+    .stage-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .stage-code {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--amber);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .stage-category-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #8E95A5;
+      background: var(--dark-subtle);
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .stage-title {
+      font-family: var(--font-display);
+      font-size: clamp(26px, 2.5vw, 36px);
+      font-weight: 700;
+      color: #F5F4F0;
+      margin-bottom: 6px;
+      line-height: 1.2;
+    }
+
+    .stage-activity {
+      font-size: 15px;
+      color: var(--amber);
+      font-weight: 500;
+      margin-bottom: 18px;
+    }
+
+    .stage-description {
+      font-size: 14px;
+      color: #B2B8C4;
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+
+    /* Stage Specifications Matrix */
+    .stage-spec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      background: var(--dark-subtle);
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      margin-bottom: 24px;
+    }
+
+    .spec-item h6 {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      color: #8E95A5;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+
+    .spec-item p {
+      font-size: 13px;
+      font-weight: 600;
+      color: #F5F4F0;
+    }
+
+    /* Stage Checklist */
+    .stage-features {
+      margin-bottom: 28px;
+    }
+
+    .stage-features h6 {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: #F5F4F0;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+
+    .stage-tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .stage-tag-item {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #D2D7E0;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 6px 12px;
+      border-radius: 4px;
+    }
+
+    /* Stage Action Row */
+    .stage-action-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .stage-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: var(--amber);
+      color: #090A0D;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .stage-btn-primary:hover {
+      background: var(--amber-hover);
+    }
+
+    /* Directory List (Right) */
+    .directory-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .directory-category-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--amber);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 12px;
+      margin-bottom: 2px;
+      padding-left: 4px;
+    }
+
+    .directory-item {
+      background: var(--dark-card);
+      border: 1px solid var(--dark-line);
+      border-radius: 8px;
+      padding: 16px 20px;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .directory-item:hover {
+      background: var(--dark-subtle);
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .directory-item.active {
+      background: var(--dark-subtle);
+      border-color: var(--amber);
+      box-shadow: 0 0 16px var(--amber-glow);
+    }
+
+    .directory-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 8px;
+      width: 3px;
+      background: var(--amber);
+      border-radius: 0 2px 2px 0;
+    }
+
+    .dir-info h4 {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 600;
+      color: #F5F4F0;
+      margin-bottom: 2px;
+    }
+
+    .dir-info p {
+      font-size: 12px;
+      color: #8E95A5;
+    }
+
+    .dir-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--amber);
+      background: rgba(217, 119, 54, 0.1);
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(217, 119, 54, 0.2);
+    }
+
+    /* View Switcher */
+    .view-container {
+      display: none;
+      padding: 60px 0 100px;
+    }
+
+    .view-container.active {
+      display: block;
+    }
+
+    /* Comparison Section */
+    .comparison-wrapper {
+      padding: 60px 0;
+      border-top: 1px solid var(--dark-line);
+      background: #0D0F14;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+
+    .comp-col h3 {
+      font-family: var(--font-display);
+      font-size: 24px;
+      color: #F5F4F0;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .comp-preview-frame {
+      width: 100%;
+      height: 380px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--dark-line);
+      margin-bottom: 20px;
+      background: var(--dark-card);
+      position: relative;
+    }
+
+    .comp-preview-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+
+    .comp-box {
+      background: var(--dark-card);
+      border: 1px solid var(--dark-line);
+      border-radius: 8px;
+      padding: 24px;
+    }
+
+    .comp-box ul {
+      list-style: none;
+      margin: 16px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .comp-box li {
+      font-size: 13px;
+      color: #B2B8C4;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .comp-box li strong {
+      color: #F5F4F0;
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 1024px) {
+      .col-major, .col-standard, .col-strategic {
+        grid-column: span 6;
+      }
+
+      .showcase-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .showcase-stage {
+        position: static;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .editorial-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .col-major, .col-standard, .col-strategic {
+        grid-column: span 1;
+      }
+
+      .comparison-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stage-spec-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .control-bar {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 10px 14px;
+        gap: 8px;
+      }
+
+      .control-title {
+        font-size: 11px;
+      }
+
+      .control-tabs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+        width: 100%;
+      }
+
+      .btn-tab {
+        padding: 6px 8px;
+        font-size: 10px;
+        text-align: center;
+      }
+
+      .container {
+        padding: 0 16px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .control-tabs {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Controller Bar -->
+  <header class="control-bar">
+    <div class="control-title">
+      <span style="font-size: 16px;">✦</span>
+      <span>PHASE 2.3 // BIZNES EKOTIZIMI PROTOTIPI (7 TA KORXONA)</span>
+    </div>
+
+    <div class="control-tabs">
+      <button class="btn-tab active" onclick="switchView('variant-a')">VARIANT A: EDITORIAL GRID</button>
+      <button class="btn-tab" onclick="switchView('variant-b')">VARIANT B: INTERACTIVE SHOWCASE</button>
+      <button class="btn-tab" onclick="switchView('side-by-side')">YONMA-YON TAQQOSLASH</button>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       VARIANT A: PREMIUM EDITORIAL BUSINESS GRID
+       ========================================================================= -->
+  <section id="view-variant-a" class="view-container active">
+    <div class="container">
+      
+      <div class="section-header">
+        <div class="section-eyebrow">
+          <span class="dot"></span>
+          <span>BIZNES EKOTIZIMI VA KORXONALAR PORTFELI</span>
+        </div>
+        <h2 class="section-title">
+          20 yillik ishlab chiqarish va ko‘p tarmoqli tadbirkorlik ekotizimi
+        </h2>
+        <p class="section-subtitle">
+          Har bir korxona — mustaqil tizimli boshqaruv va aniq texnologik standartlarga tayangan muhandislik qolipi kabi faoliyat yuritadi. Sanoat polimerlaridan tortib xalqaro eksport konsortsiumigacha.
+        </p>
+
+        <!-- Category Filters -->
+        <div class="filter-row">
+          <button class="filter-pill active" onclick="filterCategory('all')">BARCHASI (7)</button>
+          <button class="filter-pill" onclick="filterCategory('mfg')">ISHLAB CHIQARISH (3)</button>
+          <button class="filter-pill" onclick="filterCategory('horeca')">HORECA & RESTORANLAR (2)</button>
+          <button class="filter-pill" onclick="filterCategory('service')">B2B SERVIS & IT (1)</button>
+          <button class="filter-pill" onclick="filterCategory('council')">SANOAT KENGASHI (1)</button>
+        </div>
+      </div>
+
+      <!-- 12-Column Asymmetrical Grid -->
+      <div class="editorial-grid">
+        
+        <!-- ENTITY 01: TOYBOLA TOYS (Major, 6 cols) -->
+        <div class="card-entity col-major" data-cat="mfg">
+          <div class="entity-visual-frame">
+            <div class="entity-blueprint-grid"></div>
+            <span class="entity-badge-top">ISHLAB CHIQARISH // ZAVOD</span>
+            <span class="entity-year-top">2012-yildan buyon</span>
+            <div class="entity-brand-center">
+              <div class="brand-mark-box">TOYBOLA TOYS</div>
+              <span class="placeholder-hint">[Rasmiy zavod fotosurati ramkasi]</span>
+            </div>
+          </div>
+          <div class="entity-content">
+            <div>
+              <div class="entity-meta-row">
+                <span class="entity-role">Asoschi va Boshqaruv kengashi a'zosi</span>
+                <span style="font-family: var(--font-mono); font-size: 11px; color: #8E95A5;">MODUL 01</span>
+              </div>
+              <h3 class="entity-name">Toybola Toys</h3>
+              <p class="entity-activity">Bolalar plastik o‘yinchoqlari fabrikasi</p>
+              <p class="entity-desc">
+                Xavfsiz polimerlardan bolalar uchun 100 dan ortiq assortimentdagi o‘yinchoqlar ishlab chiqaruvchi yuqori quvvatli zavod. Xalqaro sifat sertifikatlariga ega bo‘lib, mahsulotlari MDH va xorijiy bozorlarga eksport qilinadi.
+              </p>
+            </div>
+            <div>
+              <div class="entity-tags">
+                <span class="entity-tag">Plastik quyish</span>
+                <span class="entity-tag">Robotlashtirilgan qoliplar</span>
+                <span class="entity-tag">Xalqaro eksport</span>
+              </div>
+              <div class="entity-footer">
+                <span class="entity-category-badge">Sanoat & Polimerlar</span>
+                <a href="https://toybola.uz" target="_blank" class="entity-link">
+                  <span>toybola.uz</span>
+                  <span>↗</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ENTITY 02: SAMTECH MASTERBATCHES (Major, 6 cols) -->
+        <div class="card-entity col-major" data-cat="mfg">
+          <div class="entity-visual-frame">
+            <div class="entity-blueprint-grid"></div>
+            <span class="entity-badge-top">ISHLAB CHIQARISH // KIMYO</span>
+            <span class="entity-year-top">2016-yildan buyon</span>
+            <div class="entity-brand-center">
+              <div class="brand-mark-box">SAMTECH MASTERBATCHES</div>
+              <span class="placeholder-hint">[Sanoat majmuasi fotosurati ramkasi]</span>
+            </div>
+          </div>
+          <div class="entity-content">
+            <div>
+              <div class="entity-meta-row">
+                <span class="entity-role">Hammuassis</span>
+                <span style="font-family: var(--font-mono); font-size: 11px; color: #8E95A5;">MODUL 02</span>
+              </div>
+              <h3 class="entity-name">Samtech Masterbatches</h3>
+              <p class="entity-activity">Polimer xomashyosi va konsentrlangan bo‘yoqlar</p>
+              <p class="entity-desc">
+                Plastmassa va polimer mahsulotlari ishlab chiqaruvchi korxonalar uchun rangli va modifikatsiyalovchi masterbatch xomashyosi ishlab chiqaruvchi kimyo majmuasi. B2B sektorida mahsulot tannarxini optimallashtiruvchi strategik bo‘g‘in.
+              </p>
+            </div>
+            <div>
+              <div class="entity-tags">
+                <span class="entity-tag">Kimyo sanoati</span>
+                <span class="entity-tag">Masterbatch</span>
+                <span class="entity-tag">B2B Xomashyo</span>
+              </div>
+              <div class="entity-footer">
+                <span class="entity-category-badge">Kimyo Majmuasi</span>
+                <span class="entity-link" style="color: #8E95A5;">Sanoat hamkorligi</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ENTITY 03: VISAGE ELECTRIC (Standard, 4 cols) -->
+        <div class="card-entity col-standard" data-cat="mfg">
+          <div class="entity-visual-frame compact">
+            <div class="entity-blueprint-grid"></div>
+            <span class="entity-badge-top">ISHLAB CHIQARISH</span>
+            <span class="entity-year-top">2018-yildan</span>
+            <div class="entity-brand-center">
+              <div class="brand-mark-box" style="font-size: 15px;">VISAGE ELECTRIC</div>
+              <span class="placeholder-hint">[Ishlab chiqarish liniyasi]</span>
+            </div>
+          </div>
+          <div class="entity-content">
+            <div>
+              <div class="entity-meta-row">
+                <span class="entity-role">Hammuassis</span>
+                <span style="font-family: var(--font-mono); font-size: 10px; color: #8E95A5;">MODUL 03</span>
+              </div>
+              <h3 class="entity-name" style="font-size: 20px;">Visage Electric</h3>
+              <p class="entity-activity">Elektrotexnika va yoritish uskunalari</p>
+              <p class="entity-desc" style="font-size: 12.5px;">
+                Sanoat va maishiy ob'ektlar uchun energiya samarador, xavfsiz rozetkalar, kalitlar va elektrotexnika komponentlari ishlab chiqarish majmuasi.
+              </p>
+            </div>
+            <div>
+              <div class="entity-tags">
+                <span class="entity-tag">Elektrotexnika</span>
+                <span class="entity-tag">Avtomatlashgan liniya</span>
+              </div>
+              <div class="entity-footer">
+                <span class="entity-category-badge">Elektrotexnika</span>
+                <span class="entity-link" style="color: #8E95A5;">B2B / B2C</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ENTITY 04: AFIYET (Standard, 4 cols) -->
+        <div class="card-entity col-standard" data-cat="horeca">
+          <div class="entity-visual-frame compact">
+            <div class="entity-blueprint-grid"></div>
+            <span class="entity-badge-top">HORECA // RESTORAN</span>
+            <span class="entity-year-top">2017-yildan</span>
+            <div class="entity-brand-center">
+              <div class="brand-mark-box" style="font-size: 15px;">AFIYET KEBAB</div>
+              <span class="placeholder-hint">[Restoran interyeri ramkasi]</span>
+            </div>
+          </div>
+          <div class="entity-content">
+            <div>
+              <div class="entity-meta-row">
+                <span class="entity-role">Asoschi va Boshqaruvchi</span>
+                <span style="font-family: var(--font-mono); font-size: 10px; color: #8E95A5;">MODUL 04</span>
+              </div>
+              <h3 class="entity-name" style="font-size: 20px;">AFIYET Kebab</h3>
+              <p class="entity-activity">Turk taomlari va doner restoranlari tarmog‘i</p>
+              <p class="entity-desc" style="font-size: 12.5px;">
+                Sanoatdagi standartlashtirish tamoyilini umumiy ovqatlanishga tatbiq etgan tarmoq. Har bir taom qat'iy texnologik xaritaga kiritilgan.
+              </p>
+            </div>
+            <div>
+              <div class="entity-tags">
+                <span class="entity-tag">Standart oshxona</span>
+                <span class="entity-tag">Fast-Casual</span>
+              </div>
+              <div class="entity-footer">
+                <span class="entity-category-badge">Umumiy ovqatlanish</span>
+                <span class="entity-link" style="color: #8E95A5;">Tarmoq restorani</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ENTITY 05: PURO (Standard, 4 cols) -->
+        <div class="card-entity col-standard" data-cat="horeca">
+          <div class="entity-visual-frame compact">
+            <div class="entity-blueprint-grid"></div>
+            <span class="entity-badge-top">HORECA // KAFE</span>
+            <span class="entity-year-top">2020-yildan</span>
+            <div class="entity-brand-center">
+              <div class="brand-mark-box" style="font-size: 15px;">PURO GELATERIA</div>
+              <span class="placeholder-hint">[Qahvaxona & kafe ramkasi]</span>
+            </div>
+          </div>
+          <div class="entity-content">
+            <div>
+              <div class="entity-meta-row">
+                <span class="entity-role">Hamkor & Tashabbuskor</span>
+                <span style="font-family: var(--font-mono); font-size: 10px; color: #8E95A5;">MODUL 05</span>
+              </div>
+              <h3 class="entity-name" style="font-size: 20px;">PURO Gelateria</h3>
+              <p class="entity-activity">Italiya retsepturasi asosidagi muzqaymoq & kafe</p>
+              <p class="entity-desc" style="font-size: 12.5px;">
+                Haqiqiy italyancha dondurma va muzqaymoq madaniyati. Saqlash zanjiri, sovuq logistika va xizmat ko‘rsatish standartlashtirilgan.
+              </p>
+            </div>
+            <div>
+              <div class="entity-tags">
+                <span class="entity-tag">Sovuq logistika</span>
+                <span class="entity-tag">Retseptura standarti</span>
+              </div>
+              <div class="entity-footer">
+                <span class="entity-category-badge">Qandolatchilik & Kafe</span>
+                <span class="entity-link" style="color: #8E95A5;">Chakana tarmoq</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ENTITY 06: IT SUPPORT (Strategic, 6 cols) -->
+        <div class="card-entity col-strategic" data-cat="service">
+          <div class="entity-visual-frame">
+            <div class="entity-blueprint-grid"></div>
+            <span class="entity-badge-top">B2B SERVIS // IT TIZIMLAR</span>
+            <span class="entity-year-top">2020-yildan buyon</span>
+            <div class="entity-brand-center">
+              <div class="brand-mark-box">IT SUPPORT & SERVICE</div>
+              <span class="placeholder-hint">[Raqamlashtirish platformasi ramkasi]</span>
+            </div>
+          </div>
+          <div class="entity-content">
+            <div>
+              <div class="entity-meta-row">
+                <span class="entity-role">Loyiha tashabbuskori</span>
+                <span style="font-family: var(--font-mono); font-size: 11px; color: #8E95A5;">MODUL 06</span>
+              </div>
+              <h3 class="entity-name">IT Support & Service</h3>
+              <p class="entity-activity">Korxonalarni avtomatlashtirish va IT integratsiya</p>
+              <p class="entity-desc">
+                Sanoat korxonalari, xomashyo omborlari va savdo tarmoqlari uchun ERP, CRM va boshqaruv hisoboti tizimlarini joriy etish. Ishlab chiqarish va savdo jarayonlaridagi yo‘qotishlarni bartaraf etuvchi raqamli monitoring infratuzilmasi.
+              </p>
+            </div>
+            <div>
+              <div class="entity-tags">
+                <span class="entity-tag">ERP tizimlari</span>
+                <span class="entity-tag">Ombor avtomatizatsiyasi</span>
+                <span class="entity-tag">Boshqaruv hisoboti</span>
+              </div>
+              <div class="entity-footer">
+                <span class="entity-category-badge">B2B Raqamli Servis</span>
+                <span class="entity-link" style="color: #8E95A5;">Infratuzilma hamkori</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ENTITY 07: UZBIC (Strategic, 6 cols) -->
+        <div class="card-entity col-strategic" data-cat="council">
+          <div class="entity-visual-frame">
+            <div class="entity-blueprint-grid"></div>
+            <span class="entity-badge-top">SANOAT KENGASHI // EKSPORT</span>
+            <span class="entity-year-top">2022-yildan buyon</span>
+            <div class="entity-brand-center">
+              <div class="brand-mark-box">UZBIC COUNCIL</div>
+              <span class="placeholder-hint">[Kengash sammiti & diplomatiya ramkasi]</span>
+            </div>
+          </div>
+          <div class="entity-content">
+            <div>
+              <div class="entity-meta-row">
+                <span class="entity-role">Kengash Raisi</span>
+                <span style="font-family: var(--font-mono); font-size: 11px; color: #8E95A5;">MODUL 07</span>
+              </div>
+              <h3 class="entity-name">UZBIC</h3>
+              <p class="entity-activity">O‘zbekiston Biznes va Sanoat Kengashi</p>
+              <p class="entity-desc">
+                Mahalliy sanoat korxonalarini jahon bozoriga olib chiqish, tashqi savdo to‘siqlarini bartaraf etish va o‘zbek mahsulotlarining xalqaro raqobatbardoshligini oshirish maqsadida tashkil etilgan mustaqil biznes kengashi.
+              </p>
+            </div>
+            <div>
+              <div class="entity-tags">
+                <span class="entity-tag">Xalqaro eksport</span>
+                <span class="entity-tag">B2B konsorsium</span>
+                <span class="entity-tag">Sanoat diplomatiyasi</span>
+              </div>
+              <div class="entity-footer">
+                <span class="entity-category-badge">Jamoat Tashkiloti & Kengash</span>
+                <a href="https://uzbic.uz" target="_blank" class="entity-link">
+                  <span>uzbic.uz</span>
+                  <span>↗</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       VARIANT B: INTERACTIVE BUSINESS SHOWCASE
+       ========================================================================= -->
+  <section id="view-variant-b" class="view-container">
+    <div class="container">
+      
+      <div class="section-header">
+        <div class="section-eyebrow">
+          <span class="dot"></span>
+          <span>INTERAKTIV EKOTIZIM DOSSIYESI</span>
+        </div>
+        <h2 class="section-title">
+          Korxonalar vitrinasi: Markaziy ekspozitsiya va yo‘nalishlar
+        </h2>
+        <p class="section-subtitle">
+          Quyidagi katalog orqali har bir korxona spetsifikatsiyasi, ishlab chiqarish xususiyati va boshqaruv darajasini interaktiv tarzda o‘rganing.
+        </p>
+      </div>
+
+      <div class="showcase-layout">
+        
+        <!-- Left: Large Featured Showcase Stage -->
+        <div class="showcase-stage" id="showcaseStage">
+          <div class="stage-media-cover">
+            <div class="entity-blueprint-grid"></div>
+            <div class="entity-brand-center">
+              <div class="brand-mark-box" id="stageBrandMark">TOYBOLA TOYS</div>
+              <span class="placeholder-hint" id="stageHint">[Sanoat ishlab chiqarish ramkasi]</span>
+            </div>
+          </div>
+
+          <div class="stage-content">
+            <div class="stage-header-row">
+              <span class="stage-code" id="stageCode">MODUL 01 // SANOAT FABRIKASI</span>
+              <span class="stage-category-tag" id="stageCategory">ISHLAB CHIQARISH</span>
+            </div>
+
+            <h3 class="stage-title" id="stageTitle">Toybola Toys</h3>
+            <p class="stage-activity" id="stageActivity">Bolalar plastik o‘yinchoqlari fabrikasi</p>
+
+            <p class="stage-description" id="stageDesc">
+              Xavfsiz polimerlardan bolalar uchun 100 dan ortiq assortimentdagi o‘yinchoqlar ishlab chiqaruvchi yuqori quvvatli zavod. Xalqaro sifat standartlari bo‘yicha sertifikatlangan bo‘lib, mahsulotlari MDH va xorijiy bozorlarga muntazam eksport qilinadi.
+            </p>
+
+            <!-- Specification Matrix -->
+            <div class="stage-spec-grid">
+              <div class="spec-item">
+                <h6>Asoschining o‘rni</h6>
+                <p id="stageRole">Asoschi va Boshqaruv kengashi a'zosi</p>
+              </div>
+              <div class="spec-item">
+                <h6>Tashkil etilgan davr</h6>
+                <p id="stageFounded">2012-yildan buyon</p>
+              </div>
+              <div class="spec-item">
+                <h6>Sanoat yo‘nalishi</h6>
+                <p id="stageSector">Polimer sanoati & O‘yinchoqlar</p>
+              </div>
+              <div class="spec-item">
+                <h6>Operatsion xususiyat</h6>
+                <p id="stageNature">Avtonom direktorlar boshqaruvi</p>
+              </div>
+            </div>
+
+            <!-- Key Tags -->
+            <div class="stage-features">
+              <h6>Asosiy texnologik yo‘nalishlar</h6>
+              <div class="stage-tag-list" id="stageTags">
+                <span class="stage-tag-item">Plastik quyish</span>
+                <span class="stage-tag-item">Robotlashtirilgan qoliplar</span>
+                <span class="stage-tag-item">Xalqaro eksport</span>
+              </div>
+            </div>
+
+            <!-- Action Row -->
+            <div class="stage-action-row">
+              <span style="font-family: var(--font-mono); font-size: 11px; color: #8E95A5;" id="stageStatus">
+                Holati: Faol sanoat korxonasi
+              </span>
+              <a href="https://toybola.uz" target="_blank" class="stage-btn-primary" id="stageLink">
+                <span>Korxona veb-sayti</span>
+                <span>↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Directory Navigator -->
+        <div class="directory-list">
+          
+          <div class="directory-category-label">ISHLAB CHIQARISH KORXONALARI (3)</div>
+          
+          <button class="directory-item active" onclick="selectCompany(0)">
+            <div class="dir-info">
+              <h4>Toybola Toys</h4>
+              <p>Bolalar plastik o‘yinchoqlari fabrikasi</p>
+            </div>
+            <span class="dir-badge">2012</span>
+          </button>
+
+          <button class="directory-item" onclick="selectCompany(1)">
+            <div class="dir-info">
+              <h4>Samtech Masterbatches</h4>
+              <p>Polimer xomashyosi & modifikatorlar</p>
+            </div>
+            <span class="dir-badge">2016</span>
+          </button>
+
+          <button class="directory-item" onclick="selectCompany(2)">
+            <div class="dir-info">
+              <h4>Visage Electric</h4>
+              <p>Elektrotexnika & yoritish uskunalari</p>
+            </div>
+            <span class="dir-badge">2018</span>
+          </button>
+
+          <div class="directory-category-label" style="margin-top: 18px;">HORECA VA RESTORANLAR (2)</div>
+
+          <button class="directory-item" onclick="selectCompany(3)">
+            <div class="dir-info">
+              <h4>AFIYET Kebab</h4>
+              <p>Turk taomlari restoranlar tarmog‘i</p>
+            </div>
+            <span class="dir-badge">2017</span>
+          </button>
+
+          <button class="directory-item" onclick="selectCompany(4)">
+            <div class="dir-info">
+              <h4>PURO Gelateria</h4>
+              <p>Italiya muzqaymoqlari & qahvaxona</p>
+            </div>
+            <span class="dir-badge">2020</span>
+          </button>
+
+          <div class="directory-category-label" style="margin-top: 18px;">B2B SERVIS VA SANOAT KENGASHI (2)</div>
+
+          <button class="directory-item" onclick="selectCompany(5)">
+            <div class="dir-info">
+              <h4>IT Support & Service</h4>
+              <p>Zavodlarni raqamlashtirish & ERP</p>
+            </div>
+            <span class="dir-badge">2020</span>
+          </button>
+
+          <button class="directory-item" onclick="selectCompany(6)">
+            <div class="dir-info">
+              <h4>UZBIC</h4>
+              <p>O‘zbekiston Biznes va Sanoat Kengashi</p>
+            </div>
+            <span class="dir-badge">2022</span>
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       SIDE-BY-SIDE COMPARISON SECTION
+       ========================================================================= -->
+  <section id="view-side-by-side" class="view-container">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">
+          <span class="dot"></span>
+          <span>STRATEGIK TAQQOSLASH // VARIANT A VS VARIANT B</span>
+        </div>
+        <h2 class="section-title">
+          Qaysi konsepsiya biznes maqsadlariga ko‘proq mos keladi?
+        </h2>
+        <p class="section-subtitle">
+          Ikkala yondashuv ham tasdiqlangan Concept D tokenlariga to‘liq asoslangan. Quyidagi tahlil asosida eng optimal yo‘nalishni tanlang.
+        </p>
+      </div>
+
+      <div class="comparison-grid">
+        <!-- Variant A Column -->
+        <div class="comp-col">
+          <h3>
+            <span style="color: var(--amber);">✦</span>
+            <span>Variant A: Editorial Business Grid</span>
+          </h3>
+          <div class="comp-preview-frame">
+            <img src="previews/phase2-3-variant-a-desktop-1440.png" alt="Variant A Preview" class="comp-preview-img" onerror="this.src='../screenshots/phase2-3-variant-a-desktop-1440.png'" />
+          </div>
+          <div class="comp-box">
+            <p style="font-size: 14px; color: #F5F4F0; line-height: 1.6;">
+              <strong>Vizual arxitektura:</strong> Butun ekotizimni bir qarashda ko‘rsatuvchi 12 ustunli asimmetrik jurnalistik to‘r (grid). Barcha 7 ta korxona o‘z vizual ramkasi va faktik ma’lumotlari bilan sahifada ochiq turadi.
+            </p>
+            <ul>
+              <li>
+                <span style="color: #22C55E;">✔</span>
+                <span><strong>Afzalligi:</strong> Foydalanuvchi bir martalik skroll davomida barcha 7 ta biznes ko‘lamini darhol idrok qiladi. Bosish shart emas.</span>
+              </li>
+              <li>
+                <span style="color: #22C55E;">✔</span>
+                <span><strong>Ierarxiya:</strong> Yirik zavodlar (Toybola, Samtech) 6 ustunli keng blokda, boshqalari 4 ustunda aniq vazn bilan ajratiladi.</span>
+              </li>
+              <li>
+                <span style="color: #EF4444;">✖</span>
+                <span><strong>Kamchiligi:</strong> Mobil ekranda kartalar ketma-ket joylashgani sababli skroll balandligi uzunroq bo‘ladi.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Variant B Column -->
+        <div class="comp-col">
+          <h3>
+            <span style="color: var(--amber);">✦</span>
+            <span>Variant B: Interactive Showcase Stage</span>
+          </h3>
+          <div class="comp-preview-frame">
+            <img src="previews/phase2-3-variant-b-desktop-1440.png" alt="Variant B Preview" class="comp-preview-img" onerror="this.src='../screenshots/phase2-3-variant-b-desktop-1440.png'" />
+          </div>
+          <div class="comp-box">
+            <p style="font-size: 14px; color: #F5F4F0; line-height: 1.6;">
+              <strong>Vizual arxitektura:</strong> Markaziy yirik vitrina (Featured Stage) va o‘ng tomonda 7 ta biznesning toifali navigator paneli. Tanlangan biznes haqida chuqur texnologik va institutsional tafsilotlar ochiladi.
+            </p>
+            <ul>
+              <li>
+                <span style="color: #22C55E;">✔</span>
+                <span><strong>Afzalligi:</strong> Boshqaruv markazi (Executive Command Center) hissini uyg‘otadi. Har bir korxona katta diqqat bilan o‘rganiladi.</span>
+              </li>
+              <li>
+                <span style="color: #22C55E;">✔</span>
+                <span><strong>Kompaktlik:</strong> Sahifa bo‘yi qisqa va zich bo‘lib, qiziqqan foydalanuvchi interaktiv tarzda o‘zi boshqaradi.</span>
+              </li>
+              <li>
+                <span style="color: #EF4444;">✖</span>
+                <span><strong>Kamchiligi:</strong> Passiv foydalanuvchi boshqa korxonalarni ko‘rish uchun qo‘shimcha klik qilishga erinishi mumkin.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Tab Switching Logic
+    function switchView(viewId) {
+      document.querySelectorAll('.view-container').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.btn-tab').forEach(el => el.classList.remove('active'));
+
+      const targetView = document.getElementById('view-' + viewId);
+      if (targetView) targetView.classList.add('active');
+
+      const tabs = document.querySelectorAll('.btn-tab');
+      if (viewId === 'variant-a') tabs[0].classList.add('active');
+      if (viewId === 'variant-b') tabs[1].classList.add('active');
+      if (viewId === 'side-by-side') tabs[2].classList.add('active');
+    }
+
+    // Category Filtering in Variant A
+    function filterCategory(cat) {
+      document.querySelectorAll('.filter-pill').forEach(el => el.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const cards = document.querySelectorAll('.card-entity');
+      cards.forEach(card => {
+        if (cat === 'all' || card.getAttribute('data-cat') === cat) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Interactive Company Directory for Variant B
+    const companiesData = [
+      {
+        name: "Toybola Toys",
+        code: "MODUL 01 // SANOAT FABRIKASI",
+        category: "ISHLAB CHIQARISH",
+        activity: "Bolalar plastik o‘yinchoqlari fabrikasi",
+        desc: "Xavfsiz polimerlardan bolalar uchun 100 dan ortiq assortimentdagi o‘yinchoqlar ishlab chiqaruvchi yuqori quvvatli zavod. Xalqaro sifat standartlari bo‘yicha sertifikatlangan bo‘lib, mahsulotlari MDH va xorijiy bozorlarga muntazam eksport qilinadi.",
+        role: "Asoschi va Boshqaruv kengashi a'zosi",
+        founded: "2012-yildan buyon",
+        sector: "Polimer sanoati & O‘yinchoqlar",
+        nature: "Avtonom direktorlar boshqaruvi",
+        tags: ["Plastik quyish", "Robotlashtirilgan qoliplar", "Xalqaro eksport"],
+        status: "Holati: Faol sanoat korxonasi",
+        linkText: "toybola.uz",
+        linkUrl: "https://toybola.uz"
+      },
+      {
+        name: "Samtech Masterbatches",
+        code: "MODUL 02 // KIMYO MAJMUASI",
+        category: "ISHLAB CHIQARISH",
+        activity: "Polimer xomashyosi va konsentrlangan bo‘yoqlar",
+        desc: "Plastmassa va polimer mahsulotlari ishlab chiqaruvchi korxonalar uchun rangli va modifikatsiyalovchi masterbatch xomashyosi ishlab chiqaruvchi kimyo majmuasi. B2B sektorida mahsulot tannarxini optimallashtiruvchi strategik bo‘g‘in.",
+        role: "Hammuassis",
+        founded: "2016-yildan buyon",
+        sector: "Kimyo sanoati & Polimerlar",
+        nature: "B2B xomashyo ta'minoti",
+        tags: ["Kimyo sanoati", "Masterbatch", "B2B Xomashyo"],
+        status: "Holati: Faol ishlab chiqarish korxonasi",
+        linkText: "Sanoat hamkorligi",
+        linkUrl: "#"
+      },
+      {
+        name: "Visage Electric",
+        code: "MODUL 03 // ELEKTROTEXNIKA",
+        category: "ISHLAB CHIQARISH",
+        activity: "Elektrotexnika va yoritish uskunalari",
+        desc: "Sanoat va maishiy ob'ektlar uchun energiya samarador, xavfsiz rozetkalar, kalitlar, kabellar va elektrotexnika komponentlari ishlab chiqarish majmuasi.",
+        role: "Hammuassis",
+        founded: "2018-yildan buyon",
+        sector: "Elektrotexnika sanoati",
+        nature: "Avtomatlashtirilgan ishlab chiqarish",
+        tags: ["Elektrotexnika", "Sanoat qoliplari", "Energiya samaradorligi"],
+        status: "Holati: Faol korxona",
+        linkText: "B2B / B2C buyurtma",
+        linkUrl: "#"
+      },
+      {
+        name: "AFIYET Kebab",
+        code: "MODUL 04 // HORECA RESTORANLAR",
+        category: "UMUMIY OVQATLANISH",
+        activity: "Turk taomlari va doner restoranlari tarmog‘i",
+        desc: "Sanoatdagi standartlashtirish tamoyilini umumiy ovqatlanishga tatbiq etgan tarmoq. Har bir taom qat'iy texnologik xaritaga kiritilgan bo‘lib, oshpaz o‘zgarsa ham sifat o‘zgarmaydi.",
+        role: "Asoschi va Boshqaruvchi",
+        founded: "2017-yildan buyon",
+        sector: "HoReCa & Fast-Casual",
+        nature: "Standartlashtirilgan oshxona tarmog‘i",
+        tags: ["Standart oshxona", "Texnologik xarita", "Fast-Casual"],
+        status: "Holati: Faol restoranlar tarmog‘i",
+        linkText: "Restoranlar tarmog‘i",
+        linkUrl: "#"
+      },
+      {
+        name: "PURO Gelateria",
+        code: "MODUL 05 // HORECA KAFE",
+        category: "QANDOLATCHILIK & KAFE",
+        activity: "Italiya retsepturasi asosidagi muzqaymoq & kafe",
+        desc: "Haqiqiy italyancha dondurma va muzqaymoq madaniyati. Saqlash zanjiri, sovuq logistika va xizmat ko‘rsatish qat'iy standartlar asosida tizimlashtirilgan.",
+        role: "Hamkor & Tashabbuskor",
+        founded: "2020-yildan buyon",
+        sector: "HoReCa & Qandolatchilik",
+        nature: "Chakana savdo va sovuq zanjir",
+        tags: ["Sovuq logistika", "Retseptura standarti", "Kafe tarmog‘i"],
+        status: "Holati: Faol kafe tarmog‘i",
+        linkText: "PURO tarmog‘i",
+        linkUrl: "#"
+      },
+      {
+        name: "IT Support & Service",
+        code: "MODUL 06 // B2B SERVIS",
+        category: "RAQAMLI INFRATUZILMA",
+        activity: "Korxonalarni avtomatlashtirish va IT integratsiya",
+        desc: "Sanoat korxonalari, xomashyo omborlari va savdo tarmoqlari uchun ERP, CRM va boshqaruv hisoboti tizimlarini joriy etish. Ishlab chiqarish va savdo jarayonlaridagi yo‘qotishlarni bartaraf etuvchi raqamli monitoring infratuzilmasi.",
+        role: "Loyiha tashabbuskori",
+        founded: "2020-yildan buyon",
+        sector: "Axborot Texnologiyalari & B2B",
+        nature: "Korporativ IT integratsiya",
+        tags: ["ERP tizimlari", "Ombor avtomatizatsiyasi", "KPI monitoring"],
+        status: "Holati: Faol xizmat ko‘rsatish",
+        linkText: "IT Integratsiya",
+        linkUrl: "#"
+      },
+      {
+        name: "UZBIC",
+        code: "MODUL 07 // SANOAT KENGASHI",
+        category: "JAMOAT TASHKILOTI",
+        activity: "O‘zbekiston Biznes va Sanoat Kengashi",
+        desc: "Mahalliy sanoat korxonalarini jahon bozoriga olib chiqish, tashqi savdo to‘siqlarini bartaraf etish va o‘zbek mahsulotlarining xalqaro raqobatbardoshligini oshirish maqsadida tashkil etilgan mustaqil biznes kengashi.",
+        role: "Kengash Raisi",
+        founded: "2022-yildan buyon",
+        sector: "Xalqaro savdo & Sanoat diplomatiyasi",
+        nature: "B2B eksport konsortsiumlari",
+        tags: ["Xalqaro eksport", "B2B konsorsium", "Sanoat diplomatiyasi"],
+        status: "Holati: Faol jamoat platformasi",
+        linkText: "uzbic.uz",
+        linkUrl: "https://uzbic.uz"
+      }
+    ];
+
+    function selectCompany(idx) {
+      document.querySelectorAll('.directory-item').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.directory-item')[idx].classList.add('active');
+
+      const data = companiesData[idx];
+      document.getElementById('stageBrandMark').textContent = data.name.toUpperCase();
+      document.getElementById('stageCode').textContent = data.code;
+      document.getElementById('stageCategory').textContent = data.category;
+      document.getElementById('stageTitle').textContent = data.name;
+      document.getElementById('stageActivity').textContent = data.activity;
+      document.getElementById('stageDesc').textContent = data.desc;
+      document.getElementById('stageRole').textContent = data.role;
+      document.getElementById('stageFounded').textContent = data.founded;
+      document.getElementById('stageSector').textContent = data.sector;
+      document.getElementById('stageNature').textContent = data.nature;
+      document.getElementById('stageStatus').textContent = data.status;
+
+      const tagContainer = document.getElementById('stageTags');
+      tagContainer.innerHTML = '';
+      data.tags.forEach(tag => {
+        const span = document.createElement('span');
+        span.className = 'stage-tag-item';
+        span.textContent = tag;
+        tagContainer.appendChild(span);
+      });
+
+      const linkEl = document.getElementById('stageLink');
+      linkEl.href = data.linkUrl;
+      linkEl.innerHTML = `<span>${data.linkText}</span><span>↗</span>`;
+    }
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anvar Abduqayum — Phase 1.5 Visual Concepts Exploration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Diverse Google Fonts for the 3 distinct concepts -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Cinzel:wght@500;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #090A0D;
+      color: #E4E7EC;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation Switcher Bar */
+    .top-controller {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(14, 16, 22, 0.94);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-title h1 {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #FFFFFF;
+    }
+
+    .badge-phase {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(255, 85, 0, 0.15);
+      color: #FF6B22;
+      border: 1px solid rgba(255, 85, 0, 0.3);
+      text-transform: uppercase;
+    }
+
+    .switcher-group {
+      display: flex;
+      background: #050608;
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      gap: 4px;
+    }
+
+    .tab-btn {
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #98A2B3;
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab-btn:hover {
+      color: #FFFFFF;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .tab-btn.active {
+      color: #FFFFFF;
+      background: #1D2433;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .view-mode-group {
+      display: flex;
+      background: #050608;
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      gap: 4px;
+    }
+
+    .view-btn {
+      padding: 6px 12px;
+      font-size: 12px;
+      color: #98A2B3;
+      background: transparent;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .view-btn.active {
+      background: #252D3D;
+      color: #FFF;
+    }
+
+    /* Main Canvas Stage */
+    .stage-wrapper {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+      transition: max-width 0.3s ease;
+    }
+
+    .stage-wrapper.mobile-mode {
+      max-width: 420px;
+      padding: 24px 12px 80px;
+    }
+
+    .stage-wrapper.mobile-mode .mockup-viewport {
+      border: 6px solid #20242D;
+      border-radius: 36px;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8);
+      overflow: hidden;
+    }
+
+    .mockup-viewport {
+      background: #000;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    /* Concept Canvas Containers */
+    .concept-canvas {
+      display: none;
+    }
+
+    .concept-canvas.active {
+      display: block;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =========================================================================
+       CONCEPT A: THE ARCHITECTURAL MONOLITH (Minimalist Precision Luxury)
+       Colors: #0D0F12, #E8ECF2, #2A5BFF (Cobalt Electric)
+       Fonts: Space Grotesk (Display) + Plus Jakarta Sans + JetBrains Mono
+       ========================================================================= */
+    .theme-monolith {
+      background: #0D0F12;
+      color: #E8ECF2;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .theme-monolith .hero-section {
+      min-height: 85vh;
+      position: relative;
+      padding: clamp(32px, 6vw, 80px) clamp(20px, 4vw, 60px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: 
+        radial-gradient(circle at 80% 20%, rgba(42, 91, 255, 0.12) 0%, transparent 60%),
+        linear-gradient(180deg, #0D0F12 0%, #080A0D 100%);
+    }
+
+    .theme-monolith .top-specs {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #8C95A6;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 16px;
+      margin-bottom: 32px;
+    }
+
+    .theme-monolith .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .mobile-mode .theme-monolith .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+
+    .theme-monolith .hero-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(32px, 5.5vw, 68px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: #FFFFFF;
+      margin-bottom: 24px;
+    }
+
+    .theme-monolith .hero-heading span.accent-blue {
+      color: #2A5BFF;
+      background: linear-gradient(135deg, #4F7DFF 0%, #2A5BFF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .theme-monolith .hero-desc {
+      font-size: clamp(14px, 1.4vw, 18px);
+      color: #9AA4B2;
+      line-height: 1.6;
+      max-width: 580px;
+      margin-bottom: 36px;
+    }
+
+    .theme-monolith .cta-cluster {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .theme-monolith .btn-primary {
+      padding: 16px 32px;
+      background: #2A5BFF;
+      color: #FFFFFF;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 14px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 20px rgba(42, 91, 255, 0.35);
+    }
+
+    .theme-monolith .btn-primary:hover {
+      background: #1C48E0;
+      transform: translateY(-2px);
+    }
+
+    .theme-monolith .btn-secondary {
+      padding: 16px 28px;
+      background: rgba(255, 255, 255, 0.04);
+      color: #E8ECF2;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .theme-monolith .portrait-card {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: #13171F;
+      aspect-ratio: 4/5;
+    }
+
+    .theme-monolith .portrait-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      filter: contrast(1.05) grayscale(20%);
+    }
+
+    .theme-monolith .portrait-badge {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      padding: 12px 16px;
+      background: rgba(13, 15, 18, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Concept A: Services Architecture (Precision Ledgers) */
+    .theme-monolith .section-block {
+      padding: clamp(40px, 6vw, 80px) clamp(20px, 4vw, 60px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .theme-monolith .section-header-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #2A5BFF;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .theme-monolith .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 700;
+      color: #FFF;
+      margin-bottom: 40px;
+    }
+
+    .theme-monolith .services-monolith-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .mobile-mode .theme-monolith .services-monolith-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .theme-monolith .service-card {
+      background: #11141A;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      position: relative;
+    }
+
+    .theme-monolith .service-card:hover {
+      border-color: rgba(42, 91, 255, 0.4);
+      transform: translateY(-4px);
+      background: #141923;
+    }
+
+    .theme-monolith .service-index {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #8C95A6;
+      margin-bottom: 16px;
+    }
+
+    .theme-monolith .service-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #FFF;
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+
+    .theme-monolith .service-body {
+      font-size: 14px;
+      color: #9AA4B2;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .theme-monolith .service-metric-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 6px 10px;
+      background: rgba(42, 91, 255, 0.08);
+      color: #6C92FF;
+      border: 1px solid rgba(42, 91, 255, 0.2);
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    .theme-monolith .card-action {
+      font-size: 13px;
+      font-weight: 600;
+      color: #2A5BFF;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Concept A: Portfolio Matrix */
+    .theme-monolith .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .mobile-mode .theme-monolith .portfolio-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .theme-monolith .corp-chip {
+      background: #11141A;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 20px;
+      border-radius: 4px;
+    }
+
+    .theme-monolith .corp-chip h4 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      color: #FFF;
+      margin-bottom: 4px;
+    }
+
+    .theme-monolith .corp-chip p {
+      font-size: 12px;
+      color: #8C95A6;
+    }
+
+    /* =========================================================================
+       CONCEPT B: THE CINEMATIC EDITORIAL (Luxury Monograph & Warm Amber)
+       Colors: #0A0A0B, #F5F2EB, #D97736 (Warm Amber / Liquid Bronze)
+       Fonts: Playfair Display (Serif) + Manrope + JetBrains Mono
+       ========================================================================= */
+    .theme-cinematic {
+      background: #0A0A0B;
+      color: #F5F2EB;
+      font-family: 'Manrope', sans-serif;
+    }
+
+    .theme-cinematic .hero-section {
+      position: relative;
+      min-height: 85vh;
+      padding: clamp(40px, 8vw, 100px) clamp(20px, 5vw, 80px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: 
+        radial-gradient(circle at 50% 30%, rgba(217, 119, 54, 0.09) 0%, transparent 70%),
+        linear-gradient(180deg, #0A0A0B 0%, #111113 100%);
+      border-bottom: 1px solid rgba(245, 242, 235, 0.08);
+    }
+
+    .theme-cinematic .editorial-masthead {
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .theme-cinematic .kicker {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #D97736;
+      margin-bottom: 24px;
+    }
+
+    .theme-cinematic .hero-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: clamp(34px, 5.8vw, 76px);
+      font-weight: 500;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: #F5F2EB;
+      margin-bottom: 24px;
+    }
+
+    .theme-cinematic .hero-title em {
+      font-style: italic;
+      color: #E6A26B;
+    }
+
+    .theme-cinematic .hero-lead {
+      font-size: clamp(15px, 1.3vw, 19px);
+      color: #A39E93;
+      line-height: 1.7;
+      max-width: 640px;
+      margin: 0 auto 40px;
+      font-weight: 300;
+    }
+
+    .theme-cinematic .hero-cta-row {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .theme-cinematic .btn-amber {
+      padding: 16px 36px;
+      background: #D97736;
+      color: #0A0A0B;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      border-radius: 2px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 25px rgba(217, 119, 54, 0.3);
+      transition: all 0.25s ease;
+    }
+
+    .theme-cinematic .btn-amber:hover {
+      background: #E88B4D;
+      transform: translateY(-2px);
+    }
+
+    .theme-cinematic .btn-outline {
+      padding: 16px 32px;
+      background: transparent;
+      color: #F5F2EB;
+      border: 1px solid rgba(245, 242, 235, 0.2);
+      font-size: 14px;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+
+    .theme-cinematic .cinematic-portrait-band {
+      margin-top: 50px;
+      position: relative;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid rgba(245, 242, 235, 0.1);
+    }
+
+    .theme-cinematic .cinematic-portrait-band img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      object-position: top;
+      filter: sepia(10%) brightness(0.95);
+    }
+
+    .theme-cinematic .portrait-caption-bar {
+      padding: 14px 20px;
+      background: #111114;
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #A39E93;
+      border-top: 1px solid rgba(245, 242, 235, 0.08);
+    }
+
+    /* Concept B: Services as Curated Programs */
+    .theme-cinematic .services-editorial {
+      padding: clamp(50px, 8vw, 100px) clamp(20px, 5vw, 80px);
+      border-bottom: 1px solid rgba(245, 242, 235, 0.08);
+    }
+
+    .theme-cinematic .editorial-section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 4vw, 52px);
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .theme-cinematic .editorial-section-sub {
+      text-align: center;
+      color: #A39E93;
+      max-width: 580px;
+      margin: 0 auto 56px;
+      font-size: 15px;
+    }
+
+    .theme-cinematic .curated-services-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      background: rgba(245, 242, 235, 0.08);
+      border: 1px solid rgba(245, 242, 235, 0.08);
+    }
+
+    .theme-cinematic .service-row-item {
+      background: #0D0D10;
+      padding: 32px clamp(20px, 4vw, 40px);
+      display: grid;
+      grid-template-columns: 80px 1.5fr 2fr 160px;
+      align-items: center;
+      gap: 24px;
+      transition: background 0.2s ease;
+    }
+
+    .mobile-mode .theme-cinematic .service-row-item {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .theme-cinematic .service-row-item:hover {
+      background: #15151A;
+    }
+
+    .theme-cinematic .row-num {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 28px;
+      color: #D97736;
+    }
+
+    .theme-cinematic .row-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .theme-cinematic .row-desc {
+      font-size: 14px;
+      color: #A39E93;
+      line-height: 1.6;
+    }
+
+    /* =========================================================================
+       CONCEPT C: THE NEO-INDUSTRIAL COMMAND (High-Impact Sanoat & Orange)
+       Colors: #121417, #F0F2F5, #FF5500 (Industrial Hazard Orange)
+       Fonts: Space Grotesk / Clash Display + Plus Jakarta Sans + JetBrains Mono
+       ========================================================================= */
+    .theme-industrial {
+      background: #121417;
+      color: #F0F2F5;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .theme-industrial .hero-section {
+      min-height: 85vh;
+      padding: clamp(32px, 6vw, 70px) clamp(20px, 4vw, 50px);
+      position: relative;
+      border-bottom: 2px solid #23272E;
+      background: 
+        linear-gradient(135deg, rgba(255, 85, 0, 0.06) 0%, transparent 50%),
+        #121417;
+    }
+
+    .theme-industrial .telemetry-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 16px;
+      background: #1A1D23;
+      border-left: 3px solid #FF5500;
+      border-radius: 2px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #A0AAB8;
+      margin-bottom: 36px;
+    }
+
+    .theme-industrial .industrial-split {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .mobile-mode .theme-industrial .industrial-split {
+      grid-template-columns: 1fr;
+    }
+
+    .theme-industrial .industrial-heading {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(34px, 5.2vw, 64px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: #FFF;
+      margin-bottom: 20px;
+    }
+
+    .theme-industrial .hazard-tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: #FF5500;
+      background: rgba(255, 85, 0, 0.12);
+      padding: 4px 10px;
+      border-radius: 2px;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+    .theme-industrial .industrial-lead {
+      font-size: 16px;
+      color: #A0AAB8;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .theme-industrial .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 36px;
+      padding-top: 24px;
+      border-top: 1px solid #23272E;
+    }
+
+    .theme-industrial .kpi-box h3 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 28px;
+      font-weight: 800;
+      color: #FF5500;
+    }
+
+    .theme-industrial .kpi-box p {
+      font-size: 12px;
+      color: #798393;
+      text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .theme-industrial .btn-hazard {
+      padding: 16px 32px;
+      background: #FF5500;
+      color: #FFF;
+      font-weight: 700;
+      font-size: 14px;
+      border: none;
+      border-radius: 2px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      box-shadow: 0 4px 20px rgba(255, 85, 0, 0.35);
+    }
+
+    .theme-industrial .portrait-blueprint {
+      position: relative;
+      border: 1px solid #2F3642;
+      background: #181C22;
+      padding: 12px;
+      border-radius: 2px;
+    }
+
+    .theme-industrial .portrait-blueprint img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      object-position: top;
+      filter: grayscale(100%) contrast(1.1);
+    }
+
+    .theme-industrial .blueprint-overlay {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      background: rgba(18, 20, 23, 0.9);
+      padding: 4px 10px;
+      border: 1px solid #FF5500;
+      color: #FF5500;
+    }
+
+    /* Comparison Section Footer */
+    .comparison-analysis {
+      margin-top: 60px;
+      background: #11141A;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 36px clamp(20px, 4vw, 48px);
+    }
+
+    .comparison-analysis h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #FFF;
+      margin-bottom: 24px;
+    }
+
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin-top: 16px;
+    }
+
+    .matrix-table th, .matrix-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      text-align: left;
+    }
+
+    .matrix-table th {
+      background: #161A22;
+      color: #9AA4B2;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Controller Navigation -->
+  <header class="top-controller">
+    <div class="brand-title">
+      <h1>Anvar Abduqayum</h1>
+      <span class="badge-phase">Phase 1.5 Prototype</span>
+    </div>
+
+    <!-- Concept Switcher -->
+    <div class="switcher-group">
+      <button class="tab-btn active" onclick="switchConcept('concept-a')">
+        <span>A. Architectural Monolith</span>
+      </button>
+      <button class="tab-btn" onclick="switchConcept('concept-b')">
+        <span>B. Cinematic Editorial</span>
+      </button>
+      <button class="tab-btn" onclick="switchConcept('concept-c')">
+        <span>C. Neo-Industrial</span>
+      </button>
+    </div>
+
+    <!-- Device Frame Mode Switcher -->
+    <div class="view-mode-group">
+      <button class="view-btn active" onclick="setViewMode('desktop')">DESKTOP</button>
+      <button class="view-btn" onclick="setViewMode('mobile')">MOBILE (420px)</button>
+    </div>
+  </header>
+
+  <!-- Interactive Stage Wrapper -->
+  <main class="stage-wrapper" id="stageWrapper">
+    <div class="mockup-viewport">
+
+      <!-- ===================================================================
+           CONCEPT A: ARCHITECTURAL MONOLITH
+           =================================================================== -->
+      <section id="concept-a" class="concept-canvas active theme-monolith">
+        <!-- Hero Section -->
+        <div class="hero-section">
+          <div class="top-specs">
+            <div>ANVAR ABDUQAYUM // ARCHITECTURAL MONOLITH</div>
+            <div>STATUS: AMALIYOTCHI TADBIRKOR &amp; SANOATCHI</div>
+            <div>TOSHKENT &bull; 20+ YIL TAJRIBA</div>
+          </div>
+
+          <div class="hero-grid">
+            <div>
+              <h2 class="hero-heading">
+                Sanoat ko‘lami, <br>
+                <span class="accent-blue">avtonom boshqaruv</span> <br>
+                va amaliy mentorlik.
+              </h2>
+              <p class="hero-desc">
+                20+ yillik real ishlab chiqarish zavodlari (Toybola, Samtech, Visage, Afiyet, Puro), xalqaro eksport va tizimli korporativ boshqaruv. Biznesingizni operatsion qafasdan mustaqil tizimga olib chiqing.
+              </p>
+              <div class="cta-cluster">
+                <button class="btn-primary">
+                  <span>Strategik Diagnostika Bron Qilish</span>
+                  <span>&rarr;</span>
+                </button>
+                <button class="btn-secondary">
+                  <span>Xizmatlar &amp; Mentorlik</span>
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <div class="portrait-card">
+                <img src="/images/hero/portrait.webp" alt="Anvar Abduqayum">
+                <div class="portrait-badge">
+                  <span>SYSTEM ARCHITECT</span>
+                  <span style="color: #2A5BFF; font-weight:700;">7 KORXONA / 15+ EKSPORT</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Services Section Mockup -->
+        <div class="section-block">
+          <div class="section-header-tag">&bull; 02 // XIZMATLAR VA MENTORLIK DASTURLARI</div>
+          <h3 class="section-title">Biznesingizni miqyoslashtiruvchi strategik yo‘nalishlar</h3>
+
+          <div class="services-monolith-grid">
+            <div class="service-card">
+              <div>
+                <div class="service-index">01 // INDIVIDUAL MENTORSHIP</div>
+                <h4 class="service-name">1-on-1 Strategik Mentorlik</h4>
+                <div class="service-metric-tag">Oylik boshqaruv sessiyalari</div>
+                <p class="service-body">
+                  Kompaniya asoschisining shaxsiy samaradorligi, operatsion botqoqdan chiqish, boshqaruv kengashi shakllantirish va delegatsiya qilish tizimi.
+                </p>
+              </div>
+              <div class="card-action">Ariza topshirish &rarr;</div>
+            </div>
+
+            <div class="service-card" style="border-color: rgba(42, 91, 255, 0.4); background: #131722;">
+              <div>
+                <div class="service-index" style="color: #2A5BFF;">02 // INDUSTRIAL SCALING (TOP)</div>
+                <h4 class="service-name">Zavod va Ishlab Chiqarishni Tizimlashtirish</h4>
+                <div class="service-metric-tag">SOP, Tannarx va ERP integratsiyasi</div>
+                <p class="service-body">
+                  Xomashyo isrofi va ko‘rinmas yo‘qotishlarni bartaraf etish, standartlashtirish (SOP) va zavodlarning egasisiz 24/7 ishlash mexanizmi.
+                </p>
+              </div>
+              <div class="card-action">Batafsil tanishish &rarr;</div>
+            </div>
+
+            <div class="service-card">
+              <div>
+                <div class="service-index">03 // EXPORT ACCELERATION</div>
+                <h4 class="service-name">UZBIC Xalqaro Eksport Konsaltingi</h4>
+                <div class="service-metric-tag">15+ davlatga chiqish tajribasi</div>
+                <p class="service-body">
+                  Mahalliy mahsulotlarni tashqi bozorlarga (MDH, Yaqin Sharq) olib chiqish, sertifikatlash, distribyutorlar bilan B2B shartnomalar tuzish.
+                </p>
+              </div>
+              <div class="card-action">Eksport so‘rovi &rarr;</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Portfolio Section Mockup -->
+        <div class="section-block">
+          <div class="section-header-tag">&bull; 03 // BIZNES EKOTIZIMI (REAL SANOAT)</div>
+          <h3 class="section-title">Anvar Abduqayum tomonidan qurilgan 7 ta mustaqil tizim</h3>
+          <div class="portfolio-grid">
+            <div class="corp-chip">
+              <h4>Toybola Toys</h4>
+              <p>Bolalar plastik o‘yinchoqlari fabrikasi &bull; Eksportchi</p>
+            </div>
+            <div class="corp-chip">
+              <h4>Samtech Masterbatch</h4>
+              <p>Polimer rang xomashyosi majmuasi &bull; B2B</p>
+            </div>
+            <div class="corp-chip">
+              <h4>Visage Electric</h4>
+              <p>Elektrotexnika va yoritish uskunalari zavodi</p>
+            </div>
+            <div class="corp-chip">
+              <h4>PURO &amp; AFIYET</h4>
+              <p>Italiya dondurmasi &amp; Standartlashgan restoran tarmog‘i</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ===================================================================
+           CONCEPT B: THE CINEMATIC EDITORIAL
+           =================================================================== -->
+      <section id="concept-b" class="concept-canvas theme-cinematic">
+        <!-- Hero Section -->
+        <div class="hero-section">
+          <div class="editorial-masthead">
+            <div class="kicker">Anvar Abduqayum &bull; Shaxsiy Monografiya &amp; Biznes Ekotizimi</div>
+            <h2 class="hero-title">
+              Haqiqiy tadbirkorlik — <em>egasisiz ishlaydigan</em> <br>tizimlar yaratish san’atidir.
+            </h2>
+            <p class="hero-lead">
+              20 yillik qat’iy sanoat intizomi, yuzlab xatolardan olingan qimmatli darslar va xalqaro miqyosdagi zavodlar tajribasi asosida biznesingizni yangi bosqichga olib chiqing.
+            </p>
+            <div class="hero-cta-row">
+              <button class="btn-amber">Strategik Uchrashuvga Yozilish</button>
+              <button class="btn-outline">Konsalting Dasturlari</button>
+            </div>
+
+            <div class="cinematic-portrait-band">
+              <img src="/images/hero/portrait.webp" alt="Anvar Abduqayum">
+              <div class="portrait-caption-bar">
+                <span>ANVAR ABDUQAYUM &bull; SANOATCHI VA MENTOR</span>
+                <span>TOY BOLA &bull; SAMTECH &bull; VISAGE &bull; UZBIC</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Services Section Mockup -->
+        <div class="services-editorial">
+          <div class="kicker" style="text-align:center;">Eksklyuziv Xizmatlar</div>
+          <h3 class="editorial-section-title">Rahbarlar va Biznes Egalari Uchun Dasturlar</h3>
+          <p class="editorial-section-sub">Har bir dastur shaxsan amaliyotchi tadbirkor tomonidan olib boriladi va amaliy natijaga qaratilgan.</p>
+
+          <div class="curated-services-stack">
+            <div class="service-row-item">
+              <div class="row-num">I</div>
+              <div class="row-name">Boshqaruv Tizimi va Delegatsiya</div>
+              <div class="row-desc">Operatsiyaga botib qolgan kompaniyani direktorlar kengashi va aniq reglamentlar (SOP) asosida avtonom boshqaruvga o‘tkazish.</div>
+              <div><button class="btn-outline" style="width:100%; font-size:12px;">Tanlash</button></div>
+            </div>
+
+            <div class="service-row-item" style="background:#17171E;">
+              <div class="row-num" style="color:#FFB17A;">II</div>
+              <div class="row-name">Ishlab Chiqarish Zavodlari Auditi</div>
+              <div class="row-desc">Zavoddagi tannarx kalkulyatsiyasi, moddiy isroflar, qoliplar va uskunalar samaradorligini amaliy tekshirish.</div>
+              <div><button class="btn-amber" style="width:100%; font-size:12px;">Ariza</button></div>
+            </div>
+
+            <div class="service-row-item">
+              <div class="row-num">III</div>
+              <div class="row-name">UZBIC Xalqaro Eksport Yo‘lagi</div>
+              <div class="row-desc">Mahalliy mahsulotlarni tashqi bozorlarga eksport qilish uchun B2B missiyalar va distribyutsiya shartnomalari.</div>
+              <div><button class="btn-outline" style="width:100%; font-size:12px;">Tanlash</button></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ===================================================================
+           CONCEPT C: THE NEO-INDUSTRIAL COMMAND
+           =================================================================== -->
+      <section id="concept-c" class="concept-canvas theme-industrial">
+        <!-- Hero Section -->
+        <div class="hero-section">
+          <div class="telemetry-bar">
+            <span>TERMINAL // ANVAR ABDUQAYUM</span>
+            <span>SYSTEM // 7 FACTORIES RUNNING AUTONOMOUSLY</span>
+            <span>LOCATION // TASHKENT, UZBEKISTAN</span>
+            <span style="color:#FF5500;">LIVE TELEMETRY &bull; 2026</span>
+          </div>
+
+          <div class="industrial-split">
+            <div>
+              <span class="hazard-tag">Sanoat &bull; Ishlab Chiqarish &bull; Eksport</span>
+              <h2 class="industrial-heading">
+                HIS-TUYG‘ULAR EMAS, <br>
+                <span style="color:#FF5500;">QAT’IY METRIKALAR</span> VA SANOAT QOLIPLARI.
+              </h2>
+              <p class="industrial-lead">
+                O‘yinchoq quyish fabrikalaridan tortib polimer xomashyosi va restoranlargacha: egasining doimiy qatnashuvisiz ishlaydigan yuqori unumli korporativ tizimlar me’mori.
+              </p>
+
+              <div class="kpi-strip">
+                <div class="kpi-box">
+                  <h3>20+</h3>
+                  <p>Yil Amaliy Sanoat</p>
+                </div>
+                <div class="kpi-box">
+                  <h3>7</h3>
+                  <p>Mustaqil Korxona</p>
+                </div>
+                <div class="kpi-box">
+                  <h3>15+</h3>
+                  <p>Eksport Davlatlari</p>
+                </div>
+              </div>
+
+              <div style="display:flex; gap:16px; flex-wrap:wrap;">
+                <button class="btn-hazard">
+                  <span>Diagnostika So‘rovini Yuborish</span>
+                  <span>&rarr;</span>
+                </button>
+                <button style="padding:16px 28px; background:#1C2027; color:#FFF; border:1px solid #2F3642; font-family:'JetBrains Mono'; font-size:13px; cursor:pointer;">
+                  [ TESTNI TOPSHIRISH ]
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <div class="portrait-blueprint">
+                <span class="blueprint-overlay">FIG. 01 // FOUNDER IDENTIFIER</span>
+                <img src="/images/hero/portrait.webp" alt="Anvar Abduqayum">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Services Section Mockup -->
+        <div style="padding: clamp(40px, 6vw, 80px) clamp(20px, 4vw, 50px); border-bottom: 2px solid #23272E;">
+          <div style="font-family:'JetBrains Mono'; color:#FF5500; font-size:12px; margin-bottom:8px;">
+            // MODULAR ENGINES &bull; KONSALTING MODULLARI
+          </div>
+          <h3 style="font-family:'Space Grotesk'; font-size:36px; font-weight:800; margin-bottom:32px;">
+            Muhandislik darajasidagi biznes transformatsiyasi
+          </h3>
+
+          <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:20px;" class="services-monolith-grid">
+            <div style="background:#181C22; border:1px solid #2F3642; padding:28px;">
+              <div style="color:#FF5500; font-family:'JetBrains Mono'; font-size:12px; margin-bottom:12px;">ENGINE 01</div>
+              <h4 style="font-size:20px; font-weight:700; margin-bottom:10px;">Shaxsiy Mentorlik</h4>
+              <p style="font-size:14px; color:#A0AAB8; line-height:1.6; margin-bottom:20px;">
+                Tadbirkor bilan 1-on-1 strategik ish. Kengaytirish to‘siqlarini yechish va delegatsiya arxitekturasi.
+              </p>
+              <div style="color:#FF5500; font-family:'JetBrains Mono'; font-size:12px;">BRON QILISH &rarr;</div>
+            </div>
+
+            <div style="background:#181C22; border:1px solid #FF5500; padding:28px;">
+              <div style="color:#FF5500; font-family:'JetBrains Mono'; font-size:12px; margin-bottom:12px;">ENGINE 02 // CORE</div>
+              <h4 style="font-size:20px; font-weight:700; margin-bottom:10px;">Zavodlarni Tizimlashtirish</h4>
+              <p style="font-size:14px; color:#A0AAB8; line-height:1.6; margin-bottom:20px;">
+                Ishlab chiqarish liniyalarini audit qilish, xomashyo yo‘qotishlarini kamaytirish, real tannarx telemetriyasi.
+              </p>
+              <div style="color:#FF5500; font-family:'JetBrains Mono'; font-size:12px;">ARIZA YUBORISH &rarr;</div>
+            </div>
+
+            <div style="background:#181C22; border:1px solid #2F3642; padding:28px;">
+              <div style="color:#FF5500; font-family:'JetBrains Mono'; font-size:12px; margin-bottom:12px;">ENGINE 03</div>
+              <h4 style="font-size:20px; font-weight:700; margin-bottom:10px;">UZBIC Eksport Konsaltingi</h4>
+              <p style="font-size:14px; color:#A0AAB8; line-height:1.6; margin-bottom:20px;">
+                Mahsulotlarni chet elga yetkazib berish, distribyutorlik shartnomalari va bojxona sertifikatsiyasi.
+              </p>
+              <div style="color:#FF5500; font-family:'JetBrains Mono'; font-size:12px;">KENGASHGA A'ZOLIK &rarr;</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Comparative Analysis Matrix -->
+    <div class="comparison-analysis">
+      <h2>Uchta Vizual Konsepsiyaning Qiyosiy Tahlili</h2>
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th>Xususiyat</th>
+            <th>A. Architectural Monolith</th>
+            <th>B. Cinematic Editorial</th>
+            <th>C. Neo-Industrial Command</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Asosiy Falsafa</strong></td>
+            <td>Shveytsariya-Nordik muhandislik intizomi, toza me'moriy monolit</td>
+            <td>Kinematografik monografiya, yuqori darajadagi shaxsiy jurnal</td>
+            <td>Qat'iy sanoat boshqaruv paneli (Command Center)</td>
+          </tr>
+          <tr>
+            <td><strong>Ranglar Palitrasi</strong></td>
+            <td>Grafit (#0D0F12), Platina (#E8ECF2), Cobalt Blue (#2A5BFF)</td>
+            <td>Obsidian (#0A0A0B), Fil suyagi (#F5F2EB), Amber (#D97736)</td>
+            <td>Titan (#121417), Beton (#A0AAB8), Hazard Orange (#FF5500)</td>
+          </tr>
+          <tr>
+            <td><strong>Tipografiya Juftligi</strong></td>
+            <td>Space Grotesk + Plus Jakarta Sans + JetBrains Mono</td>
+            <td>Playfair Display (Serif) + Manrope + JetBrains Mono</td>
+            <td>Space Grotesk + Plus Jakarta Sans + JetBrains Mono</td>
+          </tr>
+          <tr>
+            <td><strong>Asosiy WOW Faktori</strong></td>
+            <td>Asimmetrik me'moriy monolitlar, o'ta toza va qimmat minimalizm</td>
+            <td>Kinematografik chuqurlik, boy serif va fotosuratlar uyg'unligi</td>
+            <td>Jonli telemetriya ko'rsatkichlari, sanoat quvvati va dinamika</td>
+          </tr>
+          <tr>
+            <td><strong>Xizmatlar Taqdimoti</strong></td>
+            <td>3 ustunli aniq parametrli texnologik kartochkalar (KPI, format)</td>
+            <td>Kuratorlik dasturlari formati (eksklyuziv rahbarlik dasturlari)</td>
+            <td>Modular Service Engines (muhandislik bloklari)</td>
+          </tr>
+          <tr>
+            <td><strong>Nishon Auditoriyaga Mosligi</strong></td>
+            <td>Yirik va o'rta biznes egalari, tizim istagan korporativ rahbarlar</td>
+            <td>Elita tadbirkorlar, xalqaro investorlar va nufuzli biznes egalari</td>
+            <td>Zavod egalari, muhandis-tadbirkorlar, ishlab chiqaruvchilar</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    function switchConcept(conceptId) {
+      document.querySelectorAll('.concept-canvas').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      
+      const target = document.getElementById(conceptId);
+      if (target) {
+        target.classList.add('active');
+      }
+
+      event.currentTarget.classList.add('active');
+    }
+
+    function setViewMode(mode) {
+      const wrapper = document.getElementById('stageWrapper');
+      document.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+      
+      if (mode === 'mobile') {
+        wrapper.classList.add('mobile-mode');
+      } else {
+        wrapper.classList.remove('mobile-mode');
+      }
+
+      event.currentTarget.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
+

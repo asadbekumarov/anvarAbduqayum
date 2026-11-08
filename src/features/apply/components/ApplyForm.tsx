@@ -374,7 +374,7 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
         <button
           type="submit"
           disabled={isSubmitting}
-          className="group relative overflow-hidden w-full bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] py-4 text-xs uppercase tracking-[0.2em] font-medium transition-colors rounded-none flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+          className="group relative overflow-hidden w-full bg-[#D4AF37] hover:bg-[#F3E5AB] text-[#070707] py-4 text-xs uppercase tracking-[0.2em] font-bold transition-colors rounded-none flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 shadow-[0_4px_16px_rgba(212,175,55,0.25)]"
         >
           {/* Liquid Sheen */}
           <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />

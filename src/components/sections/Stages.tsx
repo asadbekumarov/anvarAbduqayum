@@ -76,7 +76,7 @@ export function Stages({ onOpenApply }: StagesProps) {
     <section
       id="bosqichlar"
       aria-label={t("title")}
-      className="scroll-mt-20 py-14 sm:py-20 border-b border-white/[0.08] bg-[#0A0A0A] text-[#F5F5F0] relative overflow-hidden"
+      className="scroll-mt-20 py-14 sm:py-20 border-b border-white/[0.08] bg-[#070707] text-[#E5E5E5] relative overflow-hidden"
     >
       <div className="max-w-[1360px] mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-stretch">
@@ -85,8 +85,8 @@ export function Stages({ onOpenApply }: StagesProps) {
             <div className="space-y-6">
               {/* Swiss Kicker */}
               <div className="flex items-center gap-4">
-                <span className="w-8 h-[1px] bg-[#C5A880]" />
-                <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum">
+                <span className="w-8 h-[1px] bg-[#D4AF37]" />
+                <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#D4AF37]">
                   {formatSectionKicker("stages", t("kicker"))}
                 </span>
               </div>
@@ -100,7 +100,7 @@ export function Stages({ onOpenApply }: StagesProps) {
               </MaskedHeading>
 
               {/* Bespoke Architectural Tabs */}
-              <div className="flex flex-col border-t border-white/[0.08]">
+              <div className="flex flex-col border-t border-[#1E1E1E]">
                 {tabItems.map((tab) => {
                   const isActive = activeTab === tab.id;
                   return (
@@ -111,21 +111,21 @@ export function Stages({ onOpenApply }: StagesProps) {
                         setActiveTab(tab.id);
                         setOpenItem("");
                       }}
-                      className={`group flex items-center justify-between py-4 px-4 border-b border-white/[0.08] text-left transition-all rounded-none cursor-pointer w-full ${
+                      className={`group flex items-center justify-between py-4 px-4 border-b border-[#1E1E1E] text-left transition-all duration-300 rounded-none cursor-pointer w-full ${
                         isActive
-                          ? "bg-gradient-to-r from-[#0B132B]/70 to-white/[0.02] border-l-2 border-l-[#C5A880] pl-5 text-white"
-                          : "text-neutral-200 hover:text-white hover:bg-[#0B132B]/30"
+                          ? "bg-[#121212] border-l-2 border-l-[#D4AF37] pl-5 text-white shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
+                          : "text-[#9A9A9A] hover:text-white hover:bg-white/[0.03] hover:pl-5"
                       }`}
                     >
                       <div>
-                        <span className="font-mono text-xs uppercase tracking-[0.14em] block text-[#C5A880] mb-0.5">
+                        <span className="font-mono text-xs uppercase tracking-[0.16em] block text-[#D4AF37] mb-0.5">
                           {tab.direction}
                         </span>
                         <span className="text-base sm:text-lg font-normal tracking-tight text-white">
                           {tab.title}
                         </span>
                       </div>
-                      <span className="font-mono text-xs transition-transform duration-300 group-hover:translate-x-1.5 text-platinum">
+                      <span className="font-mono text-xs transition-transform duration-300 group-hover:translate-x-1.5 text-[#D4AF37]">
                         →
                       </span>
                     </button>
@@ -135,11 +135,11 @@ export function Stages({ onOpenApply }: StagesProps) {
             </div>
 
             {/* Contextual CTA Monolith fitted into Left Column, aligned flush with bottom of right column */}
-            <div className="mt-8 lg:mt-0 p-6 sm:p-7 border border-white/[0.1] bg-gradient-to-br from-[#070D1F] via-[#0B132B]/50 to-[#0A0A0A] rounded-none shadow-[0_15px_35px_rgba(7,13,31,0.5)]">
+            <div className="mt-8 lg:mt-0 p-6 sm:p-7 border border-[#1E1E1E] hover:border-[#D4AF37]/60 hover:-translate-y-1 transition-all duration-300 bg-[#121212] rounded-none shadow-[0_15px_35px_rgba(0,0,0,0.6)]">
               <h3 className="font-serif italic text-lg sm:text-xl text-white font-normal leading-snug">
                 {t("ctaBandTitle")}
               </h3>
-              <p className="text-sm text-neutral-200 mt-2 font-normal leading-relaxed">
+              <p className="text-sm text-[#9A9A9A] mt-2 font-normal leading-relaxed">
                 {t("ctaBandDesc")}
               </p>
               <div className="mt-4">
@@ -152,12 +152,12 @@ export function Stages({ onOpenApply }: StagesProps) {
                         : "Shogirdlik va mentorlik bosqichlari"
                     )
                   }
-                  className="w-full group/cta relative overflow-hidden inline-flex items-center justify-between bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] px-5 py-3 text-xs font-mono uppercase tracking-[0.16em] rounded-none transition-colors duration-300 cursor-pointer"
+                  className="w-full group/cta relative overflow-hidden inline-flex items-center justify-between bg-[#D4AF37] hover:bg-[#F3E5AB] text-[#070707] px-5 py-3 text-xs font-mono uppercase tracking-[0.16em] font-semibold rounded-none transition-all duration-300 cursor-pointer shadow-[0_4px_16px_rgba(212,175,55,0.2)]"
                 >
                   {/* Liquid Sheen */}
                   <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover/cta:translate-x-full" />
-                  <span className="relative z-10 font-medium">{ctaT("primary")}</span>
-                  <span className="relative z-10 transition-transform duration-300 group-hover/cta:translate-x-1.5">
+                  <span className="relative z-10 font-bold">{ctaT("primary")}</span>
+                  <span className="relative z-10 transition-transform duration-300 group-hover/cta:translate-x-1.5 font-bold">
                     →
                   </span>
                 </button>
@@ -183,23 +183,31 @@ export function Stages({ onOpenApply }: StagesProps) {
                   return (
                     <div
                       key={item.id}
-                      className="relative transition-all duration-500 group-hover/stages-list:opacity-40 hover:!opacity-100"
+                      className="group relative transition-all duration-300 group-hover/stages-list:opacity-40 hover:!opacity-100 hover:bg-[#121212]/50 px-2 sm:px-4 rounded-none overflow-hidden"
                     >
+                      {/* Watermark Step Number in Background */}
+                      <span
+                        aria-hidden="true"
+                        className="pointer-events-none select-none absolute right-12 top-3 font-mono text-5xl sm:text-6xl font-bold text-[#D4AF37]/[0.04] group-hover:text-[#D4AF37]/[0.1] transition-colors duration-300"
+                      >
+                        {item.step}
+                      </span>
+
                       <button
                         type="button"
                         onClick={() => toggleItem(item.id)}
                         aria-expanded={isOpen}
                         aria-controls={`stage-content-${item.id}`}
                         id={`stage-button-${item.id}`}
-                        className="w-full py-5 flex items-baseline justify-between gap-6 text-left group rounded-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C5A880]"
+                        className="w-full py-5 flex items-baseline justify-between gap-6 text-left rounded-none cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] relative z-10"
                       >
-                        <span className="font-mono text-xs text-platinum group-hover:text-white shrink-0 w-12 transition-colors duration-300">
+                        <span className="font-mono text-xs text-[#D4AF37] group-hover:text-white shrink-0 w-12 transition-colors duration-300">
                           /{item.step}
                         </span>
-                        <span className="text-xl sm:text-2xl font-light tracking-[-0.02em] text-white transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2 flex-1">
+                        <span className="text-xl sm:text-2xl font-light tracking-[-0.02em] text-[#E5E5E5] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-2 flex-1">
                           {item.title}
                         </span>
-                        <span className="font-mono text-lg text-platinum group-hover:text-white transition-transform shrink-0">
+                        <span className="font-mono text-lg text-[#D4AF37] group-hover:text-white transition-transform shrink-0">
                           {isOpen ? "−" : "+"}
                         </span>
                       </button>
@@ -214,10 +222,10 @@ export function Stages({ onOpenApply }: StagesProps) {
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.35, ease: EASE_SWISS }}
-                            className="overflow-hidden"
+                            className="overflow-hidden relative z-10"
                           >
                             <div className="pb-8 pl-0 sm:pl-12 pr-4 space-y-4">
-                              <p className="text-base text-neutral-200 font-normal leading-relaxed">
+                              <p className="text-base text-[#9A9A9A] font-normal leading-relaxed">
                                 {item.description}
                               </p>
 
@@ -225,10 +233,10 @@ export function Stages({ onOpenApply }: StagesProps) {
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                                   {item.points.map((pt, pIdx) => (
                                     <div key={pIdx} className="flex items-start gap-2.5">
-                                      <span className="text-[#C5A880] font-mono text-xs shrink-0 mt-0.5">
+                                      <span className="text-[#D4AF37] font-mono text-xs shrink-0 mt-0.5">
                                         —
                                       </span>
-                                      <span className="text-sm text-neutral-200 font-normal leading-relaxed">
+                                      <span className="text-sm text-[#9A9A9A] font-normal leading-relaxed">
                                         {pt}
                                       </span>
                                     </div>
@@ -240,7 +248,7 @@ export function Stages({ onOpenApply }: StagesProps) {
                                 <button
                                   type="button"
                                   onClick={() => handleApply(`${item.title} bosqichi`)}
-                                  className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-[#C5A880] hover:text-white transition-colors cursor-pointer group/btn min-h-[44px]"
+                                  className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-[#D4AF37] hover:text-white transition-colors cursor-pointer group/btn min-h-[44px]"
                                 >
                                   <span>{t("stageAction")}</span>
                                   <span className="transition-transform duration-300 group-hover/btn:translate-x-1.5 font-mono">

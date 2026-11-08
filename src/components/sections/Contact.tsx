@@ -136,7 +136,7 @@ export function Contact() {
     <section
       id="aloqa"
       aria-label={t("title")}
-      className="scroll-mt-20 relative bg-gradient-to-b from-[#0A0A0A] via-[#0D1017] to-[#0A0A0A] border-t border-white/[0.08] py-16 sm:py-24 pb-28 sm:pb-32 overflow-hidden"
+      className="scroll-mt-20 relative bg-[#070707] text-[#E5E5E5] border-t border-white/[0.08] py-16 sm:py-24 pb-28 sm:pb-32 overflow-hidden"
     >
       {/* Anchor aliases */}
       <span id="kontakt" className="absolute -top-24 pointer-events-none" />
@@ -153,8 +153,8 @@ export function Contact() {
         <div className="lg:col-span-6 space-y-8">
           <div>
             <div className="flex items-center gap-3">
-              <span className="w-8 h-[1px] bg-[#C5A880]" aria-hidden="true" />
-              <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum">
+              <span className="w-8 h-[1px] bg-[#D4AF37]" aria-hidden="true" />
+              <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#D4AF37]">
                 {formatSectionKicker("contact", t("kicker"))}
               </span>
             </div>
@@ -234,7 +234,7 @@ export function Contact() {
         </div>
 
         {/* Right Column — Direct Quick Inquiry Form */}
-        <div className="lg:col-span-6 bg-gradient-to-br from-[#0F172A]/80 via-[#0B132B]/60 to-[#0A0A0A] border border-white/[0.1] shadow-[0_20px_50px_rgba(7,13,31,0.5)] p-8 sm:p-10 relative z-10">
+        <div className="lg:col-span-6 bg-[#121212] border border-[#1E1E1E] hover:border-[#D4AF37]/50 shadow-[0_20px_50px_rgba(0,0,0,0.6)] p-8 sm:p-10 relative z-10 transition-colors duration-300">
           <h3 className="font-serif italic text-2xl text-white mb-2">
             {t("formTitle")}
           </h3>
@@ -471,8 +471,8 @@ export function Contact() {
                         disabled={isSubmitting}
                         className={`min-h-[52px] py-2 px-2 font-mono text-xs transition-all rounded-none text-center cursor-pointer flex flex-col items-center justify-center gap-0.5 border ${
                           isSelected
-                            ? "bg-[#0B132B] border-[#C5A880] text-[#E2C79D] shadow-[0_0_15px_rgba(197,168,128,0.2)] ring-1 ring-[#C5A880]/60"
-                            : "bg-[#0A0A0A]/80 border-white/[0.12] text-neutral-300 hover:text-white hover:border-white/30"
+                            ? "bg-[#070707] border-[#D4AF37] text-[#F3E5AB] shadow-[0_0_15px_rgba(212,175,55,0.2)] ring-1 ring-[#D4AF37]/60"
+                            : "bg-[#070707]/80 border-[#1E1E1E] text-[#9A9A9A] hover:text-white hover:border-[#D4AF37]/40"
                         }`}
                       >
                         <span className="font-semibold text-xs tracking-wider">{opt.title}</span>
@@ -489,7 +489,7 @@ export function Contact() {
               <div>
                 <label
                   htmlFor="contact-business"
-                  className="font-mono text-xs uppercase tracking-[0.14em] text-neutral-300 block mb-2"
+                  className="font-mono text-xs uppercase tracking-[0.14em] text-[#9A9A9A] block mb-2"
                 >
                   {t("businessInputLabel")}
                 </label>
@@ -502,7 +502,7 @@ export function Contact() {
                   }
                   placeholder={t("businessInputPlaceholder")}
                   disabled={isSubmitting}
-                  className="w-full bg-[#0A0A0A]/70 border border-white/[0.12] px-4 py-3.5 text-sm text-white placeholder:text-neutral-500 focus:border-platinum/50 focus:outline-none transition-colors rounded-none resize-none"
+                  className="w-full bg-[#070707]/80 border border-[#1E1E1E] px-4 py-3.5 text-sm text-white placeholder:text-neutral-500 focus:border-[#D4AF37] focus:outline-none transition-colors rounded-none resize-none"
                 />
               </div>
 
@@ -510,7 +510,7 @@ export function Contact() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="group relative overflow-hidden w-full bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] py-4 text-xs uppercase tracking-[0.2em] font-semibold transition-colors rounded-none mt-2 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_20px_rgba(197,168,128,0.25)]"
+                className="group relative overflow-hidden w-full bg-[#D4AF37] hover:bg-[#F3E5AB] text-[#070707] py-4 text-xs uppercase tracking-[0.2em] font-semibold transition-colors rounded-none mt-2 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_4px_20px_rgba(212,175,55,0.25)]"
               >
                 {/* Liquid Sheen */}
                 <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />

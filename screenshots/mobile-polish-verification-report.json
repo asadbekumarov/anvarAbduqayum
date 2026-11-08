@@ -1,0 +1,82 @@
+{
+  "timestamp": "2026-11-08T19:15:49.217Z",
+  "tests": [
+    {
+      "name": "Mobile Sticky Bar is visible on 390px",
+      "pass": true
+    },
+    {
+      "name": "CTA 1 has positive clearance above Sticky Bar (390px)",
+      "pass": true
+    },
+    {
+      "name": "CTA 1 is clickable without interception (390px)",
+      "pass": true
+    },
+    {
+      "name": "Sticky Bar hides when form input is focused",
+      "pass": true
+    },
+    {
+      "name": "H2 size at 320px is well-proportioned",
+      "pass": true,
+      "details": {
+        "fontSize": "24px",
+        "lineHeight": "28.8px"
+      }
+    },
+    {
+      "name": "Accordion header touch target >= 48px at 320px",
+      "pass": true,
+      "height": 174.5
+    },
+    {
+      "name": "CTA 2 has positive clearance above Sticky Bar (320px)",
+      "pass": true
+    },
+    {
+      "name": "CTA 2 is clickable without interception (320px)",
+      "pass": true
+    },
+    {
+      "name": "Navbar at y=0 is pinned at top:0",
+      "pass": true
+    },
+    {
+      "name": "Navbar at scrollY=600 remains pinned at top:0",
+      "pass": true
+    },
+    {
+      "name": "Fake scarcity \"navbat asosida qabul qilinadi\" REMOVED",
+      "pass": true
+    },
+    {
+      "name": "RU fake scarcity \"в порядке очереди\" REMOVED",
+      "pass": true
+    },
+    {
+      "name": "EN fake scarcity \"rolling basis\" REMOVED",
+      "pass": true
+    }
+  ],
+  "clearanceChecks": {
+    "390px_item1": {
+      "clearancePx": 138.03125,
+      "noOverlap": true,
+      "ctaBottom": 640.96875,
+      "stickyTop": 779
+    },
+    "320px_item2": {
+      "clearancePx": 172.28125,
+      "noOverlap": true,
+      "ctaBottom": 362.71875,
+      "stickyTop": 535
+    }
+  },
+  "overflowCheck": {
+    "390px": true,
+    "320px": true,
+    "360px": true,
+    "1440px": true
+  }
+}

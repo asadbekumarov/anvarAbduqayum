@@ -46,10 +46,10 @@ export function ApplyModal({
       isOpen={isOpen}
       onClose={onClose}
       ariaLabel={modalTitle}
-      className="!max-w-lg w-full p-8 sm:p-10 relative bg-gradient-to-br from-[#0F172A] via-[#0B132B] to-[#0A0A0A] border border-white/[0.12] rounded-none shadow-[0_30px_70px_rgba(7,13,31,0.85)]"
+      className="!max-w-lg w-full p-8 sm:p-10 relative bg-[#121212] border border-[#1E1E1E] rounded-none shadow-[0_30px_70px_rgba(0,0,0,0.85)]"
     >
       {/* Modal Header */}
-      <div className="flex justify-between items-center mb-6 pb-4 border-b border-white/[0.08]">
+      <div className="flex justify-between items-center mb-6 pb-4 border-b border-[#1E1E1E]">
         <h3 className="font-serif italic text-2xl text-white">
           {modalTitle}
         </h3>
@@ -57,7 +57,7 @@ export function ApplyModal({
           type="button"
           onClick={onClose}
           aria-label={commonT("close")}
-          className="font-mono text-xl text-platinum hover:text-white transition-colors p-1 cursor-pointer"
+          className="font-mono text-xl text-[#9A9A9A] hover:text-white transition-colors p-1 cursor-pointer"
         >
           ✕
         </button>
@@ -65,7 +65,7 @@ export function ApplyModal({
 
       {/* Dynamic Context Badge */}
       {selectedService && (
-        <div className="bg-[#0B132B]/60 border-l-2 border-platinum/60 px-4 py-2.5 mb-6 font-mono text-xs text-white">
+        <div className="bg-[#161616] border-l-2 border-[#D4AF37] px-4 py-2.5 mb-6 font-mono text-xs text-white">
           <span className="text-platinum mr-2">{t("selectedPrefix")}</span>
           {selectedService}
         </div>

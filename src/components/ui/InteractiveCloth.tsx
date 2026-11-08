@@ -1480,7 +1480,7 @@ export default function InteractiveCloth({
       >
         <Image
           src={fallbackSrc}
-          alt={fallbackAlt || captionName || "Ilhom Begimqulov"}
+          alt={fallbackAlt || captionName || "Anvar Abduqayum"}
           fill
           priority
           sizes="(max-width: 768px) 100vw, 480px"
@@ -1496,7 +1496,7 @@ export default function InteractiveCloth({
           aria-label={
             ariaLabel ||
             captionName ||
-            "Ilhom Begimqulov 3D interaktiv mato portreti"
+            "Anvar Abduqayum 3D interaktiv mato portreti"
           }
           className="absolute inset-0 w-full h-full block z-10 touch-pan-y outline-none transition-opacity duration-500"
           style={{ opacity: isReady ? 1 : 0 }}

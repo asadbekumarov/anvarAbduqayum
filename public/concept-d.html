@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anvar Abduqayum — Concept D: The Authority Experience</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================================
+       CSS RESET & DESIGN TOKENS
+       Concept D: The Authority Experience
+       Contrast: Dark Obsidian Hero & Portfolio <-> Warm Cream Services & Journey
+       ========================================================================= */
+    :root {
+      --dark-canvas: #090A0D;
+      --dark-surface: #12141A;
+      --dark-surface-elevated: #181B24;
+      --dark-ink: #F5F4F0;
+      --dark-muted: #8E95A5;
+      --dark-line: rgba(255, 255, 255, 0.09);
+      
+      --light-canvas: #F6F3EC;
+      --light-surface: #FFFFFF;
+      --light-surface-subtle: #EFEBE1;
+      --light-ink: #14161A;
+      --light-muted: #666C7A;
+      --light-line: rgba(20, 22, 26, 0.1);
+      
+      --amber-accent: #D97736;
+      --amber-hover: #E68545;
+      --amber-glow: rgba(217, 119, 54, 0.25);
+      
+      --cobalt-accent: #2563EB;
+      --cobalt-glow: rgba(37, 99, 235, 0.25);
+
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background: var(--dark-canvas);
+      color: var(--dark-ink);
+      font-family: var(--font-sans);
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    /* Container constraints */
+    .container {
+      width: 100%;
+      max-width: 1360px;
+      margin: 0 auto;
+      padding-left: clamp(16px, 4vw, 48px);
+      padding-right: clamp(16px, 4vw, 48px);
+    }
+
+    /* Interactive Top Demo Bar */
+    .demo-toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(9, 10, 13, 0.95);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--dark-line);
+      padding: 10px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+    }
+
+    .demo-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      color: #FFF;
+      letter-spacing: 0.02em;
+    }
+
+    .badge-concept-d {
+      font-family: var(--font-mono);
+      background: rgba(217, 119, 54, 0.15);
+      color: var(--amber-accent);
+      border: 1px solid rgba(217, 119, 54, 0.3);
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .demo-nav-links {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      overflow-x: auto;
+      max-width: 100%;
+      white-space: nowrap;
+    }
+
+    @media (max-width: 480px) {
+      .demo-nav-links {
+        display: none;
+      }
+    }
+
+    .demo-nav-links a {
+      color: var(--dark-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .demo-nav-links a:hover {
+      color: #FFF;
+    }
+
+    /* =========================================================================
+       SECTION 1: NAVIGATION & ASYMMETRICAL CINEMATIC HERO (DARK OBSIDIAN)
+       ========================================================================= */
+    .hero-wrapper {
+      position: relative;
+      background: 
+        radial-gradient(circle at 75% 25%, rgba(217, 119, 54, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 20% 80%, rgba(37, 99, 235, 0.05) 0%, transparent 50%),
+        var(--dark-canvas);
+      border-bottom: 1px solid var(--dark-line);
+      padding-top: clamp(24px, 4vw, 40px);
+      padding-bottom: clamp(60px, 8vw, 110px);
+      overflow: hidden;
+    }
+
+    /* Main Site Navigation */
+    .site-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: clamp(32px, 5vw, 64px);
+    }
+
+    .nav-monogram {
+      font-size: clamp(16px, 1.8vw, 20px);
+      font-weight: 800;
+      color: #FFF;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .monogram-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--amber-accent);
+      border-radius: 50%;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-menu a {
+      color: var(--dark-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-menu a:hover {
+      color: #FFF;
+    }
+
+    .nav-cta-btn {
+      padding: 10px 22px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #FFF;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-cta-btn:hover {
+      background: var(--amber-accent);
+      border-color: var(--amber-accent);
+      color: #000;
+    }
+
+    /* Asymmetric Hero Architecture */
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: clamp(32px, 6vw, 72px);
+      align-items: center;
+    }
+
+    .hero-kicker-strip {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .hero-kicker-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 4px 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 2px;
+      color: var(--amber-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-kicker-text {
+      font-size: 13px;
+      color: var(--dark-muted);
+      font-family: var(--font-mono);
+    }
+
+    .hero-headline {
+      font-size: clamp(34px, 5.2vw, 68px);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      color: #FFF;
+      margin-bottom: 24px;
+    }
+
+    .hero-headline em {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      color: #E89E6C;
+      display: inline-block;
+    }
+
+    .hero-editorial-lead {
+      font-size: clamp(15px, 1.35vw, 18px);
+      line-height: 1.65;
+      color: #A4ACB9;
+      max-width: 580px;
+      margin-bottom: 36px;
+    }
+
+    /* Hero Verified Evidence Badges */
+    .hero-evidence-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding-top: 24px;
+      border-top: 1px solid var(--dark-line);
+      margin-bottom: 36px;
+    }
+
+    .evidence-item h4 {
+      font-family: var(--font-mono);
+      font-size: clamp(20px, 2.2vw, 28px);
+      font-weight: 700;
+      color: #FFF;
+      margin-bottom: 4px;
+    }
+
+    .evidence-item p {
+      font-size: 12px;
+      color: var(--dark-muted);
+      line-height: 1.4;
+    }
+
+    .hero-cta-cluster {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .btn-primary-authority {
+      padding: 16px 32px;
+      background: var(--amber-accent);
+      color: #090A0D;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.01em;
+      border-radius: 3px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 24px var(--amber-glow);
+      transition: all 0.25s ease;
+    }
+
+    .btn-primary-authority:hover {
+      background: var(--amber-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary-authority {
+      padding: 16px 28px;
+      background: rgba(255, 255, 255, 0.04);
+      color: #FFF;
+      font-weight: 600;
+      font-size: 14px;
+      border-radius: 3px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary-authority:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Cinematic Portrait Stage (Clean, High-Res, No Reticle Clutter) */
+    .portrait-cinematic-stage {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #111318;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+    }
+
+    .portrait-image-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4/5;
+      overflow: hidden;
+    }
+
+    .portrait-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      filter: contrast(1.04) brightness(0.98);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .portrait-cinematic-stage:hover .portrait-image-wrapper img {
+      transform: scale(1.02);
+    }
+
+    /* Soft natural shadow vignette (not intrusive overlay) */
+    .portrait-bottom-card {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 24px;
+      background: linear-gradient(180deg, transparent 0%, rgba(9, 10, 13, 0.95) 70%, #090A0D 100%);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .portrait-name-stamp h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 600;
+      color: #FFF;
+    }
+
+    .portrait-name-stamp p {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--amber-accent);
+      margin-top: 2px;
+      letter-spacing: 0.05em;
+    }
+
+    .portrait-badge-trust {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: #A4ACB9;
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+
+    /* Marquee / Verified Brands Strip */
+    .brands-strip-section {
+      background: #060709;
+      border-bottom: 1px solid var(--dark-line);
+      padding: 20px 0;
+      overflow: hidden;
+    }
+
+    .brands-strip-flex {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 24px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: #7A8292;
+      letter-spacing: 0.08em;
+    }
+
+    .brand-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-pill span.dot {
+      width: 5px;
+      height: 5px;
+      background: var(--amber-accent);
+      border-radius: 50%;
+    }
+
+    /* =========================================================================
+       SECTION 2: CONSULTING & MENTORING DOSSIER (LIGHT CREAM CONTRAST)
+       Crucial Requirement: Consulting given EQUAL importance to achievements
+       No generic 3-column cards! Interactive Executive Dossier Split View.
+       ========================================================================= */
+    .consulting-section-light {
+      background: var(--light-canvas);
+      color: var(--light-ink);
+      padding: clamp(60px, 9vw, 120px) 0;
+      border-bottom: 1px solid var(--light-line);
+    }
+
+    .section-eyebrow-light {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--amber-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+
+    .section-title-light {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4.4vw, 56px);
+      font-weight: 600;
+      line-height: 1.12;
+      color: var(--light-ink);
+      max-width: 800px;
+      margin-bottom: 20px;
+    }
+
+    .section-subtitle-light {
+      font-size: clamp(15px, 1.25vw, 18px);
+      color: var(--light-muted);
+      max-width: 680px;
+      line-height: 1.6;
+      margin-bottom: 56px;
+    }
+
+    /* Split-Dossier Component */
+    .dossier-layout {
+      display: grid;
+      grid-template-columns: 0.95fr 1.25fr;
+      gap: clamp(24px, 4vw, 48px);
+      align-items: start;
+    }
+
+    /* Left Menu Selector */
+    .dossier-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .dossier-tab-btn {
+      text-align: left;
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 24px 28px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .dossier-tab-btn:hover {
+      background: rgba(20, 22, 26, 0.03);
+    }
+
+    .dossier-tab-btn.active {
+      background: var(--light-surface);
+      border-color: var(--light-line);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .tab-index {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--amber-accent);
+      letter-spacing: 0.05em;
+    }
+
+    .tab-title {
+      font-family: var(--font-display);
+      font-size: clamp(18px, 1.6vw, 22px);
+      font-weight: 600;
+      color: var(--light-ink);
+    }
+
+    .tab-summary {
+      font-size: 13px;
+      color: var(--light-muted);
+    }
+
+    /* Right Dossier Interactive Detail Card */
+    .dossier-display-panel {
+      background: var(--light-surface);
+      border: 1px solid var(--light-line);
+      border-radius: 8px;
+      padding: clamp(28px, 4vw, 48px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.04);
+      position: sticky;
+      top: 90px;
+    }
+
+    .dossier-header-badge {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--light-line);
+      margin-bottom: 28px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--light-muted);
+    }
+
+    .dossier-title {
+      font-family: var(--font-display);
+      font-size: clamp(24px, 2.5vw, 36px);
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--light-ink);
+      margin-bottom: 16px;
+    }
+
+    .dossier-lead {
+      font-size: 15px;
+      color: var(--light-muted);
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+
+    /* Deliverables Matrix */
+    .dossier-spec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 24px;
+      background: var(--light-surface-subtle);
+      border-radius: 6px;
+      margin-bottom: 32px;
+    }
+
+    .spec-block h5 {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--light-muted);
+      margin-bottom: 6px;
+    }
+
+    .spec-block p {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--light-ink);
+    }
+
+    .dossier-action-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-top: 24px;
+      border-top: 1px solid var(--light-line);
+    }
+
+    .btn-dossier-apply {
+      padding: 14px 28px;
+      background: var(--light-ink);
+      color: #FFF;
+      font-weight: 600;
+      font-size: 14px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s ease;
+    }
+
+    .btn-dossier-apply:hover {
+      background: var(--amber-accent);
+      color: #000;
+    }
+
+    /* =========================================================================
+       SECTION 3: BUSINESS PORTFOLIO (DARK INDUSTRIAL ARCHITECTURE)
+       7 Active Enterprises
+       ========================================================================= */
+    .portfolio-section-dark {
+      background: var(--dark-canvas);
+      padding: clamp(60px, 9vw, 120px) 0;
+      border-bottom: 1px solid var(--dark-line);
+    }
+
+    .portfolio-grid-authority {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 24px;
+    }
+
+    .corp-card-major {
+      grid-column: span 6;
+      background: var(--dark-surface);
+      border: 1px solid var(--dark-line);
+      border-radius: 6px;
+      padding: clamp(24px, 3.5vw, 40px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+    }
+
+    .corp-card-major:hover {
+      border-color: rgba(217, 119, 54, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+    }
+
+    .corp-card-standard {
+      grid-column: span 4;
+      background: var(--dark-surface);
+      border: 1px solid var(--dark-line);
+      border-radius: 6px;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+    }
+
+    .corp-card-standard:hover {
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-3px);
+    }
+
+    .corp-tagline {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--amber-accent);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .corp-name {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 2.2vw, 30px);
+      font-weight: 600;
+      color: #FFF;
+      margin-bottom: 8px;
+    }
+
+    .corp-role-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--dark-muted);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .corp-desc {
+      font-size: 14px;
+      color: #A0AAB8;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .corp-metric-pill {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #FFF;
+      border-radius: 3px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* =========================================================================
+       SECTION 4: ENTREPRENEURIAL JOURNEY (LIGHT STONE TIMELINE)
+       ========================================================================= */
+    .timeline-section-light {
+      background: #F0EDE5;
+      color: var(--light-ink);
+      padding: clamp(60px, 8vw, 100px) 0;
+      border-bottom: 1px solid var(--light-line);
+    }
+
+    .timeline-strip-authority {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    .timeline-card-step {
+      background: #FFF;
+      border: 1px solid var(--light-line);
+      border-radius: 4px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .step-period {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--amber-accent);
+      margin-bottom: 8px;
+    }
+
+    .step-title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--light-ink);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .step-desc {
+      font-size: 12px;
+      color: var(--light-muted);
+      line-height: 1.5;
+    }
+
+    /* =========================================================================
+       SECTION 5: MEDIA ARCHIVE & INTERVIEWS (DARK CINEMATIC)
+       ========================================================================= */
+    .media-section-dark {
+      background: var(--dark-canvas);
+      padding: clamp(60px, 8vw, 110px) 0;
+      border-bottom: 1px solid var(--dark-line);
+    }
+
+    .media-grid-authority {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .media-video-card {
+      background: var(--dark-surface);
+      border: 1px solid var(--dark-line);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .video-thumbnail-box {
+      position: relative;
+      aspect-ratio: 16/9;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-thumbnail-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.7;
+    }
+
+    .play-badge-circle {
+      position: absolute;
+      width: 48px;
+      height: 48px;
+      background: var(--amber-accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-size: 18px;
+      box-shadow: 0 4px 20px var(--amber-glow);
+    }
+
+    .video-content-body {
+      padding: 24px;
+    }
+
+    .video-channel-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--amber-accent);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .video-card-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 600;
+      color: #FFF;
+      line-height: 1.35;
+      margin-bottom: 12px;
+    }
+
+    /* =========================================================================
+       SECTION 6: CONSULTATION BOOKING & FOOTER (DEEP OBSIDIAN FINALE)
+       ========================================================================= */
+    .booking-cta-section {
+      background: 
+        radial-gradient(circle at 50% 100%, rgba(217, 119, 54, 0.1) 0%, transparent 60%),
+        #060709;
+      padding: clamp(70px, 10vw, 130px) 0 40px;
+      border-top: 1px solid var(--dark-line);
+    }
+
+    .booking-monolith-box {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      background: var(--dark-surface);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: clamp(36px, 6vw, 64px) clamp(24px, 5vw, 56px);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.8);
+      margin-bottom: 64px;
+    }
+
+    .booking-headline {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3.8vw, 48px);
+      font-weight: 600;
+      color: #FFF;
+      margin-bottom: 16px;
+    }
+
+    .booking-lead {
+      font-size: 16px;
+      color: var(--dark-muted);
+      max-width: 580px;
+      margin: 0 auto 36px;
+      line-height: 1.6;
+    }
+
+    .booking-channels-flex {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .btn-cal-booking {
+      padding: 16px 36px;
+      background: var(--amber-accent);
+      color: #090A0D;
+      font-weight: 700;
+      font-size: 14px;
+      border-radius: 3px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-cal-booking:hover {
+      background: var(--amber-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-telegram-direct {
+      padding: 16px 32px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #FFF;
+      font-weight: 600;
+      font-size: 14px;
+      border-radius: 3px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .site-footer-authority {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding-top: 32px;
+      border-top: 1px solid var(--dark-line);
+      font-size: 13px;
+      color: var(--dark-muted);
+      font-family: var(--font-mono);
+    }
+
+    /* =========================================================================
+       RESPONSIVE BREAKPOINTS (360px, 390px, 768px, 1440px)
+       ========================================================================= */
+    /* Tablet & Medium Screens */
+    @media (max-width: 1024px) {
+      .hero-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .dossier-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .dossier-display-panel {
+        position: static;
+      }
+
+      .corp-card-major {
+        grid-column: span 12;
+      }
+
+      .corp-card-standard {
+        grid-column: span 6;
+      }
+
+      .timeline-strip-authority {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .media-grid-authority {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Mobile Screens (360px - 768px) */
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+
+      .hero-evidence-row {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .dossier-spec-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .corp-card-standard {
+        grid-column: span 12;
+      }
+
+      .timeline-strip-authority {
+        grid-template-columns: 1fr;
+      }
+
+      .booking-channels-flex {
+        flex-direction: column;
+      }
+
+      .btn-cal-booking, .btn-telegram-direct {
+        width: 100%;
+        justify-content: center;
+        min-height: 48px;
+      }
+
+      .site-footer-authority {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    /* Prefers-reduced-motion support */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Demo Environment Header -->
+  <aside class="demo-toolbar">
+    <div class="demo-brand">
+      <span>ANVAR ABDUQAYUM</span>
+      <span class="badge-concept-d">CONCEPT D — THE AUTHORITY EXPERIENCE</span>
+    </div>
+    <div class="demo-nav-links">
+      <a href="#hero">Hero</a>
+      <a href="#consulting">Konsalting &amp; Mentorlik</a>
+      <a href="#portfolio">Portfel (7 Korxona)</a>
+      <a href="#journey">Tarixiy Yo'l</a>
+      <a href="#media">Media</a>
+      <a href="#booking">Uchrashuv Bronlash</a>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       1. NAVIGATION & ASYMMETRICAL CINEMATIC HERO
+       ========================================================================= -->
+  <header class="hero-wrapper" id="hero">
+    <div class="container">
+      
+      <!-- Top Site Navigation -->
+      <nav class="site-nav" aria-label="Asosiy navigatsiya">
+        <a href="#" class="nav-monogram">
+          <span class="monogram-dot"></span>
+          <span>ANVAR ABDUQAYUM</span>
+        </a>
+        <div class="nav-menu">
+          <a href="#consulting">Konsalting Dasturlari</a>
+          <a href="#portfolio">Biznes Ekotizimi</a>
+          <a href="#journey">Bosib O'tilgan Yo'l</a>
+          <a href="#media">Media &amp; OAV</a>
+        </div>
+        <a href="#booking" class="nav-cta-btn">
+          <span>Uchrashuv Bron Qilish</span>
+          <span>&rarr;</span>
+        </a>
+      </nav>
+
+      <!-- Asymmetrical Hero Composition (No generic text-left/image-right) -->
+      <div class="hero-layout">
+        <div>
+          <div class="hero-kicker-strip">
+            <span class="hero-kicker-badge">SANOAT &bull; AMALIYOT &bull; BOSHQARUV</span>
+            <span class="hero-kicker-text">Toshkent &bull; 20+ Yillik Real Tajriba</span>
+          </div>
+
+          <h1 class="hero-headline">
+            <em>Egasisiz ishlaydigan</em> <br>
+            tizimlar va sanoat <br>
+            darajasidagi boshqaruv.
+          </h1>
+
+          <p class="hero-editorial-lead">
+            Anvar Abduqayum — Toybola Toys, Samtech Masterbatches, Visage Electric va UZBIC asoschisi. O'zbekiston sanoat ishlab chiqarishi va xalqaro eksportida sinalgan intizom asosida biznesingizni operatsion qafasdan mustaqil tizimga olib chiqing.
+          </p>
+
+          <!-- Verified Real Facts Only (No fictional telemetry) -->
+          <div class="hero-evidence-row">
+            <div class="evidence-item">
+              <h4>2005-yildan</h4>
+              <p>Ishlab chiqarish va xalqaro savdoda amaliy tajriba</p>
+            </div>
+            <div class="evidence-item">
+              <h4>7 Korxona</h4>
+              <p>Sanoat, polimer, HoReCa va eksport yo'nalishlarida</p>
+            </div>
+            <div class="evidence-item">
+              <h4>MDH &amp; Xalqaro</h4>
+              <p>Mahsulotlar muntazam eksport qilinadigan tashqi bozorlar</p>
+            </div>
+          </div>
+
+          <div class="hero-cta-cluster">
+            <a href="#booking" class="btn-primary-authority">
+              <span>Strategik Uchrashuvga Yozilish</span>
+              <span>&rarr;</span>
+            </a>
+            <a href="#consulting" class="btn-secondary-authority">
+              <span>Konsalting Dasturlari Dossieri</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Clean, High-Res Portrait Card (No intrusive reticle graphics) -->
+        <div>
+          <div class="portrait-cinematic-stage">
+            <div class="portrait-image-wrapper">
+              <img src="/images/hero/portrait.webp" alt="Anvar Abduqayum — Sanoatchi va Biznes Mentor">
+            </div>
+            <div class="portrait-bottom-card">
+              <div class="portrait-name-stamp">
+                <h3>Anvar Abduqayum</h3>
+                <p>TADBIRKOR &bull; ZAVODLAR ASOSCHISI</p>
+              </div>
+              <div class="portrait-badge-trust">
+                RASMIY ASSET KUTILMOQDA
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Verified Brands Strip -->
+  <div class="brands-strip-section">
+    <div class="container">
+      <div class="brands-strip-flex">
+        <div class="brand-pill"><span class="dot"></span> TOYBOLA TOYS</div>
+        <div class="brand-pill"><span class="dot"></span> SAMTECH MASTERBATCH</div>
+        <div class="brand-pill"><span class="dot"></span> VISAGE ELECTRIC</div>
+        <div class="brand-pill"><span class="dot"></span> PURO GELATERIA</div>
+        <div class="brand-pill"><span class="dot"></span> AFIYET RESTORANLARI</div>
+        <div class="brand-pill"><span class="dot"></span> UZBIC SANOAT KENGASHI</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =========================================================================
+       2. CONSULTING & MENTORING SERVICES (DELIBERATE LIGHT CREAM CONTRAST)
+       Interactive Split-Dossier Presentation (Replaces repetitive 3-column cards)
+       ========================================================================= -->
+  <section class="consulting-section-light" id="consulting">
+    <div class="container">
+      
+      <div class="section-eyebrow-light">&bull; KONSALTING VA MENTORLIK DOSSIERI</div>
+      <h2 class="section-title-light">
+        Biznes egalari va ishlab chiqaruvchilar uchun 4 ta strategik yo‘nalish
+      </h2>
+      <p class="section-subtitle-light">
+        Har bir dastur amaliyotchi tadbirkor tomonidan shaxsan olib boriladi. Shaxsiy samaradorlikdan tortib xalqaro eksportgacha bo‘lgan barcha bosqichlar qat’iy reglamentlangan.
+      </p>
+
+      <!-- The Executive Dossier Layout -->
+      <div class="dossier-layout">
+        
+        <!-- Left Interactive Program Selector -->
+        <div class="dossier-menu">
+          
+          <button class="dossier-tab-btn active" onclick="selectDossier(0)">
+            <span class="tab-index">DASTUR 01 // INDIVIDUAL GOVERNANCE</span>
+            <span class="tab-title">1-on-1 Strategik Boshqaruv Mentorligi</span>
+            <span class="tab-summary">Asoschining operatsion qafasdan chiqishi va direktorlar kengashi tuzilmasi.</span>
+          </button>
+
+          <button class="dossier-tab-btn" onclick="selectDossier(1)">
+            <span class="tab-index">DASTUR 02 // INDUSTRIAL ENGINEERING</span>
+            <span class="tab-title">Zavod va Ishlab Chiqarishni Tizimlashtirish</span>
+            <span class="tab-summary">Texnologik reglamentlar (SOP), tannarx auditi va chiqindilarni nolga tushirish.</span>
+          </button>
+
+          <button class="dossier-tab-btn" onclick="selectDossier(2)">
+            <span class="tab-index">DASTUR 03 // GLOBAL EXPANSION</span>
+            <span class="tab-title">UZBIC Xalqaro Eksport Yo‘lagi</span>
+            <span class="tab-summary">Mahalliy mahsulotlarni xorijiy bozorlarga olib chiqish va B2B konsorsium.</span>
+          </button>
+
+          <button class="dossier-tab-btn" onclick="selectDossier(3)">
+            <span class="tab-index">DASTUR 04 // DIAGNOSTIC ENTRY</span>
+            <span class="tab-title">20 Daqiqalik Strategik Diagnostika</span>
+            <span class="tab-summary">Kompaniyangizning eng zaif 3 ta bo‘g‘inini aniqlash va tezkor reja.</span>
+          </button>
+
+        </div>
+
+        <!-- Right Detailed Dossier Panel -->
+        <div class="dossier-display-panel" id="dossierDisplay">
+          <div class="dossier-header-badge">
+            <span id="dossierCode">PROGRAM SPEC: MENTOR-AA-01</span>
+            <span id="dossierFormat">FORMAT: YAKKA TARTIBDA / SHAXSAN</span>
+          </div>
+
+          <h3 class="dossier-title" id="dossierHeading">
+            1-on-1 Strategik Boshqaruv va Tizimli Delegatsiya Mentorligi
+          </h3>
+
+          <p class="dossier-lead" id="dossierDescription">
+            Kompaniya asoschisining butun kunini mayda-chuyda operatsion ishlardan ozod qilib, uni strategik rivojlanish va yangi bozorlar darajasiga olib chiqish. Xodimlar shaxsiga emas, o'zgarmas qolip va reglamentlarga tayanuvchi mustaqil boshqaruv kengashini shakllantirish.
+          </p>
+
+          <!-- Specifications Matrix -->
+          <div class="dossier-spec-grid">
+            <div class="spec-block">
+              <h5>Nishon Auditoriya</h5>
+              <p id="dossierAudience">O'z biznesini tizimlashtirishni maqsad qilgan tadbirkorlar</p>
+            </div>
+            <div class="spec-block">
+              <h5>Davomiyligi</h5>
+              <p id="dossierDuration">Suhbat asosida kelishiladi</p>
+            </div>
+            <div class="spec-block">
+              <h5>Asosiy Natija</h5>
+              <p id="dossierOutcome">Boshqaruv reglamentlari va delegatsiya yo'nalishlari</p>
+            </div>
+            <div class="spec-block">
+              <h5>Metodika</h5>
+              <p id="dossierMethod">SOP qoidalari + Shaxsiy strategik sessiyalar</p>
+            </div>
+          </div>
+
+          <div class="dossier-action-row">
+            <div>
+              <span style="font-size:12px; color:var(--light-muted); display:block;">MULOQOT SHAKLI</span>
+              <span style="font-weight:700; color:var(--light-ink); font-size:14px;">Murojaatlar navbat asosida qabul qilinadi</span>
+            </div>
+            <a href="#booking" class="btn-dossier-apply">
+              <span>Ushbu Dasturga Ariza Berish</span>
+              <span>&rarr;</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       3. BUSINESS PORTFOLIO (DARK INDUSTRIAL ARCHITECTURE)
+       7 Active Enterprises
+       ========================================================================= */
+  <section class="portfolio-section-dark" id="portfolio">
+    <div class="container">
+      
+      <div style="font-family:var(--font-mono); font-size:12px; color:var(--amber-accent); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:12px;">
+        &bull; REAL BIZNES VA SANOAT EKOTIZIMI
+      </div>
+      <h2 style="font-family:var(--font-display); font-size:clamp(32px, 4.2vw, 54px); font-weight:600; color:#FFF; margin-bottom:20px;">
+        Anvar Abduqayum tomonidan qurilgan va boshqariladigan korxonalar
+      </h2>
+      <p style="font-size:16px; color:var(--dark-muted); max-width:640px; line-height:1.6; margin-bottom:56px;">
+        Har bir korxona mustaqil muhandislik qolipi kabi loyihalashtirilgan. Egasi jarayonda bevosita qatnashmasa ham, sifat va ishlab chiqarish ritmi o'zgarmaydi.
+      </p>
+
+      <div class="portfolio-grid-authority">
+        
+        <!-- Enterprise 01: Toybola (Major) -->
+        <div class="corp-card-major">
+          <div>
+            <div class="corp-tagline">O'YINCHOQ ISHLAB CHIQARISH SANOATI</div>
+            <h3 class="corp-name">Toybola Toys</h3>
+            <span class="corp-role-tag">ASOSCHI VA KENGASH A'ZOSI &bull; 2012-YILDAN BUYON</span>
+            <p class="corp-desc">
+              O'zbekistondagi eng yirik bolalar plastik o'yinchoqlari fabrikasi. Xalqaro xavfsizlik sertifikatlariga ega 100 dan ortiq mahsulot turlari va dunyoning o'nlab davlatlariga muntazam eksport hajmlari.
+            </p>
+          </div>
+          <div class="corp-metric-pill">
+            <span>EKSPORT KO'LAMI:</span>
+            <span style="color:var(--amber-accent); font-weight:700;">15+ XALQARO DAVLATLAR</span>
+          </div>
+        </div>
+
+        <!-- Enterprise 02: Samtech (Major) -->
+        <div class="corp-card-major">
+          <div>
+            <div class="corp-tagline">POLIMER XOMASHYOSI VA BO'YOQLAR</div>
+            <h3 class="corp-name">Samtech Masterbatches</h3>
+            <span class="corp-role-tag">HAMMUASSIS &bull; 2016-YILDAN BUYON</span>
+            <p class="corp-desc">
+              Plastmassa va polimer sanoati korxonalari uchun konsentrlangan rang beruvchi va modifikator xomashyo ishlab chiqarish majmuasi. Import o'rnini bosuvchi yuqori quvvatli B2B korxona.
+            </p>
+          </div>
+          <div class="corp-metric-pill">
+            <span>SANOAT TA'SIRI:</span>
+            <span style="color:var(--amber-accent); font-weight:700;">IMPORTGA TOBELIKNI QISQARTIRISH</span>
+          </div>
+        </div>
+
+        <!-- Enterprise 03: Visage Electric -->
+        <div class="corp-card-standard">
+          <div>
+            <div class="corp-tagline">ELEKTROTEXNIKA VA YORITISH</div>
+            <h3 class="corp-name">Visage Electric</h3>
+            <span class="corp-role-tag">HAMMUASSIS &bull; 2018-YILDAN BUYON</span>
+            <p class="corp-desc">
+              Yevropa standartlari bo'yicha zamonaviy energiya samarador rozetkalar, kalitlar va elektrotexnika liniyalari.
+            </p>
+          </div>
+          <div class="corp-metric-pill">
+            <span>STANDART:</span>
+            <span style="color:#FFF;">XALQARO SIFAT</span>
+          </div>
+        </div>
+
+        <!-- Enterprise 04: PURO -->
+        <div class="corp-card-standard">
+          <div>
+            <div class="corp-tagline">ITALIYA QANDOLATCHILIK VA DONDURMA</div>
+            <h3 class="corp-name">PURO Gelateria &amp; Cafeteria</h3>
+            <span class="corp-role-tag">HAMKOR &bull; 2021-YILDAN BUYON</span>
+            <p class="corp-desc">
+              100% tabiiy italyancha dondurma va muzqaymoq madaniyatini shahar aholisiga yetkazuvchi standartlashtirilgan kafe tarmog'i.
+            </p>
+          </div>
+          <div class="corp-metric-pill">
+            <span>RETSEPTURA:</span>
+            <span style="color:#FFF;">HAQIQIY ITALIYA</span>
+          </div>
+        </div>
+
+        <!-- Enterprise 05: AFIYET -->
+        <div class="corp-card-standard">
+          <div>
+            <div class="corp-tagline">HORECA &bull; DONER RESTORANLARI</div>
+            <h3 class="corp-name">AFIYET Doner Kebab</h3>
+            <span class="corp-role-tag">ASOSCHI &bull; 2019-YILDAN BUYON</span>
+            <p class="corp-desc">
+              Sanoatdagi standartlashtirish tamoyilini umumiy ovqatlanishga olib kirgan tarmoq. Oshpazga bog'liq bo'lmagan barqaror ta'm va tezlik.
+            </p>
+          </div>
+          <div class="corp-metric-pill">
+            <span>MODEL:</span>
+            <span style="color:#FFF;">STANDART OSHXONA</span>
+          </div>
+        </div>
+
+        <!-- Enterprise 06: IT Support & Service -->
+        <div class="corp-card-standard">
+          <div>
+            <div class="corp-tagline">ERP VA AVTOMATIZATSIYA</div>
+            <h3 class="corp-name">IT Support &amp; Service</h3>
+            <span class="corp-role-tag">LOYIHA RAHBARI &bull; 2020-YILDAN BUYON</span>
+            <p class="corp-desc">
+              Zavodlar, omborlar va savdo zanjirlari uchun ERP, CRM va raqamli monitoring tizimlarini integratsiya qiluvchi markaz.
+            </p>
+          </div>
+          <div class="corp-metric-pill">
+            <span>RAQAMLI NAZORAT:</span>
+            <span style="color:#FFF;">REAL-TIME TELEMETRY</span>
+          </div>
+        </div>
+
+        <!-- Enterprise 07: UZBIC -->
+        <div class="corp-card-major" style="grid-column: span 8; background:#12151E; border-color:rgba(37, 99, 235, 0.3);">
+          <div>
+            <div class="corp-tagline" style="color:#60A5FA;">O'ZBEKISTON BIZNES VA SANOAT KENGASHI</div>
+            <h3 class="corp-name">UZBIC (Uzbekistan Business &amp; Industry Council)</h3>
+            <span class="corp-role-tag">KENGASH RAISI &bull; 2022-YILDAN BUYON</span>
+            <p class="corp-desc">
+              Mahalliy sanoat korxonalarini jahon bozoriga olib chiqish, tashqi savdo shartnomalari tuzishda amaliy ko'mak berish va mamlakat eksport salohiyatini oshirishga yo'naltirilgan nufuzli sanoat platformasi.
+            </p>
+          </div>
+          <div class="corp-metric-pill" style="border-color:rgba(37, 99, 235, 0.3);">
+            <span>PLATFORMA MAQSADI:</span>
+            <span style="color:#60A5FA; font-weight:700;">100+ EKSPORTCHI KORXONALAR KONSORSIUMI</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       4. ENTREPRENEURIAL JOURNEY (LIGHT STONE TIMELINE)
+       ========================================================================= -->
+  <section class="timeline-section-light" id="journey">
+    <div class="container">
+      
+      <div class="section-eyebrow-light">&bull; BOSIB O'TILGAN TAJRIBA YO'LI</div>
+      <h2 class="section-title-light" style="margin-bottom:12px;">
+        Savdo maydonidan — xalqaro sanoat va UZBIC kengashigacha
+      </h2>
+      <p class="section-subtitle-light" style="margin-bottom:36px;">
+        Tadbirkorlik bir kechada shakllanmaydi. Har bir bosqichda sinovlar, xatolar va amaliy darslar orqali tizim toblanib borgan.
+      </p>
+
+      <div class="timeline-strip-authority">
+        
+        <div class="timeline-card-step">
+          <div>
+            <div class="step-period">2005-yil</div>
+            <h4 class="step-title">Ilk ishlab chiqarish faoliyati</h4>
+            <p class="step-desc">Tadbirkorlikda birinchi ishlab chiqarish liniyalarini yo'lga qo'yish, dastlabki xomashyo va bozor tajribasi.</p>
+          </div>
+        </div>
+
+        <div class="timeline-card-step">
+          <div>
+            <div class="step-period">2009-yil</div>
+            <h4 class="step-title">O'yinchoq ishlab chiqarishga kirib kelish</h4>
+            <p class="step-desc">Importga muqobil sifatida dastlabki plastik o'yinchoq quyish uskunalarining xarid qilinishi va faoliyat boshlanishi.</p>
+          </div>
+        </div>
+
+        <div class="timeline-card-step">
+          <div>
+            <div class="step-period">2016 — 2018</div>
+            <h4 class="step-title">Vertikal integratsiya: Xomashyo &amp; Elektr</h4>
+            <p class="step-desc">Polimer bo'yoqlari bo'yicha Samtech Masterbatches va Visage Electric elektrotexnika korxonalarining yo'lga qo'yilishi.</p>
+          </div>
+        </div>
+
+        <div class="timeline-card-step">
+          <div>
+            <div class="step-period">2017 &bull; 2020</div>
+            <h4 class="step-title">Afiyet (2017) &bull; Puro (2020)</h4>
+            <p class="step-desc">2017-yilda ilk Afiyet doner restorani, 2020-yilda esa birinchi Puro italyan gelateriyasi faoliyati yo'lga qo'yildi.</p>
+          </div>
+        </div>
+
+        <div class="timeline-card-step">
+          <div>
+            <div class="step-period">2022 — Bugun</div>
+            <h4 class="step-title">UZBIC va Korporativ Boshqaruv</h4>
+            <p class="step-desc">O'zbekiston Biznes va Sanoat Kengashi (UZBIC) ta'sis etilishi, korxonalarni boshqaruv kengashiga topshirish va eksport kooperatsiyasi.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       5. MEDIA COVERAGE & INTERVIEWS (DARK CINEMATIC)
+       ========================================================================= -->
+  <section class="media-section-dark" id="media">
+    <div class="container">
+      
+      <div style="font-family:var(--font-mono); font-size:12px; color:var(--amber-accent); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:12px;">
+        &bull; MEDIA, INTERVYULAR VA OAV
+      </div>
+      <h2 style="font-family:var(--font-display); font-size:clamp(32px, 4vw, 52px); font-weight:600; color:#FFF; margin-bottom:16px;">
+        Sanoat rivoji va boshqaruv mavzularidagi ochiq suhbatlar
+      </h2>
+      <p style="font-size:16px; color:var(--dark-muted); max-width:620px; line-height:1.6; margin-bottom:52px;">
+        Millionlab tomoshabinlar ko'rgan tahliliy intervyular, OAV nashrlari va biznes saboqlari.
+      </p>
+
+      <div class="media-grid-authority">
+        
+        <div class="media-video-card">
+          <div class="video-thumbnail-box">
+            <img src="https://img.youtube.com/vi/vB43H4y_3Zk/hqdefault.jpg" alt="Osmondagi bolalar intervyusi">
+            <div class="play-badge-circle">&#9654;</div>
+          </div>
+          <div class="video-content-body">
+            <div class="video-channel-tag">OSMONDAGI BOLALAR</div>
+            <h4 class="video-card-title">Anvar Abduqayum bilan ochiq suhbat: Sanoat va hayotiy darslar</h4>
+            <p style="font-size:13px; color:var(--dark-muted);">Davomiyligi: 1 soat 48 daqiqa &bull; 500k+ ko'rishlar</p>
+          </div>
+        </div>
+
+        <div class="media-video-card">
+          <div class="video-thumbnail-box">
+            <img src="https://img.youtube.com/vi/J2X5mJ3HDYE/hqdefault.jpg" alt="Tadbirkor kundaligi intervyusi">
+            <div class="play-badge-circle">&#9654;</div>
+          </div>
+          <div class="video-content-body">
+            <div class="video-channel-tag">TADBIRKOR KUNDALIGI</div>
+            <h4 class="video-card-title">Biznesni egasisiz boshqarish: Zavodlar, qoliplar va eksport sirlari</h4>
+            <p style="font-size:13px; color:var(--dark-muted);">Davomiyligi: 54 daqiqa &bull; Tizimli boshqaruv</p>
+          </div>
+        </div>
+
+        <div class="media-video-card">
+          <div class="video-thumbnail-box">
+            <img src="https://img.youtube.com/vi/dFq5z_x3A_I/hqdefault.jpg" alt="Toybola zavodi turi">
+            <div class="play-badge-circle">&#9654;</div>
+          </div>
+          <div class="video-content-body">
+            <div class="video-channel-tag">BIZNES VAQT</div>
+            <h4 class="video-card-title">Toybola fabrikasida o'yinchoqlar qanday quyiladi? Zavod bo'ylab amaliy tur</h4>
+            <p style="font-size:13px; color:var(--dark-muted);">Davomiyligi: 1 soat 12 daqiqa &bull; Ishlab chiqarish</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================================================================
+       6. CONSULTATION BOOKING CTA & FOOTER (DEEP OBSIDIAN FINALE)
+       ========================================================================= -->
+  <footer class="booking-cta-section" id="booking">
+    <div class="container">
+      
+      <div class="booking-monolith-box">
+        <span class="badge-concept-d" style="margin-bottom:16px; display:inline-block;">STRATEGIK MULOQOT</span>
+        <h2 class="booking-headline">
+          Biznesingizni yangi bosqichga <br>olib chiqishga tayyormisiz?
+        </h2>
+        <p class="booking-lead">
+          Operatsion boshqaruvni tizimlashtirish, ishlab chiqarish auditi yoki UZBIC eksport kooperatsiyasi bo'yicha 20 daqiqalik bepul strategik sessiya uchun vaqt tanlang.
+        </p>
+
+        <div class="booking-channels-flex">
+          <a href="/uz/bron" class="btn-cal-booking">
+            <span>Cal.com orqali vaqtni tanlash</span>
+            <span>&rarr;</span>
+          </a>
+          <a href="https://t.me/anvar_abduqayum_admin" target="_blank" rel="noopener noreferrer" class="btn-telegram-direct">
+            <span>Telegramda Yozish (Admin)</span>
+            <span>↗</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="site-footer-authority">
+        <div>
+          &copy; 2026 Anvar Abduqayum. Barcha huquqlar himoyalangan.
+        </div>
+        <div style="display:flex; gap:20px;">
+          <a href="https://t.me/anvar_abduqayum" style="color:inherit; text-decoration:none;">Telegram</a>
+          <a href="https://instagram.com/anvar_abduqayum" style="color:inherit; text-decoration:none;">Instagram</a>
+          <a href="https://youtube.com/@AnvarAbduqayum" style="color:inherit; text-decoration:none;">YouTube</a>
+          <a href="https://linkedin.com" style="color:inherit; text-decoration:none;">LinkedIn</a>
+        </div>
+        <div>
+          CONCEPT D // THE AUTHORITY EXPERIENCE
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Interactive Script for Executive Dossier Switching -->
+  <script>
+    const dossierData = [
+      {
+        code: "PROGRAM // GOVERNANCE",
+        format: "FORMAT: YAKKA TARTIBDA / SHAXSAN",
+        heading: "Boshqaruv Tizimi va Delegatsiya Maslahatlari",
+        desc: "Kompaniya asoschisi va rahbarlariga operatsion vazifalarni tizimlashtirish, vakolatlarni taqsimlash hamda boshqaruv qoidalarini shakllantirish bo'yicha amaliy maslahatlar.",
+        audience: "O'z biznesini tizimlashtirishni maqsad qilgan tadbirkorlar",
+        duration: "Suhbat asosida kelishiladi",
+        outcome: "Boshqaruv tartib-qoidalari va delegatsiya yo'nalishlari",
+        method: "Yakka tartibdagi strategik sessiyalar"
+      },
+      {
+        code: "PROGRAM // MANUFACTURING",
+        format: "FORMAT: AMALIY TAHLIL",
+        heading: "Ishlab Chiqarish Jarayonlari va Texnologik Tartib",
+        desc: "Ishlab chiqarish korxonalarida texnologik xaritalar (SOP), tannarx hisobi hamda xomashyo yo'qotishlarini kamaytirish bo'yicha amaliy tajriba almashish.",
+        audience: "Ishlab chiqarish korxonalari va ishlab chiqaruvchilar",
+        duration: "Loyiha ko'lamiga qarab belgilanadi",
+        outcome: "Ishlab chiqarish jarayonlari xaritasi va hisob tizimi",
+        method: "Ishlab chiqarish ob'ektida amaliy tanishuv"
+      },
+      {
+        code: "PROGRAM // UZBIC EXPORT",
+        format: "FORMAT: KONSORSIUM VA SHARTNOMALAR",
+        heading: "UZBIC Xalqaro Eksport Yo'lagi va B2B Shartnomalar",
+        desc: "Mahalliy mahsulotlarni tashqi bozorlarga (Qozog'iston, Rossiya, Ozarbayjon, Yaqin Sharq) olib chiqish. Xalqaro ko'rgazmalar, ISO sertifikatlash va xorijiy distribyutsion tarmoqlarga to'g'ridan-to'g'ri chiqish yo'laklari.",
+        audience: "Eksport salohiyatiga ega o'rta va yirik ishlab chiqaruvchilar",
+        duration: "Yillik dastur / Doimiy kooperatsiya",
+        outcome: "Kafolatlangan xalqaro B2B eksport shartnomalari",
+        method: "UZBIC Kengashi resurslari + Sanoat diplomatiyasi"
+      },
+      {
+        code: "PROGRAM // DIAGNOSTIC",
+        format: "FORMAT: ONLINE / ZOOM (20 DAQIQA)",
+        heading: "Ekspress Biznes Diagnostikasi Sessiyasi",
+        desc: "Biznesingizning eng og'riqli 3 ta nuqtasini aniqlash. Moliyaviy oqimlar, xodimlar javobgarligi va operatsion botqoqlik sabablarini 20 daqiqada tahlil qilib, darhol qo'llash mumkin bo'lgan aniq tavsiyalar olish.",
+        audience: "O'sishda to'xtab qolgan barcha tadbirkorlar",
+        duration: "20 daqiqalik konsultatsiya",
+        outcome: "Kompaniyaning zaif bo'g'inlari xaritasi",
+        method: "10 ta mezonli amaliy audit testi"
+      }
+    ];
+
+    function selectDossier(index) {
+      const tabs = document.querySelectorAll('.dossier-tab-btn');
+      tabs.forEach((tab, i) => {
+        if (i === index) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+
+      const data = dossierData[index];
+      document.getElementById('dossierCode').textContent = data.code;
+      document.getElementById('dossierFormat').textContent = data.format;
+      document.getElementById('dossierHeading').textContent = data.heading;
+      document.getElementById('dossierDescription').textContent = data.desc;
+      document.getElementById('dossierAudience').textContent = data.audience;
+      document.getElementById('dossierDuration').textContent = data.duration;
+      document.getElementById('dossierOutcome').textContent = data.outcome;
+      document.getElementById('dossierMethod').textContent = data.method;
+    }
+  </script>
+
+</body>
+</html>

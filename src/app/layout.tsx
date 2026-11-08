@@ -4,16 +4,16 @@ import { SITE_URL } from "@/config/siteConfig";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Ilhom Begimqulov | Biznes Konsultant va Amaliyotchi Trener",
+  title: "Anvar Abduqayum | Ishlab chiqarish, Eksport va Biznes-mentor",
   description:
-    "Biznes boshqaruvi, operatsion tizimlar, sotuv bo'limi va jamoani kuchaytirish bo'yicha amaliy yechimlar. 10 yildan ortiq tajribaga ega amaliyotchi biznes konsultant.",
+    "20 yillik real ishlab chiqarish zavodlari, savdo tarmoqlari va xalqaro eksport tajribasi asosida biznesni tizimlashtirish hamda mentorlik.",
   openGraph: {
-    title: "Ilhom Begimqulov | Biznes Konsultant va Amaliyotchi Trener",
+    title: "Anvar Abduqayum | Ishlab chiqarish, Eksport va Biznes-mentor",
     description:
-      "Biznes boshqaruvi, operatsion tizimlar, sotuv bo'limi va jamoani kuchaytirish bo'yicha amaliy yechimlar.",
+      "20 yillik real ishlab chiqarish zavodlari, savdo tarmoqlari va xalqaro eksport tajribasi asosida biznesni tizimlashtirish hamda mentorlik.",
     type: "website",
     url: SITE_URL,
-    siteName: "Ilhom Begimqulov",
+    siteName: "Anvar Abduqayum",
     images: [
       {
         url: `${SITE_URL}/og-image.png`,
@@ -21,15 +21,15 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         type: "image/png",
-        alt: "Ilhom Begimqulov",
+        alt: "Anvar Abduqayum",
       },
     ],
-  },  
+  },
   twitter: {
     card: "summary_large_image",
-    title: "Ilhom Begimqulov | Biznes Konsultant va Amaliyotchi Trener",
+    title: "Anvar Abduqayum | Ishlab chiqarish, Eksport va Biznes-mentor",
     description:
-      "Biznes boshqaruvi, operatsion tizimlar, sotuv bo'limi va jamoani kuchaytirish bo'yicha amaliy yechimlar.",
+      "20 yillik real ishlab chiqarish zavodlari, savdo tarmoqlari va xalqaro eksport tajribasi asosida biznesni tizimlashtirish hamda mentorlik.",
     images: [`${SITE_URL}/og-image.png`],
   },
   icons: {

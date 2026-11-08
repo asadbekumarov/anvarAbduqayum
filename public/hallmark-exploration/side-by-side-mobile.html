@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hallmark 3 Mobile Concepts Side-by-Side (390px)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #06070A;
+      color: #F5F4F0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .header-bar {
+      width: 100%;
+      max-width: 1360px;
+      margin-bottom: 32px;
+      padding: 24px 32px;
+      background: #0F121A;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .main-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #FFF;
+    }
+    .sub-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      color: #8E95A5;
+      margin-top: 6px;
+    }
+    .status-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 6px 14px;
+      border-radius: 4px;
+      background: rgba(217, 119, 54, 0.18);
+      border: 1px solid #D97736;
+      color: #D97736;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* 3-Column Mobile Shell Row */
+    .mobile-row {
+      display: grid;
+      grid-template-columns: repeat(3, 390px);
+      gap: 36px;
+      width: 100%;
+      max-width: 1360px;
+      justify-content: center;
+    }
+
+    .device-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .device-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: #11141E;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      width: 100%;
+      text-align: center;
+    }
+    .c1-b { color: #D97736; border-color: rgba(217, 119, 54, 0.4); }
+    .c2-b { color: #E26D2D; border-color: rgba(226, 109, 45, 0.4); }
+    .c3-b { color: #E5C158; border-color: rgba(229, 193, 88, 0.4); }
+
+    /* Realistic Phone Frame with Actual Screenshot */
+    .phone-mockup {
+      width: 390px;
+      height: 844px;
+      background: #090A0D;
+      border: 8px solid #1E2330;
+      border-radius: 40px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      position: relative;
+    }
+    .phone-notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 18px;
+      background: #1E2330;
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+      z-index: 100;
+    }
+    .phone-screen-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      display: block;
+    }
+
+    .device-caption {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #8E95A5;
+      text-align: center;
+      line-height: 1.5;
+    }
+    .device-caption a {
+      color: #FFF;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Studio Header -->
+  <div class="header-bar">
+    <div>
+      <h1 class="main-title">Anvar Abduqayum — Hallmark 3 Premium Concepts (Mobile 390px Side-by-Side)</h1>
+      <p class="sub-title">REAL SMARTPHONE VIEWPORT SCREENSHOTS • VERIFIED CONTENT VISIBILITY • ZERO EMPTY FRAMES</p>
+    </div>
+    <span class="status-badge">390PX MOBILE COMPARISON</span>
+  </div>
+
+  <!-- 3-Column Mobile Row -->
+  <div class="mobile-row">
+
+    <!-- Concept 1 Mobile -->
+    <div class="device-column" id="mobileColConcept1">
+      <div class="device-badge c1-b">01 // REFINED AUTHORITY</div>
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <img 
+          src="../audit-screenshots/concept1_full_mobile_390px.png" 
+          alt="Concept 1 Refined Authority Mobile View" 
+          class="phone-screen-img"
+          id="imgMobileConcept1"
+        />
+      </div>
+      <div class="device-caption">
+        Playfair Serif & Swiss Grid<br>
+        <a href="concept-1-refined-authority.html" target="_blank">Alohida ochish ↗</a>
+      </div>
+    </div>
+
+    <!-- Concept 2 Mobile -->
+    <div class="device-column" id="mobileColConcept2">
+      <div class="device-badge c2-b">02 // INDUSTRIAL CINEMATIC</div>
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <img 
+          src="../audit-screenshots/concept2_full_mobile_390px.png" 
+          alt="Concept 2 Industrial Cinematic Mobile View" 
+          class="phone-screen-img"
+          id="imgMobileConcept2"
+        />
+      </div>
+      <div class="device-caption">
+        Space Grotesk & Molten Copper<br>
+        <a href="concept-2-industrial-cinematic.html" target="_blank">Alohida ochish ↗</a>
+      </div>
+    </div>
+
+    <!-- Concept 3 Mobile -->
+    <div class="device-column" id="mobileColConcept3">
+      <div class="device-badge c3-b">03 // LUXURY EDITORIAL</div>
+      <div class="phone-mockup">
+        <div class="phone-notch"></div>
+        <img 
+          src="../audit-screenshots/concept3_full_mobile_390px.png" 
+          alt="Concept 3 Luxury Editorial Mobile View" 
+          class="phone-screen-img"
+          id="imgMobileConcept3"
+        />
+      </div>
+      <div class="device-caption">
+        Cormorant Garamond & Alabaster<br>
+        <a href="concept-3-luxury-editorial.html" target="_blank">Alohida ochish ↗</a>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

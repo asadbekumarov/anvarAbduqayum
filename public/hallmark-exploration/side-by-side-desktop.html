@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hallmark 3 Desktop Concepts Side-by-Side (1440px)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #06070A;
+      color: #F5F4F0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      padding: 32px;
+      min-width: 1440px;
+    }
+
+    .header-bar {
+      margin-bottom: 28px;
+      padding: 24px 32px;
+      background: #0F121A;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .main-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #FFF;
+    }
+    .sub-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11.5px;
+      color: #8E95A5;
+      margin-top: 6px;
+    }
+    .status-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 6px 14px;
+      border-radius: 4px;
+      background: rgba(217, 119, 54, 0.18);
+      border: 1px solid #D97736;
+      color: #D97736;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* 3-Column Side-by-Side Grid */
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      width: 100%;
+    }
+
+    .concept-panel {
+      background: #0B0E15;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .c1-hdr { background: #131620; color: #D97736; border-top: 3px solid #D97736; }
+    .c2-hdr { background: #15141D; color: #E26D2D; border-top: 3px solid #E26D2D; }
+    .c3-hdr { background: #181920; color: #E5C158; border-top: 3px solid #E5C158; }
+
+    .panel-meta {
+      padding: 14px 24px;
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 12px;
+      line-height: 1.5;
+      color: #A4ACB9;
+    }
+    .panel-meta strong {
+      color: #FFF;
+    }
+
+    /* Embedded Real Screenshot Image */
+    .preview-image-container {
+      position: relative;
+      width: 100%;
+      background: #000;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .concept-screenshot {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .panel-footer {
+      padding: 16px 24px;
+      background: #0D1018;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #8E95A5;
+    }
+    .panel-footer a {
+      color: #FFF;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 6px 12px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 3px;
+      transition: all 0.2s;
+    }
+    .panel-footer a:hover {
+      background: #D97736;
+      color: #090A0D;
+      border-color: #D97736;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Studio Header -->
+  <div class="header-bar">
+    <div>
+      <h1 class="main-title">Anvar Abduqayum — Hallmark 3 Premium Concepts (Desktop 1440px Side-by-Side)</h1>
+      <p class="sub-title">REAL BROWSER SCREENSHOT EMBEDS • ZERO IFRAME RESTRICTIONS • FACTUALLY VERIFIED CONTENT</p>
+    </div>
+    <span class="status-badge">1440PX DESKTOP COMPARISON</span>
+  </div>
+
+  <!-- 3-Column Comparison Grid -->
+  <div class="comparison-grid">
+
+    <!-- Concept 1 Panel -->
+    <div class="concept-panel" id="panelConcept1">
+      <div class="panel-header c1-hdr">
+        <span>01 // REFINED AUTHORITY</span>
+        <span>CONCEPT D ELEVATED</span>
+      </div>
+      <div class="panel-meta">
+        <strong>Falsafasi:</strong> Shveysariya arxitekturaviy to‘ri va Playfair Display sarlavhalari. Obsidian (#090A0D), Warm Amber (#D97736) va JetBrains Mono.
+      </div>
+      <div class="preview-image-container">
+        <img 
+          src="../audit-screenshots/concept1_hero_1440x900.png" 
+          alt="Concept 1 Refined Authority Desktop Hero" 
+          class="concept-screenshot"
+          id="imgConcept1"
+        />
+      </div>
+      <div class="panel-footer">
+        <span>VIEWPORT: 1440×900PX</span>
+        <a href="concept-1-refined-authority.html" target="_blank">Alohida ko‘rish ↗</a>
+      </div>
+    </div>
+
+    <!-- Concept 2 Panel -->
+    <div class="concept-panel" id="panelConcept2">
+      <div class="panel-header c2-hdr">
+        <span>02 // INDUSTRIAL CINEMATIC</span>
+        <span>SCALE & FACTORY NARRATIVE</span>
+      </div>
+      <div class="panel-meta">
+        <strong>Falsafasi:</strong> Katta masshtabli sanoat qudrati, Space Grotesk, Molten Copper (#E26D2D), sanoat to‘ri va koordinatalar.
+      </div>
+      <div class="preview-image-container">
+        <img 
+          src="../audit-screenshots/concept2_hero_1440x900.png" 
+          alt="Concept 2 Industrial Cinematic Desktop Hero" 
+          class="concept-screenshot"
+          id="imgConcept2"
+        />
+      </div>
+      <div class="panel-footer">
+        <span>VIEWPORT: 1440×900PX</span>
+        <a href="concept-2-industrial-cinematic.html" target="_blank">Alohida ko‘rish ↗</a>
+      </div>
+    </div>
+
+    <!-- Concept 3 Panel -->
+    <div class="concept-panel" id="panelConcept3">
+      <div class="panel-header c3-hdr">
+        <span>03 // LUXURY EDITORIAL</span>
+        <span>ARCHITECTURAL MONOGRAPH</span>
+      </div>
+      <div class="panel-meta">
+        <strong>Falsafasi:</strong> Yuqori me’morchilik va biznes jurnallari andozasi. Alabaster Cream (#FBF9F5), Cormorant Garamond, Cinzel va Mineral Gold.
+      </div>
+      <div class="preview-image-container">
+        <img 
+          src="../audit-screenshots/concept3_hero_1440x900.png" 
+          alt="Concept 3 Luxury Editorial Desktop Hero" 
+          class="concept-screenshot"
+          id="imgConcept3"
+        />
+      </div>
+      <div class="panel-footer">
+        <span>VIEWPORT: 1440×900PX</span>
+        <a href="concept-3-luxury-editorial.html" target="_blank">Alohida ko‘rish ↗</a>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

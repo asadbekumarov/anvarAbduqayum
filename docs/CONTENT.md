@@ -1,176 +1,151 @@
-# KONTENT HUJJATI: ILHOM BEGIMQULOV SAYTI (RASMIY SAYT ASOSIDA)
+# KONTENT HUJJATI: ANVAR ABDUQAYUM SAYTI
 
-> Ushbu hujjat https://ilxombegimqulov.uz/ rasmiy saytidan to'liq o'rganilgan va olingan haqiqiy matnlarni o'z ichiga oladi. Matnlar o'zbek tilida (lotin alifbosida).
+> Ushbu hujjat Anvar Abduqayum rasmiy sayti (`https://anvarabduqayum.uz`) uchun tasdiqlangan barcha matnlar, xizmatlar, metrikalar, media havolalar va aloqa ma'lumotlarini o'z ichiga oladi.
 
 ---
 
 ## 1. Navigatsiya va Umumiy elementlar
-- **Sayt nomi**: Ilhom Begimqulov
-- **Kasbi/Unvoni**: Biznes konsultant va trener
+- **Sayt nomi**: Anvar Abduqayum
+- **Kasbi/Unvoni**: Tadbirkor, Investor va Biznes-mentor
+- **Asosiy yo'nalish**: Ishlab chiqarish, Eksport va Tizimlashtirish
 - **Bosh menyu bandlari**:
   - Bosh sahifa (`#hero`)
   - Xizmatlar (`#xizmatlar`)
-  - Tadbirlarimiz (`#tadbirlarimiz`)
-  - Bosqichlar (`#bosqichlar`)
-  - Testlar (`#testlar`)
-- **Asosiy harakatga chaqiruv (CTA)**: "Ustozga shogird tushish"
+  - Metodologiya (`#bosqichlar`)
+  - Ekspert (`#ekspert`)
+  - Keyslar va Media (`#natijalar`)
+  - Savol-javoblar (`#faq`)
+  - Aloqa (`#aloqa`)
+- **Asosiy harakatga chaqiruv (CTA)**:
+  - Bosh CTA: "Bepul diagnostikaga yozilish"
+  - Qo'shimcha CTA: "Ustozga shogird tushish"
 - **Til tanlash**: UZ / RU / EN
 
 ---
 
 ## 2. Hero (Bosh qism)
-- **Kicker**: BIZNES KONSULTANT VA TRENER
-- **Bosh sarlavha**: "Ilhom Begimqulov — biznes konsultant va trener platformasi."
-- **Quyi tavsif**: "Biznesni rivojlantirish, tizimlashtirish, strategiya, seminarlar va amaliy maslahatlar. Kompaniyangiz o'sishiga va yangi maqsadlarga erishishga yordam beramiz."
+- **Kicker**: ISHLAB CHIQARISH, EKSPORT VA BIZNES MENTORLIK
+- **Bosh sarlavha**: "Biznesingizni kichik savdodan — tizimli ishlab chiqarish va global eksport darajasiga olib chiqamiz."
+- **Quyi tavsif**: "20 yillik real zavodlar, chakana savdo tarmoqlari va xalqaro eksport tajribasi asosida kompaniyangizda qat'iy intizom, moliyaviy nazorat hamda avtonom boshqaruv tizimini quramiz."
 - **Tugmalar**:
-  - Asosiy: "Ustozga shogird tushish"
-  - Qo'shimcha: "Xizmatlar bilan tanishish"
-- **Metrikalar (Key stats)**:
-  - `8+` Mintaqaviy shahar bo'ylab seminar
-  - `100+` Tizimlashtirilgan kompaniyalar
-  - `10 000+` Tadbirkorlar va tinglovchilar
+  - Asosiy: "Bepul diagnostikaga yozilish"
+  - Qo'shimcha: "Xizmatlar yo'nalishi"
+- **Portret osti unvoni**: "Tadbirkor, Investor & Amaliyotchi Mentor · 20+ yillik tajriba"
+- **Metrikalar (Key Stats)**:
+  - `20+ yil` (01 / TAJRIBA VA KO'LAM): Yirik ishlab chiqarish zavodlari, savdo va restoran tarmoqlari
+  - `15 000+` (02 / AUDITORIYA): Biznes-forumlar, treninglar va shogirdlik dasturi ishtirokchilari
+  - `10+ davlat` (03 / GEOGRAFIYA): Xitoy, Turkiya, Yevropa va Markaziy Osiyo bo'ylab eksport-import amaliyoti
 
 ---
 
 ## 3. Xizmatlar (6 ta asosiy yo'nalish)
-- **Sarlavha**: "Xizmatlar"
-- **Kirish matni**: "Biz biznesni rivojlantirish uchun — strategik rejalashtirishdan tortib, kommunikatsiyalarni takomillashtirishgacha bo'lgan yechimlarni taklif etamiz. Kompaniyangiz o'sishiga va yangi maqsadlarga erishishga yordam beradigan xizmatni tanlang."
+- **Kicker**: XIZMATLAR ARXITEKTURASI
+- **Sarlavha**: "Real tajribada sinalgan amaliy biznes yechimlar."
+- **Kirish matni**: "Nazariy kitob gaplari emas — o'zim zavodlar va yirik savdo tarmoqlarida qo'llab, millionlab dollarlik aylanmaga olib chiqqan amaliy boshqaruv hamda masshtablashtirish tizimlari."
+- **Strategik tahlil (Monolith)**:
+  - Kicker: "STRATEGIK TAHLIL" | Badge: "20 DAQIQA · BEPUL"
+  - Sarlavha: "Biznesingiz qayerda oqsayapti?"
+  - Tavsif: "Qisqa diagnostik suhbatda korxonangizdagi savdo, ishlab chiqarish yoki kadrlar muammosini aniqlab, eng tez natija beruvchi o'sish nuqtalarini belgilab olamiz."
+  - CTA: "Bepul diagnostikaga yozilish"
 
-1. **Strategik tahlil va rejalashtirish**
-   - Biznesning joriy holatini, jumladan, marketing va operatsion jarayonlarni tahlil qilish.
-   - Kompaniyaning uzoq muddatli maqsadlarini hisobga olgan holda o'sish strategiyasini ishlab chiqish.
-   - Bozordagi xavf va imkoniyatlarni baholash.
-2. **Biznes jarayonlarini optimallashtirish**
-   - Kompaniyaning ichki jarayonlari samaradorligini oshirish.
-   - Zamonaviy vositalar va texnologiyalarni joriy etish.
-   - Ish jarayonlarini optimallashtirish hisobiga xarajatlarni kamaytirish.
-3. **Marketing strategiyalarini ishlab chiqish**
-   - Brend tan olinishini oshirish strategiyalarini yaratish.
-   - Samarali reklama kampaniyalari va harakatga chorlovlarni ishlab chiqish.
-   - Auditoriya va raqobat muhitini tahlil qilish.
-4. **Loyiha boshqaruvi bo'yicha konsultatsiya**
-   - Loyihalarning tuzilmasi va bosqichlarini ishlab chiqishda yordam.
-   - Loyihaning bajarilishini nazorat qilish va kuzatib borish.
-   - Xodimlarni loyiha boshqaruvi usullariga o'rgatish.
-5. **Biznes-kommunikatsiyalarni takomillashtirish**
-   - Ish yozishmalari va tijorat takliflarining auditi.
-   - Aniqroq va samaraliroq matnlarni yaratishda yordam.
-   - Mijozlar va hamkorlar bilan o'zaro hamkorlikning zamonaviy formatlarini ishlab chiqish.
-6. **Biznes transformatsiyasi jarayonlarida qo'llab-quvvatlash**
-   - O'zgarishlarni joriy etishda kompaniyani kuzatib borish va qo'llab-quvvatlash.
-   - Xodimlarni yangi strategiyalar va yondashuvlarga tayyorlash.
-   - Yangi biznes-modellarga silliq o'tishni ta'minlash.
+1. **Biznes audit va masshtablashtirish xaritasi**
+   - Korxonangizning joriy moliyaviy holati, xarajatlari va bozor imkoniyatlarini tahlil qilib, sof foydani oshirish strategiyasini tuzish.
+2. **Ishlab chiqarishni noldan yo'lga qo'yish va tizimlashtirish**
+   - Uskunalar tanlash (Xitoy va Turkiya), xomashyo ta'minoti, tannarxni optimallashtirish va zavod ichki intizomini qurish.
+3. **Eksport va xalqaro bozorlarga chiqish (B2B)**
+   - Mahalliy mahsulotlarni Markaziy Osiyo, Turkiya va Yevropa bozorlariga eksport qilish, xalqaro hamkorlar bilan muzokaralar olib borish.
+4. **Chakana va ulgurji savdo tarmog'ini qurish**
+   - Do'konlar tarmog'i, omborxona logistikasi, distribyutsiya va sotuv bo'limi KPI tizimini avtomatlashtirish.
+5. **Kadrlar tanlash va qat'iy korporativ intizom**
+   - Kuchli jamoa yig'ish, xodimlarni natijaga bog'lash, o'g'rilik va mas'uliyatsizlikka barham beruvchi nazorat mexanizmlari.
+6. **Shaxsiy mentorlik va «Ustoz-shogird» trekingi**
+   - Anvar Abduqayum bilan bevosita muloqotda yangi biznes ochish yoki mavjud kompaniyani yirik xolding darajasiga olib chiqish.
 
 ---
 
-## 4. Markaziy Osiyo va MDH Bo'yicha Biznes-Tur & Tadbirlarimiz
-- **Sarlavha**: "Markaziy Osiyo bo'ylab amaliy biznes-turlar"
-- **Kirish matni**: "O'zbekiston, Qozog'iston, Qirg'iziston va Tojikistonning yirik biznes markazlarida minglab tadbirkorlar ishtirokida o'tkazilgan intensiv seminarlar va yopiq uchrashuvlar arxivi."
-- **Shaharlar va seminarlar**:
-  1. **Shymkent (Шимкент)**: Ilhom Begimqulov bilan 3 kunlik intensiv seminar. Biznesni o‘stirish va tizimlashtirish bo‘yicha amaliy bilimlar.
-  2. **Osh (Ош)**: Seminar 4 ta davlat, 8 ta shaharda bo‘lib o‘tadi. Fokus: daromad, avtomatlashtirish va kuchli networking.
-  3. **Samarqand (Самарканд)**: Real keyslar, tayyor strategiyalar va aniq yo‘nalishlar. Faqat amaliyot — natijaga yo‘naltirilgan.
-  4. **Xo'jand (худжант)**: Bu seminar sizning biznesingiz uchun burilish nuqtasi bo‘ladi. Daromadni oshirish va tizim qurishni o‘rganasiz.
-  5. **Toshkent (Тошкент)**: Xarajatlarni kamaytirish, foydani oshirish va jamoani boshqarish. Hammasi real ishlaydigan metodlar.
-  6. **Farg'ona (Фаргона)**: Turli davlatlardan tadbirkorlar bilan tanishing. Yangi aloqalar va yangi imkoniyatlar.
+## 4. Metodologiya va Bosqichlar (Stages)
+- **1-yo'nalish: Biznesni tizimlashtirish (B2B)**
+  1. *Chuqur diagnostika va moliya tahlili*
+  2. *Boshqaruv va kadrlar filtratsiyasi*
+  3. *Ishlab chiqarish va tannarx optimizatsiyasi*
+  4. *Savdo va distribyutsiya tizimi*
+  5. *Avtomatlashtirish va moliyaviy nazorat*
+  6. *Masshtablashtirish va xalqaro eksport*
+- **2-yo'nalish: Shogirdlik va shaxsiy mentorlik**
+  1. *Saralash va salohiyatni aniqlash*
+  2. *Biznes-model va aniq hisob-kitob*
+  3. *Real zavod va korxonalarda amaliyot*
+  4. *Loyihani ishga tushirish va ilk sotuvlar*
+  5. *Biznes klub va xalqaro networking (UZBIC)*
+  6. *Barqaror sof foyda va yangi bosqich*
 
 ---
 
-## 5. Bosqichlar: Katta va Kichik Biznesni Rivojlantirish
-- **Sarlavha**: "Katta va kichik biznesni rivojlantirish"
-- **Kirish matni**: "Asosiy bosqichlar biznesning o'sishiga, moslashishiga va muvaffaqiyatga erishishiga yordam beradi. Biz har bir qadamda — rejalashtirishdan tortib uzoq muddatli rivojlanishgacha qo'llab-quvvatlaymiz."
-- **Kichik va o'rta tadbirkorlikni rivojlantirish bosqichlari**:
-  1. **G'oya va rejalashtirish**: Maqsadli auditoriyaning ehtiyojlarini aniqlash. Noyob tijorat taklifini (NTT) shakllantirish. Xarajatlar hisob-kitoblari va daromad prognozlari bilan birga biznes-reja ishlab chiqish. Bozor va raqobatchilarni tahlil qilish.
-  2. **Biznesni ishga tushirish**: Biznesni ro'yxatdan o'tkazish va kerakli hujjatlarni rasmiylashtirish. Firma stilini ishlab chiqish va brendni yaratish. Mahsulot yoki xizmatning birinchi versiyasini ishga tushirish. Birinchi mijozlarni jalb qilish uchun marketing faoliyatini tashkil etish.
-  3. **Jarayonlarni optimallashtirish**: Dastlabki natijalarni tahlil qilish va strategiyani tuzatish. Ichki jarayonlarni avtomatlashtirish va optimallashtirish. Jamoani shakllantirish: xodimlarni yollash yoki mutaxassislarni jalb qilish. Qayta aloqa asosida mahsulot yoki xizmat sifatini yaxshilash.
-  4. **Savdo hajmini oshirish**: Qo'shimcha xizmatlar yoki mahsulotlarni joriy etish. Marketing va reklama orqali mijozlar bazasini kengaytirish. Boshqa kompaniyalar bilan hamkorlik aloqalarini o'rnatish. Savdo strategiyalarining samaradorligini baholash.
-  5. **Biznesni masshtablash (kengaytirish)**: Yangi bozorlarga chiqish. Ishlab chiqarish yoki xizmat ko'rsatish hajmini oshirish. Uzoq muddatli o'sish strategiyasini ishlab chiqish. Yangi texnologiyalar va infratuzilmaga investitsiyalar kiritish.
-  6. **Barqaror rivojlanish**: Mahsulot yoki xizmat va mijozlarga xizmat ko'rsatish sifatini doimiy yaxshilash. Brendni rivojlantirish va bozordagi obro'sini mustahkamlash. Moliyaviy barqarorlik monitoringi. Xatarlarni boshqarish strategiyasini ishlab chiqish.
+## 5. Ekspert haqida (Anvar Abduqayum)
+- **Kicker**: TA'SISCHI VA BOSH MENTOR
+- **Ism**: ANVAR ABDUQAYUM
+- **Tajriba**: 20+ YILLIK REAL ISHLAB CHIQARISH VA SAVDO TAJRIBASI
+- **Katta shior**: "Nazariyadan xoli, zavod va bozorlarda toblangan haqiqiy tajriba."
+- **Bosh iqtibos**: "Biznesda muvaffaqiyat siri — o'z ishingizning haqiqiy «kasali» bo'lish, halollikdan chekinmaslik va har bir tiyinni tizimli nazorat qilishdadir."
+- **Biografiya**:
+  - O'zbekistondagi yirik «Toy Bola» o'yinchoqlar ishlab chiqarish korxonasi va savdo tarmog'i, polietilen qadoqlash zavodlari hamda «Afiyet», «Puro» restoranlari asoschisi.
+  - UZBIC tadbirkorlar hamjamiyati tashabbuskori. Turkiya, Xitoy va Yevropa davlatlari bilan eksport-import amaliyotini yo'lga qo'yib, minglab tadbirkorlarga amaliy ustozlik qilib kelmoqda.
+- **3 ta Boshqaruv Ustuni**:
+  1. *Qat'iy mehnat va intizom*
+  2. *Halollik va ishonch*
+  3. *Ishlab chiqarish va Eksport*
 
 ---
 
-## 6. Biz Qo'llab-Quvvatlagan Bizneslar (Hamkorlar)
-- **Sarlavha**: "Biz qo'llab-quvvatlagan bizneslar"
-- **Hamkor brendlar**: Mir, Nafis, Sladkiy Korm, Ata Plast, Texno Dunyosi, Nik Rattan, Eputy, Odezhda, Way, Logistika, Ayran va boshqa 27+ kompaniyalar.
+## 6. E'tirof va Sertifikatlar (Diplomas)
+1. **«Shuhrat» medali va Davlat e'tirofi** (2023) — O'zbekiston Respublikasi Prezidenti Farmoni
+2. **Yilning yetakchi ishlab chiqaruvchisi va eksportchisi** (2024) — Sanoat va Tadbirkorlik Assotsiatsiyasi
+3. **Xalqaro Biznes Hamjamiyat va Mentorlik E'tirofi** (2025) — UZBIC & Mintaqaviy Biznes Forumlar
 
 ---
 
-## 7. CTA Band (Chaqiruv paneli)
-- **Sarlavha**: "Savolingizni bering, biz sizning biznesingizni muvaffaqiyatli rivojlantirish uchun yechim topishga yordam beramiz!"
-- **Tugma**: "Ustozga shogird tushish"
+## 7. Media va Video Keyslar (MediaArchive)
+- **Video Keyslar (5 ta YouTube intervyu)**:
+  1. `73WXbwiMBzI` — Zavodlar, restoranlar va ishlab chiqarish tizimi: Katta intervyu (2:26:06)
+  2. `wQpjlNfFzpo` — Turkiyadagi biznes, o'tmishdagi xatolar va badavlat ustoz saboqlari (3:09:17)
+  3. `_93gL4XLv7A` — Yevropa bozoriga chiqish va Portugaliyada kompaniya ochish tajribasi (1:56:05)
+  4. `OEAEM2qXxyg` — Oilaviy tadbirkorlik va farzandlarni biznesmen qilib tarbiyalash (44:22)
+  5. `eTWLWHPsqQY` — Tadbirkorlikdagi katta burilish va davlat rahbari bilan uchrashuv (2:06)
+- **Ochiq Master-klasslar (6 ta YouTube dars)**:
+  1. `9k5x1WmGAjM` — Biznes boshlashdan oldin bilishingiz shart bo'lgan 7 ta xato (38:18)
+  2. `sKMsIe7_YOk` — Kichik sarmoya bilan uyda o'tirib 1000$ daromadga chiqish yo'llari (32:51)
+  3. `qD0ydhh9o10` — Oyiga sof 3000$ foyda keltiradigan amaliy biznes yo'nalishlar (25:10)
+  4. `vAQVWSjTV-s` — Tadbirkorlik va boshqaruv qobiliyatini qanday aniqlash mumkin? (2:54)
+  5. `2J-1nXjGEUQ` — Mavsumiy biznesda yuqori daromad: 70 000$ foyda keysi (0:25)
+  6. `PKa9KntUyQg` — 20 yoshda biznesni noldan qanday boshlaganman? Amaliy xulosalar (0:31)
+- **Biznes-turlar (6 ta shahar)**:
+  1. Toshkent (O'zbekiston) — Ishlab chiqarish va Eksport Forumi
+  2. Istanbul (Turkiya) — Xalqaro B2B Biznes-tur va Zavodlar tashrifi
+  3. Guanchjou / Yivu (Xitoy) — Uskunalar va Xomashyo Importi Biznes-missiyasi
+  4. Lissabon (Portugaliya) — Yevropa bozoriga chiqish va Investitsiya
+  5. Samarqand (O'zbekiston) — Real Keyslar va Savdoni Tizimlashtirish
+  6. Farg'ona (O'zbekiston) — Vodiy Ishlab Chiqaruvchilari Networking Uchrashuvi
 
 ---
 
-## 8. Ekspert haqida (Ilhom Begimqulov)
-- **Eyebrow**: Biznes-konsultant
-- **Sarlavha**: Ilhom Begimqulov
-- **Tavsif**: "Tajribali biznes-konsultant bo'lib, kompaniyalarga strategik masalalarni hal qilishga va ularning maqsadlariga erishishga yordam beradi. Turli miqyosdagi bizneslar bilan ko'p yillik ishlash tajribasi tufayli, natija beradigan individual yechimlarni topa oladi."
-- **Faktlar va yo'nalishlar**:
-  - **Ta'lim**: Biznesni boshqarish magistri (MBA), yetakchi xalqaro universitet. Strategik marketing va loyihalarni boshqarish bo'yicha qo'shimcha kurslar.
-  - **Tajriba**: Kichik startaplar va yirik korporatsiyalar bilan hamkorlik. Ko'p millionlik loyihalarni boshqarish va turli sohalardagi mijozlar uchun o'sish strategiyalarini ishlab chiqish tajribasi.
-  - **Mutaxassislik**: Marketing strategiyalarini ishlab chiqish va joriy etish. Biznes-kommunikatsiyalarni optimallashtirish va samarali harakatga chorlovlarni yaratish. Loyihalarni barcha bosqichlarda qo'llab-quvvatlash.
-  - **Shaxsiy fazilatlari**: Metodiklik va detallarga e'tibor. Yechimlarni har bir mijozning vazifalariga moslashtirish qobiliyati. Samarali va realistik rivojlanish rejalarini tuza olish.
+## 8. «Tadbirkorlikning yozilmagan qonunlari» kitobi
+- **Sarlavha**: «Tadbirkorlikning yozilmagan qonunlari» kitobi
+- **Tavsif**: Kichik savdodan yirik zavodlargacha bo'lgan yo'lda olingan real saboqlar, biznesda bankrot bo'lmaslik qoidalari hamda moliyaviy nazorat chek-listlari.
+- **Parametrlar**:
+  - `01 / FORMAT`: Bosma nashr + Maxsus video-darslar
+  - `02 / MAZMUN`: Real keyslar, 7 ta xato tahlili va boshqaruv jadvallari
+  - `03 / AUDITORIYA`: Yangi boshlovchilar, ishlab chiqaruvchilar va biznes egalari
+- **CTA**: Kitobga buyurtma berish
 
 ---
 
-## 9. Mijozlar fikrlari (Haqiqiy YouTube videolari)
-- **Sarlavha**: "MIJOZLAR FIKRLARI"
-- **Tavsif**: "Mijozlarimizning fikrlari — ish samaradorligi va sifatining eng yaxshi isbotidir. Bizning maslahatlarimiz kompaniyalarga muvaffaqiyatga erishishda, jarayonlarni optimallashtirishda va oʻsish uchun yangi istiqbollarni topishda qanday yordam berganini bilib oling."
-- **Haqiqiy YouTube Video ID-lari**:
-  1. `nToRnb7k428`
-  2. `x49k3Mc1Mik`
-  3. `TNcvtaqWlY0`
-  4. `G4b9i1TbIig`
-  5. `BbJe8dx1aPg`
-
----
-
-## 10. “Biznes shpargalkasi” kitobi
-- **Sarlavha**: "“Biznes shpargalkasi” kitobi"
-- **Tavsif**: "“Biznes shpargalkasi” kitobi — bu oʻz biznesini boshlamoqchi yoki rivojlantirmoqchi boʻlganlar uchun amaliy qoʻllanmadir. Unda oddiy va tushunarli maslahatlar, vaqt sinovidan oʻtgan vositalar va tadbirkorlik amaliyotidan real misollar jamlangan."
-- **Kitob bo'limlari**:
-  1. Biznesda duch kelgan qiyinchiliklar
-  2. Biznesdagi xatolarim va ulardan olgan saboqlarim
-  3. Biznesni rivojlantirish uchun foydali tavsiyalar
-
----
-
-## 11. O'tgan vebinarlar (Haqiqiy YouTube videolari)
-- **Sarlavha**: "O'TGAN VEBINARLAR"
-- **Tavsif**: "O'tgan videolarda siz biznes uchun amaliy tavsiyalar va foydali insayt (tushuncha)larni topasiz. Asosiy mavzular, dolzarb trendlar va muvaffaqiyatli keyslar sizga samarali strategiyalarni joriy etishga va oldinga siljishga yordam beradi."
-- **Haqiqiy YouTube Video ID-lari**:
-  1. `sn68jdRJym0`
-  2. `604Wo85KMGU`
-  3. `ZLV9hzFsV6A`
-  4. `mT2QtEHW9ZQ`
-  5. `MkL5oqU8Hvc`
-  6. `xXVnjicuuFk`
-
----
-
-## 12. Diplom va sertifikatlar
-- **Sarlavha**: "Diplom va sertifikatlar"
-- **Hujjatlar**: Ilhom Begimqulovning xalqaro darajadagi professional sertifikatlari va diplomlari (Lightbox orqali kattalashtirish imkoniyati bilan).
-
----
-
-## 13. Ustozga shogird tushish shakli (Shogird Modal)
-- **Sarlavha**: "Biznesingiz bormi?"
-- **Tanlovlar**: "Ha, bor" / "Yo'q"
-- **Maydonlar**:
-  - Ismingiz: To'liq ismingiz
-  - Telefon raqamingiz: +998 (__) ___-__-__
-  - Biznes muammosi: Biznesingizdagi qaysi muammo qiynayapdi?
-- **Yuborish tugmasi**: "Yuborish"
-- **Muvaffaqiyat xabari**: "Yuborildi! Ma'lumotlaringiz qabul qilindi. Tez orada siz bilan bog'lanamiz!"
-
----
-
-## 14. Kontaktlar va Footer
+## 9. Kontaktlar va Aloqa kanallari
 - **Telefon**: +998 55 503 61 00
-- **Manzil**: Toshkent, Shayxontoxur, Furkat ko'chasi 18
-- **WhatsApp**: +998 90 969 66 24 (https://wa.me/998909696624)
-- **Instagram**: https://www.instagram.com/ilxom.begimkulov
-- **Telegram**: https://t.me/Ilxombegimkulov
-- **YouTube**: https://www.youtube.com/@IlxomBegimkulov
-- **Mualliflik huquqi**: Ilhom Begimqulov © 2026. Barcha huquqlar himoyalangan.
+- **Manzil**: Toshkent shahri, Bosh ofis va «Toy Bola» biznes majmuasi
+- **Ish vaqti**: Dushanba - Shanba: 09:00 - 18:00
+- **Telegram kanal**: `@anvar_abduqayum` (https://t.me/anvar_abduqayum)
+- **Telegram admin**: `@anvar_abduqayum_admin` (https://t.me/anvar_abduqayum_admin)
+- **Instagram**: `@anvar_abduqayum` (https://www.instagram.com/anvar_abduqayum)
+- **YouTube**: `@AnvarAbduqayum` (https://www.youtube.com/@AnvarAbduqayum)
+- **Email**: info@anvarabduqayum.uz
+- **Mualliflik huquqi**: Anvar Abduqayum © 2026. Barcha huquqlar himoyalangan.

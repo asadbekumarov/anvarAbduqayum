@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anvar Abduqayum — Hallmark Premium Design Exploration Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #080A0E;
+      --bg-surface: #0F1219;
+      --bg-panel: #141822;
+      --border-subtle: rgba(255, 255, 255, 0.09);
+      --border-accent: #D97736;
+      --text-white: #FFFFFF;
+      --text-muted: #8E95A5;
+      --accent-amber: #D97736;
+      --accent-copper: #E26D2D;
+      --accent-gold: #B8860B;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text-white);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Top Studio Header */
+    .top-header {
+      background: rgba(15, 18, 25, 0.96);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 14px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .brand-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #FFF;
+    }
+    .brand-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 3px;
+      background: rgba(217, 119, 54, 0.15);
+      border: 1px solid rgba(217, 119, 54, 0.35);
+      color: var(--accent-amber);
+      font-weight: 700;
+    }
+
+    /* Concept Selector Tabs */
+    .tab-pills {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #090B10;
+      padding: 4px;
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+    }
+    .pill-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .pill-btn:hover {
+      color: #FFF;
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .pill-btn.active {
+      background: #181C26;
+      border-color: rgba(255, 255, 255, 0.15);
+      color: #FFF;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+    .pill-btn.active.c1 { border-color: var(--accent-amber); color: #FFF; }
+    .pill-btn.active.c2 { border-color: var(--accent-copper); color: #FFF; }
+    .pill-btn.active.c3 { border-color: var(--accent-gold); color: #FFF; }
+
+    /* Viewport / Device Switcher */
+    .viewport-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .device-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 7px 12px;
+      background: #12151E;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      border-radius: 4px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .device-btn:hover, .device-btn.active {
+      color: #FFF;
+      border-color: rgba(255, 255, 255, 0.3);
+      background: #1A1F2C;
+    }
+    .open-full-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      padding: 7px 12px;
+      background: rgba(217, 119, 54, 0.15);
+      border: 1px solid rgba(217, 119, 54, 0.35);
+      color: var(--accent-amber);
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* Main View Area */
+    .view-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 24px;
+      background: #06070A;
+      overflow-y: auto;
+    }
+
+    /* Iframe Frame */
+    .preview-frame-wrap {
+      width: 100%;
+      height: calc(100vh - 120px);
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #090A0D;
+    }
+    .preview-frame-wrap.mobile {
+      width: 390px;
+      height: 844px;
+      border-radius: 36px;
+      border: 8px solid #1E2330;
+    }
+    .preview-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* Comparison Matrix View */
+    .comparison-view {
+      display: none;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .comparison-view.active {
+      display: block;
+    }
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 13.5px;
+    }
+    .matrix-table th, .matrix-table td {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border-subtle);
+      border-right: 1px solid var(--border-subtle);
+      vertical-align: top;
+      line-height: 1.6;
+    }
+    .matrix-table th:last-child, .matrix-table td:last-child {
+      border-right: none;
+    }
+    .matrix-table tr:last-child td {
+      border-bottom: none;
+    }
+    .matrix-table th {
+      background: #141822;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .param-col {
+      width: 220px;
+      background: #0C0E14;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Studio Navigation Bar -->
+  <header class="top-header">
+    <div class="brand-meta">
+      <div class="brand-name">ANVAR ABDUQAYUM</div>
+      <span class="brand-tag">HALLMARK EXPLORATION</span>
+    </div>
+
+    <!-- Concept Tabs -->
+    <div class="tab-pills">
+      <button class="pill-btn active c1" onclick="switchConcept('concept-1')">
+        <span style="width:6px; height:6px; background:var(--accent-amber); border-radius:50%;"></span>
+        <span>01 // REFINED AUTHORITY</span>
+      </button>
+      <button class="pill-btn c2" onclick="switchConcept('concept-2')">
+        <span style="width:6px; height:6px; background:var(--accent-copper); border-radius:50%;"></span>
+        <span>02 // INDUSTRIAL CINEMATIC</span>
+      </button>
+      <button class="pill-btn c3" onclick="switchConcept('concept-3')">
+        <span style="width:6px; height:6px; background:var(--accent-gold); border-radius:50%;"></span>
+        <span>03 // LUXURY EDITORIAL</span>
+      </button>
+      <button class="pill-btn" onclick="switchConcept('comparison')">
+        <span>⚡ QIYOSIY TAHLIL (MATRIX)</span>
+      </button>
+    </div>
+
+    <!-- Viewport Controls -->
+    <div class="viewport-controls">
+      <button class="device-btn active" id="btnDesktop" onclick="setDevice('desktop')">
+        <span>🖥️ Desktop (1440px)</span>
+      </button>
+      <button class="device-btn" id="btnMobile" onclick="setDevice('mobile')">
+        <span>📱 Mobile (390px)</span>
+      </button>
+      <a href="/hallmark-exploration/concept-1-refined-authority.html" target="_blank" class="open-full-btn" id="openFullBtn">
+        <span>Alohida ochish ↗</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main View Area -->
+  <main class="view-container">
+    <!-- Iframe Container for Concepts -->
+    <div class="preview-frame-wrap" id="previewWrap">
+      <iframe src="/hallmark-exploration/concept-1-refined-authority.html" class="preview-iframe" id="previewIframe"></iframe>
+    </div>
+
+    <!-- Side-by-Side Comparison Matrix -->
+    <div class="comparison-view" id="comparisonView">
+      <table class="matrix-table">
+        <thead>
+          <tr>
+            <th class="param-col">Mezon / Yo‘nalish</th>
+            <th style="color:var(--accent-amber);">Concept 1 — Refined Authority</th>
+            <th style="color:var(--accent-copper);">Concept 2 — Industrial Cinematic</th>
+            <th style="color:var(--accent-gold);">Concept 3 — Luxury Editorial</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="param-col">Vizual Falsafa</td>
+            <td>Tasdiqlangan Concept D ning eng yuqori darajada sayqallangan (elevated) versiyasi. Shveysariya arxitekturaviy to‘ri va ingliz nufuzli nashriyoti uyg‘unligi.</td>
+            <td>Katta masshtabli, immersiv va kino uslubidagi zavod atmosferasi. Po‘lat qoliplar, erigan polimerlar va sanoat qudrati.</td>
+            <td>Xalqaro yuqori me’morchilik va biznes jurnallari (Architectural Digest, Monocle, Bloomberg Pursuits) estetikasi. Aristokratik nafislik.</td>
+          </tr>
+          <tr>
+            <td class="param-col">Koloristika</td>
+            <td>Obsidian (#090A0D), Qaymoqrang (#F6F3EC), Issiq Kahrabo (#D97736), Po‘lat Slate (#8E95A5).</td>
+            <td>Deep Carbon Charcoal (#050608), Molten Copper (#E26D2D), Sovuq Titan (#B8C0CC), Sof Oq (#FFF).</td>
+            <td>Alabaster Cream (#FBF9F5), Chuqur Qora Tosh (#111215), Mineral Oltin (#B8860B), Sof Oq (#FFFFFF).</td>
+          </tr>
+          <tr>
+            <td class="param-col">Tipografik Juftlik</td>
+            <td><strong>Playfair Display</strong> (bosh sarlavhalar) + <strong>Plus Jakarta Sans</strong> (matn) + <strong>JetBrains Mono</strong> (shtamplar).</td>
+            <td><strong>Space Grotesk</strong> (qudratli sanoat sarlavhalari) + <strong>Manrope</strong> (ravon matn) + <strong>Space Mono</strong> (koordinatalar).</td>
+            <td><strong>Cormorant Garamond</strong> (nafis serif va kursiv) + <strong>Plus Jakarta Sans</strong> + <strong>Cinzel</strong> (monogramma).</td>
+          </tr>
+          <tr>
+            <td class="param-col">Hero Yechimi</td>
+            <td>Asimmetrik kompozitsiya: chapda 3 ta tasdiqlangan ko‘rsatkich (20+ yil tajriba, 7 korxona ekotizimi, UZBIC platformasi), markazda muhandislik ramkali obro‘li portret.</td>
+            <td>Full-bleed ekran: sokin texnik to‘r, "SANOAT. AVTONOMIYA. EKSPORT." katta shiori, koordinatalar va avtonom ekotizim ko‘rsatkichi.</td>
+            <td>Nufuzli jurnal muqovasi: "THE INDUSTRIAL ARCHITECT // VOL. 01", markaziy klassik galereya ramkasi, nafis manifesto.</td>
+          </tr>
+          <tr>
+            <td class="param-col">Xizmatlar (Services)</td>
+            <td><strong>Executive Dossier:</strong> Shveysariya spetsifikatsiyasi formatidagi 4 ta texnik modul (Avtonomiya, Sanoat, Eksport, Audit).</td>
+            <td><strong>Operatsion Matritsa:</strong> Katta formatli kartalar, operatsion bog‘liqlikni qisqartirish va eksport zanjiri yo‘nalishlari.</td>
+            <td><strong>Advisory Booklet:</strong> Direktorlar kengashi va yirik korxonalar uchun eksklyuziv monografik jadval.</td>
+          </tr>
+          <tr>
+            <td class="param-col">Portfel Arxitekturasi</td>
+            <td>Variant A+ ning mukammal asimmetrik griddagi ko‘rinishi (Toybola 7-ustun, Samtech 5-ustun, qolgan 5 ta korxona 4-ustun).</td>
+            <td>Panoramik kartalar: Toybola flagman majmuasi, seriyali ishlab chiqarish, polimer texnologiyalari va konveyer liniyalari.</td>
+            <td>Selected Assets: Har bir korxona muzey katalogi yoki arxitektura durdonasi kabi nafis oq bo‘shliq bilan taqdim etiladi.</td>
+          </tr>
+          <tr>
+            <td class="param-col">Harakat & Interaktivlik</td>
+            <td>Vazmin, aristokratik o‘tishlar (cubic-bezier 0.16, 1, 0.3, 1), 100% transform va opacity, reflow xavfi nol.</td>
+            <td>Kinocha chuqurlik (cinematic reveals), kartochkalarda 3D mayin ko‘tarilish, yorug‘lik aksentlari.</td>
+            <td>Mayin oqish, kitob varag‘i kabi sokin va sokin o‘tishlar, osoyishta ritm.</td>
+          </tr>
+          <tr>
+            <td class="param-col">Kuchli Tomonlari</td>
+            <td>Mavjud Concept D ga eng yaqin, biznes ishonchliligini zudlik bilan shakllantiradi, xavfsiz va sinovdan o‘tgan.</td>
+            <td>Emotsional jihatdan eng ta’sirchan, yosh va xalqaro auditoriyada sanoat qudratini kuchli his qildiradi.</td>
+            <td>Eng yuqori elita va investitsion daraja, qimmatbaho xalqaro konsalting kompaniyalari maqomiga ega.</td>
+          </tr>
+          <tr>
+            <td class="param-col">Kompromisslar (Trade-offs)</td>
+            <td>Mavjud arxitekturani radikal o‘zgartirmaydi (evolyutsion yondashuv).</td>
+            <td>Kuchli qora fon va og‘irroq grottesk tipografiyasi ko‘proq kontrast talab qiladi.</td>
+            <td>Yengil (ochiq) fon va serif ko‘pligi an’anaviy sanoat saytlaridan ancha nozikroq ko‘rinish kasb etadi.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    const conceptUrls = {
+      'concept-1': '/hallmark-exploration/concept-1-refined-authority.html',
+      'concept-2': '/hallmark-exploration/concept-2-industrial-cinematic.html',
+      'concept-3': '/hallmark-exploration/concept-3-luxury-editorial.html'
+    };
+
+    let currentConcept = 'concept-1';
+
+    function switchConcept(conceptKey, btnElement) {
+      // Update Tab Buttons
+      const buttons = document.querySelectorAll('.pill-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      
+      const previewWrap = document.getElementById('previewWrap');
+      const comparisonView = document.getElementById('comparisonView');
+      const openFullBtn = document.getElementById('openFullBtn');
+      const previewIframe = document.getElementById('previewIframe');
+
+      if (conceptKey === 'comparison') {
+        previewWrap.style.display = 'none';
+        comparisonView.classList.add('active');
+        if (btnElement) btnElement.classList.add('active');
+        openFullBtn.style.display = 'none';
+      } else {
+        previewWrap.style.display = 'block';
+        comparisonView.classList.remove('active');
+        if (btnElement) btnElement.classList.add('active');
+        openFullBtn.style.display = 'inline-flex';
+        
+        currentConcept = conceptKey;
+        previewIframe.src = conceptUrls[conceptKey];
+        openFullBtn.href = conceptUrls[conceptKey];
+      }
+    }
+
+    function setDevice(device) {
+      const wrap = document.getElementById('previewWrap');
+      const btnDesktop = document.getElementById('btnDesktop');
+      const btnMobile = document.getElementById('btnMobile');
+
+      if (device === 'mobile') {
+        wrap.classList.add('mobile');
+        btnMobile.classList.add('active');
+        btnDesktop.classList.remove('active');
+      } else {
+        wrap.classList.remove('mobile');
+        btnDesktop.classList.add('active');
+        btnMobile.classList.remove('active');
+      }
+    }
+  </script>
+
+</body>
+</html>

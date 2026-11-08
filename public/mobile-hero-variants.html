@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mobile Hero Layout Variants — Anvar Abduqayum (Concept D)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark-canvas: #090A0D;
+      --dark-surface: #111318;
+      --dark-border: rgba(255, 255, 255, 0.1);
+      --amber: #D97736;
+      --amber-hover: #E68545;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #050608;
+      color: #F5F4F0;
+      font-family: var(--font-sans);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .toolbar {
+      width: 100%;
+      max-width: 860px;
+      background: #111318;
+      border: 1px solid var(--dark-border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .toolbar-title {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-amber {
+      background: rgba(217, 119, 54, 0.15);
+      color: var(--amber);
+      border: 1px solid rgba(217, 119, 54, 0.3);
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 11px;
+    }
+
+    .btn-toggle-group {
+      display: inline-flex;
+      background: #090A0D;
+      border: 1px solid var(--dark-border);
+      border-radius: 4px;
+      padding: 2px;
+    }
+
+    .btn-toggle {
+      background: transparent;
+      border: none;
+      color: #8E95A5;
+      padding: 6px 14px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: all 0.2s;
+    }
+
+    .btn-toggle.active {
+      background: rgba(255, 255, 255, 0.12);
+      color: #FFF;
+      font-weight: 600;
+    }
+
+    .comparison-stage {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .phone-mockup {
+      width: 100%;
+      max-width: 390px;
+      background: var(--dark-canvas);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8);
+      position: relative;
+    }
+
+    .phone-header-label {
+      padding: 10px 16px;
+      background: #141720;
+      border-bottom: 1px solid var(--dark-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .hero-mobile-container {
+      padding: 20px 18px 28px;
+      background: 
+        radial-gradient(circle at 80% 20%, rgba(217, 119, 54, 0.08) 0%, transparent 60%),
+        var(--dark-canvas);
+    }
+
+    .kicker-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 3px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--amber);
+      margin-bottom: 12px;
+    }
+
+    .headline {
+      font-family: var(--font-display);
+      font-size: 26px;
+      line-height: 1.15;
+      font-weight: 700;
+      color: #FFF;
+      margin-bottom: 14px;
+      letter-spacing: -0.02em;
+    }
+
+    .headline em {
+      font-style: italic;
+      color: #E89E6C;
+      font-weight: 400;
+    }
+
+    .compact-portrait-card {
+      border-radius: 6px;
+      overflow: hidden;
+      background: var(--dark-surface);
+      border: 1px solid var(--dark-border);
+      margin-bottom: 14px;
+      position: relative;
+    }
+
+    .portrait-aspect {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/10; /* Compact aspect for mobile */
+      overflow: hidden;
+      background: #0d0f14;
+    }
+
+    .portrait-aspect img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      filter: contrast(1.02);
+    }
+
+    .portrait-caption-discreet {
+      padding: 6px 10px;
+      background: #0e1017;
+      border-top: 1px solid var(--dark-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: #8E95A5;
+    }
+
+    .lead-short {
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: #A4ACB9;
+      margin-bottom: 16px;
+    }
+
+    .cta-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      min-height: 48px;
+      background: var(--amber);
+      color: #090A0D;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 700;
+      border-radius: 4px;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(217, 119, 54, 0.28);
+      margin-bottom: 16px;
+    }
+
+    .metrics-compact-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .metric-compact-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 4px;
+      padding: 8px 6px;
+      text-align: center;
+    }
+
+    .metric-compact-val {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 700;
+      color: #FFF;
+      display: block;
+      line-height: 1.2;
+    }
+
+    .metric-compact-lbl {
+      font-size: 9.5px;
+      color: #8E95A5;
+      line-height: 1.25;
+      margin-top: 2px;
+      display: block;
+    }
+
+    .tradeoff-box {
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border-top: 1px solid var(--dark-border);
+      font-size: 11.5px;
+      line-height: 1.45;
+      color: #A4ACB9;
+    }
+
+    .tradeoff-box strong { color: #FFF; }
+  </style>
+</head>
+<body>
+
+  <aside class="toolbar">
+    <div class="toolbar-title">
+      <span>MOBILE HERO KOMPOZITSIYA TAHLILI</span>
+      <span class="badge-amber">PHASE 2.1 REVIEW</span>
+    </div>
+    <div class="btn-toggle-group">
+      <button class="btn-toggle active" onclick="showBoth()">Ikkala Variant (Yonma-yon)</button>
+      <button class="btn-toggle" onclick="showOnly('variant-a')">Faqat Variant A</button>
+      <button class="btn-toggle" onclick="showOnly('variant-b')">Faqat Variant B</button>
+    </div>
+  </aside>
+
+  <main class="comparison-stage">
+    
+    <!-- ==================== VARIANT A ==================== -->
+    <section class="phone-mockup" id="variant-a">
+      <div class="phone-header-label">
+        <span style="color: var(--amber);">VARIANT A: Visual First</span>
+        <span style="color: #8E95A5;">390px Mobile</span>
+      </div>
+
+      <div class="hero-mobile-container">
+        <!-- 1. Kicker & Headline -->
+        <div class="kicker-pill">
+          <span>Sanoat • Amaliyot • Boshqaruv</span>
+        </div>
+        <h1 class="headline">
+          <em>Egasisiz ishlaydigan</em><br>tizimlar va boshqaruv.
+        </h1>
+
+        <!-- 2. Compact Portrait (Immediately establishes founder authority) -->
+        <div class="compact-portrait-card">
+          <div class="portrait-aspect">
+            <img src="/images/hero/portrait.webp" alt="Anvar Abduqayum">
+          </div>
+          <div class="portrait-caption-discreet">
+            <span>Anvar Abduqayum</span>
+            <span style="color: #6E7687;">Vaqtinchalik rasm asseti</span>
+          </div>
+        </div>
+
+        <!-- 3. Short Description -->
+        <p class="lead-short">
+          Toybola Toys, Samtech va UZBIC asoschisi. O'zbekiston sanoat ishlab chiqarishida sinalgan intizom bilan biznesingizni mustaqil tizimga olib chiqing.
+        </p>
+
+        <!-- 4. Primary CTA -->
+        <a href="/uz/bron" class="cta-button">
+          <span>Uchrashuv bronlash</span>
+          <span>&rarr;</span>
+        </a>
+
+        <!-- 5. Compact Credibility Metrics -->
+        <div class="metrics-compact-row">
+          <div class="metric-compact-box">
+            <span class="metric-compact-val">2005-yildan</span>
+            <span class="metric-compact-lbl">Ishlab chiqarish amaliyoti</span>
+          </div>
+          <div class="metric-compact-box">
+            <span class="metric-compact-val">Ko'p tarmoqli</span>
+            <span class="metric-compact-lbl">Sanoat &amp; HoReCa</span>
+          </div>
+          <div class="metric-compact-box">
+            <span class="metric-compact-val">Xalqaro</span>
+            <span class="metric-compact-lbl">Muntazam eksport</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tradeoff-box">
+        <strong>Variant A xususiyatlari:</strong>
+        <p>• Portret sarlavhadan so'ng darhol keladi — shaxsiy brend darhol vizual taniladi.</p>
+        <p>• Matn qisqa, biroq CTA birinchi ekranning o'zida (scroll qilmasdan) ko'rinadi.</p>
+      </div>
+    </section>
+
+    <!-- ==================== VARIANT B ==================== -->
+    <section class="phone-mockup" id="variant-b">
+      <div class="phone-header-label">
+        <span style="color: #4ADE80;">VARIANT B: Direct CTA First</span>
+        <span style="color: #8E95A5;">390px Mobile</span>
+      </div>
+
+      <div class="hero-mobile-container">
+        <!-- 1. Kicker & Headline -->
+        <div class="kicker-pill">
+          <span>Sanoat • Amaliyot • Boshqaruv</span>
+        </div>
+        <h1 class="headline">
+          <em>Egasisiz ishlaydigan</em><br>tizimlar va boshqaruv.
+        </h1>
+
+        <!-- 2. Short Description -->
+        <p class="lead-short">
+          Toybola Toys, Samtech va UZBIC asoschisi. O'zbekiston sanoat ishlab chiqarishida sinalgan intizom bilan biznesingizni mustaqil tizimga olib chiqing.
+        </p>
+
+        <!-- 3. Primary CTA Above the Fold -->
+        <a href="/uz/bron" class="cta-button">
+          <span>Uchrashuv bronlash</span>
+          <span>&rarr;</span>
+        </a>
+
+        <!-- 4. Compact Portrait -->
+        <div class="compact-portrait-card">
+          <div class="portrait-aspect">
+            <img src="/images/hero/portrait.webp" alt="Anvar Abduqayum">
+          </div>
+          <div class="portrait-caption-discreet">
+            <span>Anvar Abduqayum</span>
+            <span style="color: #6E7687;">Vaqtinchalik rasm asseti</span>
+          </div>
+        </div>
+
+        <!-- 5. Credibility Metrics -->
+        <div class="metrics-compact-row">
+          <div class="metric-compact-box">
+            <span class="metric-compact-val">2005-yildan</span>
+            <span class="metric-compact-lbl">Ishlab chiqarish amaliyoti</span>
+          </div>
+          <div class="metric-compact-box">
+            <span class="metric-compact-val">Ko'p tarmoqli</span>
+            <span class="metric-compact-lbl">Sanoat &amp; HoReCa</span>
+          </div>
+          <div class="metric-compact-box">
+            <span class="metric-compact-val">Xalqaro</span>
+            <span class="metric-compact-lbl">Muntazam eksport</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tradeoff-box">
+        <strong>Variant B xususiyatlari:</strong>
+        <p>• Birlamchi CTA va ta'rif sarlavha ostida yuqoriroq joylashadi (maksimal konversiya tezligi).</p>
+        <p>• Portret CTA dan keyin keladi; foydalanuvchi birinchi navbatda harakatga chaqiruvni ko'radi.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    function showBoth() {
+      document.getElementById('variant-a').style.display = 'block';
+      document.getElementById('variant-b').style.display = 'block';
+      updateButtons(0);
+    }
+    function showOnly(id) {
+      document.getElementById('variant-a').style.display = id === 'variant-a' ? 'block' : 'none';
+      document.getElementById('variant-b').style.display = id === 'variant-b' ? 'block' : 'none';
+      updateButtons(id === 'variant-a' ? 1 : 2);
+    }
+    function updateButtons(idx) {
+      const btns = document.querySelectorAll('.btn-toggle');
+      btns.forEach((b, i) => {
+        if (i === idx) b.classList.add('active');
+        else b.classList.remove('active');
+      });
+    }
+  </script>
+</body>
+</html>
+

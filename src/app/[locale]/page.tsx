@@ -1,47 +1,26 @@
 import React from "react";
-import dynamic from "next/dynamic";
 import { setRequestLocale } from "next-intl/server";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { MobileStickyBar } from "@/components/layout/MobileStickyBar";
 import { Hero } from "@/components/sections/Hero";
-import { Services } from "@/components/sections/Services";
-import { RevealOnScroll } from "@/components/ui/RevealOnScroll";
+import { ExecutiveDossier } from "@/components/sections/ExecutiveDossier";
+import { Portfolio } from "@/components/sections/Portfolio";
+import { Timeline } from "@/components/sections/Timeline";
+import { Principles } from "@/components/sections/Principles";
+import { Numbers } from "@/components/sections/Numbers";
+import { ExportUzbic } from "@/components/sections/ExportUzbic";
+import { Mistakes } from "@/components/sections/Mistakes";
+import { MediaSection } from "@/components/sections/MediaSection";
+import { ContactSection } from "@/components/sections/ContactSection";
+import { ConsultingModule } from "@/components/sections/ConsultingModule";
+import { InvestmentModule } from "@/components/sections/InvestmentModule";
+import { featuresConfig } from "@/config/features";
+import { routing } from "@/i18n/routing";
 
-import {
-  StagesSkeleton,
-  ExpertSkeleton,
-  MediaArchiveSkeleton,
-  BookCtaSkeleton,
-  FAQSkeleton,
-  ContactSkeleton,
-} from "@/components/ui/skeletons";
-
-// Dynamic imports for heavy below-fold sections with bespoke luxury skeletons to prevent CLS
-const Stages = dynamic(
-  () => import("@/components/sections/Stages").then((m) => m.Stages),
-  { loading: () => <StagesSkeleton /> }
-);
-const Expert = dynamic(
-  () => import("@/components/sections/Expert").then((m) => m.Expert),
-  { loading: () => <ExpertSkeleton /> }
-);
-const MediaArchive = dynamic(
-  () => import("@/components/sections/MediaArchive").then((m) => m.MediaArchive),
-  { loading: () => <MediaArchiveSkeleton /> }
-);
-const BookCtaSplit = dynamic(
-  () => import("@/components/sections/BookCtaSplit").then((m) => m.BookCtaSplit),
-  { loading: () => <BookCtaSkeleton /> }
-);
-const FAQ = dynamic(
-  () => import("@/components/sections/FAQ").then((m) => m.FAQ),
-  { loading: () => <FAQSkeleton /> }
-);
-const Contact = dynamic(
-  () => import("@/components/sections/Contact").then((m) => m.Contact),
-  { loading: () => <ContactSkeleton /> }
-);
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 export default async function HomePage({
   params,
@@ -52,51 +31,49 @@ export default async function HomePage({
   setRequestLocale(locale);
 
   return (
-    <div className="min-h-screen flex flex-col bg-obsidian text-white">
-      <Navbar />
+    <div className="min-h-screen flex flex-col bg-[#F4EFE6] text-[#1C1A17] antialiased">
+      {/* Blueprint Industrial Top Navigation */}
+      <Navbar locale={locale} />
 
-      <main className="flex-1 pt-20">
-        {/* Section 01: Hero + Metrics + Partner Logos Strip */}
-        <Hero />
+      <main className="flex-1 pb-24 sm:pb-0">
+        {/* Section 01: Hero (Blueprint Portrait + 5-sec Proof + Primary Telegram CTA) */}
+        {featuresConfig.sections.hero && <Hero locale={locale} />}
 
-        {/* Section 02: Services Ledger (6 compact table rows + Free Diagnostics Monolith) */}
-        <RevealOnScroll>
-          <Services />
-        </RevealOnScroll>
+        {/* Section 02: Phase 2.2 Executive Dossier (Services & Consulting) */}
+        {featuresConfig.sections.dossier && <ExecutiveDossier locale={locale} />}
 
-        {/* Section 03: Stages Methodology Blueprint (2 tabs + compact accordion) */}
-        <RevealOnScroll>
-          <Stages />
-        </RevealOnScroll>
+        {/* Section 02: Biznes portfeli (Mold sheet module cards: 7 enterprises) */}
+        {featuresConfig.sections.portfolio && <Portfolio locale={locale} />}
 
-        {/* Section 04: Founder Monograph + Compact Diplomas Strip with Lightbox */}
-        <RevealOnScroll>
-          <Expert />
-        </RevealOnScroll>
+        {/* Section 03: Yo'l (Timeline from first business to today) */}
+        {featuresConfig.sections.timeline && <Timeline locale={locale} />}
 
-        {/* Section 05: Tabbed Media, Cases & Business Tour Hub (Testimonials + Webinars + EventsTour) */}
-        <RevealOnScroll>
-          <MediaArchive />
-        </RevealOnScroll>
+        {/* Section 04: Qolip tamoyili (How businesses run without owner: CSS/SVG snapping modules) */}
+        {featuresConfig.sections.principles && <Principles locale={locale} />}
 
-        {/* Section 06: Book & Strategic Diagnostic Split-Screen */}
-        <RevealOnScroll>
-          <BookCtaSplit />
-        </RevealOnScroll>
+        {/* Section 05: Raqamlar (Animated mono counters) */}
+        {featuresConfig.sections.numbers && <Numbers locale={locale} />}
 
-        {/* Section 07: High-Impact FAQ Architecture with Live Search & Categories */}
-        <RevealOnScroll>
-          <FAQ />
-        </RevealOnScroll>
+        {/* Section 06: Eksport va UZBIC (Export geography & Council platform) */}
+        {featuresConfig.sections.exportUzbic && <ExportUzbic locale={locale} />}
 
-        {/* Section 08: Executive Contact Channels & Quick Consultation Form */}
-        <RevealOnScroll>
-          <Contact />
-        </RevealOnScroll>
+        {/* Section 07: Mening xatolarim (Honest interview lessons & system fixes) */}
+        {featuresConfig.sections.mistakes && <Mistakes locale={locale} />}
+
+        {/* Section 08: Media (YouTube interviews + Press coverage) */}
+        {featuresConfig.sections.media && <MediaSection locale={locale} />}
+
+        {/* Section 09: Aloqa (Telegram, Socials + Protected Contact Form) */}
+        {featuresConfig.sections.contact && <ContactSection locale={locale} />}
+
+        {/* Future Modules - strictly governed by feature flags (disabled in v1) */}
+        {featuresConfig.consulting && <ConsultingModule />}
+        {featuresConfig.investment && <InvestmentModule />}
       </main>
 
-      <Footer />
-      <MobileStickyBar />
+      {/* Blueprint Industrial Footer & Mobile Sticky Bar */}
+      <Footer locale={locale} />
+      <MobileStickyBar locale={locale} />
     </div>
   );
 }

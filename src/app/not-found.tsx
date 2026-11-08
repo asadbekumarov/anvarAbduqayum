@@ -3,8 +3,8 @@ import "./globals.css";
 
 export default function GlobalNotFound() {
   return (
-    <html lang="uz">
-      <body className="bg-base text-white">
+    <html lang="uz" suppressHydrationWarning>
+      <body className="bg-base text-white" suppressHydrationWarning>
         <div className="min-h-screen bg-base text-white flex items-center justify-center p-4">
           <div className="max-w-md w-full text-center space-y-6 p-8 bg-elevated border border-border rounded-[2px]">
             <span className="font-serif text-6xl font-light text-neutral-500 tracking-tight block">

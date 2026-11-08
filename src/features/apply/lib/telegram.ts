@@ -74,7 +74,7 @@ export async function sendTelegramLead(
         .filter(Boolean)
         .join("\n")
     : [
-        `🏛 <b>YANGI B2B ARIZA — ILHOM BEGIMQULOV</b>`,
+        `🏛 <b>YANGI B2B ARIZA — ANVAR ABDUQAYUM</b>`,
         `━━━━━━━━━━━━━━━━━━━━`,
         `👤 <b>Mijoz:</b> ${cleanText(lead.name)}`,
         `📞 <b>Telefon:</b> <code>${cleanText(lead.phone)}</code>`,

@@ -99,7 +99,7 @@ export function MobileMenu({ isOpen, onClose, onOpenApply }: MobileMenuProps) {
           onClick={handleLinkClick}
           className="font-serif text-lg tracking-wider font-semibold text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
         >
-          ILHOM BEGIMQULOV
+          ANVAR ABDUQAYUM
         </a>
         <CloseButton
           ref={closeButtonRef}

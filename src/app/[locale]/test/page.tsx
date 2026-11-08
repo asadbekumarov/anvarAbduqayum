@@ -24,10 +24,10 @@ export async function generateMetadata({
   const isRu = locale === "ru";
 
   const title = isUz
-    ? "Biznes diagnostika testi | Ilhom Begimqulov"
+    ? "Biznes diagnostika testi | Anvar Abduqayum"
     : isRu
-    ? "Бизнес-диагностический тест | Илхом Бегимкулов"
-    : "Business Diagnostic Test | Ilhom Begimqulov";
+    ? "Бизнес-диагностический тест | Анвар Абдукаюм"
+    : "Business Diagnostic Test | Anvar Abduqayum";
 
   const description = isUz
     ? "Biznesingiz egasisiz ishlay oladimi? 10 ta savol orqali operatsion boshqaruv tizimingizni 2 daqiqada tahlil qiling va darhol natija oling."
@@ -56,7 +56,7 @@ export async function generateMetadata({
       type: "website",
       locale: locale === "uz" ? "uz_UZ" : locale === "ru" ? "ru_RU" : "en_US",
       url: canonicalUrl,
-      siteName: "Ilhom Begimqulov",
+      siteName: "Anvar Abduqayum",
       images: [
         {
           url: `${SITE_URL}/og-image.png`,
@@ -80,7 +80,7 @@ export default async function TestPage({ params }: TestPageProps) {
   setRequestLocale(locale);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0A0A0A] text-white">
+    <div className="min-h-screen flex flex-col bg-[#070707] text-[#E5E5E5]">
       <Navbar />
 
       <main className="flex-1 pt-20 flex flex-col items-center justify-center">

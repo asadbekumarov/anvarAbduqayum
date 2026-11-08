@@ -83,7 +83,7 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
     <section
       id="natijalar"
       aria-label={tArchive("sectionAria")}
-      className="scroll-mt-20 py-14 sm:py-20 border-b border-white/[0.08] bg-[#0A0A0A] text-[#F5F5F0] relative overflow-hidden"
+      className="scroll-mt-20 py-14 sm:py-20 border-b border-white/[0.08] bg-[#070707] text-[#E5E5E5] relative overflow-hidden"
     >
       {/* Anchor targets to preserve all existing links */}
       <span id="tadbirlarimiz" className="absolute -top-20 pointer-events-none" />
@@ -97,8 +97,8 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
           {/* Section Kicker & Masked H2 */}
           <div>
             <div className="flex items-center gap-3">
-              <span className="w-8 h-[1px] bg-[#C5A880]" aria-hidden="true" />
-              <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum">
+              <span className="w-8 h-[1px] bg-[#D4AF37]" aria-hidden="true" />
+              <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#D4AF37]">
                 {formatSectionKicker("media", tArchive("kicker"))}
               </span>
             </div>
@@ -113,7 +113,7 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
         </div>
 
         {/* Swiss Architectural Tab Switcher */}
-        <div className="mt-8 border-b border-white/[0.08] flex items-center gap-2 sm:gap-6 overflow-x-auto no-scrollbar pb-0.5">
+        <div className="mt-8 border-b border-[#1E1E1E] flex items-center gap-2 sm:gap-6 overflow-x-auto no-scrollbar pb-0.5">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id;
             return (
@@ -122,10 +122,10 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
                 className={`group relative pb-4 px-2 sm:px-3 text-left font-mono text-xs tracking-wider uppercase transition-colors shrink-0 cursor-pointer flex items-center gap-2.5 ${
-                  isActive ? "text-white" : "text-neutral-300 hover:text-white"
+                  isActive ? "text-white" : "text-[#9A9A9A] hover:text-white"
                 }`}
               >
-                <span className={isActive ? "text-[#C5A880]" : "text-platinum"}>
+                <span className={isActive ? "text-[#D4AF37]" : "text-[#9A9A9A]"}>
                   /{tab.index}
                 </span>
                 <span className="font-sans font-medium text-xs sm:text-sm tracking-wide">
@@ -134,8 +134,8 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
                 <span
                   className={`text-xs px-1.5 py-0.5 font-mono ${
                     isActive
-                      ? "bg-[#C5A880] text-[#0A0A0A] font-semibold"
-                      : "bg-white/[0.06] text-platinum"
+                      ? "bg-[#D4AF37] text-[#070707] font-semibold"
+                      : "bg-white/[0.06] text-[#9A9A9A]"
                   }`}
                 >
                   {tab.count}
@@ -145,7 +145,7 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
                 {isActive && (
                   <motion.div
                     layoutId="mediaHubActiveIndicator"
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#C5A880]"
+                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#D4AF37]"
                     transition={{ duration: 0.35, ease: EASE_SWISS }}
                   />
                 )}
@@ -200,7 +200,7 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
                         }
                       }}
                       aria-label={`${vid.title} - ${tTestimonials("playTrigger")}`}
-                      className="w-[300px] sm:w-[360px] shrink-0 bg-[#0A0A0A] hover:bg-[#0B132B]/35 p-5 sm:p-6 flex flex-col justify-between transition-all duration-500 cursor-pointer group rounded-none"
+                      className="w-[300px] sm:w-[360px] shrink-0 bg-[#121212] hover:bg-[#161616] border border-[#1E1E1E] hover:border-[#D4AF37]/60 p-5 sm:p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 cursor-pointer group rounded-none"
                     >
                       <div>
                         {/* Thumbnail Container */}
@@ -273,7 +273,7 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
                       }
                     }}
                     aria-label={`${vid.title} - ${tWebinars("openLesson")}`}
-                    className="w-[280px] sm:w-[320px] shrink-0 border border-white/[0.08] bg-[#0B132B]/20 hover:bg-[#0B132B]/45 hover:border-platinum/30 transition-all duration-300 cursor-pointer group rounded-none flex flex-col justify-between"
+                    className="w-[280px] sm:w-[320px] shrink-0 border border-[#1E1E1E] bg-[#121212] hover:bg-[#161616] hover:border-[#D4AF37]/60 hover:-translate-y-1 transition-all duration-300 cursor-pointer group rounded-none flex flex-col justify-between"
                   >
                     <div className="aspect-video w-full relative overflow-hidden bg-[#141414]">
                       <Image
@@ -351,7 +351,7 @@ export function MediaArchive({ onOpenApply }: MediaArchiveProps) {
                       }
                     }}
                     aria-label={`${displayCity} - ${evt.title}`}
-                    className="w-[280px] sm:w-[320px] shrink-0 group relative bg-[#0A0A0A] border border-white/[0.08] p-5 flex flex-col justify-between transition-all duration-500 hover:bg-[#0B132B]/30 hover:border-platinum/20 rounded-none cursor-pointer"
+                    className="w-[280px] sm:w-[320px] shrink-0 group relative bg-[#121212] border border-[#1E1E1E] p-5 flex flex-col justify-between transition-all duration-300 hover:bg-[#161616] hover:border-[#D4AF37]/60 hover:-translate-y-1 rounded-none cursor-pointer"
                   >
                     <div className="flex items-center justify-between mb-4 font-mono text-xs uppercase tracking-[0.2em]">
                       <span className="text-platinum group-hover:text-white transition-colors">

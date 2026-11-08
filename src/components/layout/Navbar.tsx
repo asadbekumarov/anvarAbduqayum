@@ -1,257 +1,331 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
-import { useTranslations, useLocale } from "next-intl";
-import { LanguageSwitcher } from "./LanguageSwitcher";
-import { MobileMenu } from "./MobileMenu";
-import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { getContent } from "@/config/content";
 
 export interface NavbarProps {
-  onOpenApply?: () => void;
+  locale?: string;
 }
 
-export function Navbar({ onOpenApply }: NavbarProps) {
-  const { openApply } = useApplyModal();
-  const handleApply = onOpenApply || openApply;
-  const t = useTranslations("nav");
-  const common = useTranslations("common");
-  const ctaT = useTranslations("cta");
-
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
+  const content = getContent(locale);
+  const pathname = usePathname();
+  const router = useRouter();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("");
-  const [isScrolled, setIsScrolled] = useState(false);
 
-  const navItems = [
-    { href: "#xizmatlar", label: t("services") },
-    { href: "#bosqichlar", label: t("methodology") },
-    { href: "#ekspert", label: t("expert") },
-    { href: "#natijalar", label: t("media") },
-    { href: "#faq", label: t("faq") },
-    { href: "#aloqa", label: t("contact") },
-  ];
+  const isHomePage =
+    pathname === `/${locale}` || pathname === `/${locale}/` || pathname === "/";
 
-  const locale = useLocale();
-
-  // Smooth scroll handler with header height offset
-  const handleNavClick = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-      e.preventDefault();
-      const targetId = href.replace("#", "");
-      const element = document.getElementById(targetId);
-
-      if (element) {
-        const headerOffset = 76;
-        const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.scrollY - headerOffset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
-        });
-
-        // Set active section immediately for instantaneous UI feedback
-        setActiveSection(targetId);
-
-        // Update URL hash without forcing jump
-        if (window.history.pushState) {
-          window.history.pushState(null, "", href);
-        }
-      } else {
-        const homePrefix = locale === "uz" ? "" : `/${locale}`;
-        window.location.href = `${homePrefix}/${targetId === "hero" ? "" : href}`;
-      }
-    },
-    [locale]
-  );
-
+  // Handle scroll and sticky header state
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 24);
+      setScrolled(window.scrollY > 20);
     };
-
-    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    const sectionIds = ["xizmatlar", "bosqichlar", "ekspert", "natijalar", "faq", "aloqa"];
-    const elements = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => Boolean(el));
+  // Handle Escape key to close mobile drawer
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [mobileMenuOpen]);
 
-    if (!("IntersectionObserver" in window) || elements.length === 0) {
-      return () => window.removeEventListener("scroll", handleScroll);
-    }
+  // Track active section via IntersectionObserver when on home page
+  useEffect(() => {
+    if (!isHomePage) return;
 
-    // Aktiv bo'lim hozirgi scroll bo'yicha IntersectionObserver orqali ajratiladi
+    const sectionIds = ["xizmatlar", "portfel", "yol", "media", "aloqa"];
     const observer = new IntersectionObserver(
       (entries) => {
-        // Sahifa eng pastiga yetganda aloqa bo'limini faollashtirish
-        if (
-          window.innerHeight + window.scrollY >=
-          document.documentElement.scrollHeight - 80
-        ) {
-          setActiveSection("aloqa");
-          return;
-        }
-
-        const intersecting = entries.filter((e) => e.isIntersecting);
-        if (intersecting.length > 0) {
-          intersecting.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-          setActiveSection(intersecting[0].target.id);
-        } else if (window.scrollY < 150) {
-          setActiveSection("");
-        }
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
       },
       {
-        root: null,
-        rootMargin: "-15% 0px -55% 0px",
-        threshold: [0, 0.25, 0.5, 0.75],
+        rootMargin: "-20% 0px -60% 0px",
+        threshold: 0,
       }
     );
 
-    elements.forEach((el) => observer.observe(el));
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      observer.disconnect();
-    };
-  }, []);
+    return () => observer.disconnect();
+  }, [isHomePage]);
+
+  // Information architecture prioritized: Consulting/Services first
+  const navLinks = [
+    {
+      id: "xizmatlar",
+      href: "#xizmatlar",
+      label: content.navigation.consulting || "Xizmatlar",
+      code: "01",
+    },
+    {
+      id: "portfel",
+      href: "#portfel",
+      label: content.navigation.portfolio || "Bizneslar",
+      code: "02",
+    },
+    {
+      id: "yol",
+      href: "#yol",
+      label: content.navigation.timeline || "Faoliyat yo‘li",
+      code: "03",
+    },
+    {
+      id: "media",
+      href: "#media",
+      label: content.navigation.media || "Media",
+      code: "04",
+    },
+    {
+      id: "aloqa",
+      href: "#aloqa",
+      label: content.navigation.contact || "Aloqa",
+      code: "05",
+    },
+  ];
+
+  const handleLanguageChange = (newLocale: string) => {
+    if (newLocale === locale) return;
+    const segments = pathname.split("/").filter(Boolean);
+    if (segments.length > 0 && ["uz", "ru", "en"].includes(segments[0])) {
+      segments[0] = newLocale;
+    } else {
+      segments.unshift(newLocale);
+    }
+    router.push(`/${segments.join("/")}`);
+  };
+
+  const bookingHref = `/${locale}/bron`;
 
   return (
-    <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${
-          isScrolled
-            ? "h-16 md:h-[70px] bg-[#0A0A0A]/92 backdrop-blur-xl border-b border-white/[0.08] shadow-[0_8px_32px_rgba(0,0,0,0.65)]"
-            : "h-20 bg-[#0A0A0A]/70 backdrop-blur-md border-b border-white/[0.05]"
-        }`}
-      >
-        <div className="max-w-[1600px] mx-auto w-full h-full px-4 sm:px-6 lg:px-8 2xl:px-12 flex items-center justify-between gap-2 lg:gap-4 xl:gap-6">
-          {/* Brand Identity (Left) */}
-          <div className="shrink-0 flex items-center">
-            <a
-              href="#hero"
-              onClick={(e) => handleNavClick(e, "#hero")}
-              aria-label={common("brandAria")}
-              className="group flex items-center gap-2.5 sm:gap-3 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#C5A880]/60 rounded-sm py-1 pr-1 select-none"
-            >
-              {/* Minimalist Monogram Badge */}
-              <div className="w-8 h-8 rounded-sm bg-gradient-to-br from-[#1A1A1A] to-[#0D0D0D] border border-[#C5A880]/40 group-hover:border-[#E2C79D] flex items-center justify-center shrink-0 transition-all duration-300 shadow-[0_2px_8px_rgba(0,0,0,0.4)] group-hover:shadow-[0_0_12px_rgba(197,168,128,0.25)]">
-                <span className="font-serif text-xs font-bold tracking-wider text-[#C5A880] group-hover:text-[#E2C79D] transition-colors">
-                  IB
-                </span>
-              </div>
-
-              {/* Brand Typography */}
-              <div className="flex flex-col whitespace-nowrap">
-                <span className="text-xs font-semibold tracking-[0.16em] sm:tracking-[0.2em] text-white uppercase group-hover:text-[#E2C79D] transition-colors leading-tight whitespace-nowrap">
-                  ILHOM BEGIMQULOV
-                </span>
-                <span className="text-xs font-mono tracking-[0.14em] uppercase text-neutral-400 group-hover:text-neutral-300 transition-colors hidden sm:inline-block leading-tight mt-0.5 whitespace-nowrap">
-                  {common("businessConsulting")}
-                </span>
-              </div>
-            </a>
-          </div>
-
-          {/* Navigation Links (Center — Balanced Luxury Navigation) */}
-          <nav
-            aria-label={t("mainNavAria")}
-            className="hidden xl:flex items-center justify-center gap-0.5 2xl:gap-1.5 shrink-0 bg-white/[0.03] border border-white/[0.06] rounded-full px-2 2xl:px-3 py-1 backdrop-blur-md"
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,border-color,padding,box-shadow] duration-200 border-b ${
+        scrolled
+          ? "bg-[#090A0D]/95 backdrop-blur-md border-white/[0.09] py-3 shadow-[0_4px_20px_rgba(0,0,0,0.6)]"
+          : "bg-[#090A0D] border-white/[0.08] py-4"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between">
+          {/* Brand Monogram */}
+          <Link
+            href={`/${locale}`}
+            className="group flex items-center gap-2.5 rounded-[2px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D97736] focus-visible:ring-offset-2 focus-visible:ring-offset-[#090A0D]"
+            aria-label="Anvar Abduqayum Bosh Sahifasi"
           >
-            {navItems.map((item) => {
-              const isActive = activeSection === item.href.slice(1);
+            <span className="w-2 h-2 rounded-full bg-[#D97736] group-hover:scale-125 transition-transform" />
+            <span className="font-mono text-sm sm:text-base font-bold tracking-wider text-white uppercase group-hover:text-[#D97736] transition-colors">
+              ANVAR ABDUQAYUM
+            </span>
+          </Link>
+
+          {/* Desktop Navigation - Clean readable Title Case */}
+          <nav
+            aria-label="Asosiy navigatsiya"
+            className="hidden lg:flex items-center gap-6 xl:gap-8"
+          >
+            {navLinks.map((item) => {
+              const targetHref = isHomePage
+                ? item.href
+                : `/${locale}${item.href}`;
+              const isActive = activeSection === item.id;
+
               return (
                 <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={(e) => handleNavClick(e, item.href)}
-                  aria-current={isActive ? "page" : undefined}
-                  className={`group relative flex items-center px-2.5 2xl:px-3.5 py-1.5 rounded-full text-[11px] 2xl:text-xs uppercase tracking-[0.05em] 2xl:tracking-[0.08em] font-medium transition-all duration-200 select-none whitespace-nowrap ${
+                  key={item.id}
+                  href={targetHref}
+                  aria-current={isActive ? "true" : undefined}
+                  className={`group relative flex items-center gap-1.5 py-1 text-sm font-medium rounded-[2px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D97736] focus-visible:ring-offset-2 focus-visible:ring-offset-[#090A0D] ${
                     isActive
-                      ? "text-white bg-white/[0.08] shadow-[inset_0_1px_1px_rgba(255,255,255,0.1)]"
-                      : "text-neutral-400 hover:text-white hover:bg-white/[0.04]"
+                      ? "text-white font-semibold"
+                      : "text-[#A4ACB9] hover:text-white"
                   }`}
                 >
+                  <span
+                    className={`font-mono text-[11px] transition-colors ${
+                      isActive
+                        ? "text-[#D97736] font-bold"
+                        : "text-[#D97736]/75 group-hover:text-[#D97736]"
+                    }`}
+                  >
+                    {item.code}
+                  </span>
                   <span>{item.label}</span>
+                  {isActive && (
+                    <span className="absolute -bottom-1 left-0 right-0 h-[2px] bg-[#D97736] rounded-full" />
+                  )}
                 </a>
               );
             })}
           </nav>
 
-          {/* Actions: Single Button 'Ustozga shogird tushish' & Language Selector */}
-          <div className="hidden xl:flex shrink-0 items-center justify-end gap-2.5 2xl:gap-3">
-            {/* Single CTA Button: Ustozga shogird tushish */}
-            <button
-              type="button"
-              onClick={() => handleApply({ service: ctaT("mentorship") })}
-              className="h-9 2xl:h-10 shrink-0 group relative overflow-hidden rounded-sm bg-gradient-to-r from-[#C5A880] via-[#D4B992] to-[#C5A880] hover:brightness-105 active:scale-[0.98] px-4 2xl:px-5 font-sans text-xs uppercase tracking-[0.06em] text-[#0A0A0A] font-semibold transition-all duration-200 cursor-pointer flex items-center gap-1.5 2xl:gap-2 whitespace-nowrap shadow-[0_2px_12px_rgba(197,168,128,0.2)] hover:shadow-[0_4px_20px_rgba(197,168,128,0.35)]"
+          {/* Right Tools: Language Switcher & Consultation CTA */}
+          <div className="hidden sm:flex items-center gap-3">
+            {/* Minimalist Industrial Language Switcher */}
+            <div
+              className="inline-flex border border-white/[0.12] bg-[#12141A] p-0.5 rounded-[3px] font-mono text-[11px]"
+              role="group"
+              aria-label="Tilni tanlash"
             >
-              {/* Shimmer sweep effect */}
-              <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-1000 ease-out group-hover:translate-x-full" />
-              <span className="relative z-10 whitespace-nowrap">{ctaT("mentorship")}</span>
-              <svg
-                className="w-3.5 h-3.5 shrink-0 relative z-10 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-[#0A0A0A]"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                aria-hidden="true"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-              </svg>
-            </button>
-
-            <LanguageSwitcher />
-          </div>
-
-          {/* Tablet & Mobile Actions (Shown below XL screens) */}
-          <div className="flex shrink-0 items-center gap-2 sm:gap-3 xl:hidden">
-            <div className="hidden sm:block" aria-hidden="true">
-              <button
-                type="button"
-                tabIndex={-1}
-                onClick={() => handleApply({ service: ctaT("mentorship") })}
-                className="h-9 shrink-0 group relative overflow-hidden rounded-sm bg-gradient-to-r from-[#C5A880] to-[#D4B992] px-3.5 font-sans text-xs uppercase tracking-[0.06em] text-[#0A0A0A] font-semibold transition-all cursor-pointer flex items-center gap-1.5 whitespace-nowrap shadow-sm active:scale-[0.98]"
-              >
-                <span className="relative z-10 whitespace-nowrap">{ctaT("mentorship")}</span>
-                <span className="text-xs font-bold" aria-hidden="true">↗</span>
-              </button>
+              {(["uz", "ru", "en"] as const).map((lang) => (
+                <button
+                  key={lang}
+                  type="button"
+                  onClick={() => handleLanguageChange(lang)}
+                  className={`min-h-[44px] min-w-[44px] flex items-center justify-center px-3 py-2 uppercase rounded-[2px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D97736] ${
+                    locale === lang
+                      ? "bg-white/[0.16] text-white font-bold"
+                      : "text-[#8E95A5] hover:text-white"
+                  }`}
+                  aria-pressed={locale === lang}
+                  aria-label={`${lang.toUpperCase()} tiliga o'tish`}
+                >
+                  {lang}
+                </button>
+              ))}
             </div>
 
-            <LanguageSwitcher />
+            {/* Primary Consultation CTA - Title Case */}
+            <Link
+              href={bookingHref}
+              className="tap-target-48 px-4 py-2 bg-white/[0.06] hover:bg-[#D97736] hover:text-[#090A0D] text-white text-xs font-mono font-semibold tracking-wider rounded-[3px] border border-white/[0.14] hover:border-[#D97736] transition-authority flex items-center gap-2 group shadow-[0_2px_10px_rgba(0,0,0,0.3)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D97736] focus-visible:ring-offset-2 focus-visible:ring-offset-[#090A0D]"
+            >
+              <span>{content.navigation.ctaButton || "Uchrashuv bronlash"}</span>
+              <span className="text-[#D97736] group-hover:text-[#090A0D] transition-colors">
+                &rarr;
+              </span>
+            </Link>
+          </div>
 
-            {/* Premium Mobile Menu Toggle Button */}
+          {/* Mobile Right Controls */}
+          <div className="flex lg:hidden items-center gap-2">
+            {/* Mobile Language Switcher */}
+            <div
+              className="inline-flex sm:hidden border border-white/[0.12] bg-[#12141A] p-0.5 rounded-[3px] font-mono text-[10px]"
+              role="group"
+              aria-label="Tilni tanlash"
+            >
+              {(["uz", "ru", "en"] as const).map((lang) => (
+                <button
+                  key={lang}
+                  type="button"
+                  onClick={() => handleLanguageChange(lang)}
+                  className={`min-h-[44px] min-w-[36px] xs:min-w-[44px] px-2 py-2 flex items-center justify-center uppercase rounded-[2px] transition-colors focus:outline-none focus-visible:ring-1 focus-visible:ring-[#D97736] ${
+                    locale === lang
+                      ? "bg-white/[0.16] text-white font-bold"
+                      : "text-[#8E95A5] hover:text-white"
+                  }`}
+                  aria-pressed={locale === lang}
+                  aria-label={`${lang.toUpperCase()} tili`}
+                >
+                  {lang}
+                </button>
+              ))}
+            </div>
+
+            {/* Mobile Hamburger Button */}
             <button
               type="button"
-              onClick={() => setIsMobileMenuOpen(true)}
-              aria-label={common("openMenu")}
-              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center text-neutral-300 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-[#C5A880]/50 transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#C5A880] cursor-pointer"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="tap-target-48 p-2 text-white border border-white/[0.12] rounded-[3px] bg-[#12141A] hover:bg-white/[0.06] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D97736]"
+              aria-expanded={mobileMenuOpen}
+              aria-label="Menyuni ochish yoki yopish"
             >
               <svg
                 className="w-5 h-5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
-                strokeWidth="1.75"
-                aria-hidden="true"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                {mobileMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
               </svg>
             </button>
           </div>
         </div>
-      </header>
 
-      {/* Accessible Mobile Menu Drawer */}
-      <MobileMenu
-        isOpen={isMobileMenuOpen}
-        onClose={() => setIsMobileMenuOpen(false)}
-        onOpenApply={(opts) => {
-          setIsMobileMenuOpen(false);
-          handleApply(opts);
-        }}
-      />
-    </>
+        {/* Mobile Dropdown Menu Drawer */}
+        {mobileMenuOpen && (
+          <div
+            className="lg:hidden pt-4 pb-6 mt-3 border-t border-white/[0.1] animate-in fade-in slide-in-from-top-2 duration-150"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobil navigatsiya menyusi"
+          >
+            {/* 2-Column layout: Label (1fr) + Index (auto). Prevents overlap at 320px/360px/390px */}
+            <div className="flex flex-col gap-2">
+              {navLinks.map((item) => {
+                const targetHref = isHomePage
+                  ? item.href
+                  : `/${locale}${item.href}`;
+                const isActive = activeSection === item.id;
+
+                return (
+                  <a
+                    key={item.id}
+                    href={targetHref}
+                    onClick={() => setMobileMenuOpen(false)}
+                    aria-current={isActive ? "true" : undefined}
+                    className={`tap-target-48 grid grid-cols-[1fr_auto] items-center gap-3 px-4 py-3 border rounded-[4px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D97736] ${
+                      isActive
+                        ? "border-[#D97736] bg-[#181B24] text-white"
+                        : "border-white/[0.08] bg-[#12141A] text-white/90 hover:text-white hover:border-[#D97736]/50"
+                    }`}
+                  >
+                    <span className="text-sm font-medium truncate text-left">
+                      {item.label}
+                    </span>
+                    <span className="font-mono text-xs text-[#D97736] shrink-0 font-semibold tracking-wider text-right">
+                      № {item.code}
+                    </span>
+                  </a>
+                );
+              })}
+
+              <div className="pt-2">
+                <Link
+                  href={bookingHref}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="tap-target-48 w-full px-4 py-3 bg-[#D97736] text-[#090A0D] font-mono text-xs tracking-wider uppercase font-bold rounded-[3px] flex items-center justify-center gap-2 hover:bg-[#E68545] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                >
+                  <span>{content.navigation.ctaButton || "Uchrashuv bronlash"}</span>
+                  <span>&rarr;</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </header>
   );
-}
-
+};

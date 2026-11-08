@@ -24,10 +24,10 @@ export async function generateMetadata({
   const isRu = locale === "ru";
 
   const title = isUz
-    ? "Bepul diagnostika uchun vaqtni tanlang | Ilhom Begimqulov"
+    ? "Bepul diagnostika uchun vaqtni tanlang | Anvar Abduqayum"
     : isRu
-    ? "Выберите время бесплатной диагностики | Илхом Бегимкулов"
-    : "Book a Free Diagnostic Session | Ilhom Begimqulov";
+    ? "Выберите время бесплатной диагностики | Анвар Абдукаюм"
+    : "Book a Free Diagnostic Session | Anvar Abduqayum";
 
   const description = isUz
     ? "Biznesingizning og'riqli nuqtalarini tahlil qilamiz va qaysi yo'nalish eng tez natija berishini aniqlaymiz. 20 daqiqalik bepul diagnostika uchun vaqtni tanlang."
@@ -56,7 +56,7 @@ export async function generateMetadata({
       type: "website",
       locale: locale === "uz" ? "uz_UZ" : locale === "ru" ? "ru_RU" : "en_US",
       url: canonicalUrl,
-      siteName: "Ilhom Begimqulov",
+      siteName: "Anvar Abduqayum",
       images: [
         {
           url: `${SITE_URL}/og-image.png`,
@@ -80,7 +80,7 @@ export default async function BookingPage({ params }: BookingPageProps) {
   setRequestLocale(locale);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0A0A0A] text-white selection:bg-[#C5A880] selection:text-[#0A0A0A]">
+    <div className="min-h-screen flex flex-col bg-[#070707] text-[#E5E5E5] selection:bg-[#D4AF37] selection:text-[#070707]">
       <Navbar />
 
       <main className="flex-1 pt-20 sm:pt-24 flex flex-col">

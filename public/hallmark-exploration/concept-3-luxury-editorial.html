@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Concept 3 — Contemporary Luxury Editorial | Anvar Abduqayum Hallmark Exploration</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    /* HALLMARK STAMP: Concept 3 — Luxury Editorial | genre: editorial | job: high-end-monograph */
+    :root {
+      --bg-cream: #FBF9F5;
+      --bg-surface: #FFFFFF;
+      --bg-stone: #F3EFE6;
+      --border-hairline: rgba(17, 18, 21, 0.1);
+      --border-gold: rgba(184, 134, 11, 0.4);
+      --text-charcoal: #111215;
+      --text-soft: #555A64;
+      --text-muted: #848B96;
+      --accent-gold: #B8860B;
+      --accent-deep: #1A1C22;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-caps: 'Cinzel', serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background-color: var(--bg-cream);
+      color: var(--text-charcoal);
+      font-family: var(--font-sans);
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    @media (min-width: 1440px) {
+      .container {
+        padding: 0 40px;
+      }
+    }
+
+    /* Concept Header */
+    .concept-bar {
+      background: #111215;
+      border-bottom: 1px solid var(--border-hairline);
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #9E9B95;
+      letter-spacing: 0.05em;
+    }
+    .concept-bar .badge {
+      background: rgba(184, 134, 11, 0.2);
+      color: #E5C158;
+      border: 1px solid rgba(184, 134, 11, 0.4);
+      padding: 3px 8px;
+      border-radius: 2px;
+      font-weight: 700;
+    }
+
+    /* Editorial Masthead & Navigation */
+    .masthead {
+      border-bottom: 1px solid var(--border-hairline);
+      background: var(--bg-cream);
+      padding: 24px 0 16px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+    .mast-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-hairline);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+    }
+    .mast-center {
+      text-align: center;
+      padding: 16px 0 12px;
+    }
+    .mast-logo {
+      font-family: var(--font-caps);
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: var(--text-charcoal);
+      text-decoration: none;
+      display: block;
+    }
+    .mast-nav {
+      display: flex;
+      justify-content: center;
+      gap: 36px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 600;
+    }
+    .mast-nav a {
+      color: var(--text-soft);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .mast-nav a:hover, .mast-nav a.active {
+      color: var(--accent-gold);
+    }
+
+    /* EDITORIAL HERO */
+    .hero {
+      padding: 80px 0 120px;
+      border-bottom: 1px solid var(--border-hairline);
+    }
+    .hero-editorial-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 56px;
+      align-items: center;
+    }
+    @media (min-width: 992px) {
+      .hero-editorial-grid {
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 80px;
+      }
+    }
+    .hero-issue {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent-gold);
+      font-weight: 700;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-issue::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-hairline);
+      max-width: 120px;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(38px, 6vw, 70px);
+      line-height: 1.05;
+      font-weight: 600;
+      color: var(--text-charcoal);
+      margin-bottom: 28px;
+      letter-spacing: -0.01em;
+    }
+    .hero-title .italic-font {
+      font-style: italic;
+      color: var(--accent-gold);
+      font-weight: 400;
+    }
+    .hero-manifesto {
+      font-size: clamp(16px, 1.8vw, 19px);
+      line-height: 1.7;
+      color: var(--text-soft);
+      margin-bottom: 40px;
+      max-width: 580px;
+    }
+    .hero-btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 56px;
+    }
+    .btn-luxury-dark {
+      min-height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: var(--text-charcoal);
+      color: #FFF;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 0 32px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-luxury-dark:hover {
+      background: var(--accent-gold);
+      transform: translateY(-2px);
+    }
+    .btn-luxury-border {
+      min-height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--text-charcoal);
+      border: 1px solid var(--border-hairline);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      padding: 0 28px;
+      text-decoration: none;
+      transition: border-color 0.2s;
+    }
+    .btn-luxury-border:hover {
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+    }
+    .hero-columns-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      padding-top: 36px;
+      border-top: 1px solid var(--border-hairline);
+    }
+    .col-meta .b {
+      font-family: var(--font-display);
+      font-size: clamp(26px, 3.5vw, 38px);
+      font-weight: 600;
+      color: var(--text-charcoal);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .col-meta .t {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+    }
+
+    /* Hero Gallery Frame */
+    .hero-gallery-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      padding: 16px;
+      box-shadow: 0 24px 60px rgba(17, 18, 21, 0.08);
+    }
+    .gallery-img-box {
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      background: var(--bg-stone);
+      position: relative;
+    }
+    .gallery-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+    .gallery-caption {
+      padding: 18px 8px 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-top: 1px solid var(--border-hairline);
+      margin-top: 12px;
+    }
+    .gallery-caption h4 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-charcoal);
+    }
+    .gallery-caption span {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* EDITORIAL SERVICES */
+    .services-sec {
+      padding: 120px 0;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-hairline);
+    }
+    .sec-kicker {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent-gold);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+    .sec-head-title {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 5vw, 54px);
+      font-weight: 600;
+      color: var(--text-charcoal);
+      margin-bottom: 18px;
+      line-height: 1.15;
+    }
+    .sec-sub {
+      font-size: 16px;
+      color: var(--text-soft);
+      max-width: 640px;
+      line-height: 1.7;
+      margin-bottom: 64px;
+    }
+
+    .advisory-booklet {
+      border: 1px solid var(--border-hairline);
+      background: var(--bg-cream);
+    }
+    .booklet-entry {
+      padding: 40px;
+      border-bottom: 1px solid var(--border-hairline);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      align-items: center;
+      transition: background 0.2s;
+    }
+    @media (min-width: 900px) {
+      .booklet-entry {
+        grid-template-columns: 80px 1.4fr 1.6fr 180px;
+      }
+    }
+    .booklet-entry:last-child {
+      border-bottom: none;
+    }
+    .booklet-entry:hover {
+      background: #FFFFFF;
+    }
+    .booklet-num {
+      font-family: var(--font-display);
+      font-size: 26px;
+      color: var(--accent-gold);
+      font-weight: 600;
+    }
+    .booklet-name {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--text-charcoal);
+    }
+    .booklet-body {
+      font-size: 14px;
+      color: var(--text-soft);
+      line-height: 1.6;
+    }
+
+    /* CURATED PORTFOLIO */
+    .portfolio-sec {
+      padding: 120px 0;
+      border-bottom: 1px solid var(--border-hairline);
+    }
+    .curated-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    @media (min-width: 768px) {
+      .curated-grid {
+        grid-template-columns: repeat(12, 1fr);
+      }
+    }
+    .curated-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: box-shadow 0.25s;
+    }
+    .curated-card:hover {
+      box-shadow: 0 20px 50px rgba(17, 18, 21, 0.06);
+    }
+    .span-7 { grid-column: span 12; }
+    .span-5 { grid-column: span 12; }
+    .span-4 { grid-column: span 12; }
+    @media (min-width: 768px) {
+      .span-7 { grid-column: span 7; }
+      .span-5 { grid-column: span 5; }
+      .span-4 { grid-column: span 4; }
+    }
+    .card-edition {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-gold);
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .card-brand {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--text-charcoal);
+      margin-bottom: 8px;
+    }
+    .card-meta-line {
+      font-size: 13.5px;
+      color: var(--text-soft);
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+    .card-narrative {
+      font-size: 14px;
+      color: var(--text-soft);
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+    .card-stats-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-hairline);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* TIMELINE: MEMOIR CHAPTERS */
+    .timeline-sec {
+      padding: 120px 0;
+      background: var(--bg-stone);
+      border-bottom: 1px solid var(--border-hairline);
+    }
+    .chapters-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 36px;
+      margin-top: 48px;
+    }
+    @media (min-width: 900px) {
+      .chapters-list {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    .chapter-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      padding: 32px 24px;
+    }
+    .chap-no {
+      font-family: var(--font-display);
+      font-size: 16px;
+      color: var(--accent-gold);
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .chap-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-charcoal);
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+    .chap-desc {
+      font-size: 13px;
+      color: var(--text-soft);
+      line-height: 1.65;
+    }
+
+    /* FOOTER */
+    .luxury-notes {
+      padding: 60px 0;
+      background: var(--bg-cream);
+      font-size: 12px;
+      color: var(--text-soft);
+      line-height: 1.8;
+    }
+    .notes-frame {
+      border: 1px solid var(--border-hairline);
+      background: var(--bg-surface);
+      padding: 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Concept Bar -->
+  <div class="concept-bar">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <span class="badge">CONCEPT 3</span>
+      <span>CONTEMPORARY LUXURY EDITORIAL (ARCHITECTURAL MONOGRAPH & WHITESPACE)</span>
+    </div>
+    <div>PREVIEW: 1440PX & 390PX READY</div>
+  </div>
+
+  <!-- Editorial Masthead -->
+  <header class="masthead">
+    <div class="container">
+      <div class="mast-top">
+        <span>TOSHKENT, O‘ZBEKISTON</span>
+        <span>ISSUED: 2026 // MONOGRAF</span>
+        <span>SHAXSIY BREND & SANOAT</span>
+      </div>
+
+      <div class="mast-center">
+        <a href="#" class="mast-logo">ANVAR ABDUQAYUM</a>
+      </div>
+
+      <nav class="mast-nav">
+        <a href="#hero" class="active">KIRISH</a>
+        <a href="#services">ADVISORY DOSSIER</a>
+        <a href="#portfolio">AKTIVLAR REESTRI</a>
+        <a href="#timeline">MEMUAR TARAQQIYOTI</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="hero" class="hero">
+    <div class="container hero-editorial-grid">
+      <div>
+        <div class="hero-issue">
+          <span>THE INDUSTRIAL ARCHITECT // SPECIAL EDITION</span>
+        </div>
+
+        <h1 class="hero-title">
+          Biznesni egasisiz boshqarish <span class="italic-font">madaniyati</span> va sanoat san’ati.
+        </h1>
+
+        <p class="hero-manifesto">
+          Yigirma ikki yillik xatolar, izlanishlar va yetti xil yo‘nalishdagi mustaqil korxonalarni birlashtirgan avtonom boshqaruv falsafasi.
+        </p>
+
+        <div class="hero-btn-row">
+          <a href="#advisory" class="btn-luxury-dark">
+            <span>Shaxsiy konsultatsiya</span>
+            <span>&rarr;</span>
+          </a>
+          <a href="#portfolio" class="btn-luxury-border">
+            <span>Aktivlar katalogi</span>
+          </a>
+        </div>
+
+        <div class="hero-columns-3">
+          <div class="col-meta">
+            <span class="b">22 Yil</span>
+            <span class="t">Amaliy tadbirkorlik</span>
+          </div>
+          <div class="col-meta">
+            <span class="b">7 Brend</span>
+            <span class="t">Mustaqil korxonalar</span>
+          </div>
+          <div class="col-meta">
+            <span class="b">UZBIC</span>
+            <span class="t">Sanoat platformasi</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Gallery Card -->
+      <div class="hero-gallery-card">
+        <div class="gallery-img-box">
+          <img src="../images/hero/portrait.webp" alt="Anvar Abduqayum" class="gallery-img">
+        </div>
+        <div class="gallery-caption">
+          <div>
+            <h4>Anvar Abduqayum</h4>
+            <span>Sanoatchi, Mentor & Asoschi</span>
+          </div>
+          <div style="font-size:11px; color:var(--accent-gold); font-weight:700;">
+            PLATE NO. 01
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Editorial Services -->
+  <section id="services" class="services-sec">
+    <div class="container">
+      <div class="sec-kicker">// EXCLUSIVE ADVISORY</div>
+      <h2 class="sec-head-title">Direktorlar Kengashi Uchun Monografiya</h2>
+      <p class="sec-sub">
+        Kompaniya asoschilarini operatsion charchoqdan ozod etish va yirik korxonalarni avtonom boshqaruv darajasiga ko‘tarish dasturlari.
+      </p>
+
+      <div class="advisory-booklet">
+        <div class="booklet-entry">
+          <div class="booklet-num">01</div>
+          <div class="booklet-name">Avtonom Korxona Qurish</div>
+          <div class="booklet-body">Asoschining shaxsiy ishtirokisiz ishlaydigan tashkiliy tizim, qat’iy reglementlar va operatsion intizom.</div>
+          <div style="text-align:right;">
+            <a href="#bron" class="btn-luxury-dark" style="min-height:44px; padding:0 20px; font-size:11px;">Murojaat &rarr;</a>
+          </div>
+        </div>
+
+        <div class="booklet-entry">
+          <div class="booklet-num">02</div>
+          <div class="booklet-name">Sanoat va Zavodlar Qurilishi</div>
+          <div class="booklet-body">Qoliplash uskunalari, xomashyo ta’minoti va mahsulotni noldan seriyali ishlab chiqarishga kiritish konsaltingi.</div>
+          <div style="text-align:right;">
+            <a href="#bron" class="btn-luxury-dark" style="min-height:44px; padding:0 20px; font-size:11px;">Murojaat &rarr;</a>
+          </div>
+        </div>
+
+        <div class="booklet-entry">
+          <div class="booklet-num">03</div>
+          <div class="booklet-name">Xalqaro Savdo va Eksport</div>
+          <div class="booklet-body">Mahalliy mahsulotlarni Yevropa va Osiyo bozorlariga olib chiqish, xalqaro ko‘rgazmalar va distribyutsiya.</div>
+          <div style="text-align:right;">
+            <a href="#bron" class="btn-luxury-dark" style="min-height:44px; padding:0 20px; font-size:11px;">Murojaat &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Curated Portfolio -->
+  <section id="portfolio" class="portfolio-sec">
+    <div class="container">
+      <div class="sec-kicker">// SELECTED ASSETS</div>
+      <h2 class="sec-head-title">Aktivlar Reestri & Korxonalar</h2>
+      <p class="sec-sub">
+        Ishlab chiqarish, B2B xomashyo, xizmatlar va jamoat platformalarini qamrab olgan diversifikatsiyalangan biznes portfeli.
+      </p>
+
+      <div class="curated-grid">
+        <div class="curated-card span-7">
+          <div>
+            <div class="card-edition">CATALOG NO. 01 // SANOAT</div>
+            <h3 class="card-brand">Toybola Toys</h3>
+            <div class="card-meta-line">Bolalar o‘yinchoqlari yirik ishlab chiqarish majmuasi</div>
+            <p class="card-narrative">
+              O‘zbekistonda bolalar o‘yinchoqlari ishlab chiqarishni yo‘lga qo‘ygan, zamonaviy qolip ishlab chiqarish markazi va mustaqil boshqaruv tizimi.
+            </p>
+          </div>
+          <div class="card-stats-row">
+            <span>ASOS SOLINGAN: 2012</span>
+            <span style="color:var(--accent-gold); font-weight:700;">MONOGRAFIYANI O‘QISH &rarr;</span>
+          </div>
+        </div>
+
+        <div class="curated-card span-5">
+          <div>
+            <div class="card-edition">CATALOG NO. 02 // POLIMERLAR</div>
+            <h3 class="card-brand">Samtech</h3>
+            <div class="card-meta-line">Kimyoviy rangli konsentratlar</div>
+            <p class="card-narrative">
+              Plastmassa mahsulotlari uchun maxsus rang beruvchi masterbatchlar va xomashyo kimyosi majmuasi.
+            </p>
+          </div>
+          <div class="card-stats-row">
+            <span>B2B SEKTOR</span>
+            <span style="color:var(--accent-gold); font-weight:700;">BATAFSIL &rarr;</span>
+          </div>
+        </div>
+
+        <div class="curated-card span-4">
+          <div class="card-edition">CATALOG NO. 03</div>
+          <h3 class="card-brand" style="font-size:24px;">Visage Electric</h3>
+          <p class="card-narrative">Elektrotexnika buyumlari va montaj mahsulotlari zavodi.</p>
+          <div class="card-stats-row">
+            <span>EST. 2015</span>
+            <span style="color:var(--accent-gold); font-weight:700;">&rarr;</span>
+          </div>
+        </div>
+
+        <div class="curated-card span-4">
+          <div class="card-edition">CATALOG NO. 04</div>
+          <h3 class="card-brand" style="font-size:24px;">Afiyet Döner</h3>
+          <p class="card-narrative">Standartlashtirilgan go‘shtni qayta ishlash va restoranlar tarmog‘i.</p>
+          <div class="card-stats-row">
+            <span>EST. 2019</span>
+            <span style="color:var(--accent-gold); font-weight:700;">&rarr;</span>
+          </div>
+        </div>
+
+        <div class="curated-card span-4">
+          <div class="card-edition">CATALOG NO. 05</div>
+          <h3 class="card-brand" style="font-size:24px;">UZBIC Kengashi</h3>
+          <p class="card-narrative">O‘zbekiston Biznes va Sanoat Kengashining global eksport markazi.</p>
+          <div class="card-stats-row">
+            <span>GLOBAL</span>
+            <span style="color:var(--accent-gold); font-weight:700;">&rarr;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline Memoir -->
+  <section id="timeline" class="timeline-sec">
+    <div class="container">
+      <div class="sec-kicker">// BIOGRAPHY & MEMOIRS</div>
+      <h2 class="sec-head-title">Tadbirkorlikning Yozilmagan Qonunlari</h2>
+      <p class="sec-sub">
+        Yigirma ikki yil davomida shakllangan hayotiy saboqlar, xatolar tahlili va muvaffaqiyatli sanoat qoliplari.
+      </p>
+
+      <div class="chapters-list">
+        <div class="chapter-card">
+          <div class="chap-no">BOB I // 2004</div>
+          <h3 class="chap-title">Dastlabki Sinovlar</h3>
+          <p class="chap-desc">Savdodagi dastlabki tajribalar, kapital yetishmovchiligi va ishlab chiqarishning birinchi darslari.</p>
+        </div>
+
+        <div class="chapter-card">
+          <div class="chap-no">BOB II // 2012</div>
+          <h3 class="chap-title">Toybola Inqilobi</h3>
+          <p class="chap-desc">Mahalliy o‘yinchoqlar ishlab chiqarish orqali xorijiy import monopoliyasini sindirish yo‘li.</p>
+        </div>
+
+        <div class="chapter-card">
+          <div class="chap-no">BOB III // 2018</div>
+          <h3 class="chap-title">Sanoat Xomashyosi</h3>
+          <p class="chap-desc">Samtech korxonasini qurish orqali polimer xomashyosida mustaqil zanjirni shakllantirish.</p>
+        </div>
+
+        <div class="chapter-card">
+          <div class="chap-no">BOB IV // 2026</div>
+          <h3 class="chap-title">Avtonom Meros</h3>
+          <p class="chap-desc">Korxonalarni egasisiz boshqariladigan mustaqil institutlarga aylantirish va xalqaro tajriba almashish.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Notes -->
+  <footer class="luxury-notes">
+    <div class="container">
+      <div class="notes-frame">
+        <div style="font-weight:700; color:var(--accent-gold); margin-bottom:8px; text-transform:uppercase;">
+          HALLMARK LUXURY EDITORIAL SPECIFICATION:
+        </div>
+        <p>
+          • <strong>Art-direction:</strong> Cormorant Garamond aristokratik nozikligi + Plus Jakarta Sans zamonaviyligi + Warm Gold mayinligi.<br>
+          • <strong>Bo‘shliq ritmi (Whitespace):</strong> Yuqori darajadagi havo, me’morchilik jurnallari andozasi, keraksiz chiziqlarsiz sof qatlamlar.<br>
+          • <strong>Qulaylik:</strong> 1440px va 390px ekranlarda qat’iy 44px+ tap targets, nozik teginish zonalari va ravon o‘qish oqimi.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
+

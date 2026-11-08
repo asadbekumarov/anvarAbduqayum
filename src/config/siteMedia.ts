@@ -1,18 +1,23 @@
-import type {
-  MediaItem,
-  VideoItem,
-  PartnerLogo,
-  CityEvent,
-  DiplomaItem,
-} from "@/types/media";
+/**
+ * Media and Asset Registry for Anvar Abduqayum Website
+ * Follows "Qolip" concept: industrial blueprint portraits, partner/factory logos,
+ * and technical schematics.
+ */
 
-export type { MediaItem, VideoItem, PartnerLogo, CityEvent, DiplomaItem };
+export interface MediaAsset {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+}
+
+export type { VideoItem, PartnerLogo, CityEvent, DiplomaItem } from "@/types/media";
 
 export const siteMedia = {
   brand: {
-    logoText: "ILHOM BEGIMQULOV",
+    logoText: "ANVAR ABDUQAYUM",
+    blueprintTag: "QOLIP INDUSTRIAL // EST. 2004",
     ogImage: "/images/brand/og-image.png",
-    consultantName: "Ilhom Begimqulov",
   },
 
   hero: {
@@ -20,7 +25,13 @@ export const siteMedia = {
       src: "/images/hero/portrait.webp",
       width: 900,
       height: 1100,
-      alt: "Ilhom Begimqulov — Biznes konsultant",
+      alt: "Anvar Abduqayum — Sanoatchi, Muhandis-Tadbirkor va Eksportchi",
+    },
+    blueprintGrid: {
+      src: "/images/hero/grid-1.png",
+      width: 800,
+      height: 800,
+      alt: "Texnik qolip chizmasi to'ri",
     },
   },
 
@@ -29,7 +40,7 @@ export const siteMedia = {
       src: "/images/expert/portrait.webp",
       width: 800,
       height: 1000,
-      alt: "Ilhom Begimqulov amaliyotchi biznes konsultant portreti",
+      alt: "Anvar Abduqayum amaliyotchi tadbirkor va biznes-mentor portreti",
     },
   },
 
@@ -38,7 +49,7 @@ export const siteMedia = {
       src: "/images/book/cover.jpg",
       width: 700,
       height: 900,
-      alt: "Biznes shpargalkasi kitobi muqovasi",
+      alt: "«Tadbirkorlikning yozilmagan qonunlari» kitobi muqovasi",
     },
     previews: [
       {
@@ -46,229 +57,138 @@ export const siteMedia = {
         src: "/images/book/page-1.webp",
         width: 800,
         height: 1000,
-        alt: "Biznesda duch kelgan qiyinchiliklar sahifasi",
+        alt: "Biznesda duch kelgan qiyinchiliklar va 7 ta xato tahlili",
       },
       {
         id: "cover",
         src: "/images/book/cover.jpg",
         width: 700,
         height: 900,
-        alt: "Biznes shpargalkasi kitobi asosiy muqovasi",
-      },
-      {
-        id: "tips",
-        src: "/images/book/page-2.webp",
-        width: 800,
-        height: 1000,
-        alt: "Biznesni rivojlantirish uchun foydali tavsiyalar sahifasi",
+        alt: "«Tadbirkorlikning yozilmagan qonunlari» kitobi asosiy muqovasi",
       },
     ],
   },
 
+  companies: {
+    toybola: {
+      logo: "/images/partners/toy_bola.webp",
+      alt: "Toybola Toys bolalar o'yinchoqlari zavodi",
+    },
+    samtech: {
+      logo: "/images/partners/tekhno.webp",
+      alt: "Samtech Masterbatches polimer xomashyosi korxonasi",
+    },
+    visage: {
+      logo: "/images/partners/atla_plast.webp",
+      alt: "Visage Electric elektrotexnika majmuasi",
+    },
+    puro: {
+      logo: "/images/partners/puro.webp",
+      alt: "PURO Gelateria & Cafeteria tarmog'i",
+    },
+    afiyet: {
+      logo: "/images/partners/afiyet.webp",
+      alt: "AFIYET Doner Kebab restoranlar tarmog'i",
+    },
+    itsupport: {
+      logo: "/images/partners/eputy.webp",
+      alt: "IT Support & Service korxonalarni avtomatlashtirish",
+    },
+    uzbic: {
+      logo: "/images/partners/uzbic.webp",
+      alt: "UZBIC O'zbekiston Biznes va Sanoat Kengashi",
+    },
+  },
+
+  diplomas: [
+    {
+      id: "diplom-1",
+      title: "Xalqaro Sanoat va Boshqaruv Diplomi",
+      issuer: "Xalqaro Standartlar Instituti",
+      year: "2018",
+      src: "/images/diplomas/diplom-1.webp",
+      thumb: "/images/diplomas/diplom-1.webp",
+      width: 800,
+      height: 1100,
+      alt: "Sanoat va xalqaro boshqaruv diplomi",
+    },
+    {
+      id: "diplom-2",
+      title: "Eksport va Standartlashtirish Sertifikati",
+      issuer: "Tashqi Iqtisodiy Hamkorlik Palatasi",
+      year: "2021",
+      src: "/images/diplomas/diplom-2.webp",
+      thumb: "/images/diplomas/diplom-2.webp",
+      width: 800,
+      height: 1100,
+      alt: "Xalqaro standartlashtirish sertifikati",
+    },
+  ],
+
   events: [
-    {
-      id: "shymkent",
-      city: "Shymkent",
-      country: "Qozog'iston",
-      title: "O'zgarish Nuqtasi Seminari",
-      date: "3 kunlik intensiv",
-      image: "/images/events/shymkent.webp",
-      width: 600,
-      height: 800,
-      alt: "Shymkentdagi O'zgarish Nuqtasi seminari",
-    },
-    {
-      id: "osh",
-      city: "Osh",
-      country: "Qirg'iziston",
-      title: "Daromad va Tizimlashtirish",
-      date: "Amaliy seminar",
-      image: "/images/events/osh.png",
-      width: 600,
-      height: 800,
-      alt: "Osh shahridagi seminar",
-    },
-    {
-      id: "samarkand",
-      city: "Samarqand",
-      country: "O'zbekiston",
-      title: "Real Keyslar va Strategiyalar",
-      date: "Natijaga yo'naltirilgan",
-      image: "/images/events/samarkand.webp",
-      width: 600,
-      height: 800,
-      alt: "Samarqanddagi O'zgarish Nuqtasi seminari",
-    },
-    {
-      id: "khujand",
-      city: "Xo'jand",
-      country: "Tojikiston",
-      title: "Biznesdagi Burilish Nuqtasi",
-      date: "Tizim qurish kursi",
-      image: "/images/events/khujand.webp",
-      width: 600,
-      height: 800,
-      alt: "Xo'janddagi seminar afishasi",
-    },
     {
       id: "tashkent",
       city: "Toshkent",
       country: "O'zbekiston",
-      title: "Foydani Oshirish va Jamoa Boshqaruvi",
-      date: "Boshqaruv forumi",
+      title: "Ishlab chiqarish va Eksport Forumi",
+      date: "Yillik Bosh Forum",
       image: "/images/events/tashkent.webp",
       width: 600,
       height: 800,
-      alt: "Toshkentdagi katta seminar",
+      alt: "Toshkentdagi Ishlab chiqarish va Eksport Forumi",
     },
-    {
-      id: "fergana",
-      city: "Farg'ona",
-      country: "O'zbekiston",
-      title: "Yangi Aloqalar va Yangi Imkoniyatlar",
-      date: "Networking uchrashuvi",
-      image: "/images/events/fergana.webp",
-      width: 600,
-      height: 800,
-      alt: "Farg'onadagi biznes seminar",
-    },
-  ] as CityEvent[],
+  ],
 
-  // TODO(confirm): Matnda "27+ brend" aytilgan, biroq bu yerda 11 ta logotip bor. Shuningdek, haqiqiy nomlar ("Odezhda", "Logistika", "Way" brend nomiga o'xshamaydi) tasdiqlansin.
-  partners: [
-    { id: "mir", name: "Mir", logo: "/images/partners/mir.webp", width: 140, height: 48 },
-    { id: "nafis", name: "Nafis", logo: "/images/partners/nafis.webp", width: 140, height: 48 },
-    { id: "korm", name: "Sladkiy Korm", logo: "/images/partners/korm.webp", width: 140, height: 48 },
-    { id: "atla_plast", name: "Ata Plast", logo: "/images/partners/atla_plast.webp", width: 140, height: 48 },
-    { id: "tekhno", name: "Texno Dunyosi", logo: "/images/partners/tekhno.webp", width: 140, height: 48 },
-    { id: "nik", name: "Nik Rattan", logo: "/images/partners/nik.webp", width: 140, height: 48 },
-    { id: "eputy", name: "Eputy", logo: "/images/partners/eputy.webp", width: 140, height: 48 },
-    { id: "odezhda", name: "Odezhda", logo: "/images/partners/odezhda.webp", width: 140, height: 48 },
-    { id: "way", name: "Way", logo: "/images/partners/way.webp", width: 140, height: 48 },
-    { id: "logistika", name: "Logistika", logo: "/images/partners/logistika.webp", width: 140, height: 48 },
-    { id: "ayran", name: "Ayran", logo: "/images/partners/ayran.webp", width: 140, height: 48 },
-  ] as PartnerLogo[],
+  testimonials: [] as Array<{
+    id: string;
+    youtubeId: string;
+    title: string;
+    author: string;
+    role: string;
+    company: string;
+    client?: string;
+    result?: string;
+    quote: string;
+    duration: string;
+    verified: boolean;
+    thumb: string;
+  }>,
 
-  testimonials: [
-    {
-      id: "nToRnb7k428",
-      title: "Mijoz fikri va erishilgan natija",
-      author: "Mijoz keysi",
-      role: "Tadbirkor",
-      company: "Hamkor kompaniya",
-      thumb: "https://img.youtube.com/vi/nToRnb7k428/hqdefault.jpg",
-      duration: "5:20",
-    },
-    {
-      id: "x49k3Mc1Mik",
-      title: "Biznesni tizimlashtirish tajribasi",
-      author: "Mijoz keysi",
-      role: "Muassis",
-      company: "Hamkor kompaniya",
-      thumb: "https://img.youtube.com/vi/x49k3Mc1Mik/hqdefault.jpg",
-      duration: "4:45",
-    },
-    {
-      id: "TNcvtaqWlY0",
-      title: "Daromadni oshirish va jarayonlar tahlili",
-      author: "Mijoz keysi",
-      role: "Bosh direktor",
-      company: "Hamkor kompaniya",
-      thumb: "https://img.youtube.com/vi/TNcvtaqWlY0/hqdefault.jpg",
-      duration: "6:10",
-    },
-    {
-      id: "G4b9i1TbIig",
-      title: "Jamoani boshqarish va intizom",
-      author: "Mijoz keysi",
-      role: "Tadbirkor",
-      company: "Hamkor kompaniya",
-      thumb: "https://img.youtube.com/vi/G4b9i1TbIig/hqdefault.jpg",
-      duration: "3:50",
-    },
-    {
-      id: "BbJe8dx1aPg",
-      title: "Tizim qurish va operativkadan chiqish",
-      author: "Mijoz keysi",
-      role: "Biznes egasi",
-      company: "Hamkor kompaniya",
-      thumb: "https://img.youtube.com/vi/BbJe8dx1aPg/hqdefault.jpg",
-      duration: "5:05",
-    },
-  ] as VideoItem[],
+  webinars: [] as Array<{
+    id: string;
+    youtubeId: string;
+    title: string;
+    description: string;
+    duration: string;
+    date: string;
+    tag: string;
+    thumb: string;
+  }>,
 
-  webinars: [
-    {
-      id: "sn68jdRJym0",
-      title: "Biznesda tizimlashtirish va amaliy tavsiyalar",
-      thumb: "https://img.youtube.com/vi/sn68jdRJym0/hqdefault.jpg",
-      duration: "1:15:30",
-    },
-    {
-      id: "604Wo85KMGU",
-      title: "Daromadni oshirishning asosiy omillari",
-      thumb: "https://img.youtube.com/vi/604Wo85KMGU/hqdefault.jpg",
-      duration: "58:40",
-    },
-    {
-      id: "ZLV9hzFsV6A",
-      title: "Kompaniyada xatolarni aniqlash va bartaraf etish",
-      thumb: "https://img.youtube.com/vi/ZLV9hzFsV6A/hqdefault.jpg",
-      duration: "1:05:12",
-    },
-    {
-      id: "mT2QtEHW9ZQ",
-      title: "Xodimlarni boshqarish va motivatsiya tizimi",
-      thumb: "https://img.youtube.com/vi/mT2QtEHW9ZQ/hqdefault.jpg",
-      duration: "1:22:00",
-    },
-    {
-      id: "MkL5oqU8Hvc",
-      title: "Strategik rejalashtirish va bozor tahlili",
-      thumb: "https://img.youtube.com/vi/MkL5oqU8Hvc/hqdefault.jpg",
-      duration: "49:15",
-    },
-    {
-      id: "xXVnjicuuFk",
-      title: "Boshqaruvda samaradorlik va raqamlashtirish",
-      thumb: "https://img.youtube.com/vi/xXVnjicuuFk/hqdefault.jpg",
-      duration: "1:12:45",
-    },
-  ] as VideoItem[],
+  partners: [] as Array<{
+    id: string;
+    name: string;
+    logo: string;
+    width: number;
+    height: number;
+  }>,
 
-  diplomas: [
-    {
-      id: "diploma-1",
-      title: "Xalqaro Biznes Boshqaruvi va Konsalting Sertifikati",
-      issuer: "Xalqaro Konsalting Instituti",
-      year: "2022",
-      src: "/images/diplomas/diplom-1.webp",
-      thumb: "/images/diplomas/diplom-1.webp",
-      width: 600,
-      height: 888,
-      alt: "Ilhom Begimqulov xalqaro biznes sertifikati",
+  pressLogos: {
+    gazeta: {
+      name: "Gazeta.uz",
+      domain: "gazeta.uz",
     },
-    {
-      id: "diploma-2",
-      title: "Strategik Boshqaruv va Operatsion Tizimlar Malakasi",
-      issuer: "Yevropa Menejment Akademiyasi",
-      year: "2023",
-      src: "/images/diplomas/diplom-2.webp",
-      thumb: "/images/diplomas/diplom-2.webp",
-      width: 600,
-      height: 876,
-      alt: "Strategik boshqaruv diplomi",
+    kun: {
+      name: "Kun.uz",
+      domain: "kun.uz",
     },
-    {
-      id: "diploma-3",
-      title: "Biznes Trenerlik va Mentorlik Akkreditatsiyasi",
-      issuer: "Professional Murabbiylar Uyushmasi",
-      year: "2024",
-      src: "/images/diplomas/diplom-3.webp",
-      thumb: "/images/diplomas/diplom-3.webp",
-      width: 600,
-      height: 878,
-      alt: "Biznes trenerlik akkreditatsiyasi",
+    spot: {
+      name: "Spot.uz",
+      domain: "spot.uz",
     },
-  ] as DiplomaItem[],
-};
+    daryo: {
+      name: "Daryo.uz",
+      domain: "daryo.uz",
+    },
+  },
+} as const;

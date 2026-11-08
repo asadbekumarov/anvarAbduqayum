@@ -1,0 +1,96 @@
+{
+  "timestamp": "2026-11-08T21:24:17.737Z",
+  "desktopComparison": {
+    "allPanelsVerified": true,
+    "panels": {
+      "panelConcept1": {
+        "panelExists": true,
+        "imageExists": true,
+        "imageLoaded": true,
+        "naturalWidth": 1440,
+        "naturalHeight": 900,
+        "notEmpty": true
+      },
+      "panelConcept2": {
+        "panelExists": true,
+        "imageExists": true,
+        "imageLoaded": true,
+        "naturalWidth": 1440,
+        "naturalHeight": 900,
+        "notEmpty": true
+      },
+      "panelConcept3": {
+        "panelExists": true,
+        "imageExists": true,
+        "imageLoaded": true,
+        "naturalWidth": 1440,
+        "naturalHeight": 900,
+        "notEmpty": true
+      }
+    }
+  },
+  "mobileComparison": {
+    "allDevicesVerified": true,
+    "columns": {
+      "mobileColConcept1": {
+        "colExists": true,
+        "imageExists": true,
+        "imageLoaded": true,
+        "naturalWidth": 1055,
+        "naturalHeight": 5937,
+        "notEmpty": true
+      },
+      "mobileColConcept2": {
+        "colExists": true,
+        "imageExists": true,
+        "imageLoaded": true,
+        "naturalWidth": 1116,
+        "naturalHeight": 6497,
+        "notEmpty": true
+      },
+      "mobileColConcept3": {
+        "colExists": true,
+        "imageExists": true,
+        "imageLoaded": true,
+        "naturalWidth": 393,
+        "naturalHeight": 7059,
+        "notEmpty": true
+      }
+    }
+  },
+  "individualConcepts": {
+    "concept1": {
+      "name": "Concept 1 — Refined Authority",
+      "desktopHeroVerified": {
+        "hasHeadline": true,
+        "h1Text": "Egasisiz ishlaydigan zavodlar va sanoat darajasidagi biznes tizimlari.",
+        "imagesLoaded": true,
+        "imageCount": 1
+      },
+      "heroScreenshot": "concept1_hero_1440x900.png",
+      "mobileScreenshot": "concept1_full_mobile_390px.png"
+    },
+    "concept2": {
+      "name": "Concept 2 — Industrial Cinematic",
+      "desktopHeroVerified": {
+        "hasHeadline": true,
+        "h1Text": "SANOAT. AVTONOMIYA. EKSPORT.",
+        "imagesLoaded": true,
+        "imageCount": 1
+      },
+      "heroScreenshot": "concept2_hero_1440x900.png",
+      "mobileScreenshot": "concept2_full_mobile_390px.png"
+    },
+    "concept3": {
+      "name": "Concept 3 — Luxury Editorial",
+      "desktopHeroVerified": {
+        "hasHeadline": true,
+        "h1Text": "Biznesni egasisiz boshqarish madaniyati va sanoat san’ati.",
+        "imagesLoaded": true,
+        "imageCount": 1
+      },
+      "heroScreenshot": "concept3_hero_1440x900.png",
+      "mobileScreenshot": "concept3_full_mobile_390px.png"
+    }
+  }
+}

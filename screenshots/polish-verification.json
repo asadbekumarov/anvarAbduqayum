@@ -1,0 +1,88 @@
+{
+  "viewports": [
+    {
+      "name": "mobile-320",
+      "width": 320,
+      "status": 200,
+      "hasOverflow": false,
+      "path": "D:\\projects\\anvarAbduqayum\\screenshots\\phase2-prod-mobile-320-hero.png"
+    },
+    {
+      "name": "mobile-360",
+      "width": 360,
+      "status": 200,
+      "hasOverflow": false,
+      "path": "D:\\projects\\anvarAbduqayum\\screenshots\\phase2-prod-mobile-360-hero.png"
+    },
+    {
+      "name": "mobile-390",
+      "width": 390,
+      "status": 200,
+      "hasOverflow": false,
+      "path": "D:\\projects\\anvarAbduqayum\\screenshots\\phase2-prod-mobile-390-hero.png"
+    },
+    {
+      "name": "tablet-768",
+      "width": 768,
+      "status": 200,
+      "hasOverflow": false,
+      "path": "D:\\projects\\anvarAbduqayum\\screenshots\\phase2-prod-tablet-768-hero.png"
+    },
+    {
+      "name": "desktop-1440",
+      "width": 1440,
+      "status": 200,
+      "hasOverflow": false,
+      "path": "D:\\projects\\anvarAbduqayum\\screenshots\\phase2-prod-desktop-1440-hero.png"
+    }
+  ],
+  "mobileMenu": {
+    "at320px": [
+      {
+        "labelText": "Xizmatlar",
+        "numText": "№ 01",
+        "labelRight": 168.84375,
+        "numLeft": 180.84375,
+        "overlaps": false
+      },
+      {
+        "labelText": "Bizneslar",
+        "numText": "№ 02",
+        "labelRight": 168.1875,
+        "numLeft": 180.1875,
+        "overlaps": false
+      },
+      {
+        "labelText": "Faoliyat yo‘li",
+        "numText": "№ 03",
+        "labelRight": 179.65625,
+        "numLeft": 191.65625,
+        "overlaps": false
+      },
+      {
+        "labelText": "Media",
+        "numText": "№ 04",
+        "labelRight": 159.046875,
+        "numLeft": 171.046875,
+        "overlaps": false
+      },
+      {
+        "labelText": "Aloqa",
+        "numText": "№ 05",
+        "labelRight": 158.046875,
+        "numLeft": 170.046875,
+        "overlaps": false
+      },
+      {
+        "labelText": "UCHRASHUV BRONLASH",
+        "numText": "→",
+        "labelRight": 217.828125,
+        "numLeft": 225.828125,
+        "overlaps": false
+      }
+    ],
+    "screenshot": "D:\\projects\\anvarAbduqayum\\screenshots\\phase2-prod-mobile-320-menu.png"
+  },
+  "navigationLabels": [],
+  "variantsCaptured": []
+}

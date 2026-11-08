@@ -4,16 +4,16 @@ const getBaseUrl = (): string => {
   if (process.env.NEXT_PUBLIC_SITE_URL) {
     return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
   }
-  return "https://ilhom-begimqulov.vercel.app";
+  return "https://anvarabduqayum.uz";
 };
 
 export const SITE_URL = getBaseUrl();
 
 export const siteConfig = {
-  name: "Ilhom Begimqulov",
-  title: "Ilhom Begimqulov | Biznes Konsultant va Amaliyotchi Trener",
+  name: "Anvar Abduqayum",
+  title: "Anvar Abduqayum | Ishlab chiqarish, Eksport va Biznes-mentor",
   description:
-    "Biznes boshqaruvi, operatsion tizimlar, sotuv bo'limi va jamoani kuchaytirish bo'yicha amaliy yechimlar.",
+    "20 yillik real ishlab chiqarish zavodlari, savdo tarmoqlari va xalqaro eksport tajribasi asosida biznesni tizimlashtirish.",
   url: SITE_URL,
   ogImage: `${SITE_URL}/images/brand/og-image.png`,
 

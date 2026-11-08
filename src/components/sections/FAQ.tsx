@@ -205,16 +205,16 @@ export function FAQ({ isLoading = false }: FAQProps = {}) {
   return (
     <section
       id="faq"
-      className="relative w-full bg-[#0A0A0A] text-white py-20 sm:py-28 overflow-hidden border-t border-white/[0.08]"
+      className="relative w-full bg-[#070707] text-[#E5E5E5] py-20 sm:py-28 overflow-hidden border-t border-white/[0.08]"
     >
       {/* 1. Subtle luxury gold light spill along top edge */}
-      <div className="pointer-events-none absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#C5A880]/40 to-transparent z-10" />
+      <div className="pointer-events-none absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#D4AF37]/40 to-transparent z-10" />
 
       {/* 2. Central atmospheric gold & obsidian depth glow */}
       <div
         className="pointer-events-none absolute top-[92px] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[740px] h-[950px] rounded-full"
         style={{
-          background: "radial-gradient(ellipse at center, rgba(197, 168, 128, 0.12) 0%, rgba(11, 19, 43, 0.35) 45%, rgba(10, 10, 10, 0) 75%)",
+          background: "radial-gradient(ellipse at center, rgba(212, 175, 55, 0.12) 0%, rgba(11, 19, 43, 0.35) 45%, rgba(7, 7, 7, 0) 75%)",
         }}
       />
 
@@ -295,11 +295,11 @@ export function FAQ({ isLoading = false }: FAQProps = {}) {
         <div className="flex flex-col items-center text-center max-w-[860px] mx-auto">
           {/* Section Kicker */}
           <div className="flex items-center justify-center gap-4">
-            <span className="w-8 h-[1px] bg-[#C5A880]" />
-            <span className="font-mono text-xs uppercase tracking-[0.25em] text-platinum">
+            <span className="w-8 h-[1px] bg-[#D4AF37]" />
+            <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#D4AF37]">
               {formatSectionKicker("faq", t("kicker"))}
             </span>
-            <span className="w-8 h-[1px] bg-[#C5A880]" />
+            <span className="w-8 h-[1px] bg-[#D4AF37]" />
           </div>
 
           {/* Headline: Serif luxury display heading */}
@@ -364,18 +364,18 @@ export function FAQ({ isLoading = false }: FAQProps = {}) {
                 key={cat.key}
                 type="button"
                 onClick={() => handleCategoryClick(cat.key)}
-                className={`w-full min-h-[92px] sm:min-h-[104px] rounded-none flex items-center gap-5 sm:gap-6 px-5 sm:px-7 py-3 transition-all duration-300 text-left cursor-pointer border group ${
+                className={`w-full min-h-[92px] sm:min-h-[104px] rounded-none flex items-center gap-5 sm:gap-6 px-5 sm:px-7 py-3 transition-all duration-300 hover:-translate-y-1 text-left cursor-pointer border group ${
                   isSelected
-                    ? "bg-[#0F172A] border-[#C5A880] shadow-[0_0_24px_rgba(197,168,128,0.2)] scale-[1.005]"
-                    : "bg-[#111726]/70 hover:bg-[#151D30] border-white/[0.1] hover:border-[#C5A880]/50 shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
+                    ? "bg-[#121212] border-[#D4AF37] shadow-[0_0_24px_rgba(212,175,55,0.25)]"
+                    : "bg-[#121212]/90 hover:bg-[#161616] border-[#1E1E1E] hover:border-[#D4AF37]/60 shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
                 }`}
               >
                 {/* Sharp icon container */}
                 <div
                   className={`w-12 h-12 sm:w-14 sm:h-14 rounded-none flex items-center justify-center shrink-0 border transition-all ${
                     isSelected
-                      ? "bg-[#C5A880]/15 border-[#C5A880]/60 text-[#C5A880]"
-                      : "bg-white/[0.04] border-white/10 group-hover:border-[#C5A880]/40 group-hover:bg-[#C5A880]/10 text-platinum"
+                      ? "bg-[#D4AF37]/15 border-[#D4AF37]/60 text-[#D4AF37]"
+                      : "bg-white/[0.04] border-[#1E1E1E] group-hover:border-[#D4AF37]/50 group-hover:bg-[#D4AF37]/10 text-[#9A9A9A]"
                   }`}
                 >
                   {cat.glyph}
@@ -385,13 +385,13 @@ export function FAQ({ isLoading = false }: FAQProps = {}) {
                 <div className="flex flex-col min-w-0 pr-3 sm:pr-4 justify-center">
                   <span
                     className="text-base sm:text-lg font-medium tracking-tight transition-colors line-clamp-2 leading-snug"
-                    style={{ color: isSelected ? "#E2C79D" : "#FFFFFF" }}
+                    style={{ color: isSelected ? "#F3E5AB" : "#E5E5E5" }}
                   >
                     {cat.title}
                   </span>
                   <span
                     className="text-xs sm:text-sm font-mono mt-0.5 sm:mt-1"
-                    style={{ color: isSelected ? "#C5A880" : "#94A3B8" }}
+                    style={{ color: isSelected ? "#D4AF37" : "#9A9A9A" }}
                   >
                     {cat.count}
                   </span>
@@ -441,10 +441,10 @@ export function FAQ({ isLoading = false }: FAQProps = {}) {
               return (
                 <div
                   key={item.id}
-                  className={`rounded-xl bg-[#0F172A]/30 border transition-all duration-300 overflow-hidden ${
+                  className={`rounded-none bg-[#121212] border transition-all duration-300 overflow-hidden ${
                     isOpen
-                      ? "border-[#C5A880]/50 shadow-[0_8px_32px_rgba(0,0,0,0.6)] bg-[#0B132B]/50"
-                      : "border-white/[0.08] hover:border-white/[0.16] hover:bg-[#0F172A]/50"
+                      ? "border-[#D4AF37]/60 shadow-[0_8px_32px_rgba(0,0,0,0.6)]"
+                      : "border-[#1E1E1E] hover:border-[#D4AF37]/40 hover:bg-[#161616]"
                   }`}
                 >
                   {/* Question Button */}

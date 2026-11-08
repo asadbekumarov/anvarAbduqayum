@@ -1,9 +1,9 @@
 {
   "common": {
-    "brandName": "Ilhom Begimqulov",
-    "brandRole": "Biznes konsultant va trener",
-    "businessConsulting": "Biznes Konsalting",
-    "brandAria": "Ilhom Begimqulov - Asosiy sahifa",
+    "brandName": "Anvar Abduqayum",
+    "brandRole": "Tadbirkor, Investor va Biznes-mentor",
+    "businessConsulting": "Ishlab chiqarish, Eksport va Tizimlashtirish",
+    "brandAria": "Anvar Abduqayum - Asosiy sahifa",
     "cta": "Ustozga shogird tushish",
     "learnMore": "Batafsil ma'lumot",
     "viewServices": "Xizmatlar bilan tanishish",
@@ -38,36 +38,36 @@
     "mainNavAria": "Asosiy navigatsiya"
   },
   "hero": {
-    "kicker": "B2B Konsalting & Tizimlashtirish",
-    "titlePrefix": "Biznesingizni operatsion tartibsizlikdan — ",
-    "titleHighlight": "avtonom tizimga",
-    "titleSuffix": " olib chiqaman.",
-    "title": "Biznesingizni operatsion tartibsizlikdan — avtonom tizimga olib chiqaman.",
-    "description": "Mening amaliy metodologiyam asosida kompaniyangizda boshqaruv, moliya va sotuv jarayonlarini egasining doimiy ishtirokisiz ham barqaror ishlaydigan holatga keltiraman.",
+    "kicker": "ISHLAB CHIQARISH, EKSPORT VA BIZNES MENTORLIK",
+    "titlePrefix": "Biznesingizni kichik savdodan — ",
+    "titleHighlight": "tizimli ishlab chiqarish va eksport",
+    "titleSuffix": " darajasiga olib chiqamiz.",
+    "title": "Biznesingizni kichik savdodan — tizimli ishlab chiqarish va global eksport darajasiga olib chiqamiz.",
+    "description": "20 yillik real zavodlar, chakana savdo tarmoqlari va xalqaro eksport tajribasi asosida kompaniyangizda qat'iy intizom, moliyaviy nazorat hamda avtonom boshqaruv tizimini quramiz.",
     "ctaPrimary": "Bepul diagnostikaga yozilish",
     "ctaSecondary": "Xizmatlar yo'nalishi",
-    "captionRole": "Asoschi & Bosh strateg · 10+ yillik tajriba",
-    "metric1Label": "01 / KO'LAM",
-    "metric1Desc": "Tizimlashtirilgan B2B va B2C kompaniyalar",
+    "captionRole": "Tadbirkor, Investor & Amaliyotchi Mentor · 20+ yillik tajriba",
+    "metric1Label": "01 / TAJRIBA VA KO'LAM",
+    "metric1Desc": "Yirik ishlab chiqarish zavodlari, savdo va restoran tarmoqlari",
     "metric2Label": "02 / AUDITORIYA",
-    "metric2Desc": "Seminar va dasturlarda qatnashgan tadbirkorlar",
+    "metric2Desc": "Biznes-forumlar, treninglar va shogirdlik dasturi ishtirokchilari",
     "metric3Label": "03 / GEOGRAFIYA",
-    "metric3Desc": "Markaziy Osiyo bo'ylab yirik biznes-turlar",
+    "metric3Desc": "Xitoy, Turkiya, Yevropa va Markaziy Osiyo bo'ylab eksport-import amaliyoti",
     "partnersLabel": "ISHONCH BILDIRGAN 27+ BRENDLAR",
-    "clothAriaLabel": "Ilhom Begimqulov interaktiv 3D mato portreti",
-    "portraitAlt": "Ilhom Begimqulov portreti"
+    "clothAriaLabel": "Anvar Abduqayum interaktiv 3D mato portreti",
+    "portraitAlt": "Anvar Abduqayum portreti"
   },
   "services": {
     "kicker": "XIZMATLAR ARXITEKTURASI",
-    "titlePrefix": "Kompaniyangiz o'sishi uchun ",
-    "titleHighlight": "tizimli yechimlar.",
-    "title": "Kompaniyangiz o'sishi uchun tizimli yechimlar.",
-    "description": "Men shunchaki maslahat bermayman — biznesingizdagi operatsion uzilishlarni topib, ularni aniq reglamentlar, moliyaviy nazorat va mustaqil ishlaydigan jamoa tizimiga aylantiraman.",
+    "titlePrefix": "Real tajribada sinalgan ",
+    "titleHighlight": "amaliy biznes yechimlar.",
+    "title": "Real tajribada sinalgan amaliy biznes yechimlar.",
+    "description": "Nazariy kitob gaplari emas — o'zim zavodlar va yirik savdo tarmoqlarida qo'llab, millionlab dollarlik aylanmaga olib chiqqan amaliy boshqaruv hamda masshtablashtirish tizimlari.",
     "tagDirection": "6 ta asosiy yo'nalish",
-    "diagKicker": "INDIVIDUAL RAZVEDKA",
+    "diagKicker": "STRATEGIK TAHLIL",
     "diagTime": "20 DAQIQA · BEPUL",
-    "diagTitle": "Qaysi yechim sizning bosqichingizga mos?",
-    "diagDesc": "Qisqa strategik sessiyada biznesingizning joriy \"og'riqli nuqtalarini\" tahlil qilamiz va sizga qaysi tizimlashtirish yo'nalishi eng tez natija berishini aniqlaymiz.",
+    "diagTitle": "Biznesingiz qayerda oqsayapti?",
+    "diagDesc": "Qisqa diagnostik suhbatda korxonangizdagi savdo, ishlab chiqarish yoki kadrlar muammosini aniqlab, eng tez natija beruvchi o'sish nuqtalarini belgilab olamiz.",
     "diagPrivacy": "100% Maxfiylik kafolati",
     "diagCta": "Bepul diagnostikaga yozilish",
     "diagServiceApplyName": "Bepul diagnostika",
@@ -76,196 +76,196 @@
     "items": [
       {
         "index": "01",
-        "title": "Strategik audit va rivojlanish xaritasi",
-        "description": "Joriy biznes-model, moliyaviy oqimlar va bozor ulushining chuqur tahlili. Kompaniya keyingi 1–3 yilda qanday masshtablashishi bo'yicha aniq raqamlarga asoslangan \"Yo'l xaritasi\"ni ishlab chiqish."
+        "title": "Biznes audit va masshtablashtirish xaritasi",
+        "description": "Korxonangizning joriy moliyaviy holati, xarajatlari va bozor imkoniyatlarini tahlil qilib, sof foydani oshirish strategiyasini tuzish."
       },
       {
         "index": "02",
-        "title": "Operatsion tizimlashtirish va reglamentlar",
-        "description": "Biznes egasini kundalik \"yong'inlarni o'chirish\"dan ozod qilish. Barcha bo'limlar uchun aniq funksional majburiyatlar, KPI tizimi va inson omiliga bog'liq bo'lmagan ish standartlarini joriy etish."
+        "title": "Ishlab chiqarishni noldan yo'lga qo'yish va tizimlashtirish",
+        "description": "Uskunalar tanlash (Xitoy va Turkiya), xomashyo ta'minoti, tannarxni optimallashtirish va zavod ichki intizomini qurish."
       },
       {
         "index": "03",
-        "title": "B2B/B2C sotuv bo'limini qurish va marketing",
-        "description": "Mijozlar oqimini barqarorlashtirish, sotuv voronkasini optimallashtirish va menejerlar samaradorligini oshirish. Reklama byudjeti bekorga sarflanishini to'xtatib, ROI ko'rsatkichini o'stirish."
+        "title": "Eksport va xalqaro bozorlarga chiqish (B2B)",
+        "description": "Mahalliy mahsulotlarni Markaziy Osiyo, Turkiya va Yevropa bozorlariga eksport qilish, xalqaro hamkorlar bilan muzokaralar olib borish."
       },
       {
         "index": "04",
-        "title": "Korporativ boshqaruv va HR-arxitektura",
-        "description": "Kuchli top-menejment va o'rta bo'g'in rahbarlar jamoasini shakllantirish. Xodimlarni yollash, moslashtirish (onboarding) va natijaga bog'langan motivatsiya tizimini yo'lga qo'yish."
+        "title": "Chakana va ulgurji savdo tarmog'ini qurish",
+        "description": "Do'konlar tarmog'i, omborxona logistikasi, distribyutsiya va sotuv bo'limi KPI tizimini avtomatlashtirish."
       },
       {
         "index": "05",
-        "title": "Muzokaralar va B2B kommunikatsiya standartlari",
-        "description": "Yirik shartnomalarni yopish uchun tijorat takliflari, skriptlar va korporativ yozishmalar auditi. Mijoz va hamkorlar bilan yuqori chekda ishlash madaniyatini shakllantirish."
+        "title": "Kadrlar tanlash va qat'iy korporativ intizom",
+        "description": "Kuchli jamoa yig'ish, xodimlarni natijaga bog'lash, o'g'rilik va mas'uliyatsizlikka barham beruvchi nazorat mexanizmlari."
       },
       {
         "index": "06",
-        "title": "Biznes transformatsiyasi va shaxsiy treking",
-        "description": "O'zgarishlarni qog'ozda qolib ketmasligi uchun jamoa bilan bevosita ishlash. Yangi boshqaruv tizimi to'liq ildiz otib, mustaqil natija bergunga qadar bosqichma-bosqich kuzatuv."
+        "title": "Shaxsiy mentorlik va «Ustoz-shogird» trekingi",
+        "description": "Anvar Abduqayum bilan bevosita muloqotda yangi biznes ochish yoki mavjud kompaniyani yirik xolding darajasiga olib chiqish."
       }
     ]
   },
   "events": {
     "kicker": "GEOGRAFIYA VA KO'LAM",
-    "titlePrefix": "Markaziy Osiyo bo'ylab ",
+    "titlePrefix": "Markaziy Osiyo va xalqaro ",
     "titleHighlight": "amaliy biznes-turlar.",
-    "title": "Markaziy Osiyo bo'ylab amaliy biznes-turlar.",
-    "description": "O'zbekiston, Qozog'iston, Qirg'iziston va Tojikistonning yirik biznes markazlarida minglab tadbirkorlar ishtirokida o'tkazilgan intensiv seminarlar va yopiq uchrashuvlar arxivi.",
+    "title": "Markaziy Osiyo va xalqaro amaliy biznes-turlar.",
+    "description": "Turkiya, Xitoy, Yevropa va Markaziy Osiyo bo'ylab yirik zavodlar, sanoat ko'rgazmalari va tadbirkorlar biznes-turlari arxivi.",
     "status": "BO'LIB O'TGAN",
     "cta": "Ishtirok etish"
   },
   "stages": {
     "kicker": "METODOLOGIYA VA BOSQICHLAR",
-    "titlePrefix": "Tartibsizlikdan tizimga o'tish ",
+    "titlePrefix": "Tartibsizlikdan yirik tizimga o'tish ",
     "titleHighlight": "arxitekturasi.",
-    "title": "Tartibsizlikdan tizimga o'tish arxitekturasi.",
-    "description": "Har bir kompaniya o'ziga xos, ammo tizimli o'sish qonuniyatlari aniq. Yo'nalishni tanlang va hamkorligimiz qanday bosqichlarda amalga oshishini ko'ring.",
+    "title": "Tartibsizlikdan yirik tizimga o'tish arxitekturasi.",
+    "description": "Har bir korxona o'ziga xos, ammo real ishlab chiqarish va savdodagi o'sish qonuniyatlari aniq. Yo'nalishni tanlang va hamkorligimiz bosqichlari bilan tanishing.",
     "direction1": "YO'NALISH 01",
     "tab1": "Biznesni tizimlashtirish (B2B)",
     "direction2": "YO'NALISH 02",
     "tab2": "Shogirdlik va shaxsiy mentorlik",
     "introSmallTitle": "Biznesni tizimlashtirish (B2B)",
-    "introSmallDesc": "Kompaniyada boshqaruv, moliya va savdo jarayonlarini egasining doimiy ishtirokisiz ham barqaror ishlaydigan tizimga keltirish.",
+    "introSmallDesc": "Kompaniyada ishlab chiqarish, savdo, moliya va kadrlar intizomini rahbarning doimiy aralashuvisiz ishlaydigan tizimga aylantirish.",
     "introCorporateTitle": "Shogirdlik va shaxsiy mentorlik",
-    "introCorporateDesc": "Tadbirkor bilan yakkama-yakka formatda biznesni transformatsiya qilish va strategik maqsadlarga bosqichma-bosqich erishish.",
+    "introCorporateDesc": "Tadbirkor bilan yakkama-yakka formatda biznesni noldan qurish yoki mavjud zavod va tarmoqlarni masshtablashtirish.",
     "stageAction": "Ushbu bosqich bo'yicha yordam olish",
-    "ctaBandTitle": "Biznesingizni tizimlashtirishga tayyormisiz?",
-    "ctaBandDesc": "Kompaniyangiz bosqichiga mos dastlabki audit va diagnostika bo'yicha amaliy maslahat oling.",
+    "ctaBandTitle": "Biznesingizni yangi bosqichga olib chiqishga tayyormisiz?",
+    "ctaBandDesc": "Korxonangiz holatiga mos dastlabki audit va diagnostika bo'yicha amaliy maslahat oling.",
     "ctaBandButton": "Bepul diagnostikaga yozilish",
     "systematization": [
       {
         "step": "01",
-        "title": "G'oya va rejalashtirish",
-        "description": "Bozor va auditoriyani tahlil qilib, aniq hisob-kitoblar bilan biznes-reja ishlab chiqish.",
+        "title": "Chuqur diagnostika va moliya tahlili",
+        "description": "Korxonaning haqiqiy moliyaviy va operatsion holatini aniqlash.",
         "points": [
-          "Maqsadli auditoriyaning ehtiyojlarini aniqlash.",
-          "Noyob tijorat taklifini (NTT) shakllantirish.",
-          "Xarajatlar hisob-kitoblari va daromad prognozlari bilan birga biznes-reja ishlab chiqish.",
-          "Bozor va raqobatchilarni tahlil qilish."
+          "Kassa uzilishlari va pul oqimini tahlil qilish.",
+          "Foyda va zarar (P&L) hisobini tozalash.",
+          "Omborxona va tovar qoldiqlarini inventarizatsiya qilish.",
+          "Asosiy o'sish to'siqlarini aniqlash."
         ]
       },
       {
         "step": "02",
-        "title": "Biznesni ishga tushirish",
-        "description": "Brend yaratish, birinchi mahsulotni ishga tushirish va dastlabki mijozlarni jalb qilish.",
+        "title": "Boshqaruv va kadrlar filtratsiyasi",
+        "description": "Jamoani tozalash va mas'uliyatni taqsimlash.",
         "points": [
-          "Biznesni ro'yxatdan o'tkazish va kerakli hujjatlarni rasmiylashtirish.",
-          "Firma stilini ishlab chiqish va brendni yaratish.",
-          "Mahsulot yoki xizmatning birinchi versiyasini ishga tushirish.",
-          "Birinchi mijozlarni jalb qilish uchun marketing faoliyatini tashkil etish."
+          "Tashkiliy strukturani aniq chizish.",
+          "Har bir lavozim uchun aniq reglament va majburiyat yuklash.",
+          "Samarasiz xodimlarni saralash va kuchli kadrlarni jalb qilish.",
+          "Bo'lim rahbarlari javobgarligini belgilash."
         ]
       },
       {
         "step": "03",
-        "title": "Jarayonlarni optimallashtirish",
-        "description": "Dastlabki natijalarni baholash, ichki jarayonlarni avtomatlashtirish va jamoani kuchaytirish.",
+        "title": "Ishlab chiqarish va tannarx optimizatsiyasi",
+        "description": "Mahsulot tannarxini tushirish va sifatni oshirish.",
         "points": [
-          "Dastlabki natijalarni tahlil qilish va strategiyani tuzatish.",
-          "Ichki jarayonlarni avtomatlashtirish va optimallashtirish.",
-          "Jamoani shakllantirish: xodimlarni yollash yoki mutaxassislarni jalb qilish.",
-          "Qayta aloqa asosida mahsulot yoki xizmat sifatini yaxshilash."
+          "Xomashyo xaridini optimallashtirish va ta'minotchilar bazasi.",
+          "Brak va ishlab chiqarish isroflarini kamaytirish.",
+          "Smena va xodimlar unumdorligi normalarini joriy etish.",
+          "Uzluksiz sifat nazorati standartlarini o'rnatish."
         ]
       },
       {
         "step": "04",
-        "title": "Savdo hajmini oshirish",
-        "description": "Mijozlar bazasini kengaytirish, yangi mahsulotlar kiritish va strategik sherikliklar.",
+        "title": "Savdo va distribyutsiya tizimi",
+        "description": "Sotuv hajmini va bozor ulushini oshirish.",
         "points": [
-          "Qo'shimcha xizmatlar yoki mahsulotlarni joriy etish.",
-          "Marketing va reklama orqali mijozlar bazasini kengaytirish.",
-          "Boshqa kompaniyalar bilan hamkorlik aloqalarini o'rnatish.",
-          "Savdo strategiyalarining samaradorligini baholash."
+          "Ulgurji (B2B) va chakana (B2C) sotuv kanallarini kengaytirish.",
+          "Sotuv menejerlari uchun qat'iy KPI va bonus tizimi.",
+          "Mijozlar bazasini segmentlash va faollashtirish.",
+          "Savdo skriptlari va muzokara standartlarini joriy etish."
         ]
       },
       {
         "step": "05",
-        "title": "Biznesni masshtablash (kengaytirish)",
-        "description": "Yangi bozorlarga chiqish, ishlab chiqarish hajmini oshirish va infratuzilmaga investitsiya.",
+        "title": "Avtomatlashtirish va moliyaviy nazorat",
+        "description": "Biznesni raqamlar orqali masofadan boshqarish.",
         "points": [
-          "Yangi bozorlarga chiqish.",
-          "Ishlab chiqarish yoki xizmat ko'rsatish hajmini oshirish.",
-          "Uzoq muddatli o'sish strategiyasini ishlab chiqish.",
-          "Yangi texnologiyalar va infratuzilmaga investitsiyalar kiritish."
+          "ERP va CRM hisob tizimlarini to'liq integratsiya qilish.",
+          "Kunlik va haftalik moliyaviy hisobotlar tizimi.",
+          "O'g'rilik va yo'qotishlarni oldini oluvchi nazorat nuqtalari.",
+          "Rahbar uchun asosiy ko'rsatkichlar (Dashboard) paneli."
         ]
       },
       {
         "step": "06",
-        "title": "Barqaror rivojlanish",
-        "description": "Sifatni doimiy nazorat qilish, moliyaviy barqarorlik va xatarlarni boshqarish.",
+        "title": "Masshtablashtirish va xalqaro eksport",
+        "description": "Yangi bozorlarga chiqish va avtonom boshqaruv.",
         "points": [
-          "Mahsulot yoki xizmat va mijozlarga xizmat ko'rsatish sifatini doimiy yaxshilash.",
-          "Brendni rivojlantirish va bozordagi obro'sini mustahkamlash.",
-          "Moliyaviy barqarorlik monitoringi.",
-          "Xatarlarni boshqarish strategiyasini ishlab chiqish."
+          "Hududlarda yangi filiallar va savdo nuqtalarini ochish.",
+          "Mahsulotni eksport standartlariga tayyorlash va sertifikatlash.",
+          "Turkiya, Xitoy va Yevropa bozorlari bilan B2B aloqalar.",
+          "Kompaniya egasini kundalik operatsion jarayondan chiqarish."
         ]
       }
     ],
     "mentorship": [
       {
         "step": "01",
-        "title": "Individual tahlil va audit",
-        "description": "Kompaniyaning moliyaviy va boshqaruv tizimidagi mavjud to'siqlarni chuqur tahlil qilish.",
+        "title": "Saralash va salohiyatni aniqlash",
+        "description": "Shogirdning imkoniyatlari va yo'nalishini belgilash.",
         "points": [
-          "Kompaniyaning moliyaviy va boshqaruv hisobotlarini chuqur tekshirish.",
-          "Operatsion tizimdagi bo'shliqlar va samarasiz xarajatlarni aniqlash.",
-          "Rahbar va top-menejerlar vakolatlari auditi.",
-          "Kompaniyaning bozor ulushi va raqobatbardoshligini baholash."
+          "Joriy kapital, tajriba va qobiliyatni tahlil qilish.",
+          "Bozordagi bo'sh va daromadli nishalarni ko'rib chiqish.",
+          "Shaxsiy maqsadlar va 1 yillik rivojlanish rejasini tuzish.",
+          "Eng mos biznes yo'nalishini tanlash."
         ]
       },
       {
         "step": "02",
-        "title": "Strategik o'sish yo'l xaritasi",
-        "description": "Daromadni oshirish va kompaniyaning uzoq muddatli o'sish strategiyasini raqamlar bilan belgilash.",
+        "title": "Biznes-model va aniq hisob-kitob",
+        "description": "Xatolarni oldini olish uchun qat'iy reja.",
         "points": [
-          "Kompaniyaning 1-3 yillik aniq moliyaviy maqsadlarini belgilash.",
-          "Yangi daromad oqimlari va mahsulot yo'nalishlarini ishlab chiqish.",
-          "Bozor o'zgarishlariga moslashuvchan rejalashtirish.",
-          "Investitsion jozibadorlikni oshirish strategiyasi."
+          "Bozor hajmi va raqobatchilarni chuqur o'rganish.",
+          "Boshlang'ich investitsiya va xarajatlar smetasini tuzish.",
+          "Loyihaning o'zini oqlash muddati (ROI) va rentabellik hisobi.",
+          "Biznesdagi 7 ta asosiy xatodan himoya strategiyasi."
         ]
       },
       {
         "step": "03",
-        "title": "Tizimli boshqaruv va reglamentlar",
-        "description": "Jarayonlarni reglamentlash, lavozim yo'riqnomalari va operatsion boshqaruvni avtomatlashtirish.",
+        "title": "Real zavod va korxonalarda amaliyot",
+        "description": "Ichki oshxonani o'z ko'zi bilan ko'rish.",
         "points": [
-          "Kompaniya ichki biznes jarayonlarini xaritalash va standartlashtirish.",
-          "Har bir lavozim uchun aniq yo'riqnomalar va javobgarlik kartalarini joriy etish.",
-          "Operatsion boshqaruvni avtomatlashtirish vositalari (CRM, ERP, Task Manager).",
-          "Barcha bo'limlararo uzluksiz kommunikatsiyani yo'lga qo'yish."
+          "«Toy Bola» va boshqa zavodlarning ish jarayoni bilan tanishish.",
+          "Real ishlab chiqarish va omborxona tizimini o'rganish.",
+          "Top-menejerlar va bo'lim rahbarlari tajribasini o'zlashtirish.",
+          "Amaliy keyslar va muammolar yechimi ustida ishlash."
         ]
       },
       {
         "step": "04",
-        "title": "Sotuv va marketing kuchaytirish",
-        "description": "Sotuv voronkasini kuchaytirish, yangi mijozlar oqimi va takroriy savdolarni oshirish.",
+        "title": "Loyihani ishga tushirish va ilk sotuvlar",
+        "description": "Nazariyadan real amaliyotga o'tish.",
         "points": [
-          "Sotuv voronkasini tahlil qilish va konversiyani oshirish.",
-          "B2B va B2C mijozlar uchun kuchli noyob takliflar (NTT) yaratish.",
-          "Marketing kanallari samaradorligini (ROI, CAC, LTV) nazorat qilish.",
-          "Mijozlarni ushlab qolish va takroriy savdolarni oshirish mexanizmlari."
+          "Uskuna, xomashyo yoki tovar ta'minotini yo'lga qo'yish.",
+          "Dastlabki jamoani yollash va vazifalarni bo'lib berish.",
+          "Ilk B2B/B2C shartnomalarni tuzish va sotuvni boshlash.",
+          "Kassa va hisob-kitob intizomini birinchi kundan to'g'ri qurish."
         ]
       },
       {
         "step": "05",
-        "title": "Jamoa boshqaruvi va delegatsiyalash",
-        "description": "Xodimlarni boshqarish, KPI ko'rsatkichlari va rahbarni operativkadan to'liq ozod etish.",
+        "title": "Biznes klub va xalqaro networking",
+        "description": "Kuchli muhit va foydali aloqalar.",
         "points": [
-          "Kuchli motivatsiya va KPI (asosiy samaradorlik ko'rsatkichlari) tizimi.",
-          "Rahbarni 'operativka' (kundalik mayda ishlar)dan to'liq ozod etish.",
-          "Mustaqil qaror qabul qila oladigan top-menejment jamoasini shakllantirish.",
-          "Korporativ madaniyat va xodimlar sodiqligini mustahkamlash."
+          "UZBIC va muvaffaqiyatli tadbirkorlar hamjamiyatiga qo'shilish.",
+          "Xitoy, Turkiya va Yevropa biznes-turlarida ishtirok etish.",
+          "Yirik ishlab chiqaruvchilar va investorlar bilan tanishish.",
+          "Tajriba almashish va yangi hamkorliklar o'rnatish."
         ]
       },
       {
         "step": "06",
-        "title": "Masshtablash va yangi bozorlar",
-        "description": "Filiallar tarmog'ini yo'lga qo'yish, daromadni barqarorlashtirish va shaxsiy kapitalni mustahkamlash.",
+        "title": "Barqaror sof foyda va yangi bosqich",
+        "description": "Biznesni mustahkamlash va kengaytirish.",
         "points": [
-          "Filiallar tarmog'ini yoki franchayzing modelini yo'lga qo'yish.",
-          "Mintaqaviy va xalqaro bozorlarga chiqish rejasini amalga oshirish.",
-          "Kompaniya aktivlarini himoyalash va kapitallashuvni oshirish.",
-          "Uzoq muddatli barqaror dividendlar va biznes qiymatini o'stirish."
+          "Oylik sof foydani barqaror o'sish rejimiga olib chiqish.",
+          "Topilgan daromadni to'g'ri reinvestitsiya qilish.",
+          "Boshqaruvni tizimlashtirib, operatsion yuklamani kamaytirish.",
+          "Ikkinchi yo'nalish yoki eksport loyihasiga qadam qo'yish."
         ]
       }
     ]
@@ -277,41 +277,41 @@
     "b2bPartner": "B2B Hamkor"
   },
   "ctaBand": {
-    "kicker": "DIAGNOSTIK SAVOL",
+    "kicker": "STRATEGIK DIAGNOSTIKA",
     "titlePrefix": "Biznesingiz sizning doimiy ishtirokingizsiz ham ",
-    "titleHighlight": "tizimli ishlay oladimi?",
-    "title": "Biznesingiz sizning doimiy ishtirokingizsiz ham tizimli ishlay oladimi?",
-    "description": "Agar kompaniya egasi ta'tilga chiqqanda jarayonlar to'xtab qolsa — sizda biznes emas, yuqori mas'uliyatli ish joyi bor. Keling, buni 20 daqiqalik tahlilda o'zgartiramiz.",
+    "titleHighlight": "foyda keltira oladimi?",
+    "title": "Biznesingiz sizning doimiy ishtirokingizsiz ham foyda keltira oladimi?",
+    "description": "Agar zavod yoki do'koningizdan bir haftaga uzoqlashsangiz va savdo tushib ketsa — sizda tizim emas, og'ir ish joyi bor. Keling, 20 daqiqalik tahlilda buni tizimga solamiz.",
     "cta": "Bepul diagnostikaga yozilish",
     "startTest": "Bepul testni boshlash",
     "strategicAnalysis": "Strategik tahlil"
   },
   "expert": {
-    "kicker": "ASOSCHI VA BOSH STRATEG",
-    "name": "ILHOM BEGIMQULOV",
-    "experience": "10+ YILLIK AMALIY TAJRIBA",
-    "headlinePrefix": "Nazariyadan xoli, faqat ",
-    "headlineHighlight": "real raqamlar va tizimga",
-    "headlineSuffix": " asoslangan yondashuv.",
-    "quote": "Mening vazifam — tadbirkorga motivatsiya berish emas, balki uning kompaniyasida inson omiliga qaram bo'lmagan qat'iy boshqaruv arxitekturasini qurishdir.",
-    "bio1": "Ilhom Begimqulov — Markaziy Osiyodagi 100 dan ortiq kompaniyalarni operatsion xaosdan chiqarib, avtonom boshqaruv tizimiga o'tkazgan amaliyotchi biznes-konsultant.",
-    "bio2": "Ko'p yillik amaliy tajriba, yirik korporatsiyalar va B2B bizneslar auditi natijasida biznes egasini kundalik operativkadan ozod qiluvchi mualliflik metodologiyasini ishlab chiqqan.",
+    "kicker": "TA'SISCHI VA BOSH MENTOR",
+    "name": "ANVAR ABDUQAYUM",
+    "experience": "20+ YILLIK REAL ISHLAB CHIQARISH VA SAVDO TAJRIBASI",
+    "headlinePrefix": "Nazariyadan xoli, ",
+    "headlineHighlight": "zavod va bozorlarda toblangan",
+    "headlineSuffix": " haqiqiy tajriba.",
+    "quote": "Biznesda muvaffaqiyat siri — o'z ishingizning haqiqiy «kasali» bo'lish, halollikdan chekinmaslik va har bir tiyinni tizimli nazorat qilishdadir.",
+    "bio1": "O'zbekistondagi yirik «Toy Bola» o'yinchoqlar ishlab chiqarish korxonasi va savdo tarmog'i, polietilen qadoqlash zavodlari hamda «Afiyet», «Puro» restoranlari asoschisi.",
+    "bio2": "UZBIC tadbirkorlar hamjamiyati tashabbuskori. Turkiya, Xitoy va Yevropa davlatlari bilan eksport-import amaliyotini yo'lga qo'yib, minglab tadbirkorlarga amaliy ustozlik qilib kelmoqda.",
     "pillar1Tag": "PRINSIP / 01",
-    "pillar1Title": "Tizimlilik",
-    "pillar1Desc": "Tartibsiz jarayonlarni aniq reglament va algoritmlarga solish.",
+    "pillar1Title": "Qat'iy mehnat va intizom",
+    "pillar1Desc": "Ishga 100% berilish va jamoa ichida temir intizomni shakllantirish.",
     "pillar2Tag": "PRINSIP / 02",
-    "pillar2Title": "Qat'iy intizom",
-    "pillar2Desc": "Jamoa ichida mas'uliyat va nazorat nuqtalarini uzluksiz ta'minlash.",
+    "pillar2Title": "Halollik va ishonch",
+    "pillar2Desc": "Hamkorlar, mijozlar va jamiyat oldida shaffof ishlab, uzoq muddatli reputatsiya qurish.",
     "pillar3Tag": "PRINSIP / 03",
-    "pillar3Title": "Sof natijadorlik",
-    "pillar3Desc": "Har bir o'zgarishni sof foyda va egasining bo'shagan vaqti bilan o'lchash.",
-    "certificatesHint": "XALQARO SERTIFIKATLAR VA LITSENZIYALAR (Kattalashtirish uchun bosing)"
+    "pillar3Title": "Ishlab chiqarish va Eksport",
+    "pillar3Desc": "Faqat olib-sotarlik bilan cheklanmay, qo'shimcha qiymat yaratish va xalqaro bozorga chiqish.",
+    "certificatesHint": "DAVLAT VA XALQARO DARAJADAGI E'TIROFLAR (Kattalashtirish uchun bosing)"
   },
   "testimonials": {
     "kicker": "REAL NATIJALAR VA KEYSLAR",
-    "titlePrefix": "Tizimlashtirishdan so'ng o'zgargan ",
-    "titleHighlight": "bizneslar tarixi.",
-    "title": "Tizimlashtirishdan so'ng o'zgargan bizneslar tarixi.",
+    "titlePrefix": "Ishlab chiqarish va savdoda erishilgan ",
+    "titleHighlight": "haqiqiy natijalar.",
+    "title": "Ishlab chiqarish va savdoda erishilgan haqiqiy natijalar.",
     "tagKey": "KEYS",
     "tagFormat": "VIDEO TAHLIL",
     "playTrigger": "▶ KO'RISH"
@@ -319,55 +319,55 @@
   "book": {
     "kicker": "AMALIY QO'LLANMA VA KITOB",
     "pedestalLeft": "MUALLIFLIK NASHRI",
-    "pedestalRight": "BIZNES SHPARGALKASI",
-    "titlePrefix": "«Biznes shpargalkasi» — tadbirkorning ",
+    "pedestalRight": "AMALIY TAJRIBA",
+    "titlePrefix": "«Tadbirkorlikning yozilmagan qonunlari» — ",
     "titleHighlight": "stolusti kitobi.",
-    "title": "«Biznes shpargalkasi» kitobi",
-    "bookTitle": "«Biznes shpargalkasi» kitobi",
+    "title": "«Tadbirkorlikning yozilmagan qonunlari» kitobi",
+    "bookTitle": "«Tadbirkorlikning yozilmagan qonunlari» kitobi",
     "sectionAria": "Kitob va strategik tahlil",
     "strategicAnalysisCta": "Strategik tahlil",
-    "description": "Yillar davomida 100 dan ortiq kompaniyalarni tizimlashtirish jarayonida sinalgan tayyor shablonlar, moliyaviy jadvallar va boshqaruv algoritmlari jamlanmasi. Suvsiz, faqat amaliyot.",
+    "description": "Kichik savdodan yirik zavodlargacha bo'lgan yo'lda olingan real saboqlar, biznesda bankrot bo'lmaslik qoidalari hamda moliyaviy nazorat chek-listlari.",
     "spec1Label": "01 / FORMAT",
-    "spec1Value": "Bosma nashr + Audio-kitob versiyasi",
+    "spec1Value": "Bosma nashr + Maxsus video-darslar",
     "spec2Label": "02 / MAZMUN",
-    "spec2Value": "Real keyslar, reglamentlar va KPI shablonlari",
+    "spec2Value": "Real keyslar, 7 ta xato tahlili va boshqaruv jadvallari",
     "spec3Label": "03 / AUDITORIYA",
-    "spec3Value": "Kichik va o'rta biznes egalari hamda top-menejerlar",
+    "spec3Value": "Yangi boshlovchilar, ishlab chiqaruvchilar va biznes egalari",
     "cta": "Kitobga buyurtma berish"
   },
   "webinars": {
     "kicker": "OCHIQ BILIMLAR BAZASI",
     "titlePrefix": "Bepul master-klasslar va ",
-    "titleHighlight": "tahliliy darslar.",
-    "title": "Bepul master-klasslar va tahliliy darslar.",
+    "titleHighlight": "amaliy biznes darslar.",
+    "title": "Bepul master-klasslar va amaliy biznes darslar.",
     "lessonTag": "DARS",
     "openLesson": "OCHIQ DARS",
     "watchTrigger": "TOMOSHA QILISH →"
   },
   "diplomas": {
-    "kicker": "XALQARO EʼTIROF",
-    "titlePrefix": "Ekspertiza va xalqaro ",
-    "titleHighlight": "sertifikatlar.",
-    "title": "Ekspertiza va xalqaro sertifikatlar.",
-    "description": "Yetakchi xalqaro biznes maktablari va konsalting institutlari tomonidan berilgan professional sertifikatlar va litsenziyalar.",
+    "kicker": "DAVLAT VA XALQARO E'TIROF",
+    "titlePrefix": "Tajriba, fidoyilik va ",
+    "titleHighlight": "davlat e'tirofi.",
+    "title": "Tajriba, fidoyilik va davlat e'tirofi.",
+    "description": "O'zbekiston Respublikasi Prezidenti Farmoni, Sanoat uyushmalari va xalqaro biznes tashkilotlari tomonidan berilgan e'tiroflar.",
     "zoomHint": "KATTALASHTIRISH ↗",
-    "badgeLabel": "XALQARO LITSENZIYA"
+    "badgeLabel": "RASMIY E'TIROF"
   },
   "contact": {
     "kicker": "TO'G'RIDAN-TO'G'RI ALOQA",
-    "titlePrefix": "Kompaniyangiz taqdirini muhokama ",
-    "titleHighlight": "qilamiz.",
-    "title": "Kompaniyangiz taqdirini muhokama qilamiz.",
-    "description": "Toshkent shahridagi ofisimga tashrif buyuring yoki quyidagi aloqa kanallari orqali to'g'ridan-to'g'ri bog'laning.",
+    "titlePrefix": "Kompaniyangiz rivojini birga ",
+    "titleHighlight": "muhokama qilamiz.",
+    "title": "Kompaniyangiz rivojini birga muhokama qilamiz.",
+    "description": "Toshkent shahridagi bosh ofisimizga tashrif buyuring yoki quyidagi aloqa kanallari orqali to'g'ridan-to'g'ri bog'laning.",
     "descriptionDirect": "Quyidagi aloqa kanallari orqali shaxsan bog'laning.",
     "phoneLabel": "TELEFON RAQAMI",
     "phoneValue": "+998 55 503 61 00",
     "telegramChannelLabel": "Telegram kanal",
-    "telegramChannelBadge": "yangiliklar uchun",
+    "telegramChannelBadge": "tahlillar va yangiliklar",
     "telegramDirectLabel": "Telegramda yozish",
-    "telegramDirectBadge": "to'g'ridan-to'g'ri",
+    "telegramDirectBadge": "murojaat va qabul",
     "addressLabel": "MANZIL",
-    "addressValue": "Toshkent shahri, O'zbekiston",
+    "addressValue": "Toshkent shahri, Bosh ofis va «Toy Bola» biznes majmuasi",
     "formTitle": "Tezkor murojaat yuborish",
     "formSubtitle": "Ma'lumotlaringiz 100% maxfiy saqlanadi va 15 daqiqada aloqaga chiqamiz.",
     "formSubmit": "Ariza yuborish →",
@@ -376,7 +376,7 @@
     "namePlaceholder": "To'liq ismingizni kiriting",
     "phoneInputLabel": "TELEFON RAQAMI",
     "businessInputLabel": "BIZNES SOHASI VA SAVOLINGIZ",
-    "businessInputPlaceholder": "Kompaniyangiz faoliyat sohasi yoki sizni qiynayotgan savol...",
+    "businessInputPlaceholder": "Korxonangiz faoliyat sohasi yoki sizni qiynayotgan masala...",
     "hoursLabel": "Ish vaqti",
     "hoursValue": "Dushanba - Shanba: 09:00 - 18:00",
     "retry": "Qayta urinish",
@@ -403,11 +403,11 @@
     "businessPlaceholder": "Ha, bor / Yo'q",
     "yes": "Ha",
     "no": "Yo'q",
-    "businessDetailPlaceholder": "Biznes sohasi yoki kompaniya nomi (ixtiyoriy)...",
-    "questionLabel": "Biznesingizdagi qaysi muammo qiynayapdi?",
-    "questionPlaceholder": "Muammongizni batafsil yozing...",
+    "businessDetailPlaceholder": "Faoliyat sohasi yoki korxona nomi...",
+    "questionLabel": "Biznesingizdagi qaysi masala qiynayapti?",
+    "questionPlaceholder": "Ishlab chiqarish, savdo, kadrlar yoki moliyaviy muammoni yozing...",
     "badgeBook": "KITOB BUYURTMA QILISH",
-    "bookTitle": "“Biznes shpargalkasi” kitobi",
+    "bookTitle": "«Tadbirkorlikning yozilmagan qonunlari» kitobi",
     "bookSubtitle": "Kitobni yetkazib berish uchun ma'lumotlaringizni to'ldiring, tez orada operator siz bilan bog'lanadi.",
     "addressLabel": "Yetkazib berish manzili",
     "addressPlaceholder": "Shahar, tuman, ko'cha, xonadon...",
@@ -421,18 +421,18 @@
     "submitting": "Yuborilmoqda...",
     "successMessage": "Yuborildi! Ma'lumotlaringiz qabul qilindi. Tez orada siz bilan bog'lanamiz!",
     "errorMessage": "Xatolik yuz berdi. Iltimos, ma'lumotlarni tekshirib qaytadan urinib ko'ring.",
-    "companyScaleLabel": "KOMPANIYA KO'LAMI (XODIMLAR SONI)",
-    "scale1Sub": "Kichik biznes",
-    "scale2Sub": "O'rta biznes",
-    "scale3Sub": "Yirik korporatsiya",
-    "scale4Sub": "Yangi loyiha",
+    "companyScaleLabel": "KORXONA KO'LAMI (XODIMLAR SONI)",
+    "scale1Sub": "Kichik biznes (1-10 xodim)",
+    "scale2Sub": "O'rta biznes (11-50 xodim)",
+    "scale3Sub": "Yirik korxona (50-200 xodim)",
+    "scale4Sub": "Yangi loyiha / Startap",
     "thankYouBadge": "● ARIZA RO'YXATGA OLINDI · #VIP-USTUVORLIK",
     "thankYouTitle": "Murojaatingiz qabul qilindi.",
-    "thankYouBody": "Sizning ma'lumotlaringiz Ilhom Begimqulovning strategik bo'limiga yuborildi. Ekspertimiz 15 daqiqa ichida (ish vaqtida) siz bilan bog'lanib, 20 daqiqalik diagnostika vaqtini belgilaydi.",
+    "thankYouBody": "Sizning ma'lumotlaringiz Anvar Abduqayumning qabul bo'limiga yuborildi. Ekspertimiz 15 daqiqa ichida (ish vaqtida) siz bilan bog'lanib, 20 daqiqalik diagnostika vaqtini belgilaydi.",
     "timelineStep1Prefix": "01 / HOZIR:",
-    "timelineStep1Text": "Arizangiz mas'ul menejerga biriktirildi",
+    "timelineStep1Text": "Arizangiz mas'ul mutaxassisga biriktirildi",
     "timelineStep2Prefix": "02 / 15 DAQIQA:",
-    "timelineStep2Text": "Qisqa qo'ng'iroq va biznesingizni dastlabki o'rganish",
+    "timelineStep2Text": "Qisqa qo'ng'iroq va korxonangizni dastlabki o'rganish",
     "timelineStep3Prefix": "03 / UCHRASHUV:",
     "timelineStep3Text": "Shaxsiy strategik diagnostika sessiyasi",
     "actionTelegram": "Telegram kanalga o'tish",
@@ -444,7 +444,7 @@
     "kicker": "KO'P BERILADIGAN SAVOLLAR",
     "headline": "Ko'p beriladigan savollar",
     "headlineUz": "Ko'p beriladigan savollar",
-    "lede": "Ilhom Begimqulovning konsalting xizmatlari, biznesni tizimlashtirish, shogirdlik dasturi va hamkorlik shartlari haqidagi eng muhim savollarga javoblar.",
+    "lede": "Anvar Abduqayumning ishlab chiqarish, biznesni tizimlashtirish, shogirdlik dasturi va hamkorlik shartlari haqidagi eng muhim savollarga javoblar.",
     "communityBtn": "Bepul diagnostikaga yozilish",
     "searchPlaceholder": "Savollar bo'yicha qidirish...",
     "searchLabel": "Savollar qidiruvi",
@@ -453,19 +453,19 @@
     "allCategories": "Barchasi",
     "categories": {
       "systematization": {
-        "title": "Biznesni tizimlashtirish",
+        "title": "Ishlab chiqarish va Tizimlashtirish",
         "count": "14 ta javob"
       },
       "consulting": {
-        "title": "Strategik konsalting",
+        "title": "Eksport va Strategiya",
         "count": "18 ta javob"
       },
       "mentorship": {
-        "title": "Ustozga shogirdlik",
+        "title": "Ustoz-shogirdlik va Mentorlik",
         "count": "12 ta javob"
       },
       "guarantees": {
-        "title": "Natijalar va kafolatlar",
+        "title": "Natijalar va Amaliy kafolat",
         "count": "16 ta javob"
       }
     },
@@ -473,50 +473,50 @@
       {
         "id": "q1",
         "category": "systematization",
-        "question": "Biznesni tizimlashtirish jarayoni qanday kechadi va u qancha vaqt oladi?",
-        "answer": "Tizimlashtirish jarayoni kompaniyaning ko'lami va joriy holatiga qarab 1 oydan 3 oygacha davom etadi. Dastlab kompaniyadagi barcha jarayonlar (sotuv, moliya, HR, operatsiyalar) chuqur audit qilinadi. So'ngra har bir lavozim uchun aniq reglamentlar, KPI ko'rsatkichlari, boshqaruv iyerarxiyasi va avtomatlashtirilgan hisobot tizimi joriy etiladi."
+        "question": "Korxonani tizimlashtirish va ishlab chiqarishni yo'lga qo'yish qancha vaqt oladi?",
+        "answer": "Korxonaning ko'lami va sohasiga qarab jarayon 1 oydan 3 oygacha davom etadi. Dastlab kassa, omborxona, xomashyo va xodimlar auditi o'tkaziladi. So'ngra har bir liniya va lavozim uchun qat'iy reglamentlar, KPI ko'rsatkichlari hamda moliyaviy nazorat tizimi o'rnatiladi."
       },
       {
         "id": "q2",
         "category": "systematization",
-        "question": "Kompaniya rahbari tizimlashtirishdan keyin biznesdan butunlay chiqib keta oladimi?",
-        "answer": "Ha, tizimlashtirishning bosh maqsadi — kompaniyani avtonom va egasining kundalik aralashuvisiz barqaror ishlaydigan qilishdir. Rahbar operatsion mayda-chuyda ishlardan chiqib, o'z e'tiborini faqat strategik rivojlanish, yangi bozorlarni egallash va yuqori darajadagi investitsiyalarga qarata oladi."
+        "question": "Rahbar ishlab chiqarishdan yoki do'konlar tarmog'idan chiqib, biznesni masofadan boshqara oladimi?",
+        "answer": "Ha, tizimli boshqaruvning asosiy maqsadi — biznesni egasining har kungi aralashuvisiz mustaqil ishlaydigan qilishdir. Raqamlashtirish, ERP hisobotlar va ishonchli boshqaruvchilar orqali rahbar operativkadan chiqib, e'tiborini strategik kengayish va yangi investitsiyalarga qarata oladi."
       },
       {
         "id": "q3",
         "category": "consulting",
-        "question": "Konsalting xizmati qaysi sohadagi bizneslar uchun mos keladi?",
-        "answer": "Ilhom Begimqulov metodologiyasi universal tizimli boshqaruv qonuniyatlariga tayanadi: ishlab chiqarish, yirik ulgurji va chakana savdo, xizmat ko'rsatish, logistika va qurilish sohalari. 27 dan ortiq yirik brendlar (Texno Dunyosi, Ata Plast, Nik Rattan va boshqalar) bilan amalga oshirilgan keyslar buning amaliy isbotidir."
+        "question": "Konsalting xizmati qaysi sohalar uchun eng mos keladi?",
+        "answer": "Anvar Abduqayum metodologiyasi real ishlab chiqarish zavodlari, yirik ulgurji va chakana savdo tarmoqlari, xalqaro eksport-import, logistika va umumiy ovqatlanish («Afiyet», «Puro» va «Toy Bola» amaliy tajribasi) sohalariga tayanadi."
       },
       {
         "id": "q4",
         "category": "consulting",
-        "question": "Dastlabki diagnostika sessiyasi nima va u qanday o'tkaziladi?",
-        "answer": "20 daqiqalik individual diagnostika sessiyasi bepul o'tkaziladi. Unda ekspertimiz biznesingizning joriy 'og'riqli nuqtalari', operatsion teshiklari va moliyaviy yo'qotishlarini tahlil qiladi hamda aynan sizning bosqichingiz uchun eng tez natija beruvchi qadamlar xaritasini tuzib beradi."
+        "question": "20 daqiqalik bepul diagnostika sessiyasi qanday o'tadi?",
+        "answer": "Ushbu qisqa strategik sessiyada korxonangizdagi savdo, xomashyo tannarxi yoki kadrlar bo'yicha asosiy to'siqlar aniqlanadi hamda eng tez foyda keltiruvchi aniq qadamlar belgilab beriladi."
       },
       {
         "id": "q5",
         "category": "mentorship",
-        "question": "'Ustozga shogird tushish' dasturi qanday formatda o'tadi va kimlar qabul qilinadi?",
-        "answer": "Bu Ilhom Begimqulov bilan shaxsiy yakkama-yakka yoki yopiq eksklyuziv guruhda amalga oshiriladigan mentorlik dasturidir. Unga faqat saralashdan o'tgan, o'z biznesini bir necha barobar masshtablashtirishga tayyor bo'lgan mas'uliyatli tadbirkorlar qabul qilinadi."
+        "question": "«Ustozga shogird tushish» dasturiga kimlar qabul qilinadi?",
+        "answer": "Bu Anvar Abduqayum bilan yakkama-yakka yoki yopiq guruhda o'tadigan amaliy mentorlikdir. Unga o'z korxonasini masshtablashtirishga tayyor, halol va qat'iy intizom bilan ishlashga ahd qilgan tadbirkorlar saralash asosida qabul qilinadi."
       },
       {
         "id": "q6",
         "category": "mentorship",
-        "question": "Shogirdlik jarayonida qanday ko'nikmalar va tayyor resurslar beriladi?",
-        "answer": "Shogirdlar Ilhom Begimqulovning 10+ yillik amaliy boshqaruv andozalari, moliyaviy jadvallari, yopiq biznes klubiga a'zolik, investorlar bilan uchrashuvlar hamda xalqaro biznes-turlarda bevosita birgalikda ishtirok etish imkoniyatiga ega bo'ladilar."
+        "question": "Shogirdlik jarayonida qanday amaliy resurslar beriladi?",
+        "answer": "Shogirdlar «Toy Bola» zavodlari va restoranlarining ichki oshxonasi, Xitoy va Turkiyadan uskuna keltirish tajribasi, UZBIC biznes klubi a'zoligi hamda xalqaro biznes-turlarda bevosita ishtirok etish imkoniyatiga ega bo'ladilar."
       },
       {
         "id": "q7",
         "category": "guarantees",
-        "question": "Konsalting natijasi qanday o'lchanadi va qanday kafolatlar beriladi?",
-        "answer": "Barcha bosqichlar va natijalar shartnomada aniq KPI ko'rsatkichlari bilan belgilanadi: operatsion xarajatlarni qisqartirish, rahbarning operatsion bandligini 70% gacha kamaytirish, xodimlar samaradorligini oshirish va sof foydani barqarorlashtirish. Biz faqat o'lchana oladigan amaliy natija uchun ishlaymiz."
+        "question": "Hamkorlik natijasi qanday o'lchanadi va qanday kafolatlar bor?",
+        "answer": "Barcha maqsadlar aniq iqtisodiy ko'rsatkichlar bilan o'lchanadi: tannarxni pasaytirish, sotuv hajmini oshirish, o'g'rilik va isroflarga barham berish hamda sof foydani o'stirish. Biz faqat real korxonalarda sinovdan o'tgan amaliy metodlar bilan ishlaymiz."
       },
       {
         "id": "q8",
         "category": "guarantees",
-        "question": "Tizimlashtirish davrida jamoa qarshilik ko'rsatsa nima qilinadi?",
-        "answer": "Har qanday o'zgarishga jamoada tabiiy qarshilik bo'lishi mumkin. Metodologiyamiz xodimlarni to'g'ri motivatsiyalash, ularning mas'uliyatini shaffof KPI va bonuslar orqali rag'batlantirish hamda jamoani boshqaruv jarayoniga bosqichma-bosqich, silliq adaptatsiya qilish vositalarini o'z ichiga oladi."
+        "question": "O'zgarishlar kiritilayotganda xodimlarda qarshilik bo'lsa nima qilinadi?",
+        "answer": "20 yillik tajribamizda har qanday jamoada o'zgarishlarga tabiiy qarshilik bo'lishini ko'rganmiz. Metodologiyamiz shaffof KPI, xodimlarni natijaga qiziqtirish va qat'iy nazorat filtrlari orqali jamoani yangi intizomga bosqichma-bosqich o'rgatishni ta'minlaydi."
       }
     ],
     "bottomCard": {
@@ -540,31 +540,31 @@
     "webinarsListAria": "Vebinarlar ro'yxati",
     "eventsListAria": "Tadbirlar ro'yxati",
     "countryUzbekistan": "O'zbekiston",
-    "countryKazakhstan": "Qozog'iston",
-    "countryKyrgyzstan": "Qirg'iziston",
-    "countryTajikistan": "Tojikiston",
+    "countryKazakhstan": "Turkiya",
+    "countryKyrgyzstan": "Xitoy",
+    "countryTajikistan": "Portugaliya",
     "cityTashkent": "Toshkent",
     "citySamarkand": "Samarqand",
     "cityFergana": "Farg'ona",
-    "cityShymkent": "Shymkent",
-    "cityOsh": "Osh",
-    "cityKhujand": "Xo'jand",
+    "cityShymkent": "Istanbul",
+    "cityOsh": "Guanchjou",
+    "cityKhujand": "Lissabon",
     "businessTourSuffix": "dagi biznes-tur"
   },
   "footer": {
-    "brand": "ILHOM BEGIMQULOV",
-    "location": "Toshkent shahri, Furkat ko'chasi 18",
+    "brand": "ANVAR ABDUQAYUM",
+    "location": "Toshkent shahri, Bosh ofis va «Toy Bola» biznes majmuasi",
     "phone": "+998 55 503 61 00",
     "rights": "© 2026. Barcha huquqlar himoyalangan.",
     "backToTop": "Yuqoriga qaytish"
   },
   "quiz": {
     "badge": "EKSPRESS DIAGNOSTIKA",
-    "metaTitle": "Biznes diagnostika testi | Ilhom Begimqulov",
+    "metaTitle": "Biznes diagnostika testi | Anvar Abduqayum",
     "metaDescription": "Biznesingiz egasisiz ishlay oladimi? 10 ta savol orqali operatsion boshqaruv tizimingizni 2 daqiqada tahlil qiling va darhol natija oling.",
     "introTitle": "Biznesingiz egasisiz ishlay oladimi?",
     "introSubtitle": "10 ta savol, 2 daqiqa, natija darhol.",
-    "introDescription": "Kompaniyangiz boshqaruv tizimi, xodimlar javobgarligi va operatsion mustaqilligini 10 ta mezon bo'yicha mustaqil baholang.",
+    "introDescription": "Korxonangiz boshqaruv tizimi, xodimlar javobgarligi va operatsion mustaqilligini 10 ta mezon bo'yicha mustaqil baholang.",
     "startAction": "Testni boshlash",
     "backAction": "Orqaga",
     "questionOf": "{current} / {total}",
@@ -604,7 +604,7 @@
     "errorTitle": "Kalendar yuklanmadi",
     "errorDesc": "Kalendar yuklanmadi. Telegram orqali yozib vaqtni kelishib olishingiz mumkin.",
     "errorTelegramCta": "Telegram orqali yozish",
-    "metaTitle": "Bepul diagnostika uchun vaqtni tanlang | Ilhom Begimqulov",
+    "metaTitle": "Bepul diagnostika uchun vaqtni tanlang | Anvar Abduqayum",
     "metaDescription": "Biznesingizning og'riqli nuqtalarini tahlil qilamiz va qaysi yo'nalish eng tez natija berishini aniqlaymiz. Vaqtni tanlang, qolganini biz hal qilamiz."
   }
 }

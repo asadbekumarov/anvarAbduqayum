@@ -1,0 +1,117 @@
+{
+  "screenshots": [
+    {
+      "viewport": "desktop-1440",
+      "width": 1440,
+      "status": 200,
+      "hasOverflow": false,
+      "path": "D:\\projects\\anvarAbduqayum\\screenshots\\phase2-prod-desktop-1440-hero.png"
+    },
+    {
+      "viewport": "tablet-768",
+      "width": 768,
+      "status": 200,
+      "hasOverflow": false,
+      "path": "D:\\projects\\anvarAbduqayum\\screenshots\\phase2-prod-tablet-768-hero.png"
+    },
+    {
+      "viewport": "mobile-390",
+      "width": 390,
+      "status": 200,
+      "hasOverflow": false,
+      "path": "D:\\projects\\anvarAbduqayum\\screenshots\\phase2-prod-mobile-390-hero.png"
+    },
+    {
+      "viewport": "mobile-360",
+      "width": 360,
+      "status": 200,
+      "hasOverflow": false,
+      "path": "D:\\projects\\anvarAbduqayum\\screenshots\\phase2-prod-mobile-360-hero.png"
+    }
+  ],
+  "navigation": {
+    "desktopLinks": [
+      {
+        "text": "01 BIZNES EKOTIZIMI",
+        "href": "#portfel"
+      },
+      {
+        "text": "02 BOSIB O'TILGAN YO'L",
+        "href": "#yol"
+      },
+      {
+        "text": "03 QOLIP TAMOYILI",
+        "href": "#tamoyil"
+      },
+      {
+        "text": "04 MEDIA & OAV",
+        "href": "#media"
+      },
+      {
+        "text": "05 ALOQA",
+        "href": "#aloqa"
+      }
+    ],
+    "mobileMenuOpenWorking": true,
+    "escapeKeyWorking": true,
+    "keyboardFocusWorking": true
+  },
+  "ctas": {
+    "primaryBookingRoute": {
+      "url": "http://localhost:3011/",
+      "success": false,
+      "headline": "20 daqiqalik bepul diagnostika"
+    },
+    "secondaryServicesAnchor": "#portfel"
+  },
+  "i18n": {
+    "uz": {
+      "homeStatus": 200,
+      "bronStatus": 200,
+      "title": "Anvar Abduqayum | Sanoatchi, Ishlab Chiqaruvchi va Asoschi",
+      "heroHeadline": "Egasisiz ishlaydigan tizimlar va sanoat darajasidagi boshqaruv.",
+      "navCta": "UCHRASHUV BRON QILISH →"
+    },
+    "ru": {
+      "homeStatus": 200,
+      "bronStatus": 200,
+      "title": "Анвар Абдукаюм | Промышленник, Производитель и Основатель",
+      "heroHeadline": "Работающие без владельца системы и промышленное управление.",
+      "navCta": "ЗАБРОНИРОВАТЬ ВСТРЕЧУ →"
+    },
+    "en": {
+      "homeStatus": 200,
+      "bronStatus": 200,
+      "title": "Anvar Abduqayum | Industrialist, Manufacturer & Founder",
+      "heroHeadline": "Owner-independent systems and industrial-grade management.",
+      "navCta": "BOOK A CONSULTATION →"
+    }
+  },
+  "a11y": {
+    "imagesWithoutAlt": 0,
+    "buttonsWithoutLabel": 0,
+    "linksWithoutLabel": 0
+  },
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
+    "Failed to load resource: the server responded with a status of 404 ()"
+  ]
+}
