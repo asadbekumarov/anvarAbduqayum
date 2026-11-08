@@ -1,0 +1,69 @@
+{
+  "fileUrl": "file:///D:/projects/anvarAbduqayum/public/hallmark-exploration/concept-3-final.html",
+  "consoleErrors": [],
+  "networkErrors": [],
+  "overflowResults": {
+    "320": {
+      "hasOverflow": false,
+      "scrollWidth": 320
+    },
+    "360": {
+      "hasOverflow": false,
+      "scrollWidth": 360
+    },
+    "390": {
+      "hasOverflow": false,
+      "scrollWidth": 390
+    },
+    "768": {
+      "hasOverflow": false,
+      "scrollWidth": 768
+    },
+    "1024": {
+      "hasOverflow": false,
+      "scrollWidth": 1024
+    },
+    "1440": {
+      "hasOverflow": false,
+      "scrollWidth": 1440
+    }
+  },
+  "imagesStatus": [
+    {
+      "src": "file:///D:/projects/anvarAbduqayum/public/images/hero/portrait.webp",
+      "complete": true,
+      "naturalWidth": 900,
+      "ok": true
+    },
+    {
+      "src": "file:///D:/projects/anvarAbduqayum/public/images/partners/toy_bola.webp",
+      "complete": true,
+      "naturalWidth": 280,
+      "ok": true
+    },
+    {
+      "src": "file:///D:/projects/anvarAbduqayum/public/images/partners/afiyet.webp",
+      "complete": true,
+      "naturalWidth": 280,
+      "ok": true
+    },
+    {
+      "src": "file:///D:/projects/anvarAbduqayum/public/images/partners/puro.webp",
+      "complete": true,
+      "naturalWidth": 280,
+      "ok": true
+    },
+    {
+      "src": "file:///D:/projects/anvarAbduqayum/public/images/partners/uzbic.webp",
+      "complete": true,
+      "naturalWidth": 280,
+      "ok": true
+    },
+    {
+      "src": "https://img.youtube.com/vi/J2X5mJ3HDYE/hqdefault.jpg",
+      "complete": false,
+      "naturalWidth": 0,
+      "ok": false
+    }
+  ]
+}
