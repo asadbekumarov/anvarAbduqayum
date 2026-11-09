@@ -1,0 +1,57 @@
+{
+  "timestamp": "2026-11-09T07:15:45.611Z",
+  "overflowResults": {
+    "320": {
+      "hasOverflow": false,
+      "scrollWidth": 320,
+      "innerWidth": 320
+    },
+    "360": {
+      "hasOverflow": false,
+      "scrollWidth": 360,
+      "innerWidth": 360
+    },
+    "390": {
+      "hasOverflow": false,
+      "scrollWidth": 390,
+      "innerWidth": 390
+    },
+    "768": {
+      "hasOverflow": false,
+      "scrollWidth": 768,
+      "innerWidth": 768
+    },
+    "1024": {
+      "hasOverflow": false,
+      "scrollWidth": 1024,
+      "innerWidth": 1024
+    },
+    "1440": {
+      "hasOverflow": false,
+      "scrollWidth": 1440,
+      "innerWidth": 1440
+    }
+  },
+  "consoleErrors": [],
+  "networkErrors": [],
+  "languageSwitching": {
+    "target": "ru",
+    "resultUrl": "http://localhost:3015/ru",
+    "ok": true
+  },
+  "bookingCtaRouting": {
+    "target": "/uz/bron",
+    "resultUrl": "http://localhost:3015/uz/bron",
+    "ok": true
+  },
+  "portraitPixelStats": {
+    "objectFit": "cover",
+    "objectPosition": "50% 12%",
+    "transform": "matrix(1.24, 0, 0, 1.24, 0, -14.88)",
+    "filter": "contrast(1.04) brightness(0.97)",
+    "rect": {
+      "width": 414.40625,
+      "height": 518
+    }
+  }
+}

@@ -50,6 +50,7 @@ export interface LocaleContent {
     }>;
     portraitRole?: string;
     portraitBadge?: string;
+    portraitNote?: string;
     brands?: string[];
   };
   dossier: {
@@ -313,24 +314,25 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
         tolerance: "MDH & XALQARO",
         standard: "2005-YILDAN TAJRIBA",
       },
-      kickerBadge: "Sanoat • Amaliyot • Boshqaruv",
-      kickerText: "Toshkent • 20+ yillik tajriba",
+      kickerBadge: "MONOGRAF // SANOAT VA TIZIMLI BOSHQARUV",
+      kickerText: "Toshkent • 2026",
       verifiedMetrics: [
         {
-          value: "2005-yildan",
-          label: "Ishlab chiqarish va tadbirkorlik amaliyoti",
+          value: "2004-yildan",
+          label: "Tijorat va xalqaro savdo amaliyoti",
         },
         {
-          value: "Ko'p tarmoqli",
-          label: "Sanoat, polimer, elektrotexnika va HoReCa korxonalari",
+          value: "2012-yildan",
+          label: "Toybola fabrikasi tashkil etilishi",
         },
         {
-          value: "Xalqaro bozorlar",
-          label: "MDH va xorijiy davlatlarga muntazam eksport",
+          value: "7 tizim",
+          label: "Sanoat, polimer, HoReCa va IT tashabbusi",
         },
       ],
-      portraitRole: "Tadbirkor va muhandis",
-      portraitBadge: "Vaqtinchalik rasm asseti",
+      portraitRole: "Sanoatchi, Muhandis-Tadbirkor",
+      portraitBadge: "ARXIV ASSETI // VAQTINCHALIK FOTO",
+      portraitNote: "[Arxiv fotosurati // Vaqtinchalik vizual asset • Kelgusida tasdiqlangan professional fotosessiya bilan almashtiriladi]",
       brands: [
         "TOYBOLA TOYS",
         "SAMTECH MASTERBATCHES",
@@ -1023,24 +1025,25 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
         tolerance: "СНГ И МИР",
         standard: "ОПЫТ С 2005 ГОДА",
       },
-      kickerBadge: "Промышленность • Практика • Управление",
-      kickerText: "Ташкент • 20+ лет опыта",
+      kickerBadge: "МОНОГРАФИЯ // ПРОМЫШЛЕННОСТЬ И УПРАВЛЕНИЕ",
+      kickerText: "Ташкент • 2026",
       verifiedMetrics: [
         {
-          value: "С 2005 года",
-          label: "Практический опыт в производстве и бизнесе",
+          value: "С 2004 года",
+          label: "Торговая и международная практика",
         },
         {
-          value: "Многоотраслевой",
-          label: "Предприятия в промышленности, полимерах и HoReCa",
+          value: "С 2012 года",
+          label: "Создание фабрики Toybola",
         },
         {
-          value: "Международные рынки",
-          label: "Регулярный экспорт в страны СНГ и зарубежья",
+          value: "7 систем",
+          label: "Промышленность, полимеры, HoReCa и IT-инициатива",
         },
       ],
-      portraitRole: "Предприниматель и инженер",
-      portraitBadge: "Временный ассет фото",
+      portraitRole: "Промышленник, Инженер-Предприниматель",
+      portraitBadge: "АРХИВНЫЙ АССЕТ // ВРЕМЕННОЕ ФОТО",
+      portraitNote: "[Архивная фотография // Временный визуальный ассет • В будущем будет заменена утвержденной фотосессией]",
       brands: [
         "TOYBOLA TOYS",
         "SAMTECH MASTERBATCHES",
@@ -1730,24 +1733,25 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
         tolerance: "CIS & GLOBAL",
         standard: "SINCE 2005",
       },
-      kickerBadge: "Industry • Practice • Governance",
-      kickerText: "Tashkent • 20+ years practice",
+      kickerBadge: "MONOGRAPH // INDUSTRY & SYSTEMIC GOVERNANCE",
+      kickerText: "Tashkent • 2026",
       verifiedMetrics: [
         {
-          value: "Since 2005",
-          label: "Practice in manufacturing and business governance",
+          value: "Since 2004",
+          label: "Commercial & international trade practice",
         },
         {
-          value: "Multi-industry",
-          label: "Enterprises in plastics, electrical engineering, and HoReCa",
+          value: "Since 2012",
+          label: "Establishment of Toybola factory",
         },
         {
-          value: "Global markets",
-          label: "Regular export deliveries to CIS and foreign markets",
+          value: "7 systems",
+          label: "Manufacturing, polymers, HoReCa & IT initiative",
         },
       ],
-      portraitRole: "Entrepreneur and engineer",
-      portraitBadge: "Temporary photo asset",
+      portraitRole: "Industrialist, Engineer-Entrepreneur",
+      portraitBadge: "ARCHIVAL ASSET // TEMPORARY PHOTO",
+      portraitNote: "[Archival photograph // Temporary visual asset • To be replaced with an approved professional photoshoot]",
       brands: [
         "TOYBOLA TOYS",
         "SAMTECH MASTERBATCHES",

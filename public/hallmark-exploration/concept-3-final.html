@@ -394,14 +394,14 @@
       top: 0;
       right: 0;
       width: 100%;
-      max-width: 320px;
+      max-width: min(320px, 90vw);
       height: 100vh;
       background: var(--bg-alabaster);
       border-left: 1px solid var(--border-hairline);
       z-index: 2000;
       display: none;
       flex-direction: column;
-      padding: 24px 20px;
+      padding: 20px 16px;
       box-shadow: -10px 0 30px rgba(0,0,0,0.15);
       overflow-y: auto;
     }
@@ -423,45 +423,101 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 20px;
+      padding-bottom: 16px;
       border-bottom: 1px solid var(--border-hairline);
-      margin-bottom: 28px;
+      margin-bottom: 20px;
+      gap: 12px;
+    }
+    .drawer-head .brand-mark {
+      flex: 1;
+      min-width: 0;
+    }
+    .drawer-head .monogram {
+      font-family: var(--font-caps);
+      font-size: clamp(13px, 4vw, 17px);
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text-ink);
+      line-height: 1.1;
+      display: block;
     }
     .drawer-close {
       width: 44px;
       height: 44px;
+      min-width: 44px;
+      min-height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: transparent;
+      background: var(--bg-surface);
       border: 1px solid var(--border-hairline);
       cursor: pointer;
-      font-size: 20px;
+      font-size: 24px;
+      line-height: 1;
       border-radius: 4px;
+      color: var(--text-ink);
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+    }
+    .drawer-close:hover, .drawer-close:focus-visible {
+      background: var(--bg-dark);
+      color: #FFFFFF;
+      outline: 2px solid var(--accent-gold);
+    }
+    .drawer-lang-row {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-stone);
+    }
+    .drawer-lang-btn {
+      flex: 1;
+      min-height: 38px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all 0.2s ease;
+    }
+    .drawer-lang-btn.active {
+      background: var(--bg-dark);
+      border-color: var(--bg-dark);
+      color: #FFFFFF;
     }
     .drawer-nav {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 4px;
       list-style: none;
-      margin-bottom: 32px;
+      margin-bottom: 24px;
     }
     .drawer-nav a {
-      font-size: 16px;
+      font-size: clamp(13px, 3.8vw, 15px);
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       color: var(--text-ink);
-      padding: 10px 0;
-      display: block;
+      padding: 12px 0;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
       border-bottom: 1px solid var(--border-stone);
+      transition: color 0.2s ease, padding-left 0.2s ease;
     }
-    .drawer-nav a:hover {
+    .drawer-nav a:hover, .drawer-nav a:focus-visible {
       color: var(--accent-gold);
+      padding-left: 6px;
     }
     .drawer-footer {
       margin-top: auto;
-      padding-top: 24px;
+      padding-top: 20px;
       border-top: 1px solid var(--border-hairline);
     }
 
@@ -630,7 +686,7 @@
       font-family: var(--font-sans);
     }
 
-    /* Hero Editorial Gallery Frame */
+    /* Hero Editorial Gallery Frame with Archival Matting */
     .hero-portrait-frame {
       position: relative;
     }
@@ -641,42 +697,103 @@
       box-shadow: var(--shadow-elevated);
       position: relative;
     }
+    .portrait-archival-mat {
+      background: var(--bg-stone);
+      border: 1px solid var(--border-stone);
+      padding: 10px;
+      position: relative;
+    }
     .portrait-image-wrapper {
       position: relative;
       aspect-ratio: 4 / 5;
       overflow: hidden;
-      background: var(--bg-stone);
+      background: #111215;
+      border: 1px solid var(--border-hairline);
     }
     .portrait-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: top center;
-      filter: contrast(1.03) brightness(0.98);
+      object-position: center 12%;
+      transform-origin: center top;
+      transform: scale(1.24) translateY(-12px);
+      filter: contrast(1.04) brightness(0.97);
       display: block;
+      transition: transform 0.5s ease;
+    }
+    /* Elegant archival matting inset hairline */
+    .portrait-image-wrapper::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(184, 134, 11, 0.3);
+      pointer-events: none;
+      z-index: 2;
+    }
+    /* Archival Asset Badge */
+    .portrait-status-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      z-index: 3;
+      background: rgba(17, 18, 21, 0.88);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border: 1px solid var(--border-gold-subtle);
+      color: #EDE8DF;
+      padding: 6px 10px;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .portrait-status-badge .badge-tag {
+      color: var(--accent-gold-light);
+      font-weight: 700;
     }
     .portrait-caption {
-      padding: 18px 8px 4px;
+      padding: 16px 8px 4px;
       border-top: 1px solid var(--border-hairline);
-      margin-top: 14px;
+      margin-top: 12px;
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 10px;
     }
     .portrait-caption h3 {
       font-family: var(--font-serif);
       font-size: 20px;
       font-weight: 600;
       color: var(--text-ink);
+      line-height: 1.2;
     }
-    .portrait-caption p {
-      font-size: 11px;
-      color: var(--text-muted);
+    .portrait-caption .role-desc {
+      font-size: 11.5px;
+      color: var(--accent-gold);
+      font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       font-family: var(--font-mono);
+      margin-top: 3px;
+    }
+    .portrait-caption .asset-note {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+    .portrait-caption .city-year-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--accent-gold);
+      font-weight: 600;
+      letter-spacing: 0.1em;
     }
 
     /* SECTION 02: EXECUTIVE DOSSIER */
@@ -1554,17 +1671,57 @@
     }
 
     .form-status-alert {
-      padding: 14px 18px;
+      padding: 16px 20px;
       border-radius: 2px;
       font-size: 13px;
       display: none;
       margin-bottom: 20px;
+      line-height: 1.6;
     }
-    .form-status-alert.is-success {
+    .form-status-alert.is-prototype-notice {
       display: block;
-      background: rgba(34, 197, 94, 0.1);
-      border: 1px solid rgba(34, 197, 94, 0.3);
-      color: #15803d;
+      background: rgba(184, 134, 11, 0.08);
+      border: 1px solid var(--border-gold);
+      color: #5C4303;
+    }
+    .prototype-banner {
+      background: var(--bg-alabaster);
+      border: 1px solid var(--border-gold);
+      padding: 16px 18px;
+      margin-bottom: 24px;
+      border-radius: 2px;
+    }
+    .prototype-banner .proto-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      color: var(--accent-gold);
+      font-weight: 700;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .prototype-banner p {
+      font-size: 12.5px;
+      color: var(--text-soft);
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+    .prototype-banner .proto-spec {
+      font-size: 11px;
+      color: var(--text-muted);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      padding: 8px 12px;
+      line-height: 1.5;
+      font-family: var(--font-mono);
+    }
+    .prototype-banner .proto-spec code {
+      color: var(--text-ink);
+      background: rgba(17, 18, 21, 0.05);
+      padding: 1px 4px;
+      border-radius: 2px;
+      font-weight: 600;
     }
 
     /* Masthead Footer */
@@ -1880,12 +2037,19 @@
   <aside class="mobile-drawer" id="mobile-drawer-panel" aria-label="Mobil navigatsiya menyusi" aria-hidden="true">
     <div class="drawer-head">
       <div class="brand-mark">
-        <span class="monogram" style="font-size: 20px;">ANVAR ABDUQAYUM</span>
+        <span class="monogram">ANVAR ABDUQAYUM</span>
         <span class="tagline">Navigatsiya</span>
       </div>
       <button type="button" class="drawer-close" id="drawer-close-btn" aria-label="Menyuni yopish">
         &times;
       </button>
+    </div>
+
+    <!-- Mobile Language Selector -->
+    <div class="drawer-lang-row" role="group" aria-label="Mobil tilni tanlash">
+      <button type="button" class="drawer-lang-btn active" data-lang="uz" aria-pressed="true">UZ</button>
+      <button type="button" class="drawer-lang-btn" data-lang="ru" aria-pressed="false">RU</button>
+      <button type="button" class="drawer-lang-btn" data-lang="en" aria-pressed="false">EN</button>
     </div>
 
     <ul class="drawer-nav">
@@ -1939,40 +2103,49 @@
             <!-- 3 Verified Stat Columns (Zero Fake Metrics) -->
             <div class="hero-metrics-strip" aria-label="Tasdiqlangan Sanoat Ko'rsatkichlari">
               <div class="metric-item">
-                <span class="val">2005<span>-yildan</span></span>
-                <span class="desc">Ishlab chiqarish va tadbirkorlik amaliyoti</span>
+                <span class="val">2004<span>-yildan</span></span>
+                <span class="desc">Tijorat va xalqaro savdo amaliyoti</span>
               </div>
               <div class="metric-item">
-                <span class="val">7 <span>korxona</span></span>
-                <span class="desc">Sanoat, kimyo, HoReCa va xizmat tarmoqlari</span>
+                <span class="val">2012<span>-yildan</span></span>
+                <span class="desc">Toybola fabrikasi tashkil etilishi</span>
               </div>
               <div class="metric-item">
-                <span class="val">UZBIC <span>kengashi</span></span>
-                <span class="desc">Mahalliy ishlab chiqaruvchilar va eksport platformasi</span>
+                <span class="val">7 <span>tizim</span></span>
+                <span class="desc">Sanoat, polimer, HoReCa va IT tashabbusi</span>
               </div>
             </div>
           </div>
 
-          <!-- Hero Editorial Gallery Frame -->
+          <!-- Hero Editorial Gallery Frame with Archival Matting -->
           <div class="hero-portrait-frame">
             <div class="portrait-card">
-              <div class="portrait-image-wrapper">
-                <img 
-                  src="../images/hero/portrait.webp" 
-                  alt="Anvar Abduqayum — Sanoatchi, Muhandis-Tadbirkor" 
-                  class="portrait-img" 
-                  width="540" 
-                  height="675"
-                  loading="eager"
-                >
+              <div class="portrait-archival-mat">
+                <div class="portrait-image-wrapper">
+                  <div class="portrait-status-badge">
+                    <span class="badge-tag">ARXIV ASSETI</span>
+                    <span>VAQTINCHALIK FOTO</span>
+                  </div>
+                  <img 
+                    src="../images/hero/portrait.webp" 
+                    alt="Anvar Abduqayum — Sanoatchi, Muhandis-Tadbirkor (Vaqtinchalik arxiv fotosurati)" 
+                    class="portrait-img" 
+                    width="540" 
+                    height="675"
+                    loading="eager"
+                  >
+                </div>
               </div>
               <div class="portrait-caption">
-                <div>
+                <div style="flex: 1; min-width: 0;">
                   <h3>Anvar Abduqayum</h3>
-                  <p>Sanoatchi, Muhandis-Tadbirkor</p>
+                  <p class="role-desc">Sanoatchi, Muhandis-Tadbirkor</p>
+                  <p class="asset-note">
+                    [Arxiv fotosurati // Vaqtinchalik vizual asset &bull; Kelgusida tasdiqlangan professional fotosessiya bilan almashtiriladi]
+                  </p>
                 </div>
-                <div style="text-align: right;">
-                  <span style="font-family: var(--font-mono); font-size: 10px; color: var(--accent-gold); font-weight: 600;">
+                <div style="text-align: right; flex-shrink: 0;">
+                  <span class="city-year-tag">
                     TOSHKENT &bull; 2026
                   </span>
                 </div>
@@ -2323,11 +2496,12 @@
                 <span class="timeline-period-badge">2004 — 2011 // 01</span>
                 <h3 class="timeline-stage-title">Savdo maktabi va birinchi xalqaro logistika</h3>
                 <p class="timeline-stage-desc">
-                  Bozor talabini anglash, mayda ulgurji savdo va Xitoy hamda Turkiyadan birinchi xomashyo partiyalarini olib kelish.
+                  Bozor talabini anglash, mayda ulgurji savdo hamda Xitoy va Turkiyadan xomashyo yetkazib berish. Birlamchi tadbirkorlik amaliyoti shakllanish davri.
                 </p>
               </div>
               <div class="timeline-milestone">
-                <strong>Fokus:</strong> Xalqaro savdo amaliyoti va bozor ehtiyojlari
+                <div><strong>Faoliyat:</strong> Savdo amaliyoti (2004) &bull; Ishlab chiqarishga ilk qadamlar (2005)</div>
+                <div style="margin-top:6px; color:var(--accent-gold); font-size:10px;">Manba: Asoschi intervyulari // Holati: Tasdiqlangan amaliyot davri</div>
               </div>
             </div>
 
@@ -2337,11 +2511,12 @@
                 <span class="timeline-period-badge">2012 — 2015 // 02</span>
                 <h3 class="timeline-stage-title">Sanoatga qadam: Toybola fabrikasi</h3>
                 <p class="timeline-stage-desc">
-                  Importga qaramlikni to'xtatish maqsadida birinchi sanoat qoliplari va termoplast uskunalarini xarid qilish. O‘yinchoq ishlab chiqarish boshlanishi.
+                  2009-yildagi dastlabki sex amaliyotidan so‘ng, 2012-yilda «Toybola» fabrikasi va brendi rasman tashkil etilib, xavfsiz bolalar o‘yinchoqlari quyish yo‘lga qo‘yildi.
                 </p>
               </div>
               <div class="timeline-milestone">
-                <strong>Fokus:</strong> Plastik quyish va mahalliylashtirish
+                <div><strong>Faoliyat:</strong> 2009: Sex amaliyoti; 2012: Rasmiy fabrika tashkil etilishi</div>
+                <div style="margin-top:6px; color:var(--accent-gold); font-size:10px;">Manba: Korxona arxivi va Gazeta.uz // Holati: Tasdiqlangan korxona aktivi</div>
               </div>
             </div>
 
@@ -2351,11 +2526,12 @@
                 <span class="timeline-period-badge">2016 — 2018 // 03</span>
                 <h3 class="timeline-stage-title">Vertikal integratsiya: Xomashyo & Elektrotexnika</h3>
                 <p class="timeline-stage-desc">
-                  O‘z bo‘yoq xomashyomiz — Samtech Masterbatches hamda yangi yo‘nalish — Visage Electric elektrotexnika fabrikasi ishga tushirildi.
+                  Polimer modifikatorlari bo‘yicha Samtech Masterbatches (2015) va Visage Electric (2018) montaj liniyalari hammuassislik asosida ishga tushirildi.
                 </p>
               </div>
               <div class="timeline-milestone">
-                <strong>Fokus:</strong> Zanjirli sanoat kooperatsiyasi
+                <div><strong>Faoliyat:</strong> Hammuassislikdagi B2B sanoat kooperatsiyasi (Yakka mulkdorlik emas)</div>
+                <div style="margin-top:6px; color:var(--accent-gold); font-size:10px;">Manba: Sanoat loyihalari hisoboti // Holati: Hammuassislikdagi loyihalar</div>
               </div>
             </div>
 
@@ -2365,11 +2541,12 @@
                 <span class="timeline-period-badge">2019 — 2021 // 04</span>
                 <h3 class="timeline-stage-title">Qolip tamoyilining HoReCa'da sinovi</h3>
                 <p class="timeline-stage-desc">
-                  Sanoatdagi aniq reglament va standartlarni umumiy ovqatlanish sohasiga tatbiq qilish: AFIYET doner va PURO gelateriyasi ochildi.
+                  Sanoatdagi aniq reglamentlar umumiy ovqatlanish sohasiga tatbiq qilindi: AFIYET doner tarmog‘i (2017) va PURO italyan gelateriyasi (2020) ochildi.
                 </p>
               </div>
               <div class="timeline-milestone">
-                <strong>Fokus:</strong> Avtonom oshxona va standartlashtirish
+                <div><strong>Faoliyat:</strong> 2017: Birinchi Afiyet; 2020: Birinchi Puro</div>
+                <div style="margin-top:6px; color:var(--accent-gold); font-size:10px;">Manba: Spot.uz rasmiy intervyusi // Holati: Tasdiqlangan tarmoq aktivlari</div>
               </div>
             </div>
 
@@ -2379,11 +2556,12 @@
                 <span class="timeline-period-badge">2022 — BUGUN // 05</span>
                 <h3 class="timeline-stage-title">UZBIC va eksport kooperatsiyasi</h3>
                 <p class="timeline-stage-desc">
-                  Boshqaruv direktorlar kengashiga topshirildi. Diqqat-e'tibor sanoat eksportini kengaytirish va UZBIC orqali global bozorlarni ochishga qaratildi.
+                  Operatsion boshqaruv direktorlar kengashiga topshirildi. Diqqat O‘zbekiston sanoat eksportini kengaytirish va UZBIC kengashi orqali jahon bozorlarini ochishga qaratildi.
                 </p>
               </div>
               <div class="timeline-milestone">
-                <strong>Fokus:</strong> Global eksport va korporativ governance
+                <div><strong>Faoliyat:</strong> Mustaqil jamoat platformasi (Tijorat aktivi emas)</div>
+                <div style="margin-top:6px; color:var(--accent-gold); font-size:10px;">Manba: uzbic.uz va Kun.uz // Holati: Mustaqil jamoat platformasi</div>
               </div>
             </div>
 
@@ -2603,14 +2781,28 @@
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
                   </svg>
-                  <span>Telegram: @anvar_abduqayum_admin</span>
+                  <span>Telegram Admin: @anvar_abduqayum_admin</span>
                 </a>
 
-                <a href="tel:+998901234567" class="channel-item">
+                <a href="tel:+998555036100" class="channel-item">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                   </svg>
-                  <span>Qabulxona: +998 (90) 123-45-67</span>
+                  <span>Qabulxona: +998 55 503 61 00</span>
+                </a>
+
+                <a href="https://t.me/anvar_abduqayum" target="_blank" rel="noopener noreferrer" class="channel-item">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/>
+                  </svg>
+                  <span>Telegram Kanal: @anvar_abduqayum</span>
+                </a>
+
+                <a href="mailto:info@anvarabduqayum.uz" class="channel-item">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                  </svg>
+                  <span>Email: info@anvarabduqayum.uz</span>
                 </a>
 
                 <a href="https://www.instagram.com/anvar_abduqayum" target="_blank" rel="noopener noreferrer" class="channel-item">
@@ -2629,9 +2821,18 @@
 
           <!-- Contact Form Right -->
           <div class="contact-form-box">
-            <div id="form-alert-msg" class="form-status-alert">
-              Murojaatingiz qabul qilindi. Tez orada mas'ul vakillarimiz siz bilan bog‘lanishadi.
+            <!-- Prototype Transparency Notice -->
+            <div class="prototype-banner">
+              <span class="proto-tag">[PROTOTIP REJIMI — VIZUAL VA INTERAKTIV NAMOYISH]</span>
+              <p>
+                Ushbu shakl interfeys dizayni va foydalanish tajribasi namoyishidir. Mustaqil HTML prototipida backend mavjud emas, shuning uchun ma'lumotlar saqlanmaydi va xabar yuborilmaydi.
+              </p>
+              <div class="proto-spec">
+                <strong>Ishlab chiqarish (Next.js) integratsiyasi:</strong> Haqiqiy loyihada barcha arizalar mavjud <code>/{locale}/bron</code> Cal.com uchrashuv bronlash tizimi hamda Telegram Bot API orqali to‘g‘ridan-to‘g‘ri yuboriladi.
+              </div>
             </div>
+
+            <div id="form-alert-msg" class="form-status-alert"></div>
 
             <form id="consultation-form" novalidate>
               <div class="form-group">
@@ -2652,7 +2853,7 @@
 
               <div class="form-group">
                 <label for="form-phone" class="form-label">Telefon raqamingiz</label>
-                <input type="tel" id="form-phone" class="form-control" placeholder="+998 (90) 123-45-67" required>
+                <input type="tel" id="form-phone" class="form-control" placeholder="+998 55 503 61 00" required>
               </div>
 
               <div class="form-group">
@@ -2661,8 +2862,12 @@
               </div>
 
               <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">
-                Murojaatni yuborish
+                Shaklni tekshirish (Prototip)
               </button>
+
+              <a href="https://t.me/anvar_abduqayum_admin" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="width: 100%; justify-content: center; margin-top: 12px; font-size: 11px;">
+                To‘g‘ridan-to‘g‘ri Telegram Admin orqali yozish &rarr;
+              </a>
             </form>
           </div>
         </div>
@@ -2754,6 +2959,10 @@
             <th>Faktik maqomi:</th>
             <td id="modal-biz-status">&mdash;</td>
           </tr>
+          <tr>
+            <th>Manba va verifikatsiya:</th>
+            <td id="modal-biz-verification">&mdash;</td>
+          </tr>
         </tbody>
       </table>
 
@@ -2840,32 +3049,35 @@
           code: "MODUL 01 // ISHLAB CHIQARISH",
           name: "Toybola Toys",
           role: "Asoschi va Hammuassis",
-          period: "2009-yildan faoliyat / 2012-yildan zavod",
+          period: "2009-yildan sex amaliyoti / 2012-yildan rasmiy fabrika",
           sector: "Polimer sanoati & Bolalar o‘yinchoqlari",
           model: "Tizimli reglamentlar & Direktorlar kengashi",
           status: "Tasdiqlangan ishlab chiqarish korxonasi",
+          verification: "Korxona arxivi va Gazeta.uz tahlili (2020) // Tasdiqlangan korxona aktivi",
           desc: "2009-yildagi dastlabki o‘yinchoq ishlab chiqarish tajribasidan boshlab, 2012-yilda zamonaviy Toybola zavod quvvatlari yo‘lga qo‘yilgan. Korxonada avtomatlashtirilgan plastik quyish texnologiyalari va standartlashtirilgan qoliplar joriy etilgan bo‘lib, operatsion jarayonlar tizimli reglamentlar asosida ishlaydi.",
           website: "https://toybola.uz"
         },
         samtech: {
           code: "MODUL 02 // KIMYO MAJMUASI",
           name: "Samtech Masterbatches",
-          role: "Hammuassis / Hamkor",
+          role: "Hammuassis / Sanoat hamkori (Yakka mulkdor emas)",
           period: "2015-yildan buyon (Sanoat loyihasi)",
           sector: "Kimyo sanoati & Polimerlar",
           model: "B2B xomashyo ishlab chiqarish & Ta'minot",
           status: "Hammuassislikdagi sanoat loyihasi",
+          verification: "B2B shartnomalari va hammuassislik loyihasi // Tasdiqlangan sanoat loyihasi",
           desc: "Sanoat miqyosidagi polimer korxonalari uchun modifikatorlar va rang beruvchi masterbatch xomashyosi ishlab chiqarish loyihasi. Hammuassislik asosida tashkil etilgan bo‘lib, mahalliy korxonalarning import xomashyoga bog‘liqligini kamaytirishga xizmat qiladi.",
           website: null
         },
         visage: {
           code: "MODUL 03 // ELEKTROTEXNIKA",
           name: "Visage Electric",
-          role: "Hammuassis / Hamkor",
+          role: "Hammuassis / Sanoat hamkori (Yakka mulkdor emas)",
           period: "2018-yildan buyon (Sanoat loyihasi)",
           sector: "Elektrotexnika sanoati",
-          model: "Avtomatlashtirilgan liniyalar & B2B/B2C",
+          model: "Avtomatlashtirilgan montaj liniyalari & B2B/B2C",
           status: "Hammuassislikdagi sanoat loyihasi",
+          verification: "Elektrotexnika kooperatsiyasi va sanoat tahlillari // Tasdiqlangan sanoat loyihasi",
           desc: "Sanoat va maishiy ob'ektlar uchun energiya xavfsiz kalitlar, rozetkalar va elektrotexnika komponentlari ishlab chiqarish loyihasi. Hammuassislik asosida yo‘lga qo‘yilgan bo‘lib, mahsulotlar avtomatlashtirilgan montaj liniyalarida ishlab chiqariladi.",
           website: null
         },
@@ -2873,10 +3085,11 @@
           code: "MODUL 04 // HORECA RESTORAN",
           name: "AFIYET Kebab",
           role: "Asoschi va Hamkor",
-          period: "2017-yildan buyon (Spot intervyusi)",
+          period: "2017-yildan buyon (Birinchi restoran ochilishi)",
           sector: "HoReCa & Umumiy ovqatlanish",
           model: "Standartlashtirilgan oshxona tarmog‘i",
           status: "Tasdiqlangan restoranlar tarmog‘i",
+          verification: "Spot.uz nashriga berilgan rasmiy intervyu (2020) // Tasdiqlangan tarmoq",
           desc: "Spot.uz nashriga berilgan rasmiy intervyuda qayd etilganidek, birinchi Afiyet restorani 2017-yilda ochilgan. Loyihada umumiy ovqatlanish jarayonlari qat'iy texnologik xaritalar va standartlar asosida boshqariladi.",
           website: null
         },
@@ -2884,21 +3097,23 @@
           code: "MODUL 05 // HORECA KAFE",
           name: "PURO Gelateria",
           role: "Hamkor va Tashabbuskor",
-          period: "2020-yildan buyon (Spot intervyusi)",
+          period: "2020-yildan buyon (Birinchi nuqta ochilishi)",
           sector: "HoReCa & Qandolatchilik",
           model: "Chakana savdo va sovuq ta'minot zanjiri",
           status: "Tasdiqlangan kafe tarmog‘i",
+          verification: "Spot.uz rasmiy intervyusi (2020) // Tasdiqlangan dondurma tarmog‘i",
           desc: "Spot.uz intervyusida tasdiqlanganidek, birinchi Puro 2020-yilda faoliyatini boshlagan. Tabiiy masalliqlar, italyancha retseptura va uzluksiz sovuq ta'minot zanjiri asosida faoliyat yurituvchi kafe tarmog‘i.",
           website: null
         },
         "it-support": {
           code: "MODUL 06 // B2B SERVIS",
           name: "IT Support & Service",
-          role: "Loyiha tashabbuskori va Maslahatchi",
+          role: "Loyiha tashabbuskori va Tizim maslahatchisi",
           period: "2019-yildan buyon (Ichki IT tashabbus)",
           sector: "Axborot Texnologiyalari & Korporativ Servis",
           model: "ERP integratsiyasi & Jarayonlar nazorati",
           status: "Ichki jarayonlarni raqamlashtirish tashabbusi",
+          verification: "Ekotizim ichki ERP infratuzilmasi // Tasdiqlangan ichki tashabbus (Alohida dasturiy korporatsiya emas)",
           desc: "Ekotizimdagi sanoat korxonalari va savdo tarmoqlarini raqamlashtirish uchun shakllantirilgan operatsion IT jamoasi tashabbusi. Ichki ERP, ombor nazorati va analitik hisobotlarni avtomatlashtirishga xizmat qiladi. (Alohida dasturiy korporatsiya emas, ichki infratuzilma tashabbusidir).",
           website: null
         },
@@ -2910,6 +3125,7 @@
           sector: "Sanoat diplomatiyasi & Eksport platformasi",
           model: "B2B eksport konsortsiumlari",
           status: "Mustaqil jamoat platformasi (Tijorat aktivi emas)",
+          verification: "uzbic.uz portali va Kun.uz rasmiy axboroti // Mustaqil nodavlat jamoat platformasi",
           desc: "2022-yilda tashkil etilgan O‘zbekiston Biznes va Sanoat Kengashi (UZBIC) — tadbirkorlar va sanoatchilarning mustaqil jamoat platformasi. Kengash korxonalar o‘rtasida sanoat kooperatsiyasini yo‘lga qo‘yish va tashqi bozorlarga chiqishda amaliy ko‘mak beradi. (Muhim: UZBIC xususiy tijorat aktivi emas, Anvar Abduqayum raisligidagi jamoat platformasidir).",
           website: "https://uzbic.uz"
         }
@@ -2963,16 +3179,34 @@
         link.addEventListener('click', closeMobileDrawer);
       });
 
-      // 3. LANGUAGE SWITCHER INTERACTION
+      // 3. LANGUAGE SWITCHER INTERACTION (Sync Navbar & Drawer)
       const langBtns = document.querySelectorAll('.lang-btn');
+      const drawerLangBtns = document.querySelectorAll('.drawer-lang-btn');
+
+      function syncLanguage(selectedLang) {
+        langBtns.forEach(btn => {
+          const isActive = btn.getAttribute('data-lang') === selectedLang;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+        drawerLangBtns.forEach(btn => {
+          const isActive = btn.getAttribute('data-lang') === selectedLang;
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        });
+      }
+
       langBtns.forEach(btn => {
         btn.addEventListener('click', function() {
-          langBtns.forEach(b => {
-            b.classList.remove('active');
-            b.setAttribute('aria-pressed', 'false');
-          });
-          this.classList.add('active');
-          this.setAttribute('aria-pressed', 'true');
+          const lang = this.getAttribute('data-lang');
+          syncLanguage(lang);
+        });
+      });
+
+      drawerLangBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const lang = this.getAttribute('data-lang');
+          syncLanguage(lang);
         });
       });
 
@@ -3056,6 +3290,7 @@
       const modalBizSector = document.getElementById('modal-biz-sector');
       const modalBizModel = document.getElementById('modal-biz-model');
       const modalBizStatus = document.getElementById('modal-biz-status');
+      const modalBizVerification = document.getElementById('modal-biz-verification');
       const modalBizLinkBox = document.getElementById('modal-biz-link-box');
 
       let lastActiveTrigger = null;
@@ -3072,6 +3307,7 @@
         modalBizSector.textContent = item.sector;
         modalBizModel.textContent = item.model;
         modalBizStatus.textContent = item.status;
+        if (modalBizVerification) modalBizVerification.textContent = item.verification;
 
         if (item.website) {
           modalBizLinkBox.innerHTML = `
@@ -3184,14 +3420,32 @@
         }
       });
 
-      // 9. CONTACT FORM INTERACTION
+      // 9. CONTACT FORM INTERACTION (Truthful prototype mode, no fake message claims)
       const contactForm = document.getElementById('consultation-form');
       const formAlertMsg = document.getElementById('form-alert-msg');
 
       if (contactForm) {
         contactForm.addEventListener('submit', function(e) {
           e.preventDefault();
-          formAlertMsg.classList.add('is-success');
+          const nameInput = document.getElementById('form-name');
+          const phoneInput = document.getElementById('form-phone');
+          const messageInput = document.getElementById('form-message');
+
+          if (!nameInput.value.trim() || !phoneInput.value.trim() || !messageInput.value.trim()) {
+            formAlertMsg.className = 'form-status-alert is-prototype-notice';
+            formAlertMsg.innerHTML = '<strong>Iltimos, barcha majburiy maydonlarni to‘ldiring.</strong>';
+            formAlertMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+          }
+
+          formAlertMsg.className = 'form-status-alert is-prototype-notice';
+          formAlertMsg.innerHTML = `
+            <strong>PROTOTIP REJIMI // SHAKL VERIFIKATSIYASI MUVAFFAQIYATLI TEKSHIRILDI</strong><br>
+            Kiritilgan ma'lumotlar to‘g‘ri formatlandi. Ushbu avtonom HTML prototipida xabarlarni serverga jo‘natish ulanmagan va soxta yetkazib berish xabari ko‘rsatilmaydi.<br>
+            <span style="font-size:12px; color:var(--text-soft); margin-top:6px; display:block;">
+              Ishlab chiqarish (Next.js) platformasida arizalar <code>/{locale}/bron</code> Cal.com uchrashuv bronlash tizimi va Telegram Bot API integratsiyasi orqali to‘g‘ridan-to‘g‘ri yuboriladi. Haqiqiy murojaat uchun: <a href="https://t.me/anvar_abduqayum_admin" target="_blank" rel="noopener noreferrer" style="color:var(--accent-gold); text-decoration:underline;">@anvar_abduqayum_admin</a> yoki <a href="tel:+998555036100" style="color:var(--accent-gold); text-decoration:underline;">+998 55 503 61 00</a>.
+            </span>
+          `;
           formAlertMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
           contactForm.reset();
         });

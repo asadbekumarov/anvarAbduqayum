@@ -3,6 +3,24 @@
 @tailwind utilities;
 
 :root {
+  /* Concept 3: Contemporary Luxury Editorial Tokens */
+  --bg-alabaster: #FBF9F5;
+  --bg-surface: #FFFFFF;
+  --bg-stone: #F4EFE6;
+  --bg-dark: #111215;
+  --bg-dark-card: #17181D;
+  --border-hairline: rgba(17, 18, 21, 0.1);
+  --border-stone: rgba(17, 18, 21, 0.06);
+  --border-gold: rgba(184, 134, 11, 0.4);
+  --border-gold-subtle: rgba(184, 134, 11, 0.2);
+  --text-ink: #111215;
+  --text-soft: #4B515D;
+  --text-muted: #7A8290;
+  --accent-gold: #B8860B;
+  --accent-gold-light: #D4AF37;
+  --accent-gold-soft: rgba(184, 134, 11, 0.08);
+
+  /* Legacy & Baseline Tokens */
   --dark-canvas: #090A0D;
   --dark-surface: #12141A;
   --dark-ink: #F5F4F0;
@@ -24,8 +42,8 @@
 }
 
 html {
-  background-color: var(--dark-canvas);
-  color: var(--dark-ink);
+  background-color: var(--bg-alabaster);
+  color: var(--text-ink);
   font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
@@ -35,8 +53,8 @@ html {
 }
 
 body {
-  background-color: var(--dark-canvas);
-  color: var(--dark-ink);
+  background-color: var(--bg-alabaster);
+  color: var(--text-ink);
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -54,6 +72,46 @@ body {
 .font-mono-meta {
   font-family: var(--font-mono), monospace;
   letter-spacing: -0.01em;
+}
+
+/* Editorial Monogram Caps */
+.font-caps {
+  font-family: var(--font-display), Georgia, serif;
+  letter-spacing: 0.1em;
+}
+
+/* Hero Portrait Framing: Archival Matting */
+.portrait-archival-mat {
+  background: var(--bg-stone);
+  border: 1px solid var(--border-stone);
+  padding: 10px;
+  position: relative;
+}
+
+.portrait-image-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: #111215;
+  border: 1px solid var(--border-hairline);
+}
+
+.portrait-image-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(184, 134, 11, 0.3);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.portrait-img-editorial {
+  object-fit: cover !important;
+  object-position: center 12% !important;
+  transform-origin: center top !important;
+  transform: scale(1.24) translateY(-12px) !important;
+  filter: contrast(1.04) brightness(0.97) !important;
 }
 
 /* 48px touch targets for mobile accessibility */

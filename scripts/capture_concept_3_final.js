@@ -38,6 +38,15 @@ async function run() {
   });
   console.log('Saved hero 1440x900');
 
+  // Dedicated portrait presentation screenshot
+  const portraitEl = await page.$('.hero-portrait-frame');
+  if (portraitEl) {
+    await portraitEl.screenshot({
+      path: path.join(outputDir, 'portrait_presentation.png')
+    });
+    console.log('Saved portrait presentation screenshot');
+  }
+
   // Full page desktop 1440
   await page.screenshot({
     path: path.join(outputDir, 'concept3_final_desktop_1440px.png'),

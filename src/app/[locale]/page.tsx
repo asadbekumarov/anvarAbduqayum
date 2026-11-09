@@ -31,7 +31,7 @@ export default async function HomePage({
   setRequestLocale(locale);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#F4EFE6] text-[#1C1A17] antialiased">
+    <div className="min-h-screen flex flex-col bg-[#FBF9F5] text-[#111215] antialiased">
       {/* Blueprint Industrial Top Navigation */}
       <Navbar locale={locale} />
 
