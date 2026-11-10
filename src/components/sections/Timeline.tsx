@@ -89,21 +89,13 @@ export const Timeline: React.FC<TimelineProps> = ({ locale = "uz" }) => {
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
         {/* Editorial Split Header */}
         <header className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-10 lg:items-end pb-6 border-b border-[var(--border-hairline-editorial)] mb-6">
-          <div className="lg:col-span-7 flex items-baseline gap-3 min-w-0">
-            <span
-              className="font-mono text-[14px] font-medium text-[var(--text-muted-aa)] shrink-0"
-              aria-hidden="true"
-            >
-              {timeline.sectionNum || "04"}
-            </span>
-            <h2
-              id="timeline-heading"
-              className="font-serif text-[clamp(32px,4.1vw,52px)] font-semibold leading-[1.08] tracking-[-0.02em] text-[var(--text-ink)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
-            >
-              {timeline.title}
-              {timeline.titleEmphasis ? ` ${timeline.titleEmphasis}` : ""}
-            </h2>
-          </div>
+          <h2
+            id="timeline-heading"
+            className="lg:col-span-7 font-serif text-[clamp(32px,4.1vw,52px)] font-semibold leading-[1.08] tracking-[-0.02em] text-[var(--text-ink)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
+          >
+            {timeline.title}
+            {timeline.titleEmphasis ? ` ${timeline.titleEmphasis}` : ""}
+          </h2>
 
           <p className="lg:col-span-5 text-[16px] leading-[1.65] text-[var(--text-soft-editorial)] max-w-[58ch] [text-wrap:pretty]">
             {timeline.subtitle}

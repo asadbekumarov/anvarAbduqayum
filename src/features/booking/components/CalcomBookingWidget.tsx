@@ -124,10 +124,7 @@ export default function CalcomBookingWidget() {
     <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
       {/* Concept 3 Editorial Header Section */}
       <header className="mb-8 sm:mb-10 pb-8 border-b border-[var(--border-hairline-editorial)] max-w-4xl">
-        <div className="flex items-center gap-3 mb-3">
-          <span className="font-mono text-[13px] font-medium text-[var(--accent-gold-ink)]">
-            07.A
-          </span>
+        <div className="mb-3">
           <span className="text-[13.5px] font-semibold text-[var(--accent-gold-ink)]">
             {t("kicker")}
           </span>

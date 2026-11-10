@@ -344,17 +344,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
             <div className="lg:col-span-7 min-w-0">
-              <div className="flex items-baseline gap-3 min-w-0">
-                <span className="font-mono text-[14px] font-medium tabular-nums text-[var(--accent-gold-light)] shrink-0">
-                  {booking.ordinal}
-                </span>
-                <h2
-                  id="booking-heading"
-                  className="font-serif text-[clamp(30px,4vw,48px)] font-semibold leading-[1.09] tracking-[-0.02em] text-[var(--text-on-dark)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
-                >
-                  {booking.title}
-                </h2>
-              </div>
+              <h2
+                id="booking-heading"
+                className="font-serif text-[clamp(30px,4vw,48px)] font-semibold leading-[1.09] tracking-[-0.02em] text-[var(--text-on-dark)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
+              >
+                {booking.title}
+              </h2>
 
               <p className="mt-4 text-[17px] leading-[1.65] text-[var(--text-muted-on-dark)] max-w-[56ch] [text-wrap:pretty]">
                 {booking.lead}
@@ -452,17 +447,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
           {/* Header Row */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-10 items-end pb-6 border-b border-[var(--border-hairline-editorial)] mb-12 lg:mb-16">
-            <div className="lg:col-span-7 flex items-baseline gap-3 min-w-0">
-              <span className="font-mono text-[14px] font-medium tabular-nums text-[var(--accent-gold-ink)] shrink-0">
-                {directory.ordinal}
-              </span>
-              <h2
-                id="contact-heading"
-                className="font-serif text-[clamp(30px,4vw,48px)] font-semibold leading-[1.08] tracking-[-0.02em] text-[var(--text-ink)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
-              >
-                {directory.title}
-              </h2>
-            </div>
+            <h2
+              id="contact-heading"
+              className="lg:col-span-7 font-serif text-[clamp(30px,4vw,48px)] font-semibold leading-[1.08] tracking-[-0.02em] text-[var(--text-ink)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
+            >
+              {directory.title}
+            </h2>
             <p className="lg:col-span-5 text-[16px] leading-[1.65] text-[var(--text-soft-editorial)] max-w-[54ch] [text-wrap:pretty]">
               {directory.lead}
             </p>

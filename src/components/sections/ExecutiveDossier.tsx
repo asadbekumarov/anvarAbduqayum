@@ -71,10 +71,7 @@ export const ExecutiveDossier: React.FC<ExecutiveDossierProps> = ({
             id="dossier-heading"
             className="lg:col-span-7 font-serif text-[clamp(30px,4.2vw,50px)] font-semibold leading-[1.1] tracking-[-0.02em] text-[var(--text-ink)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
           >
-            <span className="font-mono text-[0.42em] font-semibold text-[var(--text-muted-aa)] align-super mr-2">
-              {dossier.sectionNum || "02"}
-            </span>
-            <span>{dossier.title}</span>
+            {dossier.title}
           </h2>
 
           <p className="lg:col-span-5 text-[16px] lg:text-[17px] leading-[1.65] text-[var(--text-soft-editorial)] [text-wrap:pretty]">
