@@ -6,6 +6,9 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { getContent } from "@/config/content";
 import { contactConfig } from "@/config/contact";
+import { featuresConfig } from "@/config/features";
+import { getDemoCopy } from "@/config/demoCopy";
+import { ConceptDisclosureBanner } from "@/components/ui/ConceptDisclosureBanner";
 import { SITE_URL, isIndexingEnabled } from "@/config/siteConfig";
 import "../globals.css";
 
@@ -42,43 +45,55 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const content = getContent(locale);
+  const demoMeta = getDemoCopy(locale).meta;
+  const isDemo = featuresConfig.demoMode;
+
+  const title = isDemo
+    ? `${content.meta.siteTitle} — ${demoMeta.siteTitleSuffix}`
+    : content.meta.siteTitle;
+  const description = isDemo
+    ? demoMeta.siteDescription
+    : content.meta.siteDescription;
+  const siteName = isDemo ? demoMeta.siteName : content.meta.founderName;
 
   return {
-    title: content.meta.siteTitle,
-    description: content.meta.siteDescription,
+    title,
+    description,
     metadataBase: new URL(SITE_URL),
     robots: isIndexingEnabled
       ? { index: true, follow: true }
       : { index: false, follow: false },
-    alternates: {
-      canonical: `/${locale}`,
-      languages: {
-        uz: "/uz",
-        ru: "/ru",
-        en: "/en",
-        "x-default": "/uz",
-      },
-    },
+    alternates: isDemo
+      ? undefined
+      : {
+          canonical: `/${locale}`,
+          languages: {
+            uz: "/uz",
+            ru: "/ru",
+            en: "/en",
+            "x-default": "/uz",
+          },
+        },
     openGraph: {
-      title: content.meta.siteTitle,
-      description: content.meta.siteDescription,
+      title,
+      description,
       type: "website",
       locale: locale === "uz" ? "uz_UZ" : locale === "ru" ? "ru_RU" : "en_US",
-      url: `${SITE_URL}/${locale}`,
-      siteName: content.meta.founderName,
+      url: isDemo ? undefined : `${SITE_URL}/${locale}`,
+      siteName,
       images: [
         {
           url: `${SITE_URL}/images/brand/og-image.png`,
           width: 1200,
           height: 630,
-          alt: content.meta.founderName,
+          alt: siteName,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: content.meta.siteTitle,
-      description: content.meta.siteDescription,
+      title,
+      description,
       images: [`${SITE_URL}/images/brand/og-image.png`],
     },
   };
@@ -157,13 +172,16 @@ export default async function LocaleLayout({
         className="min-h-screen flex flex-col bg-[var(--bg-alabaster)] text-[var(--text-ink)] selection:bg-[var(--accent-gold)] selection:text-[var(--bg-surface)] antialiased"
         suppressHydrationWarning
       >
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
-          }}
-        />
+        {!featuresConfig.demoMode && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+            }}
+          />
+        )}
         <NextIntlClientProvider locale={locale} messages={messages}>
+          {featuresConfig.demoMode && <ConceptDisclosureBanner locale={locale} />}
           {children}
         </NextIntlClientProvider>
       </body>

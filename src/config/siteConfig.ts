@@ -1,4 +1,5 @@
 import { contactConfig } from "./contact";
+import { featuresConfig } from "./features";
 
 const getBaseUrl = (): string => {
   if (process.env.NEXT_PUBLIC_SITE_URL) {
@@ -13,9 +14,10 @@ export const OFFICIAL_PRODUCTION_ORIGIN = "https://anvarabduqayum.uz";
 
 /**
  * Explicit opt-in search engine indexing control.
- * Keeps staging, preview, local, and unapproved environments non-indexable even when NODE_ENV === "production".
+ * Always disabled in demo mode, staging, preview, local, and unapproved environments.
  */
 export const isIndexingEnabled =
+  !featuresConfig.demoMode &&
   process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true" &&
   SITE_URL === OFFICIAL_PRODUCTION_ORIGIN;
 

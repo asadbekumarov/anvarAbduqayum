@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { getContent } from "@/config/content";
+import { featuresConfig } from "@/config/features";
 import { siteMedia } from "@/config/siteMedia";
 import { BookingActionLink } from "@/components/ui/BookingActionLink";
 
@@ -41,7 +42,11 @@ export const Hero: React.FC<HeroProps> = ({ locale = "uz" }) => {
     <section
       id="hero"
       aria-labelledby="hero-heading"
-      className="relative bg-[var(--bg-alabaster)] border-b border-[var(--border-hairline)] pt-[84px] sm:pt-28 lg:pt-36 pb-24 sm:pb-20 lg:pb-24 overflow-hidden"
+      className={`relative bg-[var(--bg-alabaster)] border-b border-[var(--border-hairline)] ${
+        featuresConfig.demoMode
+          ? "pt-6 sm:pt-10 lg:pt-16"
+          : "pt-[84px] sm:pt-28 lg:pt-36"
+      } pb-24 sm:pb-20 lg:pb-24 overflow-hidden`}
     >
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] xl:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] gap-9 sm:gap-12 lg:gap-16 xl:gap-20 items-center">

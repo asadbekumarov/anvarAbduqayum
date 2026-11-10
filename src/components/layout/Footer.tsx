@@ -6,6 +6,8 @@ import { useLocale } from "next-intl";
 import { usePathname } from "next/navigation";
 import { getContent } from "@/config/content";
 import { contactConfig } from "@/config/contact";
+import { featuresConfig } from "@/config/features";
+import { getDemoCopy } from "@/config/demoCopy";
 import { BookingActionLink } from "@/components/ui/BookingActionLink";
 
 interface FooterProps {
@@ -17,7 +19,9 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
   const pathname = usePathname() || "/";
   const rawLocale = locale || routeLocale || "uz";
   const safeLocale = rawLocale === "ru" || rawLocale === "en" ? rawLocale : "uz";
+  const isDemoMode = featuresConfig.demoMode;
   const content = getContent(safeLocale);
+  const demoCopy = getDemoCopy(safeLocale);
   const { footer } = content;
 
   const isHomePage =
@@ -84,9 +88,14 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
 
           {/* Zone 2: Official Contact Channels */}
           <div className="md:col-span-4 min-w-0">
-            <h2 className="text-[15px] font-semibold text-[var(--accent-gold-light)] mb-4">
+            <h2 className="text-[15px] font-semibold text-[var(--accent-gold-light)] mb-2">
               {footer.contactHeading}
             </h2>
+            {isDemoMode && (
+              <p className="text-[12.5px] leading-[1.45] text-[var(--text-muted-on-dark)] mb-3">
+                {demoCopy.footer.externalChannelsNote}
+              </p>
+            )}
             <ul className="flex flex-col">
               <li>
                 <a
@@ -167,21 +176,25 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
 
         {/* Bottom Colophon Strip */}
         <div className="pt-7 flex flex-wrap items-center justify-between gap-4">
-          <p className="text-[14px] leading-[1.5] text-[var(--text-muted-on-dark)]">
-            {footer.colophonNote}
+          <p className="text-[14px] leading-[1.5] text-[var(--text-muted-on-dark)] max-w-[68ch]">
+            {isDemoMode ? demoCopy.footer.colophonNote : footer.colophonNote}
           </p>
-          <a
-            href={isHomePage ? "#hero" : `/${safeLocale}`}
-            onClick={(e) => {
-              if (!isHomePage) {
-                e.preventDefault();
-                window.scrollTo({ top: 0 });
-              }
-            }}
-            className="inline-flex items-center min-h-[44px] px-1 text-[14px] font-semibold text-[var(--text-on-dark)] hover:text-[var(--accent-gold-light)] border-b border-[var(--border-on-dark)] hover:border-[var(--accent-gold-light)] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
-          >
-            {footer.backToTop}
-          </a>
+          {isHomePage ? (
+            <a
+              href="#hero"
+              className="inline-flex items-center min-h-[44px] px-1 text-[14px] font-semibold text-[var(--text-on-dark)] hover:text-[var(--accent-gold-light)] border-b border-[var(--border-on-dark)] hover:border-[var(--accent-gold-light)] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+            >
+              {footer.backToTop}
+            </a>
+          ) : (
+            <button
+              type="button"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="inline-flex items-center min-h-[44px] px-1 bg-transparent border-0 border-b border-[var(--border-on-dark)] hover:border-[var(--accent-gold-light)] text-[14px] font-semibold text-[var(--text-on-dark)] hover:text-[var(--accent-gold-light)] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)] cursor-pointer"
+            >
+              {footer.backToTop}
+            </button>
+          )}
         </div>
       </div>
     </footer>

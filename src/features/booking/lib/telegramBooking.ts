@@ -1,8 +1,11 @@
-interface TelegramBookingResult {
-  success: boolean;
-  messageId?: number;
-  error?: string;
-}
+import {
+  dispatchTelegramHtmlMessage,
+  escapeTelegramHtml,
+  sanitizeTelegramUrl,
+  type TelegramDispatchResult,
+} from "@/lib/telegramHtml";
+
+type TelegramBookingResult = TelegramDispatchResult;
 
 export interface CalWebhookPayload {
   triggerEvent: "BOOKING_CREATED" | "BOOKING_RESCHEDULED" | "BOOKING_CANCELLED" | string;
@@ -173,28 +176,16 @@ function formatLocation(loc?: string): string {
 }
 
 /**
- * Dispatches structured Cal.com booking notification to Telegram.
- * Uses TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID.
+ * Formats and dispatches structured Cal.com booking notifications to Telegram.
+ * Escapes all dynamic text, restricts manage URLs to https:, and fails closed
+ * when messaging credentials are missing.
  */
 export async function processCalWebhook(
   event: CalWebhookPayload
 ): Promise<TelegramBookingResult> {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-
-  if (!token || !chatId) {
-    console.warn(
-      "[Telegram Booking Service] Missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID. Skipping Telegram dispatch in dev mode."
-    );
-    return {
-      success: true, // Don't crash development test suites if credentials not set
-    };
-  }
-
   const payload = event.payload || {};
   const triggerEvent = event.triggerEvent;
 
-  // Title based strictly on event type
   let headerTitle = "📅 <b>Yangi BRON</b>";
   if (triggerEvent === "BOOKING_RESCHEDULED") {
     headerTitle = "🔄 <b>Bron o'zgardi</b>";
@@ -202,16 +193,10 @@ export async function processCalWebhook(
     headerTitle = "❌ <b>Bron bekor qilindi</b>";
   }
 
-  const cleanText = (str?: string) =>
-    (str || "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
-
-  // Attendees & contact info
-  const firstAttendee = Array.isArray(payload.attendees) && payload.attendees.length > 0
-    ? payload.attendees[0]
-    : undefined;
+  const firstAttendee =
+    Array.isArray(payload.attendees) && payload.attendees.length > 0
+      ? payload.attendees[0]
+      : undefined;
 
   const responses = payload.responses || {};
   const userFields = payload.userFieldsResponses || {};
@@ -248,12 +233,18 @@ export async function processCalWebhook(
   const formattedTime = formatTashkentMeetingTime(payload.startTime, payload.endTime);
   const location = formatLocation(payload.location);
 
-  const manageUrl =
-    payload.rescheduleUrl ||
-    payload.cancelUrl ||
-    (payload.uid ? `https://app.cal.com/booking/${payload.uid}` : "");
+  const rawManageUrl =
+    typeof payload.rescheduleUrl === "string" && payload.rescheduleUrl.trim()
+      ? payload.rescheduleUrl
+      : typeof payload.cancelUrl === "string" && payload.cancelUrl.trim()
+      ? payload.cancelUrl
+      : typeof payload.uid === "string" && payload.uid.trim()
+      ? `https://app.cal.com/booking/${encodeURIComponent(payload.uid.trim())}`
+      : "";
 
-  const cancellationReason = payload.cancellationReason || "";
+  const safeManageUrl = sanitizeTelegramUrl(rawManageUrl, ["https:"]);
+  const cancellationReason =
+    typeof payload.cancellationReason === "string" ? payload.cancellationReason : "";
 
   const timestamp = new Intl.DateTimeFormat("uz-UZ", {
     timeZone: "Asia/Tashkent",
@@ -268,60 +259,23 @@ export async function processCalWebhook(
   const messageLines: (string | null)[] = [
     headerTitle,
     `━━━━━━━━━━━━━━━━━━━━`,
-    `👤 <b>Mijoz:</b> ${cleanText(name)}`,
-    `✉️ <b>Email:</b> <code>${cleanText(email)}</code>`,
-    `📞 <b>Telefon:</b> <code>${cleanText(phone)}</code>`,
-    companySize ? `🏢 <b>Kompaniya ko'lami:</b> ${cleanText(companySize)}` : null,
-    question ? `❓ <b>Savol / Izoh:</b>\n<i>${cleanText(question)}</i>` : null,
+    `👤 <b>Mijoz:</b> ${escapeTelegramHtml(name)}`,
+    `✉️ <b>Email:</b> <code>${escapeTelegramHtml(email)}</code>`,
+    `📞 <b>Telefon:</b> <code>${escapeTelegramHtml(phone)}</code>`,
+    companySize ? `🏢 <b>Kompaniya ko'lami:</b> ${escapeTelegramHtml(companySize)}` : null,
+    question ? `❓ <b>Savol / Izoh:</b>\n<i>${escapeTelegramHtml(question)}</i>` : null,
     cancellationReason
-      ? `⚠️ <b>Bekor qilish sababi:</b>\n<i>${cleanText(cancellationReason)}</i>`
+      ? `⚠️ <b>Bekor qilish sababi:</b>\n<i>${escapeTelegramHtml(cancellationReason)}</i>`
       : null,
-    `🕒 <b>Uchrashuv vaqti:</b> ${formattedTime} (Toshkent vaqti)`,
-    `📍 <b>Uchrashuv joyi/turi:</b> ${cleanText(location)}`,
-    manageUrl
-      ? `🔗 <b>Boshqarish:</b> <a href="${manageUrl}">Bekor qilish yoki o'zgartirish</a>`
+    `🕒 <b>Uchrashuv vaqti:</b> ${escapeTelegramHtml(formattedTime)} (Toshkent vaqti)`,
+    `📍 <b>Uchrashuv joyi/turi:</b> ${escapeTelegramHtml(location)}`,
+    safeManageUrl
+      ? `🔗 <b>Boshqarish:</b> <a href="${escapeTelegramHtml(safeManageUrl)}">Bekor qilish yoki o'zgartirish</a>`
       : null,
     `━━━━━━━━━━━━━━━━━━━━`,
-    `🕒 <b>Qayd etilgan vaqt:</b> ${timestamp}`,
+    `🕒 <b>Qayd etilgan vaqt:</b> ${escapeTelegramHtml(timestamp)}`,
   ];
 
   const message = messageLines.filter(Boolean).join("\n");
-
-  try {
-    const url = `https://api.telegram.org/bot${token}/sendMessage`;
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: message,
-        parse_mode: "HTML",
-        disable_web_page_preview: true,
-      }),
-      signal: AbortSignal.timeout(8000),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok || !data.ok) {
-      console.error("[Telegram Booking Error Response]", data);
-      return {
-        success: false,
-        error: data.description || "Telegram API ga yuborishda xatolik yuz berdi",
-      };
-    }
-
-    return {
-      success: true,
-      messageId: data.result?.message_id,
-    };
-  } catch (error) {
-    console.error("[Telegram Booking Network Error]", error);
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : "Telegram ulanish xatosi",
-    };
-  }
+  return dispatchTelegramHtmlMessage(message, "[Telegram Booking Service]");
 }

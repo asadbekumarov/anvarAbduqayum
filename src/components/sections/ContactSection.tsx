@@ -4,6 +4,8 @@ import React, { useRef, useState } from "react";
 import { activeBookingMode } from "@/config/booking";
 import { getContent } from "@/config/content";
 import { contactConfig } from "@/config/contact";
+import { featuresConfig } from "@/config/features";
+import { getDemoCopy } from "@/config/demoCopy";
 import { BookingActionLink } from "@/components/ui/BookingActionLink";
 import {
   cleanUzbekPhone,
@@ -48,7 +50,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   locale = "uz",
 }) => {
   const safeLocale = locale === "ru" || locale === "en" ? locale : "uz";
+  const isDemoMode = featuresConfig.demoMode;
   const content = getContent(safeLocale);
+  const demoCopy = getDemoCopy(safeLocale);
   const { booking, directory, form: formCopy } = content.contact;
   const displayedBookingRoute =
     activeBookingMode === "telegram"
@@ -155,6 +159,22 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     }
 
     setFieldErrors({});
+
+    if (isDemoMode) {
+      // Demo Safety Mode: validate client-side only; never retain, log, or transmit entered PII
+      setSubmittedSummary(null);
+      setFormData({
+        name: "",
+        business: "",
+        topic: formCopy.topicOptions[0]?.id || "coop",
+        message: "",
+        honeypot: "",
+      });
+      setDisplayPhone("");
+      setStatus("success");
+      return;
+    }
+
     submitLockRef.current = true;
     setStatus("submitting");
 
@@ -413,6 +433,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                   </a>
                 )}
               </div>
+
+              {isDemoMode && (
+                <p className="text-[12.5px] leading-[1.55] text-[var(--text-muted-on-dark)] border-t border-[var(--border-on-dark-subtle)] pt-3">
+                  {demoCopy.externalChannels.outboundNotice}
+                </p>
+              )}
             </aside>
           </div>
         </div>
@@ -448,9 +474,23 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
               <h3 className="font-serif text-[24px] font-semibold leading-[1.25] text-[var(--text-ink)] mb-1 [text-wrap:balance]">
                 {directory.heading}
               </h3>
-              <p className="text-[15.5px] leading-[1.6] text-[var(--text-soft-editorial)] mb-6">
+              <p className="text-[15.5px] leading-[1.6] text-[var(--text-soft-editorial)] mb-5">
                 {directory.subheading}
               </p>
+
+              {isDemoMode && (
+                <div
+                  id="contact-external-channels-notice"
+                  className="mb-5 p-3.5 bg-[var(--bg-alabaster)] border border-[var(--border-gold)] rounded-[2px]"
+                >
+                  <p className="text-[13px] font-semibold text-[var(--accent-gold-ink)] mb-1">
+                    {demoCopy.externalChannels.channelsBadge}
+                  </p>
+                  <p className="text-[13.5px] leading-[1.55] text-[var(--text-soft-editorial)]">
+                    {demoCopy.externalChannels.channelsNote}
+                  </p>
+                </div>
+              )}
 
               <ul className="border-t border-[var(--border-hairline-editorial-strong)]">
                 {officialChannels.map((channel) => (
@@ -496,12 +536,49 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                 <h3 className="font-serif text-[26px] font-semibold leading-[1.22] text-[var(--text-ink)] [text-wrap:balance]">
                   {formCopy.title}
                 </h3>
-                <p className="mt-2 text-[14.5px] leading-[1.55] text-[var(--text-soft-editorial)]">
-                  {formCopy.subtitle}
+                {isDemoMode && (
+                  <p
+                    id="contact-demo-badge"
+                    className="mt-2 text-[13px] font-semibold text-[var(--accent-gold-ink)]"
+                  >
+                    {demoCopy.contactForm.badge}
+                  </p>
+                )}
+                <p className="mt-1.5 text-[14.5px] leading-[1.55] text-[var(--text-soft-editorial)]">
+                  {isDemoMode
+                    ? demoCopy.contactForm.subtitle
+                    : formCopy.subtitle}
                 </p>
               </div>
 
-              {status === "success" && submittedSummary ? (
+              {status === "success" && isDemoMode ? (
+                <div
+                  id="contact-success-panel"
+                  role="status"
+                  aria-live="polite"
+                  className="p-6 bg-[var(--bg-alabaster)] border border-[var(--border-gold)] rounded-[2px] flex flex-col gap-3"
+                >
+                  <h4 className="font-serif text-[22px] font-semibold leading-[1.3] text-[var(--text-ink)]">
+                    {demoCopy.contactForm.successTitle}
+                  </h4>
+                  <p className="text-[13px] font-semibold text-[var(--accent-gold-ink)]">
+                    {demoCopy.contactForm.badge}
+                  </p>
+                  <p className="text-[15px] leading-[1.6] text-[var(--text-soft-editorial)]">
+                    {demoCopy.contactForm.successMessage}
+                  </p>
+
+                  <div className="pt-1 flex flex-wrap gap-3">
+                    <button
+                      type="button"
+                      onClick={handleReset}
+                      className="min-h-[46px] px-5 bg-[var(--bg-dark)] text-[var(--bg-surface-warm)] border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] rounded-[2px] text-[14.5px] font-semibold inline-flex items-center transition-[background-color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                    >
+                      {demoCopy.contactForm.resetButton}
+                    </button>
+                  </div>
+                </div>
+              ) : status === "success" && submittedSummary ? (
                 <div
                   id="contact-success-panel"
                   role="status"
@@ -801,7 +878,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                       aria-busy={isSubmitting}
                       className="min-h-[48px] px-8 bg-[var(--bg-dark)] text-[var(--bg-surface-warm)] border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] active:bg-[var(--bg-dark)] disabled:opacity-60 disabled:cursor-not-allowed rounded-[2px] text-[15px] font-semibold inline-flex items-center justify-center whitespace-nowrap transition-[background-color,border-color] duration-150 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
                     >
-                      {isSubmitting ? formCopy.submitting : formCopy.submitButton}
+                      {isSubmitting
+                        ? formCopy.submitting
+                        : isDemoMode
+                        ? demoCopy.contactForm.submitButton
+                        : formCopy.submitButton}
                     </button>
                   </div>
                 </form>

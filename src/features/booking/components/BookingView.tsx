@@ -1,10 +1,12 @@
 "use client";
 
 import React from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
 import { activeBookingMode } from "@/config/booking";
 import { contactConfig } from "@/config/contact";
+import { featuresConfig } from "@/config/features";
+import { getDemoCopy } from "@/config/demoCopy";
 
 const CalcomBookingWidget = dynamic(() => import("./CalcomBookingWidget"), {
   ssr: false,
@@ -13,6 +15,9 @@ const CalcomBookingWidget = dynamic(() => import("./CalcomBookingWidget"), {
 
 function TelegramBookingHandoff() {
   const t = useTranslations("booking");
+  const locale = useLocale();
+  const isDemoMode = featuresConfig.demoMode;
+  const demoCopy = getDemoCopy(locale);
 
   return (
     <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
@@ -134,6 +139,12 @@ function TelegramBookingHandoff() {
                   {t("handoffSecondaryCta")}: {contactConfig.phone.display}
                 </span>
               </a>
+
+              {isDemoMode && (
+                <p className="text-[12.5px] leading-[1.55] text-[var(--text-muted-on-dark)] border-t border-[var(--border-on-dark-subtle)] pt-3">
+                  {demoCopy.externalChannels.outboundNotice}
+                </p>
+              )}
             </div>
           </aside>
         </div>

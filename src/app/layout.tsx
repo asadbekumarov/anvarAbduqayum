@@ -1,39 +1,49 @@
 import { ReactNode } from "react";
 import type { Metadata } from "next";
+import { featuresConfig } from "@/config/features";
+import { getDemoCopy } from "@/config/demoCopy";
 import { SITE_URL, isIndexingEnabled } from "@/config/siteConfig";
+
+const demoRootMeta = getDemoCopy("uz").meta;
+const rootTitle = featuresConfig.demoMode
+  ? `Anvar Abduqayum — ${demoRootMeta.siteTitleSuffix}`
+  : "Anvar Abduqayum | Ishlab chiqarish, Eksport va Biznes-mentor";
+const rootDescription = featuresConfig.demoMode
+  ? demoRootMeta.siteDescription
+  : "20 yillik real ishlab chiqarish zavodlari, savdo tarmoqlari va xalqaro eksport tajribasi asosida biznesni tizimlashtirish hamda mentorlik.";
+const rootSiteName = featuresConfig.demoMode
+  ? demoRootMeta.siteName
+  : "Anvar Abduqayum";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   robots: isIndexingEnabled
     ? { index: true, follow: true }
     : { index: false, follow: false },
-  title: "Anvar Abduqayum | Ishlab chiqarish, Eksport va Biznes-mentor",
-  description:
-    "20 yillik real ishlab chiqarish zavodlari, savdo tarmoqlari va xalqaro eksport tajribasi asosida biznesni tizimlashtirish hamda mentorlik.",
+  title: rootTitle,
+  description: rootDescription,
   openGraph: {
-    title: "Anvar Abduqayum | Ishlab chiqarish, Eksport va Biznes-mentor",
-    description:
-      "20 yillik real ishlab chiqarish zavodlari, savdo tarmoqlari va xalqaro eksport tajribasi asosida biznesni tizimlashtirish hamda mentorlik.",
+    title: rootTitle,
+    description: rootDescription,
     type: "website",
-    url: SITE_URL,
-    siteName: "Anvar Abduqayum",
+    url: featuresConfig.demoMode ? undefined : SITE_URL,
+    siteName: rootSiteName,
     images: [
       {
-        url: `${SITE_URL}/og-image.png`,
-        secureUrl: `${SITE_URL}/og-image.png`,
+        url: `${SITE_URL}/images/brand/og-image.png`,
+        secureUrl: `${SITE_URL}/images/brand/og-image.png`,
         width: 1200,
         height: 630,
         type: "image/png",
-        alt: "Anvar Abduqayum",
+        alt: rootSiteName,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Anvar Abduqayum | Ishlab chiqarish, Eksport va Biznes-mentor",
-    description:
-      "20 yillik real ishlab chiqarish zavodlari, savdo tarmoqlari va xalqaro eksport tajribasi asosida biznesni tizimlashtirish hamda mentorlik.",
-    images: [`${SITE_URL}/og-image.png`],
+    title: rootTitle,
+    description: rootDescription,
+    images: [`${SITE_URL}/images/brand/og-image.png`],
   },
   icons: {
     icon: [

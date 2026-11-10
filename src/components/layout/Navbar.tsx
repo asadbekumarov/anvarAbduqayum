@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { getContent } from "@/config/content";
+import { featuresConfig } from "@/config/features";
 import { BookingActionLink } from "@/components/ui/BookingActionLink";
 
 export interface NavbarProps {
@@ -222,7 +223,11 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
     <>
       {/* Editorial Top Masthead Header */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 border-b transition-[background-color,border-color,padding,box-shadow] duration-200 ${
+        className={`${
+          featuresConfig.demoMode
+            ? "sticky top-0 left-0 right-0"
+            : "fixed top-0 left-0 right-0"
+        } z-50 border-b transition-[background-color,border-color,padding,box-shadow] duration-200 ${
           scrolled
             ? "bg-[var(--bg-alabaster-glass)] backdrop-blur-md border-[var(--border-hairline)] py-3 shadow-[var(--shadow-editorial-header)]"
             : "bg-[var(--bg-alabaster)] border-[var(--border-hairline-subtle)] py-4"

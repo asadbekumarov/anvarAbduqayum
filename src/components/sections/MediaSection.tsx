@@ -228,7 +228,8 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
         {fallbackPlate}
         <Image
           unoptimized
-          loading="eager"
+          loading={priorityLoad ? undefined : "lazy"}
+          decoding="async"
           src={thumbUrl}
           alt={alt}
           width={1280}

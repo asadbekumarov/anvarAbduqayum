@@ -1,11 +1,16 @@
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { featuresConfig } from "@/config/features";
 
 export function NavbarSkeleton() {
   return (
     <header
       aria-hidden="true"
-      className="fixed top-0 left-0 right-0 z-50 bg-[#0A0A0A]/90 backdrop-blur-md border-b border-white/[0.08] transition-all"
+      className={`${
+        featuresConfig.demoMode
+          ? "sticky top-0 left-0 right-0"
+          : "fixed top-0 left-0 right-0"
+      } z-50 bg-[#0A0A0A]/90 backdrop-blur-md border-b border-white/[0.08] transition-all`}
     >
       <div className="max-w-[1360px] mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
         {/* Logo / Brand Name Skeleton */}

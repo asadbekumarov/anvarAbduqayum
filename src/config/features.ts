@@ -5,7 +5,18 @@
 
 export type BookingMode = "telegram" | "calcom";
 
+const resolveDemoMode = (): boolean => {
+  const envVal = process.env.NEXT_PUBLIC_DEMO_MODE?.trim().toLowerCase();
+  if (envVal === "false") return false;
+  if (envVal === "true") return true;
+  // Private Demo Safety Mode enabled by default until authorized production deployment
+  return true;
+};
+
 export interface FeatureFlags {
+  // Reversible private demo safety mode (discloses independent concept & blocks real lead delivery)
+  demoMode: boolean;
+
   // Reversible public booking flow toggle (default: "telegram" until Cal.com is confirmed)
   bookingMode: BookingMode;
 
@@ -30,6 +41,9 @@ export interface FeatureFlags {
 }
 
 export const featuresConfig: FeatureFlags = {
+  // Set to false (or NEXT_PUBLIC_DEMO_MODE=false) only for authorized official production launch
+  demoMode: resolveDemoMode(),
+
   // Temporary safe handoff to official Telegram administrator pending verified Cal.com config
   bookingMode: "telegram",
 
