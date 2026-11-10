@@ -1,9 +1,12 @@
 import { ReactNode } from "react";
 import type { Metadata } from "next";
-import { SITE_URL } from "@/config/siteConfig";
+import { SITE_URL, isIndexingEnabled } from "@/config/siteConfig";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+  robots: isIndexingEnabled
+    ? { index: true, follow: true }
+    : { index: false, follow: false },
   title: "Anvar Abduqayum | Ishlab chiqarish, Eksport va Biznes-mentor",
   description:
     "20 yillik real ishlab chiqarish zavodlari, savdo tarmoqlari va xalqaro eksport tajribasi asosida biznesni tizimlashtirish hamda mentorlik.",

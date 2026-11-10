@@ -1,0 +1,2090 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="description" content="Anvar Abduqayum: rasmiy aloqa kanallari, strategik konsultatsiya yo'nalishi va tahririy yakuniy colophon prototipi.">
+  <title>Phase 3.5: Aloqa, Konsultatsiya va Yakun | Concept 3 Editorial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Hallmark Concept 3 Exploration: Contact, Booking CTA & Footer | editorial | alabaster-stone-gold */
+    /* Critique: P5 H5 E5 S5 R5 V5 · Obsidian booking commitment band, Warm Stone asymmetric contact ledger with prototype-validated form, and colophon masthead footer; fake calendar embed, unverified socials, and SaaS 4-column link farm cut cleanly. */
+    /* Hallmark · answered F3 · editorial display headings wrap naturally at clause boundaries without artificial line breaks */
+    :root {
+      --bg-alabaster: oklch(98.1% 0.008 82);
+      --bg-alabaster-glass: oklch(98.1% 0.008 82 / 0.96);
+      --bg-stone: oklch(94.8% 0.015 80);
+      --bg-stone-soft: oklch(96.3% 0.011 82);
+      --bg-surface: oklch(99.2% 0.006 85);
+      --bg-dark: oklch(16.8% 0.009 260);
+      --bg-dark-elevated: oklch(20.6% 0.011 260);
+      --bg-dark-glass: oklch(16.8% 0.009 260 / 0.96);
+
+      --text-ink: oklch(16.8% 0.009 260);
+      --text-soft: oklch(34.5% 0.014 260);
+      --text-muted: oklch(43.2% 0.015 260);
+      --text-on-dark: oklch(98.1% 0.008 82);
+      --text-muted-on-dark: oklch(80.8% 0.012 260);
+
+      --accent-gold: oklch(57.2% 0.132 82);
+      --accent-gold-ink: oklch(44.8% 0.118 78);
+      --accent-gold-light: oklch(75.2% 0.128 84);
+      --accent-gold-wash: oklch(57.2% 0.132 82 / 0.09);
+      --accent-gold-border: oklch(57.2% 0.132 82 / 0.36);
+
+      --status-error-ink: oklch(44.5% 0.165 24);
+      --status-error-border: oklch(50.2% 0.162 24);
+      --status-error-wash: oklch(52% 0.15 24 / 0.07);
+
+      --border-hairline: oklch(16.8% 0.009 260 / 0.12);
+      --border-hairline-subtle: oklch(16.8% 0.009 260 / 0.08);
+      --border-hairline-strong: oklch(16.8% 0.009 260 / 0.25);
+      --border-on-dark: oklch(98.1% 0.008 82 / 0.18);
+      --border-on-dark-subtle: oklch(98.1% 0.008 82 / 0.1);
+
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --shadow-subtle: 0 2px 12px oklch(16.8% 0.009 260 / 0.05);
+      --shadow-sticky: 0 -4px 20px oklch(16.8% 0.009 260 / 0.08);
+
+      --space-3xs: 2px;
+      --space-2xs: 4px;
+      --space-xs: 8px;
+      --space-sm: 12px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 40px;
+      --space-2xl: 64px;
+      --space-3xl: 96px;
+      --space-4xl: 128px;
+
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+      --radius-sharp: 2px;
+      --radius-subtle: 4px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      background-color: var(--bg-alabaster);
+      color: var(--text-ink);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      font-synthesis: none;
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--space-3xl);
+      scroll-padding-bottom: var(--space-3xl);
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    @media (min-width: 640px) {
+      html {
+        scroll-padding-bottom: 0;
+      }
+    }
+
+    body {
+      background-color: var(--bg-alabaster);
+      color: var(--text-ink);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: clip;
+    }
+
+    ::selection {
+      background: var(--accent-gold);
+      color: var(--bg-surface);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent-gold);
+      outline-offset: 2px;
+      transition: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1320px;
+      margin-inline: auto;
+      padding-inline: var(--space-md);
+    }
+
+    @media (min-width: 640px) {
+      .container {
+        padding-inline: var(--space-lg);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .container {
+        padding-inline: var(--space-xl);
+      }
+    }
+
+    .skip-link {
+      position: absolute;
+      left: -9999px;
+      top: 0;
+      z-index: 900;
+      min-height: 44px;
+      padding: var(--space-sm) var(--space-md);
+      background: var(--bg-dark);
+      color: var(--bg-surface);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .skip-link:focus {
+      left: var(--space-md);
+      top: var(--space-md);
+    }
+
+    /* =====================================================================
+       CONTINUITY MASTHEAD & EXPLORATION BANNER (MATCHES PHASE 3.1 - 3.4)
+       ===================================================================== */
+    .masthead {
+      position: sticky;
+      top: 0;
+      z-index: 300;
+      background: var(--bg-alabaster-glass);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-hairline);
+      min-height: var(--space-2xl);
+      display: flex;
+      align-items: center;
+    }
+
+    .masthead-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-xs);
+      padding-block: var(--space-sm);
+    }
+
+    @media (min-width: 640px) {
+      .masthead-inner {
+        gap: var(--space-md);
+      }
+    }
+
+    .wordmark-link {
+      font-family: var(--font-display);
+      font-size: clamp(13px, 4vw, 18px);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text-ink);
+      white-space: nowrap;
+      min-width: 0;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      transition: color var(--dur-micro) var(--ease-out);
+    }
+
+    .wordmark-link:hover {
+      color: var(--accent-gold-ink);
+    }
+
+    .wordmark-dot {
+      color: var(--accent-gold);
+    }
+
+    .masthead-nav {
+      display: none;
+      align-items: center;
+      gap: var(--space-lg);
+    }
+
+    @media (min-width: 900px) {
+      .masthead-nav {
+        display: flex;
+      }
+    }
+
+    .nav-item-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-soft);
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      border-bottom: 1px solid transparent;
+      transition: color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+      white-space: nowrap;
+    }
+
+    .nav-item-link:hover {
+      color: var(--text-ink);
+      border-bottom-color: var(--accent-gold-ink);
+    }
+
+    .lang-switcher {
+      display: inline-flex;
+      border: 1px solid var(--border-hairline-strong);
+      border-radius: var(--radius-sharp);
+      overflow: hidden;
+      background: var(--bg-surface);
+      flex-shrink: 0;
+    }
+
+    .lang-btn {
+      min-width: 44px;
+      min-height: 44px;
+      padding-inline: var(--space-xs);
+      background: transparent;
+      border: none;
+      border-right: 1px solid var(--border-hairline);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-soft);
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+
+    @media (min-width: 480px) {
+      .lang-btn {
+        padding-inline: var(--space-sm);
+      }
+    }
+
+    .lang-btn:last-child {
+      border-right: none;
+    }
+
+    .lang-btn:hover:not(.is-active) {
+      background: var(--bg-stone);
+      color: var(--text-ink);
+    }
+
+    .lang-btn.is-active,
+    .lang-btn:active {
+      background: var(--bg-dark);
+      color: var(--bg-surface);
+    }
+
+    /* Compact Exploration Header */
+    .intro-banner {
+      background: var(--bg-alabaster);
+      border-bottom: 1px solid var(--border-hairline);
+      padding-block: var(--space-xl) var(--space-2xl);
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: end;
+    }
+
+    @media (min-width: 1024px) {
+      .intro-grid {
+        grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+        gap: var(--space-xl);
+      }
+    }
+
+    .banner-h1 {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4.4vw, 54px);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      color: var(--text-ink);
+      overflow-wrap: break-word;
+      text-wrap: balance;
+      min-width: 0;
+    }
+
+    .banner-lead {
+      font-size: 17px;
+      line-height: 1.62;
+      color: var(--text-soft);
+      max-width: 58ch;
+      text-wrap: pretty;
+      margin-top: var(--space-md);
+    }
+
+    .banner-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+
+    @media (min-width: 1024px) {
+      .banner-actions {
+        justify-content: flex-end;
+      }
+    }
+
+    .btn-primary-action {
+      min-height: 46px;
+      padding-inline: var(--space-lg);
+      background: var(--bg-dark);
+      color: var(--bg-surface);
+      border: 1px solid var(--bg-dark);
+      border-radius: var(--radius-sharp);
+      font-size: 14.5px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      white-space: nowrap;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-primary-action:hover {
+      background: var(--accent-gold-ink);
+      border-color: var(--accent-gold-ink);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary-action:active {
+      transform: translateY(0);
+    }
+
+    .banner-text-link {
+      min-height: 46px;
+      padding-inline: var(--space-sm);
+      color: var(--text-ink);
+      font-size: 14.5px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      white-space: nowrap;
+      border-bottom: 1px solid var(--border-hairline-strong);
+      transition: color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .banner-text-link:hover {
+      color: var(--accent-gold-ink);
+      border-bottom-color: var(--accent-gold-ink);
+    }
+
+    /* Continuity Seam (Phase 3.4 Media Press Ledger -> Phase 3.5 Closing Journey) */
+    .continuity-seam {
+      background: var(--bg-stone-soft);
+      border-bottom: 1px solid var(--border-hairline);
+      padding-block: var(--space-md);
+    }
+
+    .continuity-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+
+    .continuity-crumbs {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+
+    .continuity-crumb-link {
+      color: var(--text-ink);
+      font-weight: 600;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      border-bottom: 1px solid var(--border-hairline-strong);
+      transition: color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .continuity-crumb-link:hover {
+      color: var(--accent-gold-ink);
+      border-bottom-color: var(--accent-gold-ink);
+    }
+
+    .continuity-source-note {
+      font-size: 13.5px;
+      color: var(--accent-gold-ink);
+      font-weight: 600;
+    }
+
+    /* =====================================================================
+       BAND 1: CONSULTATION BOOKING COMMITMENT (OBSIDIAN EDITORIAL)
+       ===================================================================== */
+    .section-booking-band {
+      background: var(--bg-dark);
+      color: var(--text-on-dark);
+      border-bottom: 1px solid var(--border-on-dark);
+      padding-block: var(--space-3xl);
+    }
+
+    .booking-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-xl);
+      align-items: start;
+    }
+
+    @media (min-width: 1024px) {
+      .booking-grid {
+        grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+        gap: var(--space-2xl);
+      }
+    }
+
+    .booking-h2-pair {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-sm);
+      min-width: 0;
+    }
+
+    .booking-num {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      color: var(--accent-gold-light);
+      flex-shrink: 0;
+    }
+
+    .booking-h2 {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4.1vw, 50px);
+      font-weight: 600;
+      line-height: 1.09;
+      letter-spacing: -0.02em;
+      color: var(--text-on-dark);
+      overflow-wrap: break-word;
+      text-wrap: balance;
+      min-width: 0;
+    }
+
+    .booking-lead {
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--text-muted-on-dark);
+      max-width: 56ch;
+      text-wrap: pretty;
+      margin-top: var(--space-md);
+    }
+
+    .booking-spec-list {
+      margin-top: var(--space-xl);
+      border-top: 1px solid var(--border-on-dark);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    @media (min-width: 640px) {
+      .booking-spec-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    .booking-spec-item {
+      padding-block: var(--space-md);
+      border-bottom: 1px solid var(--border-on-dark-subtle);
+    }
+
+    @media (min-width: 640px) {
+      .booking-spec-item {
+        padding-right: var(--space-md);
+        border-bottom: none;
+        border-right: 1px solid var(--border-on-dark-subtle);
+      }
+      .booking-spec-item + .booking-spec-item {
+        padding-left: var(--space-md);
+      }
+      .booking-spec-item:last-child {
+        border-right: none;
+        padding-right: 0;
+      }
+    }
+
+    .booking-spec-key {
+      font-size: 13.5px;
+      color: var(--accent-gold-light);
+      font-weight: 600;
+    }
+
+    .booking-spec-val {
+      font-size: 15.5px;
+      color: var(--text-on-dark);
+      font-weight: 500;
+      margin-top: var(--space-2xs);
+      line-height: 1.45;
+    }
+
+    .booking-dispatch-card {
+      background: var(--bg-dark-elevated);
+      color: var(--text-on-dark);
+      border: 1px solid var(--border-on-dark);
+      border-top: 2px solid var(--accent-gold-light);
+      border-radius: var(--radius-sharp);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    @media (min-width: 640px) {
+      .booking-dispatch-card {
+        padding: var(--space-xl);
+      }
+    }
+
+    .booking-card-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 1.25;
+      color: var(--text-on-dark);
+    }
+
+    .booking-card-desc {
+      font-size: 15.5px;
+      line-height: 1.62;
+      color: var(--text-muted-on-dark);
+    }
+
+    .booking-route-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--bg-dark);
+      border: 1px solid var(--border-on-dark);
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      color: var(--accent-gold-light);
+      overflow-wrap: anywhere;
+    }
+
+    .booking-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-sm);
+      padding-top: var(--space-xs);
+    }
+
+    .btn-on-dark-primary {
+      min-height: 48px;
+      padding-inline: var(--space-lg);
+      background: var(--bg-surface);
+      color: var(--text-ink);
+      border: 1px solid var(--bg-surface);
+      border-radius: var(--radius-sharp);
+      font-size: 15px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      white-space: nowrap;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-on-dark-primary:hover {
+      background: var(--accent-gold-light);
+      border-color: var(--accent-gold-light);
+      color: var(--text-ink);
+      transform: translateY(-1px);
+    }
+
+    .btn-on-dark-primary:active {
+      transform: translateY(0);
+    }
+
+    .link-on-dark-secondary {
+      min-height: 48px;
+      padding-inline: var(--space-sm);
+      color: var(--text-on-dark);
+      font-size: 14.5px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      border-bottom: 1px solid var(--border-on-dark);
+      transition: color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .link-on-dark-secondary:hover {
+      color: var(--accent-gold-light);
+      border-bottom-color: var(--accent-gold-light);
+    }
+
+    /* =====================================================================
+       BAND 2: CONTACT DIRECTORY & PROTOTYPE FORM (WARM STONE)
+       ===================================================================== */
+    .section-contact {
+      background: var(--bg-stone);
+      border-bottom: 1px solid var(--border-hairline);
+      padding-block: var(--space-3xl);
+    }
+
+    .section-split-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-md);
+      align-items: end;
+      padding-bottom: var(--space-lg);
+      border-bottom: 1px solid var(--border-hairline);
+      margin-bottom: var(--space-2xl);
+    }
+
+    @media (min-width: 1024px) {
+      .section-split-header {
+        grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+        gap: var(--space-xl);
+      }
+    }
+
+    .section-title-pair {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-sm);
+      min-width: 0;
+    }
+
+    .section-num-gutter {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      color: var(--accent-gold-ink);
+      flex-shrink: 0;
+    }
+
+    .section-h2 {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4.1vw, 50px);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--text-ink);
+      overflow-wrap: break-word;
+      text-wrap: balance;
+      min-width: 0;
+    }
+
+    .section-lead {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-soft);
+      max-width: 54ch;
+      text-wrap: pretty;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-xl);
+      align-items: start;
+    }
+
+    @media (min-width: 1024px) {
+      .contact-grid {
+        grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+        gap: var(--space-2xl);
+      }
+    }
+
+    /* Left Column: Ruled Editorial Directory */
+    .directory-panel {
+      min-width: 0;
+    }
+
+    .directory-heading {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.25;
+      color: var(--text-ink);
+      margin-bottom: var(--space-xs);
+    }
+
+    .directory-sub {
+      font-size: 15.5px;
+      line-height: 1.6;
+      color: var(--text-soft);
+      margin-bottom: var(--space-lg);
+    }
+
+    .contact-ledger {
+      list-style: none;
+      border-top: 1px solid var(--border-hairline-strong);
+    }
+
+    .contact-ledger-row {
+      border-bottom: 1px solid var(--border-hairline);
+    }
+
+    .contact-channel-link {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: var(--space-xs);
+      align-items: center;
+      padding-block: var(--space-md);
+      padding-inline: var(--space-xs);
+      min-height: 60px;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .contact-channel-link:hover {
+      background: var(--accent-gold-wash);
+    }
+
+    .channel-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .channel-value {
+      display: block;
+      font-size: clamp(14.5px, 4.3vw, 17px);
+      font-weight: 600;
+      color: var(--text-ink);
+      margin-top: var(--space-3xs);
+      font-variant-numeric: tabular-nums;
+      overflow-wrap: break-word;
+      transition: transform var(--dur-micro) var(--ease-out);
+    }
+
+    .channel-cue {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--accent-gold-ink);
+      transition: transform var(--dur-micro) var(--ease-out);
+    }
+
+    .contact-channel-link:hover .channel-value,
+    .contact-channel-link:hover .channel-cue {
+      transform: translateX(3px);
+    }
+
+    .office-footnote {
+      margin-top: var(--space-lg);
+      padding: var(--space-md);
+      background: var(--bg-alabaster);
+      border: 1px solid var(--border-hairline-strong);
+      border-radius: var(--radius-sharp);
+    }
+
+    .office-footnote-title {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--text-ink);
+    }
+
+    .office-footnote-copy {
+      font-size: 14.5px;
+      line-height: 1.55;
+      color: var(--text-soft);
+      margin-top: var(--space-2xs);
+    }
+
+    /* Right Column: Architectural Inquiry Form Surface */
+    .form-surface {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-hairline-strong);
+      border-radius: var(--radius-sharp);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-subtle);
+      min-width: 0;
+    }
+
+    @media (min-width: 640px) {
+      .form-surface {
+        padding: var(--space-xl);
+      }
+    }
+
+    .form-header {
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--border-hairline);
+      margin-bottom: var(--space-lg);
+    }
+
+    .form-title {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 600;
+      line-height: 1.22;
+      color: var(--text-ink);
+    }
+
+    .form-prototype-banner {
+      margin-top: var(--space-sm);
+      padding: var(--space-sm) var(--space-md);
+      background: var(--accent-gold-wash);
+      border: 1px solid var(--accent-gold-border);
+      border-radius: var(--radius-sharp);
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--accent-gold-ink);
+      font-weight: 500;
+    }
+
+    .inquiry-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .form-row-two {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-md);
+    }
+
+    @media (min-width: 640px) {
+      .form-row-two {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2xs);
+      min-width: 0;
+    }
+
+    .field-label {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-ink);
+    }
+
+    .field-control {
+      width: 100%;
+      min-height: 48px;
+      padding: var(--space-sm) var(--space-md);
+      background: var(--bg-alabaster);
+      border: 1px solid var(--border-hairline-strong);
+      border-radius: var(--radius-sharp);
+      font-family: inherit;
+      font-size: 16px;
+      line-height: 1.4;
+      color: var(--text-ink);
+      transition: border-color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .field-control::placeholder {
+      color: var(--text-muted);
+    }
+
+    .field-control:hover {
+      border-color: var(--text-ink);
+    }
+
+    .field-control:focus {
+      background: var(--bg-surface);
+    }
+
+    .field-control[aria-invalid="true"] {
+      border-color: var(--status-error-border);
+      background: var(--status-error-wash);
+    }
+
+    .field-textarea {
+      min-height: 112px;
+      resize: vertical;
+      line-height: 1.55;
+    }
+
+    .field-select {
+      cursor: pointer;
+    }
+
+    .field-error {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--status-error-ink);
+      min-height: 20px;
+    }
+
+    .field-error:empty {
+      display: none;
+    }
+
+    .hp-trap {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .form-submit-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      padding-top: var(--space-xs);
+    }
+
+    .btn-form-submit {
+      min-height: 48px;
+      padding-inline: var(--space-xl);
+      background: var(--bg-dark);
+      color: var(--bg-surface);
+      border: 1px solid var(--bg-dark);
+      border-radius: var(--radius-sharp);
+      font-size: 15px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      white-space: nowrap;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-form-submit:hover {
+      background: var(--accent-gold-ink);
+      border-color: var(--accent-gold-ink);
+      transform: translateY(-1px);
+    }
+
+    .btn-form-submit:active {
+      transform: translateY(0);
+    }
+
+    .form-endpoint-caption {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .prototype-result-box {
+      padding: var(--space-lg);
+      background: var(--bg-alabaster);
+      border: 1px solid var(--accent-gold-ink);
+      border-radius: var(--radius-sharp);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+
+    .prototype-result-box[hidden] {
+      display: none;
+    }
+
+    .prototype-result-title {
+      font-family: var(--font-display);
+      font-size: 21px;
+      font-weight: 600;
+      color: var(--text-ink);
+      line-height: 1.3;
+    }
+
+    .prototype-result-copy {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--text-soft);
+    }
+
+    .prototype-result-summary {
+      list-style: none;
+      border-top: 1px solid var(--border-hairline);
+      padding-top: var(--space-sm);
+      display: grid;
+      gap: var(--space-xs);
+      font-size: 14.5px;
+      color: var(--text-ink);
+    }
+
+    .prototype-result-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      padding-top: var(--space-xs);
+    }
+
+    .btn-outline-reset {
+      min-height: 44px;
+      padding-inline: var(--space-md);
+      background: transparent;
+      color: var(--text-ink);
+      border: 1px solid var(--border-hairline-strong);
+      border-radius: var(--radius-sharp);
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      transition: border-color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-outline-reset:hover {
+      border-color: var(--accent-gold-ink);
+      background: var(--accent-gold-wash);
+    }
+
+    /* =====================================================================
+       BAND 3: EDITORIAL MASTHEAD FOOTER & COLOPHON (OBSIDIAN)
+       ===================================================================== */
+    .site-footer {
+      background: var(--bg-dark);
+      color: var(--text-on-dark);
+      padding-top: var(--space-3xl);
+      padding-bottom: calc(var(--space-2xl) + var(--space-xl));
+    }
+
+    @media (min-width: 640px) {
+      .site-footer {
+        padding-bottom: var(--space-2xl);
+      }
+    }
+
+    .footer-top-mast {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-lg);
+      padding-bottom: var(--space-2xl);
+      border-bottom: 1px solid var(--border-on-dark);
+      align-items: end;
+    }
+
+    @media (min-width: 900px) {
+      .footer-top-mast {
+        grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+      }
+    }
+
+    .footer-wordmark {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3.8vw, 44px);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--text-on-dark);
+      text-wrap: balance;
+    }
+
+    .footer-tagline {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text-muted-on-dark);
+      max-width: 48ch;
+      margin-top: var(--space-sm);
+    }
+
+    .footer-mast-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    @media (min-width: 900px) {
+      .footer-mast-cta {
+        justify-content: flex-end;
+      }
+    }
+
+    .btn-footer-outline {
+      min-height: 46px;
+      padding-inline: var(--space-lg);
+      background: transparent;
+      color: var(--text-on-dark);
+      border: 1px solid var(--border-on-dark);
+      border-radius: var(--radius-sharp);
+      font-size: 14.5px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      white-space: nowrap;
+      transition: border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-footer-outline:hover {
+      border-color: var(--accent-gold-light);
+      color: var(--accent-gold-light);
+      background: var(--bg-dark-elevated);
+    }
+
+    /* Middle 3-Zone Editorial Ledger */
+    .footer-ledger {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-xl);
+      padding-block: var(--space-2xl);
+      border-bottom: 1px solid var(--border-on-dark-subtle);
+    }
+
+    @media (min-width: 768px) {
+      .footer-ledger {
+        grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 3fr);
+        gap: var(--space-xl);
+      }
+    }
+
+    .footer-zone-heading {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--accent-gold-light);
+      margin-bottom: var(--space-md);
+    }
+
+    .footer-index-list {
+      list-style: none;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    @media (min-width: 480px) {
+      .footer-index-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: var(--space-lg);
+      }
+    }
+
+    .footer-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      font-size: 15px;
+      color: var(--text-muted-on-dark);
+      border-bottom: 1px solid transparent;
+      overflow-wrap: anywhere;
+      transition: color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .footer-link:hover {
+      color: var(--text-on-dark);
+      border-bottom-color: var(--accent-gold-light);
+    }
+
+    .footer-link-code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--accent-gold-light);
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+    }
+
+    .footer-contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Bottom Colophon Strip */
+    .footer-colophon {
+      padding-top: var(--space-lg);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+    }
+
+    .footer-colophon-note {
+      font-size: 14px;
+      color: var(--text-muted-on-dark);
+      line-height: 1.5;
+    }
+
+    .footer-top-return {
+      min-height: 44px;
+      padding-inline: var(--space-xs);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-on-dark);
+      border-bottom: 1px solid var(--border-on-dark);
+      transition: color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .footer-top-return:hover {
+      color: var(--accent-gold-light);
+      border-bottom-color: var(--accent-gold-light);
+    }
+
+    /* =====================================================================
+       MOBILE STICKY CONVERSION BAR (< 640px CLEARANCE VERIFICATION)
+       ===================================================================== */
+    .mobile-sticky-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 400;
+      background: var(--bg-alabaster-glass);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--border-hairline-strong);
+      box-shadow: var(--shadow-sticky);
+      padding: var(--space-sm) var(--space-md);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    @media (min-width: 640px) {
+      .mobile-sticky-bar {
+        display: none;
+      }
+    }
+
+    .sticky-cta-primary {
+      flex: 1 1 0;
+      min-height: 44px;
+      padding-inline: var(--space-sm);
+      background: var(--bg-dark);
+      color: var(--bg-surface);
+      border: 1px solid var(--bg-dark);
+      border-radius: var(--radius-sharp);
+      font-size: 13.5px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      white-space: nowrap;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .sticky-cta-primary:hover {
+      background: var(--accent-gold-ink);
+      border-color: var(--accent-gold-ink);
+    }
+
+    .sticky-cta-secondary {
+      flex: 1 1 0;
+      min-height: 44px;
+      padding-inline: var(--space-sm);
+      background: transparent;
+      color: var(--text-ink);
+      border: 1px solid var(--border-hairline-strong);
+      border-radius: var(--radius-sharp);
+      font-size: 13.5px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      white-space: nowrap;
+      transition: border-color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .sticky-cta-secondary:hover {
+      border-color: var(--accent-gold-ink);
+      background: var(--accent-gold-wash);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      :root {
+        --dur-micro: 0.01ms;
+        --dur-short: 0.01ms;
+      }
+      html {
+        scroll-behavior: auto;
+      }
+      *, *::before, *::after {
+        transition-duration: 0.01ms;
+        animation-duration: 0.01ms;
+      }
+    }
+  </style>
+</head>
+<body id="top">
+  <a class="skip-link" href="#konsultatsiya-band" data-i18n="skipToMain">Asosiy kontentga o‘tish</a>
+
+  <!-- STICKY CONCEPT 3 MASTHEAD -->
+  <header class="masthead">
+    <div class="container masthead-inner">
+      <a class="wordmark-link" href="#top" aria-label="Anvar Abduqayum">
+        <span>Anvar Abduqayum<span class="wordmark-dot">.</span></span>
+      </a>
+
+      <nav class="masthead-nav" aria-label="Bo‘limlar navigatsiyasi">
+        <a class="nav-item-link" href="#konsultatsiya-band" data-i18n="navConsult">Konsultatsiya</a>
+        <a class="nav-item-link" href="#aloqa" data-i18n="navContact">Aloqa</a>
+        <a class="nav-item-link" href="#sayt-yakuni" data-i18n="navFooter">Colophon</a>
+      </nav>
+
+      <div class="lang-switcher" role="group" aria-label="Tilni tanlash">
+        <button type="button" class="lang-btn is-active" data-lang="uz" aria-pressed="true">UZ</button>
+        <button type="button" class="lang-btn" data-lang="ru" aria-pressed="false">RU</button>
+        <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- EXPLORATION HEADER -->
+  <section class="intro-banner" aria-labelledby="exploration-heading">
+    <div class="container intro-grid">
+      <div>
+        <h1 class="banner-h1" id="exploration-heading" data-i18n="bannerH1">Aloqa, konsultatsiya va yakuniy colophon</h1>
+        <p class="banner-lead" data-i18n="bannerLead">Tasdiqlangan rasmiy kanallar, konsultatsiya marshruti va mobil colophon dizayn prototipi.</p>
+      </div>
+      <div class="banner-actions">
+        <a class="btn-primary-action" href="/uz/bron" data-booking-link data-i18n="bannerCta">Konsultatsiya sahifasiga o‘tish</a>
+        <a class="banner-text-link" href="#aloqa" data-i18n="bannerSecondary">Aloqa kanallarini ko‘rish</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTINUITY BRIDGE FROM PHASE 3.4 -->
+  <div class="continuity-seam">
+    <div class="container continuity-inner">
+      <div class="continuity-crumbs">
+        <span data-i18n="seamPrev">Oldingi bosqich:</span>
+        <a class="continuity-crumb-link" href="phase3-4-media.html" data-i18n="seamPrevLink">06 Media va OAV arxivi</a>
+        <span aria-hidden="true">/</span>
+        <span data-i18n="seamCurr">07 Konsultatsiya va aloqa / 08 Colophon</span>
+      </div>
+      <span class="continuity-source-note" data-i18n="seamNote">Izolyatsiya qilingan prototip: faqat mijoz tasdiqlagan rasmiy kontaktlar</span>
+    </div>
+  </div>
+
+  <main>
+    <!-- BAND 1: CONSULTATION BOOKING COMMITMENT (OBSIDIAN) -->
+    <section class="section-booking-band" id="konsultatsiya-band" aria-labelledby="booking-heading">
+      <div class="container booking-grid">
+        <div>
+          <div class="booking-h2-pair">
+            <span class="booking-num">07.A</span>
+            <h2 class="booking-h2" id="booking-heading" data-i18n="bookingH2">Strategik konsultatsiyaga yozilish</h2>
+          </div>
+          <p class="booking-lead" data-i18n="bookingLead">Korxonangizdagi boshqaruv tizimini tahlil qilish, operatsion muammolarni aniqlash yoki strategik hamkorlikni muhokama qilish uchun alohida ajratilgan yozilish sahifasidan foydalaning.</p>
+
+          <dl class="booking-spec-list">
+            <div class="booking-spec-item">
+              <dt class="booking-spec-key" data-i18n="spec1Key">Diagnostika davomiyligi</dt>
+              <dd class="booking-spec-val" data-i18n="spec1Val">20 daqiqalik dastlabki sessiya</dd>
+            </div>
+            <div class="booking-spec-item">
+              <dt class="booking-spec-key" data-i18n="spec2Key">Muhokama mavzulari</dt>
+              <dd class="booking-spec-val" data-i18n="spec2Val">Tizimlashtirish va strategik sheriklik</dd>
+            </div>
+            <div class="booking-spec-item">
+              <dt class="booking-spec-key" data-i18n="spec3Key">Uchrashuv shakli</dt>
+              <dd class="booking-spec-val" data-i18n="spec3Val">Onlayn yoki Toshkent ofisida</dd>
+            </div>
+          </dl>
+        </div>
+
+        <aside class="booking-dispatch-card" aria-labelledby="booking-card-title">
+          <h3 class="booking-card-title" id="booking-card-title" data-i18n="bookingCardTitle">Mavjud rasmiy yozilish manzili</h3>
+          <p class="booking-card-desc" data-i18n="bookingCardDesc">Haqiqiy vaqt jadvallari va ariza shakli saytning maxsus bron sahifasida joylashgan. Til almashganda marshrut avtomatik moslashadi.</p>
+
+          <div class="booking-route-pill" aria-label="Bron sahifasi marshruti">
+            <span data-i18n="bookingRouteLabel">Faol marshrut:</span>
+            <span data-booking-route-text>/uz/bron</span>
+          </div>
+
+          <div class="booking-actions">
+            <a class="btn-on-dark-primary" href="/uz/bron" data-booking-link data-i18n="bookingBtnPrimary">Bron sahifasini ochish</a>
+            <a class="link-on-dark-secondary" href="https://t.me/anvar_abduqayum_admin" target="_blank" rel="noopener noreferrer" data-i18n="bookingBtnTelegram">Telegram admin ga yozish</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- BAND 2: CONTACT DIRECTORY & PROTOTYPE INQUIRY FORM (WARM STONE) -->
+    <section class="section-contact" id="aloqa" aria-labelledby="contact-heading">
+      <div class="container">
+        <div class="section-split-header">
+          <div class="section-title-pair">
+            <span class="section-num-gutter">07.B</span>
+            <h2 class="section-h2" id="contact-heading" data-i18n="contactH2">Rasmiy aloqa kanallari</h2>
+          </div>
+          <p class="section-lead" data-i18n="contactLead">Tijoriy takliflar, hamkorlik murojaatlari va OAV so‘rovlari faqat quyidagi tasdiqlangan rasmiy manzillar orqali qabul qilinadi.</p>
+        </div>
+
+        <div class="contact-grid">
+          <!-- Left: Editorial Direct Directory -->
+          <div class="directory-panel">
+            <h3 class="directory-heading" data-i18n="dirHeading">To‘g‘ridan-to‘g‘ri bog‘lanish</h3>
+            <p class="directory-sub" data-i18n="dirSub">Matbuot, konsultatsiya va biznes hamkorlik uchun tasdiqlangan rasmiy aloqa nuqtalari.</p>
+
+            <ul class="contact-ledger">
+              <li class="contact-ledger-row">
+                <a class="contact-channel-link" href="tel:+998555036100">
+                  <span>
+                    <span class="channel-label" data-i18n="chPhoneLabel">Rasmiy telefon raqami</span>
+                    <span class="channel-value">+998 55 503 61 00</span>
+                  </span>
+                  <span class="channel-cue" data-i18n="cueCall">Qo‘ng‘iroq</span>
+                </a>
+              </li>
+              <li class="contact-ledger-row">
+                <a class="contact-channel-link" href="https://t.me/anvar_abduqayum_admin" target="_blank" rel="noopener noreferrer">
+                  <span>
+                    <span class="channel-label" data-i18n="chTgAdminLabel">Telegram admin (murojaatlar)</span>
+                    <span class="channel-value">@anvar_abduqayum_admin</span>
+                  </span>
+                  <span class="channel-cue" data-i18n="cueMessage">Yozish</span>
+                </a>
+              </li>
+              <li class="contact-ledger-row">
+                <a class="contact-channel-link" href="https://t.me/anvar_abduqayum" target="_blank" rel="noopener noreferrer">
+                  <span>
+                    <span class="channel-label" data-i18n="chTgChannelLabel">Rasmiy Telegram kanal</span>
+                    <span class="channel-value">@anvar_abduqayum</span>
+                  </span>
+                  <span class="channel-cue" data-i18n="cueOpen">Ochish</span>
+                </a>
+              </li>
+              <li class="contact-ledger-row">
+                <a class="contact-channel-link" href="mailto:info@anvarabduqayum.uz">
+                  <span>
+                    <span class="channel-label" data-i18n="chEmailLabel">Elektron pochta</span>
+                    <span class="channel-value">info@anvarabduqayum.uz</span>
+                  </span>
+                  <span class="channel-cue" data-i18n="cueMail">Xat</span>
+                </a>
+              </li>
+              <li class="contact-ledger-row">
+                <a class="contact-channel-link" href="https://www.instagram.com/anvar_abduqayum" target="_blank" rel="noopener noreferrer">
+                  <span>
+                    <span class="channel-label" data-i18n="chIgLabel">Instagram sahifasi</span>
+                    <span class="channel-value">@anvar_abduqayum</span>
+                  </span>
+                  <span class="channel-cue" data-i18n="cueOpen">Ochish</span>
+                </a>
+              </li>
+              <li class="contact-ledger-row">
+                <a class="contact-channel-link" href="https://www.youtube.com/@AnvarAbduqayum" target="_blank" rel="noopener noreferrer">
+                  <span>
+                    <span class="channel-label" data-i18n="chYtLabel">YouTube kanali</span>
+                    <span class="channel-value">@AnvarAbduqayum</span>
+                  </span>
+                  <span class="channel-cue" data-i18n="cueOpen">Ochish</span>
+                </a>
+              </li>
+            </ul>
+
+            <div class="office-footnote">
+              <p class="office-footnote-title" data-i18n="officeTitle">Manzil va vakillik</p>
+              <p class="office-footnote-copy" data-i18n="officeCopy">Toshkent shahri, O‘zbekiston. Uchrashuvlar oldindan kelishilgan jadval asosida o‘tkaziladi.</p>
+            </div>
+          </div>
+
+          <!-- Right: Prototype-Validated Contact Form -->
+          <div class="form-surface">
+            <div class="form-header">
+              <h3 class="form-title" data-i18n="formTitle">Murojaat shakli</h3>
+              <p class="form-prototype-banner" data-i18n="formNotice">Faqat prototip tekshiruvi: bu izolyatsiya qilingan dizayn sahifasi serverga ulangan emas va ma’lumot yubormaydi.</p>
+            </div>
+
+            <form class="inquiry-form" id="contact-form" data-endpoint="" novalidate>
+              <input class="hp-trap" type="text" name="website_check" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+              <div class="form-row-two">
+                <div class="field-group">
+                  <label class="field-label" for="inquiry-name" data-i18n="labelName">Ismingiz</label>
+                  <input class="field-control" id="inquiry-name" name="name" type="text" required autocomplete="name" aria-describedby="error-name" placeholder="Alisher Karimov">
+                  <span class="field-error" id="error-name" role="alert"></span>
+                </div>
+
+                <div class="field-group">
+                  <label class="field-label" for="inquiry-phone" data-i18n="labelPhone">Telefon raqamingiz</label>
+                  <input class="field-control" id="inquiry-phone" name="phone" type="tel" required inputmode="tel" autocomplete="tel" aria-describedby="error-phone" placeholder="+998 (90) 123-45-67">
+                  <span class="field-error" id="error-phone" role="alert"></span>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="inquiry-topic" data-i18n="labelTopic">Murojaat yo‘nalishi</label>
+                <select class="field-control field-select" id="inquiry-topic" name="topic">
+                  <option value="coop" data-i18n="topicCoop">Strategik hamkorlik</option>
+                  <option value="consult" data-i18n="topicConsult">Konsultatsiya (tizimlashtirish)</option>
+                  <option value="media" data-i18n="topicMedia">OAV va intervyu</option>
+                  <option value="other" data-i18n="topicOther">Boshqa masala</option>
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="inquiry-message" data-i18n="labelMessage">Qisqacha mazmun</label>
+                <textarea class="field-control field-textarea" id="inquiry-message" name="message" rows="3" aria-describedby="error-message" placeholder="Kompaniyangiz faoliyati va asosiy savolingizni qisqacha yozing..."></textarea>
+                <span class="field-error" id="error-message" role="alert"></span>
+              </div>
+
+              <div class="form-submit-row">
+                <button class="btn-form-submit" type="submit" id="submit-btn" data-i18n="submitLabel">Shaklni tekshirish</button>
+                <span class="form-endpoint-caption" data-i18n="endpointCaption">Ishchi tizimda /api/lead orqali yuboriladi</span>
+              </div>
+
+              <div class="prototype-result-box" id="prototype-status" role="status" aria-live="polite" hidden>
+                <h4 class="prototype-result-title" data-i18n="protoResultTitle">Prototip tekshiruvi yakunlandi: xabar yuborilmadi</h4>
+                <p class="prototype-result-copy" data-i18n="protoResultCopy">Kiritilgan maydonlar mijoz tomonida tekshirildi, ammo serverga so‘rov yuborilmadi (izolyatsiya qilingan HTML explorer). Haqiqiy murojaat yuborish uchun rasmiy Telegram admin yoki konsultatsiya sahifasidan foydalaning.</p>
+                <ul class="prototype-result-summary" id="proto-summary-list"></ul>
+                <div class="prototype-result-actions">
+                  <a class="btn-primary-action" href="https://t.me/anvar_abduqayum_admin" target="_blank" rel="noopener noreferrer">
+                    <span data-i18n="protoTgBtn">Telegram admin orqali yozish</span>
+                  </a>
+                  <a class="btn-outline-reset" href="/uz/bron" data-booking-link>
+                    <span data-i18n="protoBronBtn">Bron sahifasiga o‘tish</span>
+                  </a>
+                  <button type="button" class="btn-outline-reset" id="reset-form-btn" data-i18n="protoResetBtn">Shaklni tozalash</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- BAND 3: EDITORIAL MASTHEAD & COLOPHON FOOTER (OBSIDIAN) -->
+  <footer class="site-footer" id="sayt-yakuni">
+    <div class="container">
+      <div class="footer-top-mast">
+        <div>
+          <p class="footer-wordmark">Anvar Abduqayum<span class="wordmark-dot">.</span></p>
+          <p class="footer-tagline" data-i18n="footerTagline">Tizimli tadbirkorlik, sanoat ishlab chiqarishi va boshqaruv amaliyoti.</p>
+        </div>
+        <div class="footer-mast-cta">
+          <a class="btn-footer-outline" href="/uz/bron" data-booking-link data-i18n="footerCta">Konsultatsiya band qilish</a>
+        </div>
+      </div>
+
+      <div class="footer-ledger">
+        <div>
+          <h2 class="footer-zone-heading" data-i18n="footerNavHeading">Sayt bo‘limlari</h2>
+          <ul class="footer-index-list">
+            <li><a class="footer-link" href="#top"><span class="footer-link-code">01</span><span data-i18n="fNavHome">Asosiy sahifa</span></a></li>
+            <li><a class="footer-link" href="#xizmatlar"><span class="footer-link-code">02</span><span data-i18n="fNavServices">Xizmatlar va dasturlar</span></a></li>
+            <li><a class="footer-link" href="#portfel"><span class="footer-link-code">03</span><span data-i18n="fNavPortfolio">Biznes ekotizimi</span></a></li>
+            <li><a class="footer-link" href="#yol"><span class="footer-link-code">04</span><span data-i18n="fNavTimeline">Faoliyat yo‘li</span></a></li>
+            <li><a class="footer-link" href="#tamoyil"><span class="footer-link-code">05</span><span data-i18n="fNavPhilosophy">Qolip tamoyili</span></a></li>
+            <li><a class="footer-link" href="phase3-4-media.html"><span class="footer-link-code">06</span><span data-i18n="fNavMedia">Media va intervyular</span></a></li>
+            <li><a class="footer-link" href="#konsultatsiya-band"><span class="footer-link-code">07</span><span data-i18n="fNavConsult">Konsultatsiya</span></a></li>
+            <li><a class="footer-link" href="#aloqa"><span class="footer-link-code">08</span><span data-i18n="fNavContact">Rasmiy aloqa</span></a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="footer-zone-heading" data-i18n="footerContactHeading">Rasmiy aloqa</h2>
+          <ul class="footer-contact-list">
+            <li><a class="footer-link" href="tel:+998555036100">+998 55 503 61 00</a></li>
+            <li><a class="footer-link" href="mailto:info@anvarabduqayum.uz">info@anvarabduqayum.uz</a></li>
+            <li><a class="footer-link" href="https://t.me/anvar_abduqayum_admin" target="_blank" rel="noopener noreferrer">Telegram admin: @anvar_abduqayum_admin</a></li>
+            <li><a class="footer-link" href="https://t.me/anvar_abduqayum" target="_blank" rel="noopener noreferrer">Telegram: @anvar_abduqayum</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 class="footer-zone-heading" data-i18n="footerPlatformsHeading">Ommaviy kanallar</h2>
+          <ul class="footer-contact-list">
+            <li><a class="footer-link" href="https://www.instagram.com/anvar_abduqayum" target="_blank" rel="noopener noreferrer">Instagram: @anvar_abduqayum</a></li>
+            <li><a class="footer-link" href="https://www.youtube.com/@AnvarAbduqayum" target="_blank" rel="noopener noreferrer">YouTube: @AnvarAbduqayum</a></li>
+            <li><a class="footer-link" href="/uz/bron" data-booking-link data-i18n="footerBronLink">Diagnostika bron qilish</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-colophon">
+        <p class="footer-colophon-note" data-i18n="colophonNote">Anvar Abduqayum, 2026. Toshkent, O‘zbekiston. Boshqaruv va sanoat loyihalari nashri.</p>
+        <a class="footer-top-return" href="#top" data-i18n="backToTop">Sahifa boshiga qaytish</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MOBILE STICKY CONVERSION BAR (< 640px CLEARANCE VERIFICATION) -->
+  <div class="mobile-sticky-bar" role="region" aria-label="Tezkor aloqa paneli">
+    <a class="sticky-cta-primary" href="/uz/bron" data-booking-link data-i18n="stickyBron">Konsultatsiya</a>
+    <a class="sticky-cta-secondary" href="https://t.me/anvar_abduqayum_admin" target="_blank" rel="noopener noreferrer" data-i18n="stickyTg">Telegram admin</a>
+  </div>
+
+  <script>
+    (function () {
+      const I18N = {
+        uz: {
+          pageTitle: "Phase 3.5: Aloqa, Konsultatsiya va Yakun | Concept 3 Editorial",
+          skipToMain: "Asosiy kontentga o‘tish",
+          navConsult: "Konsultatsiya",
+          navContact: "Aloqa",
+          navFooter: "Colophon",
+          bannerH1: "Aloqa, konsultatsiya va yakuniy colophon",
+          bannerLead: "Tasdiqlangan rasmiy kanallar, konsultatsiya marshruti va mobil colophon dizayn prototipi.",
+          bannerCta: "Konsultatsiya sahifasiga o‘tish",
+          bannerSecondary: "Aloqa kanallarini ko‘rish",
+          seamPrev: "Oldingi bosqich:",
+          seamPrevLink: "06 Media va OAV arxivi",
+          seamCurr: "07 Konsultatsiya va aloqa / 08 Colophon",
+          seamNote: "Izolyatsiya qilingan prototip: faqat mijoz tasdiqlagan rasmiy kontaktlar",
+          bookingH2: "Strategik konsultatsiyaga yozilish",
+          bookingLead: "Korxonangizdagi boshqaruv tizimini tahlil qilish, operatsion muammolarni aniqlash yoki strategik hamkorlikni muhokama qilish uchun alohida ajratilgan yozilish sahifasidan foydalaning.",
+          spec1Key: "Diagnostika davomiyligi",
+          spec1Val: "20 daqiqalik dastlabki sessiya",
+          spec2Key: "Muhokama mavzulari",
+          spec2Val: "Tizimlashtirish va strategik sheriklik",
+          spec3Key: "Uchrashuv shakli",
+          spec3Val: "Onlayn yoki Toshkent ofisida",
+          bookingCardTitle: "Mavjud rasmiy yozilish manzili",
+          bookingCardDesc: "Haqiqiy vaqt jadvallari va ariza shakli saytning maxsus bron sahifasida joylashgan. Til almashganda marshrut avtomatik moslashadi.",
+          bookingRouteLabel: "Faol marshrut:",
+          bookingBtnPrimary: "Bron sahifasini ochish",
+          bookingBtnTelegram: "Telegram admin bilan bog‘lanish",
+          contactH2: "Rasmiy aloqa kanallari",
+          contactLead: "Tijoriy takliflar, hamkorlik murojaatlari va OAV so‘rovlari faqat quyidagi tasdiqlangan rasmiy manzillar orqali qabul qilinadi.",
+          dirHeading: "To‘g‘ridan-to‘g‘ri bog‘lanish",
+          dirSub: "Matbuot, konsultatsiya va biznes hamkorlik uchun tasdiqlangan rasmiy aloqa nuqtalari.",
+          chPhoneLabel: "Rasmiy telefon raqami",
+          chTgAdminLabel: "Telegram admin (murojaatlar)",
+          chTgChannelLabel: "Rasmiy Telegram kanal",
+          chEmailLabel: "Elektron pochta",
+          chIgLabel: "Instagram sahifasi",
+          chYtLabel: "YouTube kanali",
+          cueCall: "Qo‘ng‘iroq",
+          cueMessage: "Yozish",
+          cueOpen: "Ochish",
+          cueMail: "Xat",
+          officeTitle: "Manzil va vakillik",
+          officeCopy: "Toshkent shahri, O‘zbekiston. Uchrashuvlar oldindan kelishilgan jadval asosida o‘tkaziladi.",
+          formTitle: "Murojaat shakli",
+          formNotice: "Faqat prototip tekshiruvi: bu izolyatsiya qilingan dizayn sahifasi serverga ulangan emas va ma’lumot yubormaydi.",
+          labelName: "Ismingiz",
+          labelPhone: "Telefon raqamingiz",
+          labelTopic: "Murojaat yo‘nalishi",
+          labelMessage: "Qisqacha mazmun",
+          namePlaceholder: "Alisher Karimov",
+          messagePlaceholder: "Kompaniyangiz faoliyati va asosiy savolingizni qisqacha yozing...",
+          topicCoop: "Strategik hamkorlik",
+          topicConsult: "Konsultatsiya (tizimlashtirish)",
+          topicMedia: "OAV va intervyu",
+          topicOther: "Boshqa masala",
+          submitLabel: "Shaklni tekshirish",
+          endpointCaption: "Ishchi tizimda /api/lead orqali yuboriladi",
+          errName: "Iltimos, kamida 2 ta harfdan iborat ismingizni kiriting.",
+          errPhone: "Iltimos, to‘liq O‘zbekiston telefon raqamini kiriting (+998 (XX) XXX-XX-XX).",
+          errHoneypot: "Avtomatik maydon to‘ldirilishi aniqlandi.",
+          protoResultTitle: "Prototip tekshiruvi yakunlandi: xabar yuborilmadi",
+          protoResultCopy: "Kiritilgan maydonlar mijoz tomonida tekshirildi, ammo serverga so‘rov yuborilmadi (izolyatsiya qilingan HTML explorer). Haqiqiy murojaat yuborish uchun rasmiy Telegram admin yoki konsultatsiya sahifasidan foydalaning.",
+          protoTgBtn: "Telegram admin orqali yozish",
+          protoBronBtn: "Bron sahifasiga o‘tish",
+          protoResetBtn: "Shaklni tozalash",
+          summaryName: "Ism",
+          summaryPhone: "Telefon",
+          summaryTopic: "Yo‘nalish",
+          summaryMessage: "Mazmun",
+          summaryMessageEmpty: "Kiritilmagan",
+          footerTagline: "Tizimli tadbirkorlik, sanoat ishlab chiqarishi va boshqaruv amaliyoti.",
+          footerCta: "Konsultatsiya band qilish",
+          footerNavHeading: "Sayt bo‘limlari",
+          footerContactHeading: "Rasmiy aloqa",
+          footerPlatformsHeading: "Ommaviy kanallar",
+          fNavHome: "Asosiy sahifa",
+          fNavServices: "Xizmatlar va dasturlar",
+          fNavPortfolio: "Biznes ekotizimi",
+          fNavTimeline: "Faoliyat yo‘li",
+          fNavPhilosophy: "Qolip tamoyili",
+          fNavMedia: "Media va intervyular",
+          fNavConsult: "Konsultatsiya",
+          fNavContact: "Rasmiy aloqa",
+          footerBronLink: "Diagnostika bron qilish",
+          colophonNote: "Anvar Abduqayum, 2026. Toshkent, O‘zbekiston. Boshqaruv va sanoat loyihalari nashri.",
+          backToTop: "Sahifa boshiga qaytish",
+          stickyBron: "Konsultatsiya",
+          stickyTg: "Telegram admin"
+        },
+        ru: {
+          pageTitle: "Фаза 3.5: Контакты, Консультация и Колофон | Concept 3 Editorial",
+          skipToMain: "Перейти к основному содержанию",
+          navConsult: "Консультация",
+          navContact: "Контакты",
+          navFooter: "Колофон",
+          bannerH1: "Контакты, консультация и финальный колофон",
+          bannerLead: "Проверенные официальные контакты, маршрут записи и финальный колофон прототипа.",
+          bannerCta: "Открыть страницу записи",
+          bannerSecondary: "Перейти к контактам",
+          seamPrev: "Предыдущий этап:",
+          seamPrevLink: "06 Медиа и архив СМИ",
+          seamCurr: "07 Консультация и контакты / 08 Колофон",
+          seamNote: "Изолированный прототип: только подтвержденные контакты клиента",
+          bookingH2: "Запись на стратегическую консультацию",
+          bookingLead: "Чтобы разобрать систему управления бизнесом, устранить операционные сбои или обсудить стратегическое партнерство, перейдите на выделенную страницу записи.",
+          spec1Key: "Длительность диагностики",
+          spec1Val: "Вводная сессия 20 минут",
+          spec2Key: "Темы обсуждения",
+          spec2Val: "Систематизация и стратегическое партнерство",
+          spec3Key: "Формат встречи",
+          spec3Val: "Онлайн или в офисе в Ташкенте",
+          bookingCardTitle: "Официальная страница бронирования",
+          bookingCardDesc: "Актуальное расписание и форма заявки находятся на специализированной странице бронирования. При смене языка маршрут обновляется автоматически.",
+          bookingRouteLabel: "Активный маршрут:",
+          bookingBtnPrimary: "Открыть страницу записи",
+          bookingBtnTelegram: "Связаться через Telegram admin",
+          contactH2: "Официальные каналы связи",
+          contactLead: "Деловые предложения, запросы на партнерство и обращения СМИ принимаются исключительно по указанным официальным контактам.",
+          dirHeading: "Прямая связь",
+          dirSub: "Подтвержденные каналы связи для прессы, консультаций и делового сотрудничества.",
+          chPhoneLabel: "Официальный телефон",
+          chTgAdminLabel: "Telegram администратора (обращения)",
+          chTgChannelLabel: "Официальный Telegram канал",
+          chEmailLabel: "Электронная почта",
+          chIgLabel: "Страница Instagram",
+          chYtLabel: "Канал YouTube",
+          cueCall: "Позвонить",
+          cueMessage: "Написать",
+          cueOpen: "Открыть",
+          cueMail: "Письмо",
+          officeTitle: "Локация и формат",
+          officeCopy: "Ташкент, Узбекистан. Очные встречи проводятся по предварительному согласованию.",
+          formTitle: "Форма обращения",
+          formNotice: "Только проверка прототипа: эта изолированная дизайн-страница не подключена к серверу и не отправляет данные.",
+          labelName: "Ваше имя",
+          labelPhone: "Номер телефона",
+          labelTopic: "Направление запроса",
+          labelMessage: "Краткое содержание",
+          namePlaceholder: "Алишер Каримов",
+          messagePlaceholder: "Кратко опишите сферу бизнеса и ваш ключевой вопрос...",
+          topicCoop: "Стратегическое партнерство",
+          topicConsult: "Консультация (систематизация)",
+          topicMedia: "СМИ и интервью",
+          topicOther: "Другой вопрос",
+          submitLabel: "Проверить форму",
+          endpointCaption: "В рабочей версии отправка выполняется через /api/lead",
+          errName: "Пожалуйста, введите имя (не менее 2 символов).",
+          errPhone: "Пожалуйста, введите полный номер Узбекистана (+998 (XX) XXX-XX-XX).",
+          errHoneypot: "Обнаружено автоматическое заполнение скрытого поля.",
+          protoResultTitle: "Проверка прототипа выполнена: данные не отправлены",
+          protoResultCopy: "Поля прошли проверку на стороне клиента, но запрос не отправлен на сервер (изолированный HTML прототип). Для реального обращения используйте официальный Telegram администратора или страницу бронирования.",
+          protoTgBtn: "Написать в Telegram admin",
+          protoBronBtn: "Перейти на /ru/bron",
+          protoResetBtn: "Сбросить форму",
+          summaryName: "Имя",
+          summaryPhone: "Телефон",
+          summaryTopic: "Направление",
+          summaryMessage: "Сообщение",
+          summaryMessageEmpty: "Не заполнено",
+          footerTagline: "Системное предпринимательство, промышленное производство и управленческая практика.",
+          footerCta: "Записаться на консультацию",
+          footerNavHeading: "Разделы сайта",
+          footerContactHeading: "Официальная связь",
+          footerPlatformsHeading: "Публичные каналы",
+          fNavHome: "Главная",
+          fNavServices: "Услуги и программы",
+          fNavPortfolio: "Экосистема бизнесов",
+          fNavTimeline: "Путь предпринимателя",
+          fNavPhilosophy: "Принцип Qolip",
+          fNavMedia: "Медиа и интервью",
+          fNavConsult: "Консультация",
+          fNavContact: "Контакты",
+          footerBronLink: "Забронировать диагностику",
+          colophonNote: "Анвар Абдукаюм, 2026. Ташкент, Узбекистан. Издание о системном управлении и производстве.",
+          backToTop: "Наверх",
+          stickyBron: "Консультация",
+          stickyTg: "Telegram admin"
+        },
+        en: {
+          pageTitle: "Phase 3.5: Contact, Consultation & Colophon | Concept 3 Editorial",
+          skipToMain: "Skip to main content",
+          navConsult: "Consultation",
+          navContact: "Contact",
+          navFooter: "Colophon",
+          bannerH1: "Contact, consultation and editorial colophon",
+          bannerLead: "Verified official contact channels, booking handoff, and colophon layout prototype.",
+          bannerCta: "Open booking page",
+          bannerSecondary: "Jump to contact channels",
+          seamPrev: "Previous phase:",
+          seamPrevLink: "06 Media & press archive",
+          seamCurr: "07 Consultation & contact / 08 Colophon",
+          seamNote: "Isolated prototype: verified client contacts only",
+          bookingH2: "Book a strategic consultation",
+          bookingLead: "Review operational management systems, resolve governance bottlenecks, or discuss strategic partnerships through the dedicated diagnostic booking page.",
+          spec1Key: "Diagnostic length",
+          spec1Val: "20-minute introductory session",
+          spec2Key: "Focus areas",
+          spec2Val: "Systematization and strategic partnership",
+          spec3Key: "Meeting format",
+          spec3Val: "Online or Tashkent office",
+          bookingCardTitle: "Dedicated booking destination",
+          bookingCardDesc: "Live scheduling availability and the intake workflow reside on the dedicated booking route. Switching languages updates the route dynamically.",
+          bookingRouteLabel: "Active route:",
+          bookingBtnPrimary: "Open booking page",
+          bookingBtnTelegram: "Message Telegram admin",
+          contactH2: "Verified official channels",
+          contactLead: "Commercial inquiries, partnership proposals, and media requests are accepted exclusively through the verified channels listed below.",
+          dirHeading: "Direct directory",
+          dirSub: "Verified contact points for media, advisory inquiries, and business partnerships.",
+          chPhoneLabel: "Official telephone",
+          chTgAdminLabel: "Telegram admin (inquiries)",
+          chTgChannelLabel: "Official Telegram channel",
+          chEmailLabel: "Email address",
+          chIgLabel: "Instagram account",
+          chYtLabel: "YouTube channel",
+          cueCall: "Call",
+          cueMessage: "Message",
+          cueOpen: "Open",
+          cueMail: "Email",
+          officeTitle: "Location & protocol",
+          officeCopy: "Tashkent, Uzbekistan. In-person meetings take place strictly by prior appointment.",
+          formTitle: "Inquiry ledger",
+          formNotice: "Prototype validation only: this isolated design page is not connected to a backend and does not transmit submissions.",
+          labelName: "Full name",
+          labelPhone: "Phone number",
+          labelTopic: "Inquiry topic",
+          labelMessage: "Brief overview",
+          namePlaceholder: "Alisher Karimov",
+          messagePlaceholder: "Briefly describe your business operation and core question...",
+          topicCoop: "Strategic partnership",
+          topicConsult: "Consultation (systematization)",
+          topicMedia: "Media & press interview",
+          topicOther: "Other inquiry",
+          submitLabel: "Validate form",
+          endpointCaption: "Production submits via /api/lead",
+          errName: "Please enter your name (at least 2 characters).",
+          errPhone: "Please enter a complete Uzbekistan phone number (+998 (XX) XXX-XX-XX).",
+          errHoneypot: "Automated hidden field entry detected.",
+          protoResultTitle: "Prototype validation only: nothing was submitted",
+          protoResultCopy: "Your fields passed client-side validation, but no network request was sent from this isolated HTML exploration (empty endpoint). For real inquiries, use the verified Telegram admin handle or the dedicated booking route.",
+          protoTgBtn: "Message Telegram admin",
+          protoBronBtn: "Go to /en/bron",
+          protoResetBtn: "Clear form",
+          summaryName: "Name",
+          summaryPhone: "Phone",
+          summaryTopic: "Topic",
+          summaryMessage: "Overview",
+          summaryMessageEmpty: "Not provided",
+          footerTagline: "Systematic entrepreneurship, industrial manufacturing, and executive practice.",
+          footerCta: "Book consultation",
+          footerNavHeading: "Editorial index",
+          footerContactHeading: "Official channels",
+          footerPlatformsHeading: "Public media",
+          fNavHome: "Home",
+          fNavServices: "Services & programs",
+          fNavPortfolio: "Business ecosystem",
+          fNavTimeline: "Entrepreneurial journey",
+          fNavPhilosophy: "Qolip philosophy",
+          fNavMedia: "Media & interviews",
+          fNavConsult: "Consultation",
+          fNavContact: "Official contact",
+          footerBronLink: "Book diagnostic session",
+          colophonNote: "Anvar Abduqayum, 2026. Tashkent, Uzbekistan. Management and industrial publication.",
+          backToTop: "Back to top",
+          stickyBron: "Book session",
+          stickyTg: "Telegram admin"
+        }
+      };
+
+      let currentLang = "uz";
+
+      const langButtons = document.querySelectorAll(".lang-btn");
+      const bookingLinks = document.querySelectorAll("[data-booking-link]");
+      const bookingRouteText = document.querySelector("[data-booking-route-text]");
+      const form = document.getElementById("contact-form");
+      const nameInput = document.getElementById("inquiry-name");
+      const phoneInput = document.getElementById("inquiry-phone");
+      const topicSelect = document.getElementById("inquiry-topic");
+      const messageInput = document.getElementById("inquiry-message");
+      const nameError = document.getElementById("error-name");
+      const phoneError = document.getElementById("error-phone");
+      const messageError = document.getElementById("error-message");
+      const statusBox = document.getElementById("prototype-status");
+      const summaryList = document.getElementById("proto-summary-list");
+      const resetBtn = document.getElementById("reset-form-btn");
+
+      function formatUzPhone(rawValue) {
+        const digits = String(rawValue || "").replace(/\D/g, "");
+        const stripped = digits.startsWith("998") ? digits.slice(3, 12) : digits.slice(0, 9);
+        if (!stripped.length) return "";
+        let formatted = "+998 (" + stripped.slice(0, 2);
+        if (stripped.length >= 2) formatted += ")";
+        if (stripped.length > 2) formatted += " " + stripped.slice(2, 5);
+        if (stripped.length > 5) formatted += "-" + stripped.slice(5, 7);
+        if (stripped.length > 7) formatted += "-" + stripped.slice(7, 9);
+        return formatted;
+      }
+
+      function countLocalPhoneDigits(rawValue) {
+        const digits = String(rawValue || "").replace(/\D/g, "");
+        const stripped = digits.startsWith("998") ? digits.slice(3) : digits;
+        return stripped.length;
+      }
+
+      function applyLanguage(lang) {
+        if (!I18N[lang]) return;
+        currentLang = lang;
+        const dict = I18N[lang];
+        document.documentElement.lang = lang;
+        document.title = dict.pageTitle;
+
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          const key = el.getAttribute("data-i18n");
+          if (dict[key] !== undefined) {
+            el.textContent = dict[key];
+          }
+        });
+
+        nameInput.setAttribute("placeholder", dict.namePlaceholder);
+        messageInput.setAttribute("placeholder", dict.messagePlaceholder);
+
+        const targetRoute = "/" + lang + "/bron";
+        bookingLinks.forEach((link) => {
+          link.setAttribute("href", targetRoute);
+        });
+        if (bookingRouteText) {
+          bookingRouteText.textContent = targetRoute;
+        }
+
+        langButtons.forEach((btn) => {
+          const active = btn.getAttribute("data-lang") === lang;
+          btn.classList.toggle("is-active", active);
+          btn.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+
+        // Clear stale localized validation text when language switches cleanly
+        if (nameError.textContent) nameError.textContent = dict.errName;
+        if (phoneError.textContent) phoneError.textContent = dict.errPhone;
+        if (!statusBox.hidden) renderSummaryList();
+      }
+
+      function clearFieldError(inputEl, errEl) {
+        inputEl.removeAttribute("aria-invalid");
+        errEl.textContent = "";
+      }
+
+      function setFieldError(inputEl, errEl, message) {
+        inputEl.setAttribute("aria-invalid", "true");
+        errEl.textContent = message;
+      }
+
+      function renderSummaryList() {
+        const dict = I18N[currentLang];
+        const selectedOption = topicSelect.options[topicSelect.selectedIndex];
+        const topicLabel = selectedOption ? selectedOption.textContent : "";
+        const msgVal = messageInput.value.trim() || dict.summaryMessageEmpty;
+
+        const rows = [
+          [dict.summaryName, nameInput.value.trim()],
+          [dict.summaryPhone, phoneInput.value.trim()],
+          [dict.summaryTopic, topicLabel],
+          [dict.summaryMessage, msgVal]
+        ];
+
+        summaryList.innerHTML = "";
+        rows.forEach(([k, v]) => {
+          const li = document.createElement("li");
+          const strong = document.createElement("strong");
+          strong.textContent = k + ": ";
+          li.appendChild(strong);
+          li.appendChild(document.createTextNode(v));
+          summaryList.appendChild(li);
+        });
+      }
+
+      phoneInput.addEventListener("input", () => {
+        const formatted = formatUzPhone(phoneInput.value);
+        phoneInput.value = formatted;
+        if (countLocalPhoneDigits(formatted) === 9) {
+          clearFieldError(phoneInput, phoneError);
+        }
+      });
+
+      nameInput.addEventListener("input", () => {
+        if (nameInput.value.trim().length >= 2) {
+          clearFieldError(nameInput, nameError);
+        }
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const dict = I18N[currentLang];
+        const hpInput = form.querySelector('input[name="website_check"]');
+
+        clearFieldError(nameInput, nameError);
+        clearFieldError(phoneInput, phoneError);
+        messageError.textContent = "";
+
+        if (hpInput && hpInput.value.trim() !== "") {
+          messageError.textContent = dict.errHoneypot;
+          statusBox.hidden = true;
+          return;
+        }
+
+        let valid = true;
+        const cleanName = nameInput.value.trim();
+        const phoneDigits = countLocalPhoneDigits(phoneInput.value);
+
+        if (cleanName.length < 2) {
+          setFieldError(nameInput, nameError, dict.errName);
+          valid = false;
+        }
+
+        if (phoneDigits !== 9) {
+          setFieldError(phoneInput, phoneError, dict.errPhone);
+          valid = false;
+        }
+
+        if (!valid) {
+          statusBox.hidden = true;
+          if (cleanName.length < 2) {
+            nameInput.focus();
+          } else {
+            phoneInput.focus();
+          }
+          return;
+        }
+
+        renderSummaryList();
+        statusBox.hidden = false;
+        statusBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      });
+
+      resetBtn.addEventListener("click", () => {
+        form.reset();
+        clearFieldError(nameInput, nameError);
+        clearFieldError(phoneInput, phoneError);
+        messageError.textContent = "";
+        statusBox.hidden = true;
+        summaryList.innerHTML = "";
+        nameInput.focus();
+      });
+
+      langButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          applyLanguage(btn.getAttribute("data-lang"));
+        });
+      });
+
+      applyLanguage("uz");
+    })();
+  </script>
+</body>
+</html>

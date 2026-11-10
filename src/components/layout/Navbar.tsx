@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { getContent } from "@/config/content";
+import { BookingActionLink } from "@/components/ui/BookingActionLink";
 
 export interface NavbarProps {
   locale?: string;
@@ -20,11 +21,12 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
 
   const toggleButtonRef = useRef<HTMLButtonElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const drawerPanelRef = useRef<HTMLElement | null>(null);
 
   const isHomePage =
     pathname === `/${locale}` || pathname === `/${locale}/` || pathname === "/";
 
-  // Handle sticky blur state on scroll
+  // Handle sticky header blur on scroll
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -33,7 +35,7 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Escape key support & focus restoration
+  // Escape key closes mobile drawer and restores focus to trigger
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && mobileMenuOpen) {
@@ -45,83 +47,163 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [mobileMenuOpen]);
 
-  // Lock background scroll when mobile drawer is open
+  // Lock body scroll, toggle inert on closed drawer, and shift focus when drawer opens
   useEffect(() => {
+    const panel = drawerPanelRef.current;
+    if (panel) {
+      if (mobileMenuOpen) {
+        panel.removeAttribute("inert");
+      } else {
+        panel.setAttribute("inert", "");
+      }
+    }
+
     if (mobileMenuOpen) {
       document.body.style.overflow = "hidden";
       closeButtonRef.current?.focus();
     } else {
       document.body.style.overflow = "";
     }
+
+    const mq = window.matchMedia("(min-width: 1280px)");
+    const handleViewportChange = (e: MediaQueryListEvent) => {
+      if (e.matches) {
+        setMobileMenuOpen(false);
+      }
+    };
+    mq.addEventListener("change", handleViewportChange);
+
     return () => {
       document.body.style.overflow = "";
+      mq.removeEventListener("change", handleViewportChange);
     };
   }, [mobileMenuOpen]);
 
-  // Track active section via IntersectionObserver on homepage
+  // Track active section deterministically across both scroll directions
   useEffect(() => {
-    if (!isHomePage) return;
+    if (!isHomePage) {
+      setActiveSection("");
+      return;
+    }
 
-    const sectionIds = ["xizmatlar", "portfel", "yol", "tamoyil", "media", "aloqa"];
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      {
-        rootMargin: "-20% 0px -60% 0px",
-        threshold: 0,
+    const navSectionIds = new Set([
+      "xizmatlar",
+      "portfel",
+      "yol",
+      "tamoyil",
+      "media",
+      "aloqa",
+    ]);
+
+    const updateActiveSection = () => {
+      const sections = Array.from(
+        document.querySelectorAll<HTMLElement>("main > section")
+      );
+      if (sections.length === 0) return;
+
+      const atBottom =
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 24;
+      if (atBottom) {
+        setActiveSection("aloqa");
+        return;
       }
-    );
 
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
+      const probeY = Math.min(window.innerHeight * 0.3, 220);
+      let currentId = "";
 
-    return () => observer.disconnect();
+      for (const section of sections) {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= probeY && rect.bottom > probeY) {
+          currentId = navSectionIds.has(section.id) ? section.id : "";
+          break;
+        }
+      }
+
+      setActiveSection(currentId);
+    };
+
+    let rafId = 0;
+    const onScrollOrResize = () => {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(() => {
+        rafId = 0;
+        updateActiveSection();
+      });
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize, { passive: true });
+
+    return () => {
+      if (rafId) window.cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", onScrollOrResize);
+      window.removeEventListener("resize", onScrollOrResize);
+    };
   }, [isHomePage]);
 
-  // Information architecture matching Concept 3 Luxury Editorial
+  const taglineItems =
+    locale === "ru"
+      ? ["Промышленность", "Системное управление", "Экспорт"]
+      : locale === "en"
+      ? ["Industry", "Systemic Governance", "Export"]
+      : ["Sanoat", "Tizimli Boshqaruv", "Eksport"];
+
+  const cityLabel =
+    locale === "ru"
+      ? "Ташкент, 2026"
+      : locale === "en"
+      ? "Tashkent, 2026"
+      : "Toshkent, 2026";
+
+  // Navigation items synced with existing homepage section IDs
   const navLinks = [
     {
       id: "xizmatlar",
       href: "#xizmatlar",
       label: content.navigation.consulting || "Xizmatlar",
-      drawerLabel: `${content.navigation.consulting || "Xizmatlar"} va Dossier`,
+      drawerLabel:
+        locale === "ru"
+          ? "Услуги и досье"
+          : locale === "en"
+          ? "Services & Dossier"
+          : `${content.navigation.consulting || "Xizmatlar"} va Dossier`,
     },
     {
       id: "portfel",
       href: "#portfel",
       label: content.navigation.portfolio || "Bizneslar",
-      drawerLabel: `${content.navigation.portfolio || "Bizneslar"} (7 Tizim)`,
+      drawerLabel:
+        locale === "ru"
+          ? "Направления и проекты (7)"
+          : locale === "en"
+          ? "Ecosystem & Projects (7)"
+          : `${content.navigation.portfolio || "Bizneslar"} (7 Yo‘nalish)`,
     },
     {
       id: "yol",
       href: "#yol",
       label: content.navigation.timeline || "Faoliyat yo‘li",
-      drawerLabel: "Bosib o‘tilgan yo‘l",
+      drawerLabel: content.navigation.timeline || "Bosib o‘tilgan yo‘l",
     },
     {
       id: "tamoyil",
       href: "#tamoyil",
       label: content.navigation.principles || "Qolip tamoyili",
-      drawerLabel: "Qolip tamoyili",
+      drawerLabel: content.navigation.principles || "Qolip tamoyili",
     },
     {
       id: "media",
       href: "#media",
       label: content.navigation.media || "Media",
-      drawerLabel: "Media va suhbatlar",
+      drawerLabel: content.navigation.media || "Media va suhbatlar",
     },
     {
       id: "aloqa",
       href: "#aloqa",
       label: content.navigation.contact || "Aloqa",
-      drawerLabel: "Aloqa va konsultatsiya",
+      drawerLabel: content.navigation.contact || "Aloqa va konsultatsiya",
     },
   ];
 
@@ -136,16 +218,14 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
     router.push(`/${segments.join("/")}`);
   };
 
-  const bookingHref = `/${locale}/bron`;
-
   return (
     <>
       {/* Editorial Top Masthead Header */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-200 border-b ${
+        className={`fixed top-0 left-0 right-0 z-50 border-b transition-[background-color,border-color,padding,box-shadow] duration-200 ${
           scrolled
-            ? "bg-[#FBF9F5]/95 backdrop-blur-md border-[rgba(17,18,21,0.12)] py-3 shadow-[0_4px_24px_rgba(17,18,21,0.06)]"
-            : "bg-[#FBF9F5] border-[rgba(17,18,21,0.08)] py-4"
+            ? "bg-[var(--bg-alabaster-glass)] backdrop-blur-md border-[var(--border-hairline)] py-3 shadow-[var(--shadow-editorial-header)]"
+            : "bg-[var(--bg-alabaster)] border-[var(--border-hairline-subtle)] py-4"
         }`}
       >
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
@@ -153,21 +233,43 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
             {/* Brand Monogram */}
             <Link
               href={`/${locale}`}
-              className="group flex flex-col focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B8860B] rounded-[2px]"
-              aria-label="Anvar Abduqayum — Bosh sahifa"
+              className="group min-h-[44px] flex flex-col justify-center py-1 min-w-0 shrink-0 rounded-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-alabaster)]"
             >
-              <span className="font-serif text-base sm:text-xl lg:text-[22px] font-bold tracking-[0.12em] text-[#111215] uppercase leading-none">
-                ANVAR ABDUQAYUM<span className="text-[#B8860B]">.</span>
+              <span className="font-serif text-base sm:text-xl xl:text-[22px] font-bold tracking-[0.12em] text-[var(--text-ink)] uppercase leading-none">
+                ANVAR ABDUQAYUM<span className="text-[var(--accent-gold-ink)]">.</span>
               </span>
-              <span className="hidden sm:block text-[9.5px] font-sans font-semibold tracking-[0.14em] uppercase text-[#7A8290] mt-1">
-                Sanoat &bull; Tizimli Boshqaruv &bull; Eksport
+              <span className="hidden sm:inline-flex items-center gap-2 2xl:whitespace-nowrap text-[9.5px] font-sans font-semibold tracking-[0.12em] uppercase text-[var(--text-muted-aa)] mt-1">
+                {taglineItems.map((item, idx) => (
+                  <React.Fragment key={item}>
+                    {idx > 0 && (
+                      <span
+                        className="w-px h-2.5 bg-[var(--border-hairline)]"
+                        aria-hidden="true"
+                      />
+                    )}
+                    <span>{item}</span>
+                  </React.Fragment>
+                ))}
+              </span>
+              <span className="sr-only">
+                {locale === "ru"
+                  ? "На главную"
+                  : locale === "en"
+                  ? "Home"
+                  : "Bosh sahifa"}
               </span>
             </Link>
 
-            {/* Desktop Navigation Links (Editorial Minimalist) */}
+            {/* Desktop Navigation Links (Visible at >= 1280px to avoid horizontal crowding at 1024px) */}
             <nav
-              aria-label="Asosiy menyu"
-              className="hidden lg:flex items-center gap-7 xl:gap-8"
+              aria-label={
+                locale === "ru"
+                  ? "Основное меню"
+                  : locale === "en"
+                  ? "Primary navigation"
+                  : "Asosiy menyu"
+              }
+              className="hidden xl:flex items-center gap-3.5 2xl:gap-7"
             >
               {navLinks.map((item) => {
                 const targetHref = isHomePage
@@ -180,16 +282,16 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
                     key={item.id}
                     href={targetHref}
                     aria-current={isActive ? "true" : undefined}
-                    className={`relative py-1.5 text-[11.5px] font-sans font-semibold uppercase tracking-[0.12em] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B8860B] rounded-[2px] ${
+                    className={`group relative min-h-[44px] min-w-[44px] inline-flex items-center justify-center text-center leading-tight px-1.5 py-2 text-[11.5px] font-sans font-semibold uppercase tracking-[0.12em] transition-colors rounded-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-alabaster)] active:opacity-80 ${
                       isActive
-                        ? "text-[#111215] font-bold"
-                        : "text-[#4B515D] hover:text-[#111215]"
+                        ? "text-[var(--text-ink)] font-bold"
+                        : "text-[var(--text-soft-editorial)] hover:text-[var(--text-ink)]"
                     }`}
                   >
                     <span>{item.label}</span>
                     <span
-                      className={`absolute bottom-0 left-0 h-[1.5px] bg-[#B8860B] transition-all duration-200 ${
-                        isActive ? "w-full" : "w-0 hover:w-full"
+                      className={`absolute bottom-1.5 left-0 w-full h-[1.5px] bg-[var(--accent-gold-ink)] origin-left transition-transform duration-200 ${
+                        isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                       }`}
                     />
                   </a>
@@ -201,22 +303,30 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
             <div className="flex items-center gap-2 sm:gap-3">
               {/* Language Switcher (UZ/RU/EN) */}
               <div
-                className="hidden sm:inline-flex items-center bg-white border border-[rgba(17,18,21,0.1)] rounded-[4px] p-0.5 shadow-sm"
+                className="hidden sm:inline-flex items-center bg-[var(--bg-surface)] border border-[var(--border-hairline)] rounded-[4px] p-0.5 shadow-sm"
                 role="group"
-                aria-label="Tilni tanlash"
+                aria-label={
+                  locale === "ru"
+                    ? "Выбор языка"
+                    : locale === "en"
+                    ? "Language selector"
+                    : "Tilni tanlash"
+                }
               >
                 {(["uz", "ru", "en"] as const).map((lang) => (
                   <button
                     key={lang}
                     type="button"
                     onClick={() => handleLanguageChange(lang)}
-                    className={`min-h-[44px] min-w-[44px] px-3 py-2 text-[11px] font-mono font-semibold uppercase rounded-[2px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B8860B] ${
+                    className={`min-h-[44px] min-w-[44px] px-3 py-2 text-[11px] font-mono font-semibold uppercase rounded-[2px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] active:scale-[0.98] ${
                       locale === lang
-                        ? "bg-[#111215] text-white font-bold"
-                        : "text-[#7A8290] hover:text-[#111215]"
+                        ? "bg-[var(--bg-dark)] text-[var(--bg-surface)] font-bold"
+                        : "text-[var(--text-soft-editorial)] hover:text-[var(--text-ink)]"
                     }`}
                     aria-pressed={locale === lang}
-                    aria-label={`${lang.toUpperCase()} tiliga o'tish`}
+                    aria-label={`${lang.toUpperCase()} ${
+                      locale === "ru" ? "язык" : locale === "en" ? "language" : "tili"
+                    }`}
                   >
                     {lang}
                   </button>
@@ -224,36 +334,48 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
               </div>
 
               {/* Consultation Booking CTA */}
-              <Link
-                href={bookingHref}
-                className="hidden md:inline-flex items-center justify-center min-h-[44px] px-5 bg-[#111215] text-white text-[11px] font-sans font-semibold uppercase tracking-[0.12em] rounded-[2px] border border-[#111215] hover:bg-[#B8860B] hover:border-[#B8860B] transition-all shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B8860B]"
+              <BookingActionLink
+                locale={locale}
+                className="hidden md:inline-flex items-center justify-center min-h-[44px] px-4 2xl:px-5 max-w-[195px] text-center leading-[1.2] bg-[var(--bg-dark)] text-[var(--bg-surface)] text-[11px] font-sans font-semibold uppercase tracking-[0.12em] rounded-[2px] border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] active:scale-[0.98] transition-[background-color,border-color,color,transform] duration-200 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-alabaster)]"
               >
-                <span>{content.navigation.ctaButton || "Uchrashuv bronlash"}</span>
-              </Link>
+                <span>{content.navigation.ctaButton || "Uchrashuv bo‘yicha yozish"}</span>
+              </BookingActionLink>
 
-              {/* Mobile Menu Toggle Button (Min 44px touch target) */}
+              {/* Mobile / Tablet Menu Toggle Button (Min 44px touch target) */}
               <button
                 ref={toggleButtonRef}
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden min-h-[44px] min-w-[44px] w-11 h-11 p-2.5 flex items-center justify-center bg-white border border-[rgba(17,18,21,0.1)] rounded-[4px] text-[#111215] hover:bg-[#F4EFE6] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B8860B]"
+                className="xl:hidden min-h-[44px] min-w-[44px] w-11 h-11 p-2.5 flex items-center justify-center bg-[var(--bg-surface)] border border-[var(--border-hairline)] rounded-[4px] text-[var(--text-ink)] hover:bg-[var(--bg-stone)] active:scale-[0.96] transition-[background-color,transform] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
                 aria-expanded={mobileMenuOpen}
                 aria-controls="mobile-drawer-panel"
-                aria-label={mobileMenuOpen ? "Menyuni yopish" : "Menyuni ochish"}
+                aria-label={
+                  mobileMenuOpen
+                    ? locale === "ru"
+                      ? "Закрыть меню"
+                      : locale === "en"
+                      ? "Close menu"
+                      : "Menyuni yopish"
+                    : locale === "ru"
+                    ? "Открыть меню"
+                    : locale === "en"
+                    ? "Open menu"
+                    : "Menyuni ochish"
+                }
               >
                 <div className="w-5 h-3.5 flex flex-col justify-between" aria-hidden="true">
                   <span
-                    className={`block h-[1.75px] w-full bg-[#111215] rounded transition-transform duration-200 ${
+                    className={`block h-[1.75px] w-full bg-[var(--bg-dark)] rounded transition-transform duration-200 ${
                       mobileMenuOpen ? "translate-y-[6px] rotate-45" : ""
                     }`}
                   />
                   <span
-                    className={`block h-[1.75px] w-full bg-[#111215] rounded transition-opacity duration-200 ${
+                    className={`block h-[1.75px] w-full bg-[var(--bg-dark)] rounded transition-opacity duration-200 ${
                       mobileMenuOpen ? "opacity-0" : ""
                     }`}
                   />
                   <span
-                    className={`block h-[1.75px] w-full bg-[#111215] rounded transition-transform duration-200 ${
+                    className={`block h-[1.75px] w-full bg-[var(--bg-dark)] rounded transition-transform duration-200 ${
                       mobileMenuOpen ? "-translate-y-[6px] -rotate-45" : ""
                     }`}
                   />
@@ -264,10 +386,10 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
         </div>
       </header>
 
-      {/* Accessible Mobile Drawer Overlay */}
+      {/* Accessible Mobile / Tablet Drawer Overlay */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-[#111215]/50 backdrop-blur-sm z-[1999] lg:hidden animate-in fade-in duration-200"
+          className="fixed inset-0 bg-[var(--bg-backdrop)] backdrop-blur-sm z-[1999] xl:hidden animate-in fade-in duration-200"
           onClick={() => {
             setMobileMenuOpen(false);
             toggleButtonRef.current?.focus();
@@ -276,25 +398,34 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
         />
       )}
 
-      {/* Accessible Mobile Drawer Panel */}
+      {/* Accessible Mobile / Tablet Drawer Panel */}
       <aside
+        ref={drawerPanelRef}
         id="mobile-drawer-panel"
-        className={`fixed top-0 right-0 w-full max-w-[320px] h-full bg-[#FBF9F5] border-l border-[rgba(17,18,21,0.1)] z-[2000] flex flex-col p-5 shadow-[-10px_0_30px_rgba(0,0,0,0.12)] overflow-y-auto transition-transform duration-300 ease-in-out lg:hidden ${
-          mobileMenuOpen ? "translate-x-0" : "translate-x-full pointer-events-none"
+        className={`fixed top-0 right-0 w-full max-w-[320px] h-full bg-[var(--bg-alabaster)] border-l border-[var(--border-hairline)] z-[2000] flex flex-col p-5 shadow-[var(--shadow-editorial-drawer)] overflow-y-auto transition-[transform,visibility] duration-300 ease-in-out xl:hidden ${
+          mobileMenuOpen
+            ? "translate-x-0 visible"
+            : "translate-x-full invisible pointer-events-none"
         }`}
         role="dialog"
         aria-modal="true"
-        aria-label="Mobil navigatsiya menyusi"
+        aria-label={
+          locale === "ru"
+            ? "Мобильное меню"
+            : locale === "en"
+            ? "Mobile navigation menu"
+            : "Mobil navigatsiya menyusi"
+        }
         aria-hidden={!mobileMenuOpen}
       >
-        {/* Drawer Header (Zero overlap with min-w-0 and clamp) */}
-        <div className="flex items-center justify-between pb-4 border-b border-[rgba(17,18,21,0.08)] mb-4 gap-3">
+        {/* Drawer Header */}
+        <div className="flex items-center justify-between pb-4 border-b border-[var(--border-hairline-subtle)] mb-4 gap-3">
           <div className="min-w-0 flex-1">
-            <span className="font-serif font-bold text-sm tracking-[0.08em] text-[#111215] truncate block uppercase">
+            <span className="font-serif font-bold text-sm tracking-[0.08em] text-[var(--text-ink)] truncate block uppercase">
               ANVAR ABDUQAYUM
             </span>
-            <span className="text-[9.5px] font-mono text-[#7A8290] tracking-wider uppercase block mt-0.5">
-              Navigatsiya
+            <span className="text-[11px] font-sans text-[var(--text-muted-aa)] block mt-0.5">
+              {locale === "ru" ? "Навигация" : locale === "en" ? "Navigation" : "Navigatsiya"}
             </span>
           </div>
           <button
@@ -304,8 +435,14 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
               setMobileMenuOpen(false);
               toggleButtonRef.current?.focus();
             }}
-            className="min-h-[44px] min-w-[44px] w-11 h-11 flex items-center justify-center bg-white border border-[rgba(17,18,21,0.1)] rounded-[4px] text-2xl font-light text-[#111215] hover:bg-[#111215] hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B8860B]"
-            aria-label="Menyuni yopish"
+            className="min-h-[44px] min-w-[44px] w-11 h-11 flex items-center justify-center bg-[var(--bg-surface)] border border-[var(--border-hairline)] rounded-[4px] text-2xl font-light text-[var(--text-ink)] hover:bg-[var(--bg-dark)] hover:text-[var(--bg-surface)] active:scale-[0.96] transition-[background-color,color,transform] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+            aria-label={
+              locale === "ru"
+                ? "Закрыть меню"
+                : locale === "en"
+                ? "Close menu"
+                : "Menyuni yopish"
+            }
           >
             &times;
           </button>
@@ -313,9 +450,15 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
 
         {/* Mobile Language Switcher Row (44px min touch target) */}
         <div
-          className="grid grid-cols-3 gap-1.5 pb-4 mb-4 border-b border-[rgba(17,18,21,0.08)]"
+          className="grid grid-cols-3 gap-1.5 pb-4 mb-4 border-b border-[var(--border-hairline-subtle)]"
           role="group"
-          aria-label="Mobil tilni tanlash"
+          aria-label={
+            locale === "ru"
+              ? "Выбор языка"
+              : locale === "en"
+              ? "Language selection"
+              : "Mobil tilni tanlash"
+          }
         >
           {(["uz", "ru", "en"] as const).map((lang) => (
             <button
@@ -325,10 +468,10 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
                 handleLanguageChange(lang);
                 setMobileMenuOpen(false);
               }}
-              className={`min-h-[44px] flex items-center justify-center text-[11px] font-mono font-semibold uppercase rounded-[2px] border transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B8860B] ${
+              className={`min-h-[44px] flex items-center justify-center text-[11px] font-mono font-semibold uppercase rounded-[2px] border transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] active:scale-[0.98] ${
                 locale === lang
-                  ? "bg-[#111215] border-[#111215] text-white font-bold"
-                  : "bg-white border-[rgba(17,18,21,0.1)] text-[#7A8290] hover:text-[#111215]"
+                  ? "bg-[var(--bg-dark)] border-[var(--bg-dark)] text-[var(--bg-surface)] font-bold"
+                  : "bg-[var(--bg-surface)] border-[var(--border-hairline)] text-[var(--text-soft-editorial)] hover:text-[var(--text-ink)]"
               }`}
               aria-pressed={locale === lang}
             >
@@ -351,10 +494,10 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
                   href={targetHref}
                   onClick={() => setMobileMenuOpen(false)}
                   aria-current={isActive ? "true" : undefined}
-                  className={`min-h-[48px] py-3 flex items-center text-[13px] font-sans font-semibold uppercase tracking-[0.08em] border-b border-[rgba(17,18,21,0.06)] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B8860B] ${
+                  className={`min-h-[48px] py-3 flex items-center text-[13px] font-sans font-semibold uppercase tracking-[0.08em] border-b border-[var(--border-stone)] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] active:opacity-80 ${
                     isActive
-                      ? "text-[#B8860B] pl-1 font-bold"
-                      : "text-[#111215] hover:text-[#B8860B] hover:pl-1.5"
+                      ? "text-[var(--accent-gold-ink)] font-bold"
+                      : "text-[var(--text-ink)] hover:text-[var(--accent-gold-ink)]"
                   }`}
                 >
                   {item.drawerLabel}
@@ -365,16 +508,16 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
         </ul>
 
         {/* Drawer Bottom CTA */}
-        <div className="mt-auto pt-4 border-t border-[rgba(17,18,21,0.08)]">
-          <Link
-            href={bookingHref}
+        <div className="mt-auto pt-4 border-t border-[var(--border-hairline-subtle)]">
+          <BookingActionLink
+            locale={locale}
             onClick={() => setMobileMenuOpen(false)}
-            className="min-h-[48px] w-full flex items-center justify-center bg-[#111215] text-white text-[11px] font-sans font-semibold uppercase tracking-[0.14em] rounded-[2px] hover:bg-[#B8860B] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#B8860B]"
+            className="min-h-[48px] w-full px-4 text-center flex items-center justify-center bg-[var(--bg-dark)] text-[var(--bg-surface)] text-[11px] font-sans font-semibold uppercase tracking-[0.14em] rounded-[2px] hover:bg-[var(--accent-gold-ink)] active:scale-[0.98] transition-[background-color,transform] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
           >
-            <span>{content.navigation.ctaButton || "Uchrashuv bronlash"}</span>
-          </Link>
-          <p className="font-mono text-[10px] text-[#7A8290] mt-3 text-center tracking-wider">
-            TOSHKENT &bull; 2026 // RASMIY PORTFOLIO
+            <span>{content.navigation.ctaButton || "Uchrashuv bo‘yicha yozish"}</span>
+          </BookingActionLink>
+          <p className="font-sans text-[11px] text-[var(--text-muted-aa)] mt-3 text-center">
+            {cityLabel}
           </p>
         </div>
       </aside>

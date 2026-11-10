@@ -31,11 +31,11 @@ export default async function HomePage({
   setRequestLocale(locale);
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#FBF9F5] text-[#111215] antialiased">
+    <div className="min-h-screen flex flex-col bg-[var(--bg-alabaster)] text-[var(--text-ink)] antialiased">
       {/* Blueprint Industrial Top Navigation */}
       <Navbar locale={locale} />
 
-      <main className="flex-1 pb-24 sm:pb-0">
+      <main className="flex-1">
         {/* Section 01: Hero (Blueprint Portrait + 5-sec Proof + Primary Telegram CTA) */}
         {featuresConfig.sections.hero && <Hero locale={locale} />}
 

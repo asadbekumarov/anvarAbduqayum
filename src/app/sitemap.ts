@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
 import { routing } from "@/i18n/routing";
 import { SITE_URL } from "@/config/siteConfig";
+import { featuresConfig } from "@/config/features";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = SITE_URL;
@@ -51,5 +52,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   }));
 
-  return [...homeEntries, ...testEntries, ...bronEntries];
+  return [
+    ...homeEntries,
+    ...(featuresConfig.quiz ? testEntries : []),
+    ...bronEntries,
+  ];
 }

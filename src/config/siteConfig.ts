@@ -9,6 +9,16 @@ const getBaseUrl = (): string => {
 
 export const SITE_URL = getBaseUrl();
 
+export const OFFICIAL_PRODUCTION_ORIGIN = "https://anvarabduqayum.uz";
+
+/**
+ * Explicit opt-in search engine indexing control.
+ * Keeps staging, preview, local, and unapproved environments non-indexable even when NODE_ENV === "production".
+ */
+export const isIndexingEnabled =
+  process.env.NEXT_PUBLIC_ALLOW_INDEXING === "true" &&
+  SITE_URL === OFFICIAL_PRODUCTION_ORIGIN;
+
 export const siteConfig = {
   name: "Anvar Abduqayum",
   title: "Anvar Abduqayum | Ishlab chiqarish, Eksport va Biznes-mentor",

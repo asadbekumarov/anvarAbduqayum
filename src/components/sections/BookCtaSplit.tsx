@@ -2,8 +2,9 @@
 
 import React from "react";
 import Image from "next/image";
-import { useTranslations, useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
+import { featuresConfig } from "@/config/features";
 import { siteMedia } from "@/config/siteMedia";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
 import { MaskedHeading } from "@/components/ui/MaskedHeading";
@@ -179,16 +180,18 @@ export function BookCtaSplit({ onOpenApply }: BookCtaSplitProps) {
             </div>
 
             <div className="mt-8 pt-5 border-t border-[#1E1E1E] flex flex-col gap-3">
-              <Link
-                href="/test"
-                className="group relative overflow-hidden inline-flex items-center justify-between gap-4 w-full bg-[#D4AF37] hover:bg-[#F3E5AB] text-[#070707] px-5 sm:px-6 py-3.5 sm:py-4 text-[11px] sm:text-xs uppercase tracking-[0.12em] sm:tracking-[0.16em] font-medium rounded-none transition-colors duration-300 cursor-pointer shadow-[0_4px_16px_rgba(212,175,55,0.25)] whitespace-nowrap"
-              >
-                <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
-                <span className="relative z-10 whitespace-nowrap font-bold">{tCta("startTest")}</span>
-                <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1.5 shrink-0 font-bold">
-                  →
-                </span>
-              </Link>
+              {featuresConfig.quiz && (
+                <Link
+                  href="/test"
+                  className="group relative overflow-hidden inline-flex items-center justify-between gap-4 w-full bg-[#D4AF37] hover:bg-[#F3E5AB] text-[#070707] px-5 sm:px-6 py-3.5 sm:py-4 text-[11px] sm:text-xs uppercase tracking-[0.12em] sm:tracking-[0.16em] font-medium rounded-none transition-colors duration-300 cursor-pointer shadow-[0_4px_16px_rgba(212,175,55,0.25)] whitespace-nowrap"
+                >
+                  <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
+                  <span className="relative z-10 whitespace-nowrap font-bold">{tCta("startTest")}</span>
+                  <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1.5 shrink-0 font-bold">
+                    →
+                  </span>
+                </Link>
+              )}
               <button
                 type="button"
                 onClick={() =>

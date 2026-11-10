@@ -1,268 +1,151 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import React from "react";
+import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
+import { activeBookingMode } from "@/config/booking";
+import { contactConfig } from "@/config/contact";
 
-// Dynamically import Cal embed with ssr: false to avoid window/document reference issues during SSR
-const Cal = dynamic(() => import("@calcom/embed-react"), {
+const CalcomBookingWidget = dynamic(() => import("./CalcomBookingWidget"), {
   ssr: false,
   loading: () => null,
 });
 
-export function BookingView() {
+function TelegramBookingHandoff() {
   const t = useTranslations("booking");
-  const locale = useLocale();
-
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [hasError, setHasError] = useState(false);
-  const [isBooked, setIsBooked] = useState(false);
-
-  const rawCalLink =
-    process.env.NEXT_PUBLIC_CAL_LINK || "asadbek-umarov-klqsdt/15min";
-  const calLink = rawCalLink
-    ? rawCalLink
-        .trim()
-        .replace(/^https?:\/\/(app\.)?cal\.com\//i, "")
-        .replace(/^\/+/, "")
-        .replace(/\/+$/, "")
-    : "";
-
-  // Cal.com does not currently support 'uz' (Uzbek).
-  // For 'uz' users, we provide 'ru' in the calendar embed as the regional secondary language,
-  // while our entire website chrome and texts strictly stay in Uzbek.
-  const embedLocale = locale === "en" ? "en" : "ru";
-
-  useEffect(() => {
-    if (!calLink) {
-      setHasError(true);
-      return;
-    }
-
-    let isMounted = true;
-
-    (async function initCal() {
-      try {
-        const { getCalApi } = await import("@calcom/embed-react");
-        const cal = await getCalApi();
-        if (!isMounted) return;
-
-        // Configure theme, brand color token (#D4AF37), and layout
-        cal("ui", {
-          theme: "dark",
-          styles: {
-            branding: {
-              brandColor: "#D4AF37",
-            },
-          },
-          hideEventTypeDetails: false,
-          layout: "month_view",
-        });
-
-        // Listen for successful booking events
-        cal("on", {
-          action: "bookingSuccessful",
-          callback: () => {
-            if (isMounted) setIsBooked(true);
-          },
-        });
-
-        cal("on", {
-          action: "bookingSuccessfulV2",
-          callback: () => {
-            if (isMounted) setIsBooked(true);
-          },
-        });
-
-        // Trigger skeleton dismissal when iframe finishes loading
-        cal("on", {
-          action: "linkReady",
-          callback: () => {
-            if (isMounted) setIsLoaded(true);
-          },
-        });
-      } catch (err) {
-        console.error("[Cal Embed Init Error]", err);
-        if (isMounted) setHasError(true);
-      }
-    })();
-
-    // Fallback timer to hide skeleton if linkReady is delayed or blocked
-    const timer = setTimeout(() => {
-      if (isMounted && !hasError) {
-        setIsLoaded(true);
-      }
-    }, 3500);
-
-    return () => {
-      isMounted = false;
-      clearTimeout(timer);
-    };
-  }, [calLink, hasError]);
 
   return (
-    <div className="w-full max-w-[1120px] mx-auto px-4 sm:px-6 md:px-8 py-8 sm:py-12">
-      {/* Editorial Header Section */}
-      <div className="mb-8 sm:mb-12 max-w-3xl">
-        {/* Swiss Architectural Kicker */}
-        <div className="flex items-center gap-3 mb-4">
-          <span className="w-8 h-[1px] bg-[#D4AF37]" />
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-[#D4AF37]">
-            {t("kicker")}
+    <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+      {/* Concept 3 Editorial Header */}
+      <header className="mb-8 sm:mb-10 pb-8 border-b border-[var(--border-hairline-editorial)] max-w-4xl">
+        <div className="flex items-center gap-3 mb-3">
+          <span className="font-mono text-[13px] font-medium text-[var(--accent-gold-ink)]">
+            07.A
+          </span>
+          <span className="text-[13.5px] font-semibold text-[var(--accent-gold-ink)]">
+            {t("handoffKicker")}
           </span>
         </div>
 
-        {/* Playfair / Editorial Serif Heading */}
-        <h1 className="font-serif italic text-3xl sm:text-5xl lg:text-6xl text-white font-normal tracking-[-0.02em] leading-[1.12]">
-          {t("title")}
+        <h1 className="font-serif text-[clamp(30px,4.2vw,52px)] text-[var(--text-ink)] font-semibold tracking-[-0.02em] leading-[1.09] [overflow-wrap:break-word] [text-wrap:balance]">
+          {t("handoffTitle")}
         </h1>
 
-        {/* Narrative Description */}
-        <p className="mt-4 sm:mt-5 text-sm sm:text-base text-[#9A9A9A] font-normal leading-relaxed max-w-2xl">
-          {t("description")}
+        <p className="mt-4 text-[16.5px] sm:text-[17px] text-[var(--text-soft-editorial)] font-normal leading-[1.65] max-w-[60ch] [text-wrap:pretty]">
+          {t("handoffDescription")}
         </p>
 
-        {/* 3 Value Pillars / Badges */}
-        <div className="mt-6 sm:mt-8 pt-6 border-t border-[#1E1E1E] flex flex-wrap items-center gap-6 sm:gap-8">
-          <div className="flex items-center gap-2.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] shrink-0 animate-pulse" />
-            <span className="font-mono text-xs uppercase tracking-[0.18em] text-[#9A9A9A]">
-              {t("badgeDuration")}
-            </span>
+        {/* Verified Official Channel Ledger (No Unconfirmed Commercial Promises) */}
+        <dl className="mt-6 pt-5 border-t border-[var(--border-hairline-subtle)] grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
+          <div>
+            <dt className="text-[12.5px] font-medium text-[var(--text-muted-aa)]">
+              {t("handoffChannelLabel")}
+            </dt>
+            <dd className="text-[15px] font-semibold text-[var(--text-ink)] mt-0.5 font-mono">
+              {t("handoffChannelValue")}
+            </dd>
           </div>
-
-          <div className="flex items-center gap-2.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] shrink-0 animate-pulse" />
-            <span className="font-mono text-xs uppercase tracking-[0.18em] text-[#9A9A9A]">
-              {t("badgePrice")}
-            </span>
+          <div>
+            <dt className="text-[12.5px] font-medium text-[var(--text-muted-aa)]">
+              {t("handoffPhoneLabel")}
+            </dt>
+            <dd className="text-[15px] font-semibold text-[var(--text-ink)] mt-0.5 tabular-nums">
+              {contactConfig.phone.display}
+            </dd>
           </div>
+        </dl>
+      </header>
 
-          <div className="flex items-center gap-2.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] shrink-0 animate-pulse" />
-            <span className="font-mono text-xs uppercase tracking-[0.18em] text-[#9A9A9A]">
-              {t("badgePrivacy")}
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Booking Success Notification Banner */}
-      {isBooked && (
-        <div
-          role="status"
-          aria-live="polite"
-          className="mb-8 p-6 sm:p-8 bg-[#121212] border border-[#D4AF37] shadow-[0_12px_40px_rgba(212,175,55,0.2)] flex flex-col sm:flex-row items-start sm:items-center gap-5 transition-all duration-500 animate-in fade-in"
-        >
-          <div className="w-10 h-10 rounded-none bg-[#D4AF37]/15 border border-[#D4AF37] flex items-center justify-center text-[#D4AF37] shrink-0">
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
+      {/* Concept 3 Obsidian Architectural Handoff Panel */}
+      <section
+        aria-labelledby="telegram-handoff-title"
+        className="w-full border border-[var(--border-on-dark)] border-t-2 border-t-[var(--accent-gold-light)] bg-[var(--bg-dark)] text-[var(--text-on-dark)] rounded-[2px] shadow-[var(--shadow-editorial-card)] p-6 sm:p-10 lg:p-12"
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="lg:col-span-7 flex flex-col gap-4 min-w-0">
+            <h2
+              id="telegram-handoff-title"
+              className="font-serif text-[clamp(24px,3vw,34px)] font-semibold leading-[1.18] tracking-[-0.015em] text-[var(--text-on-dark)] [text-wrap:balance]"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <div className="flex-1">
-            <h2 className="text-base sm:text-lg font-medium text-white mb-1">
-              {t("successTitle")}
+              {t("handoffPanelTitle")}
             </h2>
-            <p className="text-sm sm:text-base text-neutral-200 font-light leading-relaxed">
-              {t("successMessage")}
+
+            <p className="text-[16px] leading-[1.68] text-[var(--text-muted-on-dark)] max-w-[54ch] [text-wrap:pretty]">
+              {t("handoffPanelBody")}
+            </p>
+
+            <p className="text-[14px] leading-[1.55] text-[var(--text-muted-on-dark)] border-l-2 border-[var(--accent-gold-light)] pl-4 mt-1">
+              {t("handoffNote")}
             </p>
           </div>
+
+          <aside
+            aria-label={t("handoffAdminLabel")}
+            className="lg:col-span-5 bg-[var(--bg-dark-elevated)] border border-[var(--border-on-dark)] rounded-[2px] p-6 sm:p-8 flex flex-col gap-4 min-w-0"
+          >
+            <div className="pb-4 border-b border-[var(--border-on-dark-subtle)]">
+              <p className="text-[13px] font-medium text-[var(--accent-gold-light)]">
+                {t("handoffAdminLabel")}
+              </p>
+              <p className="mt-1 font-mono text-[16px] font-semibold text-[var(--text-on-dark)] [overflow-wrap:anywhere]">
+                {contactConfig.telegramDirect.display}
+              </p>
+              <p className="mt-1 text-[13.5px] font-mono text-[var(--text-muted-on-dark)] [overflow-wrap:anywhere]">
+                {contactConfig.telegramDirect.url}
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3 pt-1">
+              <a
+                href={contactConfig.telegramDirect.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="min-h-[48px] w-full inline-flex items-center justify-center gap-3 bg-[var(--bg-surface)] hover:bg-[var(--accent-gold-light)] text-[var(--text-ink)] px-6 py-3 rounded-[2px] text-[15px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+              >
+                <svg
+                  className="w-4 h-4 fill-current shrink-0"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.52 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .39z" />
+                </svg>
+                <span>{t("handoffPrimaryCta")}</span>
+              </a>
+
+              <a
+                href={contactConfig.phone.href}
+                className="min-h-[48px] w-full inline-flex items-center justify-center gap-2.5 bg-transparent hover:border-[var(--accent-gold-light)] hover:text-[var(--accent-gold-light)] text-[var(--text-on-dark)] border border-[var(--border-on-dark)] px-6 py-3 rounded-[2px] text-[14.5px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+              >
+                <svg
+                  className="w-4 h-4 text-[var(--accent-gold-light)] shrink-0"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.8}
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  />
+                </svg>
+                <span className="tabular-nums">
+                  {t("handoffSecondaryCta")}: {contactConfig.phone.display}
+                </span>
+              </a>
+            </div>
+          </aside>
         </div>
-      )}
-
-      {/* Calendar Area or Fallback */}
-      <div className="relative w-full border border-[#1E1E1E] bg-[#121212] shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden">
-        {hasError || !calLink ? (
-          /* Fallback Error Card if Calendar fails or env var missing */
-          <div className="py-16 sm:py-24 px-6 text-center max-w-lg mx-auto">
-            <div className="w-12 h-12 mx-auto mb-6 flex items-center justify-center border border-[#C5A880]/40 bg-[#C5A880]/10 text-[#C5A880]">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"
-                />
-              </svg>
-            </div>
-            <h2 className="font-serif italic text-2xl sm:text-3xl text-white mb-3">
-              {t("errorTitle")}
-            </h2>
-            <p className="text-neutral-300 text-sm sm:text-base leading-relaxed mb-8">
-              {t("errorDesc")}
-            </p>
-            <a
-              href="https://t.me/anvar_abduqayum"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-3 bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] px-7 py-4 text-xs uppercase tracking-[0.16em] font-medium transition-all duration-300 shadow-[0_4px_20px_rgba(197,168,128,0.25)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#C5A880]"
-            >
-              <span>{t("errorTelegramCta")}</span>
-              <span>→</span>
-            </a>
-          </div>
-        ) : (
-          <div className="relative min-h-[680px] w-full">
-            {/* Minimalist Swiss Skeleton Loader */}
-            {!isLoaded && (
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 z-10 bg-[#0A0A0A] p-6 sm:p-10 flex flex-col gap-6 animate-pulse"
-              >
-                <div className="flex items-center justify-between pb-6 border-b border-white/[0.08]">
-                  <div className="h-6 w-48 bg-white/[0.08] rounded-none" />
-                  <div className="flex gap-2">
-                    <div className="h-8 w-8 bg-white/[0.06] rounded-none" />
-                    <div className="h-8 w-8 bg-white/[0.06] rounded-none" />
-                  </div>
-                </div>
-                <div className="grid grid-cols-7 gap-3 py-2">
-                  {[...Array(7)].map((_, i) => (
-                    <div key={i} className="h-4 bg-white/[0.05] rounded-none" />
-                  ))}
-                </div>
-                <div className="grid grid-cols-7 gap-3 flex-1">
-                  {[...Array(28)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="h-14 sm:h-20 bg-white/[0.03] border border-white/[0.04] rounded-none"
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Cal.com Embed Component */}
-            <div className="w-full min-h-[680px]">
-              <Cal
-                calLink={calLink}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  minHeight: "680px",
-                  overflow: "auto",
-                }}
-                config={{
-                  layout: "month_view",
-                  theme: "dark",
-                  locale: embedLocale,
-                }}
-              />
-            </div>
-          </div>
-        )}
-      </div>
+      </section>
     </div>
   );
+}
+
+export function BookingView() {
+  if (activeBookingMode === "calcom") {
+    return <CalcomBookingWidget />;
+  }
+
+  return <TelegramBookingHandoff />;
 }

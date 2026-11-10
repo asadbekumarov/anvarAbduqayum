@@ -1,0 +1,87 @@
+{
+  "tabAfterArrowKey": "Dastur 03: Global expansion",
+  "focusRestoredOnEscape": true,
+  "modalAuditMob": {
+    "backgroundScrollLocked": true,
+    "modalScrollable": true,
+    "modalAboveStickyZ": true,
+    "closeBtnRect": {
+      "x": 274.921875,
+      "y": 843.28125,
+      "width": 95.078125,
+      "height": 48,
+      "top": 843.28125,
+      "right": 370,
+      "bottom": 891.28125,
+      "left": 274.921875
+    }
+  },
+  "overflowResults": {
+    "320": {
+      "hasOverflow": false,
+      "scrollWidth": 320,
+      "innerWidth": 320
+    },
+    "360": {
+      "hasOverflow": false,
+      "scrollWidth": 360,
+      "innerWidth": 360
+    },
+    "390": {
+      "hasOverflow": false,
+      "scrollWidth": 390,
+      "innerWidth": 390
+    },
+    "768": {
+      "hasOverflow": false,
+      "scrollWidth": 768,
+      "innerWidth": 768
+    },
+    "1024": {
+      "hasOverflow": false,
+      "scrollWidth": 1024,
+      "innerWidth": 1024
+    },
+    "1440": {
+      "hasOverflow": false,
+      "scrollWidth": 1440,
+      "innerWidth": 1440
+    }
+  },
+  "ruCheck": {
+    "heading": "4 стратегических направления для владельцев бизнеса и производителей",
+    "uzbicPill": "Независимая общественная платформа: не частный бизнес"
+  },
+  "enCheck": {
+    "heading": "4 strategic directions for business owners and industrial operators",
+    "uzbicPill": "Independent public platform: not a private company"
+  },
+  "imgAudit": [
+    {
+      "alt": "Toybola Toys logotipi",
+      "src": "../images/partners/toy_bola.webp",
+      "complete": true,
+      "naturalWidth": 280
+    },
+    {
+      "alt": "AFIYET Kebab logotipi",
+      "src": "../images/partners/afiyet.webp",
+      "complete": true,
+      "naturalWidth": 280
+    },
+    {
+      "alt": "PURO Gelateria logotipi",
+      "src": "../images/partners/puro.webp",
+      "complete": true,
+      "naturalWidth": 280
+    },
+    {
+      "alt": "UZBIC rasmiy belgisi",
+      "src": "../images/partners/uzbic.webp",
+      "complete": true,
+      "naturalWidth": 280
+    }
+  ],
+  "consoleErrors": [],
+  "networkErrors": []
+}

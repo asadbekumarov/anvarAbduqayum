@@ -1,24 +1,36 @@
 import React from "react";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { MobileStickyBar } from "@/components/layout/MobileStickyBar";
 import { QuizView } from "@/features/quiz/components/QuizView";
-import { SITE_URL } from "@/config/siteConfig";
+import { featuresConfig } from "@/config/features";
+import { SITE_URL, isIndexingEnabled } from "@/config/siteConfig";
 import { routing } from "@/i18n/routing";
 
 interface TestPageProps {
   params: Promise<{ locale: string }>;
 }
 
+export const dynamic = "force-dynamic";
+
 export function generateStaticParams() {
+  if (!featuresConfig.quiz) return [];
   return routing.locales.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({
   params,
 }: TestPageProps): Promise<Metadata> {
+  if (!featuresConfig.quiz) {
+    return {
+      title: "404 | Anvar Abduqayum",
+      robots: { index: false, follow: false },
+    };
+  }
+
   const { locale } = await params;
   const isUz = locale === "uz";
   const isRu = locale === "ru";
@@ -41,6 +53,9 @@ export async function generateMetadata({
   return {
     title,
     description,
+    robots: isIndexingEnabled
+      ? { index: true, follow: true }
+      : { index: false, follow: false },
     alternates: {
       canonical: canonicalUrl,
       languages: {
@@ -76,6 +91,10 @@ export async function generateMetadata({
 }
 
 export default async function TestPage({ params }: TestPageProps) {
+  if (!featuresConfig.quiz) {
+    notFound();
+  }
+
   const { locale } = await params;
   setRequestLocale(locale);
 

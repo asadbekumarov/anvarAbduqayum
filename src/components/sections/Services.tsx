@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
+import { useTranslations, useLocale } from "next-intl";
+import { BookingActionLink } from "@/components/ui/BookingActionLink";
 import { useApplyModal, type OpenApplyOptions } from "@/features/apply/context/ApplyModalContext";
 import { GridLine } from "@/components/ui/GridLine";
 import { MaskedHeading } from "@/components/ui/MaskedHeading";
@@ -23,6 +23,7 @@ export function Services({ onOpenApply }: ServicesProps) {
   const handleApply = onOpenApply || openApply;
   const t = useTranslations("services");
   const ctaT = useTranslations("cta");
+  const locale = useLocale();
   const items = t.raw("items") as ServiceItem[];
 
   return (
@@ -91,8 +92,8 @@ export function Services({ onOpenApply }: ServicesProps) {
                 </span>
 
                 <div className="flex flex-col sm:flex-row gap-3 items-stretch">
-                  <Link
-                    href="/bron"
+                  <BookingActionLink
+                    locale={locale}
                     className="group/btn relative overflow-hidden inline-flex items-center justify-center gap-3 bg-[#D4AF37] hover:bg-[#F3E5AB] text-[#070707] px-5 py-3.5 text-xs uppercase tracking-[0.15em] font-semibold transition-all duration-300 shadow-[0_4px_16px_rgba(212,175,55,0.25)] text-center cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
                   >
                     <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover/btn:translate-x-full" />
@@ -100,7 +101,7 @@ export function Services({ onOpenApply }: ServicesProps) {
                     <span className="relative z-10 transition-transform duration-300 group-hover/btn:translate-x-1 font-bold">
                       →
                     </span>
-                  </Link>
+                  </BookingActionLink>
 
                   <button
                     type="button"

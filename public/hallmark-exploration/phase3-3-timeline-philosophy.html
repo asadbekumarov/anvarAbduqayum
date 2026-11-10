@@ -1,0 +1,1894 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Anvar Abduqayum: Bosib o‘tilgan faoliyat yo‘li xronikasi va Qolip boshqaruv tamoyilining tahririy loyihasi.">
+  <title>Phase 3.3: Bosib o‘tilgan yo‘l va Qolip tamoyili | Concept 3 Editorial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Hallmark Concept 3 Exploration: Timeline & Business Philosophy | editorial | alabaster-stone-gold */
+    /* Critique: P4 H5 E5 S5 R5 V5 · Asymmetric monograph chronology and die-mold architecture; all decorative corner brackets and unverified percentages stripped to sharpen typographic weight. */
+    /* Hallmark · answered F3 · editorial two-line headlines wrap cleanly by clause across wide and mobile columns */
+    :root {
+      --bg-alabaster: oklch(98.1% 0.008 82);
+      --bg-alabaster-glass: oklch(98.1% 0.008 82 / 0.96);
+      --bg-stone: oklch(94.8% 0.015 80);
+      --bg-stone-soft: oklch(96.3% 0.011 82);
+      --bg-surface: oklch(99.2% 0.006 85);
+      --bg-dark: oklch(16.8% 0.009 260);
+      --bg-dark-elevated: oklch(20.6% 0.011 260);
+
+      --text-ink: oklch(16.8% 0.009 260);
+      --text-soft: oklch(34.5% 0.014 260);
+      --text-muted: oklch(43.2% 0.015 260);
+      --text-on-dark: oklch(98.1% 0.008 82);
+      --text-muted-on-dark: oklch(80.8% 0.012 260);
+
+      --accent-gold: oklch(57.2% 0.132 82);
+      --accent-gold-ink: oklch(44.8% 0.118 78);
+      --accent-gold-light: oklch(75.2% 0.128 84);
+      --accent-gold-wash: oklch(57.2% 0.132 82 / 0.08);
+      --accent-gold-border: oklch(57.2% 0.132 82 / 0.36);
+
+      --border-hairline: oklch(16.8% 0.009 260 / 0.12);
+      --border-hairline-subtle: oklch(16.8% 0.009 260 / 0.08);
+      --border-hairline-strong: oklch(16.8% 0.009 260 / 0.25);
+      --border-on-dark: oklch(98.1% 0.008 82 / 0.18);
+
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --shadow-subtle: 0 2px 12px oklch(16.8% 0.009 260 / 0.05);
+
+      --space-3xs: 2px;
+      --space-2xs: 4px;
+      --space-xs: 8px;
+      --space-sm: 12px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 40px;
+      --space-2xl: 64px;
+      --space-3xl: 96px;
+      --space-4xl: 128px;
+
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+      --radius-sharp: 2px;
+      --radius-subtle: 4px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      background-color: var(--bg-alabaster);
+      color: var(--text-ink);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      font-synthesis: none;
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--space-3xl);
+      overflow-x: clip;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background-color: var(--bg-alabaster);
+      color: var(--text-ink);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: clip;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent-gold);
+      outline-offset: 2px;
+      transition: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1320px;
+      margin-inline: auto;
+      padding-inline: var(--space-md);
+    }
+
+    @media (min-width: 640px) {
+      .container {
+        padding-inline: var(--space-lg);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .container {
+        padding-inline: var(--space-xl);
+      }
+    }
+
+    /* =====================================================================
+       CONTINUITY MASTHEAD & EXPLORATION BANNER
+       ===================================================================== */
+    .masthead {
+      position: sticky;
+      top: 0;
+      z-index: 300;
+      background: var(--bg-alabaster-glass);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-hairline);
+      min-height: var(--space-2xl);
+      display: flex;
+      align-items: center;
+    }
+
+    .masthead-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-xs);
+      padding-block: var(--space-sm);
+    }
+
+    .wordmark-link {
+      font-family: var(--font-display);
+      font-size: clamp(13.5px, 4.1vw, 18px);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text-ink);
+      white-space: nowrap;
+      min-width: 0;
+      transition: color var(--dur-micro) var(--ease-out);
+    }
+
+    @media (min-width: 640px) {
+      .masthead-inner {
+        gap: var(--space-md);
+      }
+    }
+
+    .wordmark-link:hover {
+      color: var(--accent-gold-ink);
+    }
+
+    .wordmark-dot {
+      color: var(--accent-gold);
+    }
+
+    .masthead-nav {
+      display: none;
+      align-items: center;
+      gap: var(--space-lg);
+    }
+
+    @media (min-width: 768px) {
+      .masthead-nav {
+        display: flex;
+      }
+    }
+
+    .nav-item-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-soft);
+      padding-block: var(--space-2xs);
+      border-bottom: 1px solid transparent;
+      transition: color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+      white-space: nowrap;
+    }
+
+    .nav-item-link:hover {
+      color: var(--text-ink);
+      border-bottom-color: var(--accent-gold-ink);
+    }
+
+    .nav-item-link:active {
+      color: var(--accent-gold-ink);
+    }
+
+    .lang-switcher {
+      display: inline-flex;
+      border: 1px solid var(--border-hairline-strong);
+      border-radius: var(--radius-sharp);
+      overflow: hidden;
+      background: var(--bg-surface);
+      flex-shrink: 0;
+    }
+
+    .lang-btn {
+      min-width: 38px;
+      min-height: 44px;
+      padding-inline: var(--space-xs);
+      background: transparent;
+      border: none;
+      border-right: 1px solid var(--border-hairline);
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--text-soft);
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+
+    @media (min-width: 480px) {
+      .lang-btn {
+        min-width: 44px;
+        padding-inline: var(--space-sm);
+        font-size: 13px;
+      }
+    }
+
+    .lang-btn:last-child {
+      border-right: none;
+    }
+
+    .lang-btn:hover:not(.is-active) {
+      background: var(--bg-stone);
+      color: var(--text-ink);
+    }
+
+    .lang-btn:active {
+      background: var(--bg-dark);
+      color: var(--bg-surface);
+    }
+
+    .lang-btn.is-active {
+      background: var(--bg-dark);
+      color: var(--bg-surface);
+    }
+
+    .intro-banner {
+      background: var(--bg-alabaster);
+      border-bottom: 1px solid var(--border-hairline);
+      padding-block: var(--space-xl) var(--space-2xl);
+    }
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: end;
+    }
+
+    @media (min-width: 1024px) {
+      .intro-grid {
+        grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+        gap: var(--space-xl);
+      }
+    }
+
+    .banner-h1 {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4.4vw, 56px);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      color: var(--text-ink);
+      overflow-wrap: break-word;
+      text-wrap: balance;
+      min-width: 0;
+    }
+
+    .banner-lead {
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--text-soft);
+      max-width: 56ch;
+      text-wrap: pretty;
+      margin-top: var(--space-md);
+    }
+
+    .banner-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+      align-items: center;
+    }
+
+    @media (min-width: 1024px) {
+      .banner-actions {
+        justify-content: flex-end;
+      }
+    }
+
+    .btn-primary-action {
+      min-height: 46px;
+      padding-inline: var(--space-lg);
+      background: var(--bg-dark);
+      color: var(--bg-surface);
+      border: 1px solid var(--bg-dark);
+      border-radius: var(--radius-sharp);
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      white-space: nowrap;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-primary-action:hover {
+      background: var(--accent-gold);
+      border-color: var(--accent-gold);
+      transform: translateY(-1px);
+    }
+
+    .btn-primary-action:active {
+      transform: translateY(0);
+    }
+
+    .btn-secondary-action {
+      min-height: 46px;
+      padding-inline: var(--space-md);
+      background: transparent;
+      color: var(--text-ink);
+      border: 1px solid var(--border-hairline-strong);
+      border-radius: var(--radius-sharp);
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+      transition: border-color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .btn-secondary-action:hover {
+      border-color: var(--text-ink);
+      background: var(--bg-surface);
+    }
+
+    .btn-secondary-action:active {
+      background: var(--bg-stone);
+    }
+
+    /* =====================================================================
+       SECTION 04: TIMELINE MONOGRAPH (WARM STONE #F4EFE6)
+       Asymmetric Horizontal Chronology Rows (Zero Card-in-Card Boxes)
+       ===================================================================== */
+    .section-timeline {
+      background: var(--bg-stone);
+      border-bottom: 1px solid var(--border-hairline);
+      padding-block: var(--space-3xl);
+      scroll-margin-top: var(--space-3xl);
+    }
+
+    @media (min-width: 1024px) {
+      .section-timeline {
+        padding-block: var(--space-4xl);
+      }
+    }
+
+    .section-split-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-md);
+      padding-bottom: var(--space-lg);
+      border-bottom: 1px solid var(--border-hairline);
+      margin-bottom: var(--space-lg);
+    }
+
+    @media (min-width: 1024px) {
+      .section-split-header {
+        grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+        gap: var(--space-xl);
+        align-items: end;
+      }
+    }
+
+    .section-title-pair {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-sm);
+      min-width: 0;
+    }
+
+    .section-num-gutter {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .section-h2 {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4.1vw, 52px);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--text-ink);
+      overflow-wrap: break-word;
+      text-wrap: balance;
+      min-width: 0;
+    }
+
+    .section-lead {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-soft);
+      max-width: 58ch;
+      text-wrap: pretty;
+    }
+
+    /* Attribution Taxonomy Key + Filter Bar */
+    .timeline-filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-lg);
+    }
+
+    .filter-pill-btn {
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-sharp);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-soft);
+      white-space: nowrap;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+
+    .filter-pill-btn:hover:not(.is-active) {
+      border-color: var(--text-ink);
+      color: var(--text-ink);
+    }
+
+    .filter-pill-btn:active {
+      background: var(--bg-stone-soft);
+    }
+
+    .filter-pill-btn.is-active {
+      background: var(--bg-dark);
+      border-color: var(--bg-dark);
+      color: var(--bg-surface);
+    }
+
+    .role-key-strip {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-sm);
+      padding-block: var(--space-md);
+      border-top: 1px solid var(--border-hairline-subtle);
+      border-bottom: 1px solid var(--border-hairline);
+      margin-bottom: var(--space-xl);
+    }
+
+    @media (min-width: 640px) {
+      .role-key-strip {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .role-key-strip {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: var(--space-lg);
+      }
+    }
+
+    .role-key-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-soft);
+    }
+
+    .role-swatch {
+      width: 10px;
+      height: 10px;
+      flex-shrink: 0;
+      border-radius: 1px;
+    }
+
+    .swatch-personal { background: var(--accent-gold); }
+    .swatch-founding { background: var(--bg-dark); }
+    .swatch-partner { background: var(--text-muted); }
+    .swatch-council { border: 2px solid var(--accent-gold); background: transparent; }
+
+    /* Monograph Ledger Rows */
+    .chronicle-list {
+      border-top: 1px solid var(--border-hairline-strong);
+    }
+
+    .chronicle-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-lg);
+      padding-block: var(--space-xl);
+      border-bottom: 1px solid var(--border-hairline);
+      transition: background-color var(--dur-short) var(--ease-out);
+    }
+
+    @media (min-width: 1024px) {
+      .chronicle-row {
+        grid-template-columns: minmax(0, 3fr) minmax(0, 5.5fr) minmax(0, 3.5fr);
+        gap: var(--space-xl);
+        padding-inline: var(--space-md);
+        align-items: start;
+      }
+
+      .chronicle-row:hover {
+        background: var(--bg-stone-soft);
+      }
+    }
+
+    .chronicle-period-col {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .chronicle-year {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 2.8vw, 38px);
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.05;
+      color: var(--text-ink);
+    }
+
+    .chronicle-role-tag {
+      align-self: flex-start;
+      font-size: 12px;
+      font-weight: 600;
+      padding: var(--space-2xs) var(--space-sm);
+      border-radius: var(--radius-sharp);
+    }
+
+    .tag-personal {
+      background: var(--accent-gold-wash);
+      color: var(--accent-gold-ink);
+      border: 1px solid var(--accent-gold-border);
+    }
+
+    .tag-founding {
+      background: var(--bg-surface);
+      color: var(--text-ink);
+      border: 1px solid var(--border-hairline-strong);
+    }
+
+    .tag-partner {
+      background: var(--bg-alabaster);
+      color: var(--text-soft);
+      border: 1px solid var(--border-hairline);
+    }
+
+    .tag-council {
+      background: var(--bg-dark);
+      color: var(--accent-gold-light);
+      border: 1px solid var(--accent-gold-border);
+    }
+
+    .chronicle-stage-title {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 2.2vw, 27px);
+      font-weight: 600;
+      line-height: 1.24;
+      color: var(--text-ink);
+      margin-bottom: var(--space-sm);
+      overflow-wrap: break-word;
+    }
+
+    .chronicle-summary {
+      font-size: 16px;
+      line-height: 1.68;
+      color: var(--text-soft);
+      max-width: 60ch;
+      text-wrap: pretty;
+    }
+
+    .chronicle-evidence-col {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      border-top: 1px solid var(--border-hairline-subtle);
+      padding-top: var(--space-md);
+    }
+
+    @media (min-width: 1024px) {
+      .chronicle-evidence-col {
+        border-top: none;
+        border-left: 1px solid var(--border-hairline);
+        padding-top: 0;
+        padding-left: var(--space-lg);
+      }
+    }
+
+    .evidence-pair dt {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: var(--space-3xs);
+    }
+
+    .evidence-pair dd {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.48;
+      color: var(--text-ink);
+      margin-bottom: var(--space-sm);
+    }
+
+    .verify-toggle-btn {
+      align-self: flex-start;
+      min-height: 44px;
+      padding: var(--space-xs) var(--space-md);
+      background: transparent;
+      border: 1px solid var(--border-hairline-strong);
+      border-radius: var(--radius-sharp);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-ink);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .verify-toggle-btn:hover {
+      background: var(--bg-surface);
+      border-color: var(--accent-gold-ink);
+    }
+
+    .verify-toggle-btn:active {
+      background: var(--bg-stone);
+    }
+
+    .verify-toggle-btn svg {
+      transition: transform var(--dur-short) var(--ease-out);
+    }
+
+    .verify-toggle-btn[aria-expanded="true"] svg {
+      transform: rotate(180deg);
+    }
+
+    .verify-note-drawer {
+      margin-top: var(--space-xs);
+      padding: var(--space-md);
+      background: var(--bg-surface);
+      border-left: 2px solid var(--accent-gold);
+      font-size: 14px;
+      line-height: 1.58;
+      color: var(--text-soft);
+    }
+
+    .verify-note-drawer[hidden] {
+      display: none;
+    }
+
+    /* =====================================================================
+       SECTION 05: BUSINESS PHILOSOPHY / QOLIP TAMOYILI (ALABASTER #FBF9F5)
+       Obsidian Manifesto Band + Interactive 4-Pillar Mold Inspector
+       ===================================================================== */
+    .section-philosophy {
+      background: var(--bg-alabaster);
+      padding-block: var(--space-3xl);
+      scroll-margin-top: var(--space-3xl);
+    }
+
+    @media (min-width: 1024px) {
+      .section-philosophy {
+        padding-block: var(--space-4xl);
+      }
+    }
+
+    /* Full-width Editorial Obsidian Manifesto Band */
+    .manifesto-band {
+      background: var(--bg-dark);
+      color: var(--text-on-dark);
+      padding: var(--space-xl) var(--space-lg);
+      border: 1px solid var(--accent-gold-border);
+      border-radius: var(--radius-sharp);
+      margin-bottom: var(--space-2xl);
+    }
+
+    @media (min-width: 1024px) {
+      .manifesto-band {
+        padding: var(--space-2xl) var(--space-3xl);
+      }
+    }
+
+    .manifesto-inner {
+      max-width: 72ch;
+      border-left: 2px solid var(--accent-gold-light);
+      padding-left: var(--space-lg);
+    }
+
+    @media (min-width: 1024px) {
+      .manifesto-inner {
+        padding-left: var(--space-xl);
+      }
+    }
+
+    .manifesto-heading {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--accent-gold-light);
+      margin-bottom: var(--space-sm);
+    }
+
+    .manifesto-quote {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(22px, 2.5vw, 31px);
+      font-weight: 500;
+      line-height: 1.42;
+      color: var(--text-on-dark);
+      margin-bottom: var(--space-lg);
+    }
+
+    .manifesto-footer-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-md);
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--border-on-dark);
+    }
+
+    .manifesto-framework-tag {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--accent-gold-light);
+    }
+
+    .manifesto-caveat {
+      font-size: 13px;
+      color: var(--text-muted-on-dark);
+      max-width: 48ch;
+    }
+
+    /* Interactive Mold System Switcher & Contrast Inspector */
+    .mold-switcher-bar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-xs);
+      margin-bottom: var(--space-lg);
+    }
+
+    @media (min-width: 640px) {
+      .mold-switcher-bar {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .mold-switcher-bar {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: var(--space-sm);
+      }
+    }
+
+    .mold-tab {
+      min-height: 52px;
+      padding: var(--space-sm) var(--space-md);
+      text-align: left;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-hairline);
+      border-radius: var(--radius-sharp);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: var(--space-3xs);
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+
+    .mold-tab:hover:not(.is-active) {
+      border-color: var(--text-ink);
+    }
+
+    .mold-tab:active {
+      background: var(--bg-stone);
+    }
+
+    .mold-tab.is-active {
+      background: var(--bg-dark);
+      border-color: var(--bg-dark);
+      color: var(--bg-surface);
+    }
+
+    .mold-tab-idx {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent-gold-ink);
+    }
+
+    .mold-tab.is-active .mold-tab-idx {
+      color: var(--accent-gold-light);
+    }
+
+    .mold-tab-name {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.3;
+      color: inherit;
+    }
+
+    /* Specification Panel Grid (Left Contrast Matrix + Right Operational Principle) */
+    .mold-panel-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-xl);
+      background: var(--bg-surface);
+      border: 1px solid var(--border-hairline-strong);
+      border-radius: var(--radius-sharp);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-2xl);
+    }
+
+    @media (min-width: 1024px) {
+      .mold-panel-grid {
+        grid-template-columns: minmax(0, 6.5fr) minmax(0, 5.5fr);
+        padding: var(--space-xl);
+        gap: var(--space-2xl);
+      }
+    }
+
+    .mold-panel-title {
+      font-family: var(--font-display);
+      font-size: clamp(26px, 2.8vw, 34px);
+      font-weight: 600;
+      line-height: 1.18;
+      color: var(--text-ink);
+      margin-bottom: var(--space-md);
+    }
+
+    .mold-panel-rule {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent-gold-ink);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--border-hairline);
+      margin-bottom: var(--space-md);
+    }
+
+    .mold-panel-desc {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-soft);
+      max-width: 60ch;
+      text-wrap: pretty;
+      margin-bottom: var(--space-lg);
+    }
+
+    .mold-application-dl {
+      border-top: 1px solid var(--border-hairline);
+      padding-top: var(--space-md);
+    }
+
+    .mold-application-dl dt {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: var(--space-2xs);
+    }
+
+    .mold-application-dl dd {
+      font-size: 14.5px;
+      font-weight: 500;
+      line-height: 1.55;
+      color: var(--text-ink);
+    }
+
+    /* Right Well: Systematic Contrast Shift (Without Cards inside Cards) */
+    .contrast-well {
+      background: var(--bg-stone);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-lg);
+    }
+
+    .contrast-row-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .contrast-block-before {
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--border-hairline);
+    }
+
+    .contrast-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: var(--space-2xs);
+    }
+
+    .contrast-value-before {
+      font-size: 15px;
+      color: var(--text-soft);
+      line-height: 1.5;
+    }
+
+    .contrast-label-gold {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent-gold-ink);
+      margin-bottom: var(--space-2xs);
+    }
+
+    .contrast-value-after {
+      font-family: var(--font-display);
+      font-size: 19px;
+      font-weight: 600;
+      line-height: 1.35;
+      color: var(--text-ink);
+    }
+
+    .contrast-caveat {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-soft);
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--border-hairline);
+    }
+
+    /* Complete 4-Pillar Hairline Summary Index */
+    .pillars-summary-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      border-top: 1px solid var(--border-hairline-strong);
+    }
+
+    @media (min-width: 768px) {
+      .pillars-summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .pillar-summary-item {
+      padding: var(--space-lg) var(--space-md);
+      border-bottom: 1px solid var(--border-hairline);
+      display: flex;
+      gap: var(--space-md);
+      align-items: start;
+      background: transparent;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+      width: 100%;
+      text-align: left;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+
+    @media (min-width: 768px) {
+      .pillar-summary-item:nth-child(odd) {
+        border-right: 1px solid var(--border-hairline);
+        padding-right: var(--space-xl);
+      }
+      .pillar-summary-item:nth-child(even) {
+        padding-left: var(--space-xl);
+      }
+    }
+
+    .pillar-summary-item:hover {
+      background: var(--bg-surface);
+    }
+
+    .pillar-summary-num {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--accent-gold-ink);
+      line-height: 1.2;
+      flex-shrink: 0;
+    }
+
+    .pillar-summary-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-ink);
+      margin-bottom: var(--space-2xs);
+      display: block;
+    }
+
+    .pillar-summary-line {
+      font-size: 14px;
+      color: var(--text-soft);
+      line-height: 1.5;
+      display: block;
+    }
+
+    /* Footer Colophon */
+    .colophon-footer {
+      background: var(--bg-stone);
+      border-top: 1px solid var(--border-hairline);
+      padding-block: var(--space-xl);
+    }
+
+    .colophon-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+
+    .colophon-cta {
+      min-height: 46px;
+      padding-inline: var(--space-lg);
+      background: var(--bg-dark);
+      color: var(--bg-surface);
+      border: 1px solid var(--bg-dark);
+      border-radius: var(--radius-sharp);
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+
+    .colophon-cta:hover {
+      background: var(--accent-gold);
+      border-color: var(--accent-gold);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MASTHEAD BAR -->
+  <header class="masthead">
+    <div class="container masthead-inner">
+      <a href="#yol" class="wordmark-link" aria-label="Anvar Abduqayum">
+        ANVAR ABDUQAYUM<span class="wordmark-dot">.</span>
+      </a>
+
+      <nav class="masthead-nav" aria-label="Bo‘limlar">
+        <a href="#yol" class="nav-item-link" id="nav-timeline">Faoliyat yo‘li</a>
+        <a href="#tamoyil" class="nav-item-link" id="nav-philosophy">Qolip tamoyili</a>
+      </nav>
+
+      <div class="lang-switcher" role="group" aria-label="Tilni tanlash">
+        <button type="button" class="lang-btn is-active" data-lang="uz" aria-pressed="true">UZ</button>
+        <button type="button" class="lang-btn" data-lang="ru" aria-pressed="false">RU</button>
+        <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- COMPACT EXPLORATION BANNER (Banner Posture) -->
+    <section class="intro-banner" aria-labelledby="banner-heading">
+      <div class="container intro-grid">
+        <div>
+          <h1 class="banner-h1" id="banner-heading">Faoliyat yo‘li va Qolip tamoyili</h1>
+          <p class="banner-lead" id="banner-lead">
+            Shaxsiy tajriba, kompaniyalar tashkili, hammuassislik va UZBIC jamoat mas’uliyati tasnifi.
+          </p>
+        </div>
+
+        <div class="banner-actions">
+          <a href="#yol" class="btn-primary-action" id="btn-jump-timeline">
+            <span id="btn-jump-timeline-label">Xronologiyani ko‘rish</span>
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M8 3v10M4 9l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="#tamoyil" class="btn-secondary-action" id="btn-jump-philosophy">Qolip tamoyili</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SECTION 04: TIMELINE MONOGRAPH (BOSIB O'TILGAN YO'L)
+         ================================================================= -->
+    <section class="section-timeline" id="yol" aria-labelledby="timeline-heading">
+      <div class="container">
+        <header class="section-split-header">
+          <div class="section-title-pair">
+            <span class="section-num-gutter" aria-hidden="true">04</span>
+            <h2 class="section-h2" id="timeline-heading">
+              <span id="tl-title-main">Bosib o‘tilgan yo‘l</span>
+            </h2>
+          </div>
+          <p class="section-lead" id="tl-lead">
+            Tadbirkorlik bir kunda qurilmaydi. Quyidagi xronika shaxsiy savdo tajribasini, zavod tashkil topgan yillarni, hammuassislikdagi loyihalarni hamda mustaqil jamoat kengashidagi maqomni aniq ajratib ko‘rsatadi.
+          </p>
+        </header>
+
+        <!-- Role Filter Tabs -->
+        <div class="timeline-filter-row" role="tablist" aria-label="Rol bo‘yicha filtrlash" id="tl-filters">
+          <button type="button" role="tab" class="filter-pill-btn is-active" aria-selected="true" data-filter="all" id="flt-all">Barchasi (5)</button>
+          <button type="button" role="tab" class="filter-pill-btn" aria-selected="false" data-filter="personal" id="flt-personal">Shaxsiy tajriba va asoschilik (2)</button>
+          <button type="button" role="tab" class="filter-pill-btn" aria-selected="false" data-filter="partner" id="flt-partner">Hammuassislik va hamkorlik (2)</button>
+          <button type="button" role="tab" class="filter-pill-btn" aria-selected="false" data-filter="council" id="flt-council">Jamoat kengashi mas’uliyati (1)</button>
+        </div>
+
+        <!-- Role Classification Legend -->
+        <div class="role-key-strip" id="tl-legend">
+          <div class="role-key-item">
+            <span class="role-swatch swatch-personal" aria-hidden="true"></span>
+            <span id="key-personal">Shaxsiy savdo tajribasi</span>
+          </div>
+          <div class="role-key-item">
+            <span class="role-swatch swatch-founding" aria-hidden="true"></span>
+            <span id="key-founding">Kompaniya tashkili (2009 / 2012)</span>
+          </div>
+          <div class="role-key-item">
+            <span class="role-swatch swatch-partner" aria-hidden="true"></span>
+            <span id="key-partner">Hammuassislik va hamkorlik loyihalari</span>
+          </div>
+          <div class="role-key-item">
+            <span class="role-swatch swatch-council" aria-hidden="true"></span>
+            <span id="key-council">Jamoat kengashi raisligi (UZBIC)</span>
+          </div>
+        </div>
+
+        <!-- Asymmetric Monochrome Monograph List -->
+        <div class="chronicle-list" id="chronicle-list"></div>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         SECTION 05: BUSINESS PHILOSOPHY (QOLIP TAMOYILI)
+         ================================================================= -->
+    <section class="section-philosophy" id="tamoyil" aria-labelledby="philosophy-heading">
+      <div class="container">
+        <header class="section-split-header">
+          <div class="section-title-pair">
+            <span class="section-num-gutter" aria-hidden="true">05</span>
+            <h2 class="section-h2" id="philosophy-heading">
+              <span id="ph-title-main">Qolip tamoyili</span>
+            </h2>
+          </div>
+          <p class="section-lead" id="ph-lead">
+            Plastik quyish sanoatidan olingan boshqaruv analogiyasi: mahsulot sifati va operatsion barqarorlik inson kayfiyatiga emas, avvaldan aniq loyihalanadigan standart va reglamentlarga tayanadi.
+          </p>
+        </header>
+
+        <!-- Obsidian Editorial Philosophy Statement Band -->
+        <article class="manifesto-band" aria-labelledby="ph-statement-heading">
+          <div class="manifesto-inner">
+            <h3 class="manifesto-heading" id="ph-statement-heading">Boshqaruv falsafasi</h3>
+            <p class="manifesto-quote" id="ph-manifesto">
+              Agar biznes rahbar yo‘qligida butunlay to‘xtab qolsa, u hali tizim emas, balki yakka shaxsga bog‘langan ish mexanizmidir. Tadbirkorlikdagi asosiy maqsad: egasiz ham aniq reglament va mas’uliyat asosida ishlay oladigan boshqaruv arxitekturasini shakllantirishdir.
+            </p>
+            <div class="manifesto-footer-meta">
+              <span class="manifesto-framework-tag" id="ph-framework">Qolip metodologiyasi</span>
+              <span class="manifesto-caveat" id="ph-caveat">
+                Boshqaruv metodologiyasi: tijorat natijalariga umumiy kafolat sifatida emas, amaliy tizimlashtirish tamoyili sifatida taqdim etiladi.
+              </span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Interactive 4-Pillar System Inspector Tabs -->
+        <div class="mold-switcher-bar" role="tablist" aria-label="Qolip tamoyili modullari" id="mold-tablist"></div>
+
+        <!-- Active Module Deep Specification + Contrast Shift -->
+        <div class="mold-panel-grid" id="mold-panel" role="tabpanel">
+          <div>
+            <h3 class="mold-panel-title" id="mp-title"></h3>
+            <div class="mold-panel-rule" id="mp-rule"></div>
+            <p class="mold-panel-desc" id="mp-desc"></p>
+            <dl class="mold-application-dl">
+              <dt id="mp-app-label">Amaliyotdagi kontekst</dt>
+              <dd id="mp-app-value"></dd>
+            </dl>
+          </div>
+
+          <aside class="contrast-well" aria-label="Tizimli o‘zgarish solishtirmasi">
+            <div class="contrast-row-group">
+              <div class="contrast-block-before">
+                <span class="contrast-label" id="mp-before-label">Shaxsga bog‘liq boshqaruv</span>
+                <p class="contrast-value-before" id="mp-before-val"></p>
+              </div>
+              <div>
+                <span class="contrast-label-gold" id="mp-after-label">Qolip yondashuvi</span>
+                <p class="contrast-value-after" id="mp-after-val"></p>
+              </div>
+            </div>
+            <p class="contrast-caveat" id="mp-disclaimer"></p>
+          </aside>
+        </div>
+
+        <!-- All 4 Pillars At-a-Glance Index (Click syncs Inspector) -->
+        <div class="pillars-summary-grid" id="pillars-summary-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- COLOPHON CLOSE -->
+  <footer class="colophon-footer">
+    <div class="container colophon-row">
+      <p id="footer-colophon-note">
+        Concept 3 Luxury Editorial exploration: Anvar Abduqayum shaxsiy brend va biznes ekotizimi (Phase 3.3).
+      </p>
+      <a href="/uz/bron" class="colophon-cta" id="footer-cta-link">
+        <span id="footer-cta-label">Uchrashuv bronlash</span>
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      let currentLang = 'uz';
+      let currentTlFilter = 'all';
+      let activeMoldIdx = 0;
+
+      const COPY = {
+        uz: {
+          navTl: "Faoliyat yo‘li",
+          navPh: "Qolip tamoyili",
+          bannerH1: "Faoliyat yo‘li va Qolip tamoyili",
+          bannerLead: "Shaxsiy savdo tajribasi, kompaniyalar tashkili, hammuassislik loyihalari va UZBIC jamoat mas’uliyatining aniq tasnifi.",
+          jumpTl: "Xronologiyani ko‘rish",
+          jumpPh: "Qolip tamoyili",
+          tlTitle: "Bosib o‘tilgan yo‘l",
+          tlLead: "Tadbirkorlik bir kunda qurilmaydi. Quyidagi xronika shaxsiy savdo tajribasini, zavod tashkil topgan yillarni, hammuassislikdagi loyihalarni hamda mustaqil jamoat kengashidagi maqomni aniq ajratib ko‘rsatadi.",
+          filters: {
+            all: "Barchasi (5)",
+            personal: "Shaxsiy tajriba va asoschilik (2)",
+            partner: "Hammuassislik va hamkorlik (2)",
+            council: "Jamoat kengashi mas’uliyati (1)"
+          },
+          keys: {
+            personal: "Shaxsiy savdo tajribasi",
+            founding: "Kompaniya tashkili (2009 / 2012)",
+            partner: "Hammuassislik va hamkorlik loyihalari",
+            council: "Jamoat kengashi raisligi (UZBIC)"
+          },
+          roleLabel: "Maqomi va ishtiroki",
+          sourceLabel: "Manba va tasdiq",
+          verifyLabel: "Huquqiy va faktik izoh",
+          hideLabel: "Izohni yopish",
+          phTitle: "Qolip tamoyili",
+          phLead: "Plastik quyish sanoatidan olingan boshqaruv analogiyasi: mahsulot sifati va operatsion barqarorlik inson kayfiyatiga emas, avvaldan aniq loyihalanadigan standart va reglamentlarga tayanadi.",
+          statementHeading: "Boshqaruv falsafasi",
+          manifesto: "Agar biznes rahbar yo‘qligida butunlay to‘xtab qolsa, u hali tizim emas, balki yakka shaxsga bog‘langan ish mexanizmidir. Tadbirkorlikdagi asosiy maqsad: egasiz ham aniq reglament va mas’uliyat asosida ishlay oladigan boshqaruv arxitekturasini shakllantirishdir.",
+          frameworkTag: "Qolip metodologiyasi",
+          caveat: "Boshqaruv metodologiyasi: tijorat natijalariga umumiy kafolat sifatida emas, amaliy tizimlashtirish tamoyili sifatida taqdim etiladi.",
+          appLabel: "Ekotizimdagi kontekst",
+          beforeLabel: "Shaxsga bog‘liq boshqaruv",
+          afterLabel: "Qolip yondashuvi",
+          disclaimer: "Eslatma: natijalar kompaniya jamoasi intizomi, bozor kon’yunkturasi va boshqaruv ijrosiga bog‘liq; umumiy moliyaviy kafolat berilmaydi.",
+          colophon: "Concept 3 Luxury Editorial tadqiqoti: Bosib o‘tilgan yo‘l va Qolip tamoyili (Phase 3.3).",
+          cta: "Uchrashuv bronlash"
+        },
+        ru: {
+          navTl: "Хроника пути",
+          navPh: "Принцип «Колип»",
+          bannerH1: "Хроника пути и принцип «Колип»",
+          bannerLead: "Разделение личного опыта торговли, запуска заводов, партнерств и роли в UZBIC.",
+          jumpTl: "Перейти к хронике",
+          jumpPh: "Принцип «Колип»",
+          tlTitle: "Пройденный путь",
+          tlLead: "Системный бизнес не строится за один день. Хроника разграничивает личный торговый опыт, годы основания предприятий, партнерские проекты и статус в общественном совете.",
+          filters: {
+            all: "Все этапы (5)",
+            personal: "Личный опыт и основание (2)",
+            partner: "Соучредительство и партнерство (2)",
+            council: "Общественный совет UZBIC (1)"
+          },
+          keys: {
+            personal: "Личный опыт торговли",
+            founding: "Основание завода (2009 / 2012)",
+            partner: "Промышленное соучредительство и HoReCa",
+            council: "Председательство в совете UZBIC"
+          },
+          roleLabel: "Роль и правовой статус",
+          sourceLabel: "Источник верификации",
+          verifyLabel: "Фактическое уточнение",
+          hideLabel: "Скрыть уточнение",
+          phTitle: "Принцип «Колип»",
+          phLead: "Управленческая аналогия из промышленного литья: устойчивость результата определяется не ручным контролем собственника, а заранее выстроенным стандартом процессов.",
+          statementHeading: "Философия управления",
+          manifesto: "Если бизнес полностью останавливается в отсутствие владельца, он все еще держится на личном контроле. Цель системного управления: выстроить рабочую архитектуру на четких регламентах и ответственности команды.",
+          frameworkTag: "Методология «Колип»",
+          caveat: "Методология управления представлена как практический ориентир систематизации, а не как коммерческая гарантия результата.",
+          appLabel: "Контекст применения",
+          beforeLabel: "Ручной контроль",
+          afterLabel: "Подход «Колип»",
+          disclaimer: "Примечание: эффективность внедрения зависит от управленческой дисциплины предприятия и рыночных условий; прямые финансовые гарантии не даются.",
+          colophon: "Дизайн-исследование Concept 3 Editorial: Хроника пути и принцип «Колип» (Phase 3.3).",
+          cta: "Забронировать встречу"
+        },
+        en: {
+          navTl: "Track Record",
+          navPh: "The Mold Principle",
+          bannerH1: "Chronicle of Practice & The Mold Principle",
+          bannerLead: "Distinguishing personal trade, venture founding dates, co-ownership, and public chairmanship at UZBIC.",
+          jumpTl: "Explore timeline",
+          jumpPh: "The Mold Principle",
+          tlTitle: "Track Record",
+          tlLead: "Industrial systems are never forged overnight. This record clearly distinguishes personal trading background, formal factory launches, shared-equity co-founding, and public council service.",
+          filters: {
+            all: "All Milestones (5)",
+            personal: "Personal Practice & Founding (2)",
+            partner: "Co-founder & Partnerships (2)",
+            council: "Public Council Roles (1)"
+          },
+          keys: {
+            personal: "Personal trade background",
+            founding: "Factory founding (2009 / 2012)",
+            partner: "Co-founder & HoReCa partnerships",
+            council: "UZBIC Public Council Chairmanship"
+          },
+          roleLabel: "Role & attribution",
+          sourceLabel: "Primary verification source",
+          verifyLabel: "Factual verification note",
+          hideLabel: "Hide note",
+          phTitle: "The Mold Principle",
+          phLead: "Borrowed from precision injection molding: operational consistency flows from designing clear workflows and accountability, rather than constant founder intervention.",
+          statementHeading: "Governance Philosophy",
+          manifesto: "If daily operations stall whenever the owner steps away, the structure still rests on personal oversight. Systemic entrepreneurship is building documented standards and delegation that hold beyond constant supervision.",
+          frameworkTag: "The Mold Framework",
+          caveat: "Presented as an operational methodology informed by manufacturing practice, not a universal performance guarantee.",
+          appLabel: "Observed ecosystem context",
+          beforeLabel: "Owner-dependent execution",
+          afterLabel: "The Mold approach",
+          disclaimer: "Note: outcomes depend on internal execution discipline and market conditions; no blanket commercial guarantees are implied.",
+          colophon: "Concept 3 Luxury Editorial Exploration: Track Record & The Mold Principle (Phase 3.3).",
+          cta: "Book Consultation"
+        }
+      };
+
+      const TIMELINE_DATA = [
+        {
+          id: "early-trade",
+          filterCat: "personal",
+          tagClass: "tag-personal",
+          period: { uz: "2009-yilgacha", ru: "До 2009 года", en: "Pre-2009" },
+          tag: { uz: "Shaxsiy biznes tajribasi", ru: "Личный опыт торговли", en: "Personal trade experience" },
+          title: {
+            uz: "Savdo amaliyoti va birinchi ishlab chiqarish qadamlari",
+            ru: "Школа торговли и первые шаги к производству",
+            en: "Cross-border trade and transition to production"
+          },
+          summary: {
+            uz: "Xitoy va Turkiya bilan savdo-logistika aloqalari orqali bozor kon’yunkturasi va xomashyo zanjirlari o‘rganildi. Ushbu tayyorgarlik 2009-yilda Toshkentda dastlabki polimer o‘yinchoqlar sexini boshlashga zamin yaratdi.",
+            ru: "Изучение оптовой торговли, рыночного спроса и поставок сырья из Китая и Турции сформировало базу для перехода к первым производственным цехам в 2009 году.",
+            en: "Wholesale trade experience and raw-material logistics linking Uzbekistan with China and Turkey established the practical groundwork prior to launching local toy workshops in 2009."
+          },
+          role: {
+            uz: "Shaxsiy savdo va ta’minot amaliyoti",
+            ru: "Личная предпринимательская и торговая практика",
+            en: "Personal entrepreneurial trade & sourcing"
+          },
+          source: {
+            uz: "Asoschi intervyulari va Spot.uz (2022)",
+            ru: "Интервью основателя и Spot.uz (2022)",
+            en: "Founder interviews & Spot.uz (2022)"
+          },
+          note: {
+            uz: "Aniq bir yillik boshlanish sanasi hujjatlashtirilmaganligi sababli tasdiqlanmagan raqamlar ishlatilmaydi; tasdiqlangan ishlab chiqarish boshlanishi 2009-yilga to‘g‘ri keladi.",
+            ru: "Без непроверенных точных дат старта; документально подтвержденный переход к производственным цехам относится к 2009 году.",
+            en: "Avoiding unverified exact trade start years; documented production workshop initiation dates back cleanly to 2009."
+          }
+        },
+        {
+          id: "toybola-founding",
+          filterCat: "personal",
+          tagClass: "tag-founding",
+          period: { uz: "2009 / 2012", ru: "2009 / 2012", en: "2009 / 2012" },
+          tag: { uz: "Kompaniya tashkili", ru: "Основание предприятия", en: "Company founding date" },
+          title: {
+            uz: "Toybola Toys fabrikasi va brendining tashkil etilishi",
+            ru: "Основание фабрики и бренда Toybola Toys",
+            en: "Establishment of the Toybola Toys factory"
+          },
+          summary: {
+            uz: "2009-yildagi dastlabki sex amaliyotidan so‘ng, 2012-yilda Toybola brendi va zamonaviy zavod quvvatlari rasman tashkil topdi. Termoplast quyish uskunalari va standartlashtirilgan qoliplar yo‘lga qo‘yildi.",
+            ru: "После цеховых практик 2009 года в 2012 году были официально основаны бренд и фабрика Toybola с автоматизированным литьем пластмасс под давлением.",
+            en: "Following workshop prototyping in 2009, the Toybola brand and modern factory facilities were formally founded in 2012 using injection molding and standardized tooling."
+          },
+          role: {
+            uz: "Asoschi va Hammuassis",
+            ru: "Основатель и Соучредитель",
+            en: "Founder & Co-founder"
+          },
+          source: {
+            uz: "Korxona arxivi va Gazeta.uz (2020)",
+            ru: "Архив предприятия и Gazeta.uz (2020)",
+            en: "Enterprise Archive & Gazeta.uz (2020)"
+          },
+          note: {
+            uz: "2009 (sex amaliyoti) va 2012 (zavod tashkili) sanalari birlamchi manbalarda tasdiqlangan; tasdiqlanmagan ishlab chiqarish hajmi raqamlari kiritilmadi.",
+            ru: "Даты 2009 (цех) и 2012 (завод) подтверждены архивом и публикациями; неподтвержденные объемы выпуска исключены.",
+            en: "Both 2009 workshop start and 2012 factory incorporation are verified; unverified unit volume estimates have been excluded."
+          }
+        },
+        {
+          id: "industrial-cofound",
+          filterCat: "partner",
+          tagClass: "tag-partner",
+          period: { uz: "2015 / 2018", ru: "2015 / 2018", en: "2015 / 2018" },
+          tag: { uz: "Hammuassislikdagi sanoat", ru: "Промышленное соучредительство", en: "Co-founder industrial ventures" },
+          title: {
+            uz: "Samtech Masterbatches va Visage Electric hammuassisligi",
+            ru: "Соучредительство в Samtech Masterbatches и Visage Electric",
+            en: "Co-founding Samtech Masterbatches and Visage Electric"
+          },
+          summary: {
+            uz: "Polimer sanoati uchun rang konsentratlari (Samtech Masterbatches, 2015-yildan) hamda elektrotexnika montaj mahsulotlari (Visage Electric, 2018-yildan) loyihalari hamkorlikda yo‘lga qo‘yildi.",
+            ru: "На принципах промышленного партнерства запущены проекты выпуска полимерных красителей Samtech Masterbatches (с 2015 г.) и электротехники Visage Electric (с 2018 г.).",
+            en: "Entered upstream polymer additives via Samtech Masterbatches (since 2015) and automated electrical switchgear assembly via Visage Electric (since 2018) through industrial partnerships."
+          },
+          role: {
+            uz: "Hammuassis / Sanoat hamkori (yakka mulkdor emas)",
+            ru: "Соучредитель / Партнер (совместный капитал)",
+            en: "Co-founder / Partner (shared equity)"
+          },
+          source: {
+            uz: "B2B sanoat kooperatsiyasi kelishuvlari",
+            ru: "Соглашения о промышленной кооперации",
+            en: "Industrial Cooperation Records"
+          },
+          note: {
+            uz: "Har ikki korxona yakka egalik emas, hammuassislik asosidagi B2B loyihalaridir. Import qaramligi bo‘yicha tasdiqlanmagan foiz ko‘rsatkichlari olib tashlandi.",
+            ru: "Оба проекта созданы в соучредительстве и не являются единоличной собственностью. Неподтвержденные проценты импортозамещения удалены.",
+            en: "Clearly distinguished as shared-equity co-founding ventures rather than sole proprietorship; unverified import-substitution percentages removed."
+          }
+        },
+        {
+          id: "horeca-internal-it",
+          filterCat: "partner",
+          tagClass: "tag-partner",
+          period: { uz: "2017 / 2020", ru: "2017 / 2020", en: "2017 / 2020" },
+          tag: { uz: "HoReCa va ichki IT", ru: "HoReCa и внутренний IT", en: "Hospitality & internal IT" },
+          title: {
+            uz: "AFIYET Kebab, PURO Gelateria va ichki raqamlashtirish",
+            ru: "AFIYET Kebab, PURO Gelateria и внутренняя цифровизация",
+            en: "AFIYET Kebab, PURO Gelateria & internal ERP digitization"
+          },
+          summary: {
+            uz: "Texnologik xarita va oshxona standartlari asosida 2017-yilda AFIYET Kebab, 2020-yilda PURO Gelateria ochildi. 2019-yildan ekotizim korxonalari uchun ichki ERP va ombor hisoboti tashabbusi shakllantirildi.",
+            ru: "В 2017 году открылся первый ресторан AFIYET Kebab, а в 2020 году заработала точка PURO Gelateria на стандартах техкарт. С 2019 года развивается внутренняя IT-инициатива учета.",
+            en: "Applied kitchen SOPs to hospitality with AFIYET Kebab launching in 2017 and PURO Gelateria in 2020, backed by internal ERP and inventory digitization from 2019."
+          },
+          role: {
+            uz: "Asoschi va Hamkor (AFIYET), Hamkor (PURO), Ichki IT tashabbusi",
+            ru: "Основатель и партнер (AFIYET), партнер (PURO), инициатор внутреннего IT",
+            en: "Founder/Partner (AFIYET), Partner (PURO), Internal IT Initiative"
+          },
+          source: {
+            uz: "Spot.uz rasmiy intervyusi (2020) va ekotizim arxivi",
+            ru: "Официальное интервью Spot.uz (2020) и архив экосистемы",
+            en: "Spot.uz Interview Archive (2020) & internal telemetry"
+          },
+          note: {
+            uz: "AFIYET (2017) va PURO (2020) ochilish sanalari Spot.uz da tasdiqlangan. IT Support & Service alohida dasturiy kompaniya emas, guruh ichidagi xizmat ko‘rsatish tashabbusidir.",
+            ru: "Даты запуска AFIYET (2017) и PURO (2020) подтверждены Spot.uz. IT Support & Service является внутренней инфраструктурной инициативой, а не внешней корпорацией.",
+            en: "Verified Spot.uz launch years (Afiyet 2017, Puro 2020); IT Support & Service is strictly an internal operational infrastructure initiative."
+          }
+        },
+        {
+          id: "uzbic-council",
+          filterCat: "council",
+          tagClass: "tag-council",
+          period: { uz: "2022 - Hozir", ru: "2022 - Сегодня", en: "2022 - Present" },
+          tag: { uz: "Jamoat kengashi mas’uliyati", ru: "Общественный статус (UZBIC)", en: "Public council responsibility" },
+          title: {
+            uz: "UZBIC Jamoat Kengashi Raisligi va eksport kooperatsiyasi",
+            ru: "Председательство в совете UZBIC и экспортная повестка",
+            en: "Chairmanship of UZBIC & B2B Export Diplomacy"
+          },
+          summary: {
+            uz: "2022-yilda tashkil etilgan O‘zbekiston Biznes va Sanoat Kengashi (UZBIC) raisi sifatida mahalliy ishlab chiqaruvchilar o‘rtasida B2B kooperatsiya va xorijiy bozorlarga chiqish yo‘nalishida jamoat faoliyati olib borilmoqda.",
+            ru: "С 2022 года в статусе Председателя Общественного Совета UZBIC координируется B2B-кооперация местных производителей и расширение экспортных каналов.",
+            en: "Since 2022, chairs the independent Uzbekistan Business and Industrial Council (UZBIC), facilitating B2B cooperation among domestic manufacturers and access to foreign trade channels."
+          },
+          role: {
+            uz: "Jamoat Kengashi Raisi (xususiy tijorat mulkdorligi emas)",
+            ru: "Председатель Совета (общественный статус, не частный актив)",
+            en: "Council Chair (public capacity, not private commercial ownership)"
+          },
+          source: {
+            uz: "uzbic.uz portali va Kun.uz axborotlari",
+            ru: "Портал uzbic.uz и публикации Kun.uz",
+            en: "Official uzbic.uz portal & Kun.uz reporting"
+          },
+          note: {
+            uz: "UZBIC nodavlat jamoat platformasi bo‘lib, xususiy kompaniya sifatida egalik qilinmaydi va alohida konsalting xizmatlariga kafolat organi hisoblanmaydi.",
+            ru: "UZBIC является независимой негосударственной общественной платформой и не выступает частной собственностью или гарантом консалтинговых услуг.",
+            en: "UZBIC is a non-governmental public council; chairmanship reflects institutional leadership rather than commercial equity or service guarantees."
+          }
+        }
+      ];
+
+      const PILLARS_DATA = [
+        {
+          id: "sop",
+          idx: "Modul A",
+          title: {
+            uz: "Texnologik reglamentlar (SOP)",
+            ru: "Технологические регламенты (SOP)",
+            en: "Standard Operating Procedures (SOP)"
+          },
+          summary: {
+            uz: "Har bir jarayon qadami yozma hujjatlashtiriladi.",
+            ru: "Каждый этап процесса зафиксирован в регламентах.",
+            en: "Documented step-by-step workflows replace tribal knowledge."
+          },
+          rule: {
+            uz: "Qoida: Xodimga emas, hujjatlashtirilgan jarayon protokoliga tayanish",
+            ru: "Правило: Опора на протокол процесса, а не на привычки отдельных лиц",
+            en: "Rule: Depend on documented workflows rather than individual habits"
+          },
+          desc: {
+            uz: "Korxonadagi har bir qadam (uskuna ishga tushirish va xomashyo qabulidan tortib oshxona texnik xaritalarigacha) yozma standartlar bilan mustahkamlanadi. Xodimlar almashganda ham asosiy ish tartibi saqlanib qoladi.",
+            ru: "Ключевые действия (от приемки сырья и запуска линий до кулинарных техкарт) закреплены в письменных регламентах, позволяющих сохранять единый стандарт при ротации персонала.",
+            en: "Core execution workflows (from feedstock intake and press startup to standardized kitchen prep) are codified cleanly in manuals so operational consistency endures staff turnover."
+          },
+          app: {
+            uz: "Toybola polimer sexlari, AFIYET Kebab texnik xaritalari va PURO Gelateria sovuq zanjirida qo‘llaniladi.",
+            ru: "Применяется на производстве Toybola, а также в техкартах кухни AFIYET Kebab и логистике PURO.",
+            en: "Applied across Toybola factory tooling protocols as well as Afiyet kitchen recipes and Puro cold-chain handling."
+          },
+          before: {
+            uz: "Og‘zaki ko‘rsatmalar, ustalar tajribasiga qaramlik va turli smenalarda turlicha sifat.",
+            ru: "Устные распоряжения, зависимость от конкретных мастеров и нестабильность от смены к смене.",
+            en: "Informal verbal habits, key-person dependency, and variable output quality across shifts."
+          },
+          after: {
+            uz: "Takrorlanadigan reglamentlar va yangi xodimlarni standart asosida moslashtirish.",
+            ru: "Повторяемые регламенты (SOP) и ввод сотрудников в работу по единому стандарту.",
+            en: "Repeatable SOP checklists enabling structured onboarding and consistent daily execution."
+          }
+        },
+        {
+          id: "governance",
+          idx: "Modul B",
+          title: {
+            uz: "Delegatsiyalash va vakolat chegaralari",
+            ru: "Делегирование и границы полномочий",
+            en: "Delegation & Accountability Matrix"
+          },
+          summary: {
+            uz: "Operatsion ijro va strategik boshqaruv aniq ajratiladi.",
+            ru: "Четкое разделение операционной рутины и стратегии.",
+            en: "Clear separation between daily operations and oversight."
+          },
+          rule: {
+            uz: "Qoida: Aniq vakolatlar taqsimoti va rahbarlar hisobdorligi",
+            ru: "Правило: Поэтапное делегирование полномочий и подотчетность",
+            en: "Rule: Structured authority limits backed by executive reporting"
+          },
+          desc: {
+            uz: "Kundalik operatsion xaridlar, smena nazorati va texnik qarorlar asoschi zimmasidan boshqaruvchilar va mas’ul bo‘limlarga o‘tkaziladi. Har bir bo‘limning qaror qabul qilish chegarasi oldindan belgilanadi.",
+            ru: "Повседневное управление закупками, сменами и текущими операциями передается профильным руководителям с четко очерченными рамками полномочий и регулярной отчетностью.",
+            en: "Daily purchasing, shift scheduling, and routine decisions shift away from the founder to responsible managers operating within explicitly bounded budgets and mandates."
+          },
+          app: {
+            uz: "Hammuassislik va tarmoq loyihalarida (Samtech, Visage, Afiyet) sheriklik hamda boshqaruv rollarini taqsimlash tajribasi.",
+            ru: "Опыт разделения зон ответственности в производственных партнерствах и сети ресторанов.",
+            en: "Practiced across multi-site ventures and co-owned industrial partnerships where founder presence cannot scale manually."
+          },
+          before: {
+            uz: "Har bir xarid, smena va muammo faqat asoschining shaxsiy ruxsati bilan hal qilinishi.",
+            ru: "Необходимость личного участия собственника в каждом мелком согласовании.",
+            en: "Every purchase, shift exception, or vendor request stalling until founder sign-off."
+          },
+          after: {
+            uz: "Lavozim vakolatlari, moliya chegaralari va muntazam hisobot intizomi.",
+            ru: "Закрепленные должностные полномочия, финансовые лимиты и отчетная дисциплина.",
+            en: "Defined managerial mandates, clear spending thresholds, and structured weekly accountability."
+          }
+        },
+        {
+          id: "metrics",
+          idx: "Modul C",
+          title: {
+            uz: "Ichki ERP va raqamli hisobot",
+            ru: "Внутренний ERP и цифровой учет",
+            en: "Internal ERP & Operational Telemetry"
+          },
+          summary: {
+            uz: "Xomashyo sarfi, ombor va tannarx tizimli nazoratda bo‘ladi.",
+            ru: "Склады, расход сырья и себестоимость в едином контуре.",
+            en: "Warehouse, feedstock, and cost tracking inside internal ERP."
+          },
+          rule: {
+            uz: "Qoida: Taxminlarga emas, hujjatlashtirilgan hisobot ko‘rsatkichlariga tayanish",
+            ru: "Правило: Опора на фактический учет, а не на субъективные оценки",
+            en: "Rule: Base operational reviews on verified ledger telemetry"
+          },
+          desc: {
+            uz: "Zavod omborlaridagi qoldiqlar, xomashyo sarfi, yaroqsiz mahsulot (brak) va mahsulot tannarxi ichki hisob tizimlari hamda ERP vositalari orqali kuzatib boriladi. Bu ko‘rinmas yo‘qotishlarni o‘z vaqtida aniqlashga yordam beradi.",
+            ru: "Остатки на складах, списание сырья, процент брака и калькуляция себестоимости контролируются через внутренние инструменты учета и ERP-отчетность для выявления потерь.",
+            en: "Factory inventory balances, material consumption, defect tracking, and unit cost structures are monitored through internal ERP dashboards so operational leakages surface early."
+          },
+          app: {
+            uz: "2019-yildan ekotizim ichidagi korxonalar ehtiyoji uchun shakllantirilgan IT Support & Service ichki tashabbusi.",
+            ru: "Внутренняя инфраструктурная инициатива IT Support & Service, действующая с 2019 года.",
+            en: "Implemented via the internal IT Support & Service infrastructure team organized in 2019 for group ventures."
+          },
+          before: {
+            uz: "Kechikkan oylik hisob-kitoblar, qog‘oz daftarlar va ko‘rinmas xomashyo yo‘qotishlari.",
+            ru: "Запоздалые итоги месяца на бумаге и неучтенные потери сырья на линии.",
+            en: "Delayed end-of-month reconciliations and unmeasured material waste across workshops."
+          },
+          after: {
+            uz: "Tizimlashtirilgan ombor hisobi, dinamik tannarx nazorati va shaffof hisobotlar.",
+            ru: "Регулярный складской учет, контроль себестоимости и прозрачные дашборды.",
+            en: "Synchronized inventory records, structured unit-cost tracking, and transparent reporting."
+          }
+        },
+        {
+          id: "culture",
+          idx: "Modul D",
+          title: {
+            uz: "Mas’uliyat madaniyati va tizimni tuzatish",
+            ru: "Культура ответственности и улучшение системы",
+            en: "Stewardship & Continuous Calibration"
+          },
+          summary: {
+            uz: "Kamchilik aniqlansa, jarayon protokolining o‘zi takomillashtiriladi.",
+            ru: "Отклонения устраняются через доработку самого процесса.",
+            en: "Defects trigger process refinement rather than blame cycles."
+          },
+          rule: {
+            uz: "Qoida: Jarayondagi bo‘shliqni inson aybi bilan adashtirmaslik",
+            ru: "Правило: Отделять пробелы регламента от личной ошибки",
+            en: "Rule: Diagnose broken workflows alongside personnel coaching"
+          },
+          desc: {
+            uz: "Ishlab chiqarish yoki xizmatda og‘ish aniqlanganda faqat ijrochini jazolash uzoq muddatli yechim bermaydi. Har bir xatolik nazorat zanjiri va o‘quv reglamentini kuchaytirish uchun asos sifatida tahlil qilinadi.",
+            ru: "При выявлении сбоя поиск виновных не решает системную причину. Разбор ошибок используется для усиления инструкций, точек контроля и обучения команды.",
+            en: "When defects or delivery delays happen, disciplinary pressure alone fails to stop recurrence. Each incident feeds back into revising training steps, checklists, and quality gates."
+          },
+          app: {
+            uz: "Amaliy tadbirkorlik yo‘lidagi xatolar tahlili hamda ishlab chiqarish jarayonlarini bosqichma-bosqich kalibrlash tajribasi.",
+            ru: "Опыт разбора управленческих ошибок и поэтапной донастройки производственных стандартов.",
+            en: "Shaped directly by retrospective analysis of operational mistakes across manufacturing and hospitality launches."
+          },
+          before: {
+            uz: "Xato chiqqanda aybdorni izlash, lekin jarayonning o‘zini o‘zgartirmaslik.",
+            ru: "Поиск крайнего при сбое без изменения самой инструкции.",
+            en: "Recurring errors blamed on individuals while leaving weak workflows unchanged."
+          },
+          after: {
+            uz: "Sabablarni tahlil qilish, reglamentni yangilash va jamoaviy mas’uliyat.",
+            ru: "Разбор первопричин, обновление регламентов и ответственное отношение к стандарту.",
+            en: "Root-cause calibration, living checklists, and shared team stewardship."
+          }
+        }
+      ];
+
+      let expandedIds = new Set(["toybola-founding"]);
+
+      function renderTimeline() {
+        const c = COPY[currentLang];
+        const listEl = document.getElementById("chronicle-list");
+        const filtered = TIMELINE_DATA.filter(item => currentTlFilter === "all" || item.filterCat === currentTlFilter);
+
+        listEl.innerHTML = filtered.map(item => {
+          const isOpen = expandedIds.has(item.id);
+          const panelId = `note-drawer-${item.id}`;
+          const btnId = `verify-btn-${item.id}`;
+
+          return `
+            <article class="chronicle-row" aria-labelledby="stage-title-${item.id}">
+              <div class="chronicle-period-col">
+                <span class="chronicle-year">${item.period[currentLang]}</span>
+                <span class="chronicle-role-tag ${item.tagClass}">${item.tag[currentLang]}</span>
+              </div>
+
+              <div>
+                <h3 class="chronicle-stage-title" id="stage-title-${item.id}">${item.title[currentLang]}</h3>
+                <p class="chronicle-summary">${item.summary[currentLang]}</p>
+              </div>
+
+              <div class="chronicle-evidence-col">
+                <dl class="evidence-pair">
+                  <dt>${c.roleLabel}</dt>
+                  <dd>${item.role[currentLang]}</dd>
+                  <dt>${c.sourceLabel}</dt>
+                  <dd>${item.source[currentLang]}</dd>
+                </dl>
+
+                <button type="button" class="verify-toggle-btn" id="${btnId}" aria-expanded="${isOpen}" aria-controls="${panelId}" data-id="${item.id}">
+                  <span>${isOpen ? c.hideLabel : c.verifyLabel}</span>
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+
+                <div class="verify-note-drawer" id="${panelId}" ${isOpen ? "" : "hidden"}>
+                  ${item.note[currentLang]}
+                </div>
+              </div>
+            </article>
+          `;
+        }).join("");
+
+        listEl.querySelectorAll(".verify-toggle-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const id = btn.dataset.id;
+            if (expandedIds.has(id)) expandedIds.delete(id);
+            else expandedIds.add(id);
+            renderTimeline();
+            document.getElementById(`verify-btn-${id}`)?.focus();
+          });
+        });
+      }
+
+      function renderPhilosophy(focusActiveTab) {
+        const c = COPY[currentLang];
+        const tablist = document.getElementById("mold-tablist");
+        const activePillar = PILLARS_DATA[activeMoldIdx] || PILLARS_DATA[0];
+
+        tablist.innerHTML = PILLARS_DATA.map((p, idx) => {
+          const isSel = idx === activeMoldIdx;
+          return `
+            <button type="button" role="tab" class="mold-tab ${isSel ? "is-active" : ""}" id="mold-tab-${p.id}" aria-selected="${isSel}" aria-controls="mold-panel" tabindex="${isSel ? "0" : "-1"}" data-idx="${idx}">
+              <span class="mold-tab-idx">${p.idx}</span>
+              <span class="mold-tab-name">${p.title[currentLang]}</span>
+            </button>
+          `;
+        }).join("");
+
+        const panel = document.getElementById("mold-panel");
+        panel.setAttribute("aria-labelledby", `mold-tab-${activePillar.id}`);
+        document.getElementById("mp-title").textContent = activePillar.title[currentLang];
+        document.getElementById("mp-rule").textContent = activePillar.rule[currentLang];
+        document.getElementById("mp-desc").textContent = activePillar.desc[currentLang];
+        document.getElementById("mp-app-label").textContent = c.appLabel;
+        document.getElementById("mp-app-value").textContent = activePillar.app[currentLang];
+        document.getElementById("mp-before-label").textContent = c.beforeLabel;
+        document.getElementById("mp-before-val").textContent = activePillar.before[currentLang];
+        document.getElementById("mp-after-label").textContent = c.afterLabel;
+        document.getElementById("mp-after-val").textContent = activePillar.after[currentLang];
+        document.getElementById("mp-disclaimer").textContent = c.disclaimer;
+
+        const summaryGrid = document.getElementById("pillars-summary-grid");
+        summaryGrid.innerHTML = PILLARS_DATA.map((p, idx) => `
+          <button type="button" class="pillar-summary-item" data-idx="${idx}">
+            <span class="pillar-summary-num">0${idx + 1}</span>
+            <span>
+              <span class="pillar-summary-title">${p.title[currentLang]}</span>
+              <span class="pillar-summary-line">${p.summary[currentLang]}</span>
+            </span>
+          </button>
+        `).join("");
+
+        const tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
+        tabs.forEach(tab => {
+          tab.addEventListener("click", () => {
+            activeMoldIdx = parseInt(tab.dataset.idx, 10);
+            renderPhilosophy(true);
+          });
+
+          tab.addEventListener("keydown", e => {
+            let nextIdx = -1;
+            if (e.key === "ArrowRight" || e.key === "ArrowDown") nextIdx = (activeMoldIdx + 1) % PILLARS_DATA.length;
+            else if (e.key === "ArrowLeft" || e.key === "ArrowUp") nextIdx = (activeMoldIdx - 1 + PILLARS_DATA.length) % PILLARS_DATA.length;
+            else if (e.key === "Home") nextIdx = 0;
+            else if (e.key === "End") nextIdx = PILLARS_DATA.length - 1;
+
+            if (nextIdx !== -1) {
+              e.preventDefault();
+              activeMoldIdx = nextIdx;
+              renderPhilosophy(true);
+            }
+          });
+        });
+
+        summaryGrid.querySelectorAll(".pillar-summary-item").forEach(btn => {
+          btn.addEventListener("click", () => {
+            activeMoldIdx = parseInt(btn.dataset.idx, 10);
+            renderPhilosophy(false);
+            document.getElementById("mold-panel").scrollIntoView({ behavior: "smooth", block: "nearest" });
+          });
+        });
+
+        if (focusActiveTab) {
+          document.getElementById(`mold-tab-${activePillar.id}`)?.focus();
+        }
+      }
+
+      function syncLanguage() {
+        const c = COPY[currentLang];
+        document.documentElement.lang = currentLang;
+
+        document.getElementById("nav-timeline").textContent = c.navTl;
+        document.getElementById("nav-philosophy").textContent = c.navPh;
+        document.getElementById("banner-heading").textContent = c.bannerH1;
+        document.getElementById("banner-lead").textContent = c.bannerLead;
+        document.getElementById("btn-jump-timeline-label").textContent = c.jumpTl;
+        document.getElementById("btn-jump-philosophy").textContent = c.jumpPh;
+
+        document.getElementById("tl-title-main").textContent = c.tlTitle;
+        document.getElementById("tl-lead").textContent = c.tlLead;
+        document.getElementById("flt-all").textContent = c.filters.all;
+        document.getElementById("flt-personal").textContent = c.filters.personal;
+        document.getElementById("flt-partner").textContent = c.filters.partner;
+        document.getElementById("flt-council").textContent = c.filters.council;
+        document.getElementById("key-personal").textContent = c.keys.personal;
+        document.getElementById("key-founding").textContent = c.keys.founding;
+        document.getElementById("key-partner").textContent = c.keys.partner;
+        document.getElementById("key-council").textContent = c.keys.council;
+
+        document.getElementById("ph-title-main").textContent = c.phTitle;
+        document.getElementById("ph-lead").textContent = c.phLead;
+        document.getElementById("ph-statement-heading").textContent = c.statementHeading;
+        document.getElementById("ph-manifesto").textContent = c.manifesto;
+        document.getElementById("ph-framework").textContent = c.frameworkTag;
+        document.getElementById("ph-caveat").textContent = c.caveat;
+        document.getElementById("footer-colophon-note").textContent = c.colophon;
+        document.getElementById("footer-cta-label").textContent = c.cta;
+        document.getElementById("footer-cta-link").setAttribute("href", `/${currentLang}/bron`);
+
+        renderTimeline();
+        renderPhilosophy(false);
+      }
+
+      document.querySelectorAll(".filter-pill-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          currentTlFilter = btn.dataset.filter;
+          document.querySelectorAll(".filter-pill-btn").forEach(b => {
+            const act = b.dataset.filter === currentTlFilter;
+            b.classList.toggle("is-active", act);
+            b.setAttribute("aria-selected", act ? "true" : "false");
+          });
+          renderTimeline();
+        });
+      });
+
+      document.querySelectorAll(".lang-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          currentLang = btn.dataset.lang;
+          document.querySelectorAll(".lang-btn").forEach(b => {
+            const act = b.dataset.lang === currentLang;
+            b.classList.toggle("is-active", act);
+            b.setAttribute("aria-pressed", act ? "true" : "false");
+          });
+          syncLanguage();
+        });
+      });
+
+      syncLanguage();
+    })();
+  </script>
+</body>
+</html>

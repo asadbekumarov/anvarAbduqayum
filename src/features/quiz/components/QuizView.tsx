@@ -3,7 +3,7 @@
 import React, { useState, useTransition, useCallback } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "@/i18n/routing";
+import { BookingActionLink } from "@/components/ui/BookingActionLink";
 import {
   QUIZ_QUESTIONS,
   calculateQuizScore,
@@ -671,24 +671,20 @@ export function QuizView() {
                 </div>
               </div>
 
-              {/* Action Buttons: Booking Page, Telegram Direct Consultation & Retake */}
+              {/* Action Buttons: Telegram Coordinator Handoff, Channel & Retake */}
               <div className="pt-6 border-t border-[#1E1E1E] flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center">
-                <Link
-                  href="/bron"
+                <BookingActionLink
+                  locale={locale}
                   className="group relative overflow-hidden inline-flex items-center justify-between gap-4 flex-1 bg-[#D4AF37] hover:bg-[#F3E5AB] text-[#070707] px-7 py-4 text-xs uppercase tracking-[0.14em] font-bold transition-all duration-300 cursor-pointer shadow-[0_4px_20px_rgba(212,175,55,0.25)] text-center"
                 >
                   <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
                   <span className="relative z-10 font-bold">
-                    {locale === "ru"
-                      ? "Записаться на 20-минутную диагностику с Анваром Абдукаюмом"
-                      : locale === "en"
-                      ? "Book 20-min Diagnostic Session with Anvar Abduqayum"
-                      : "Anvar Abduqayum bilan 20 daqiqalik bepul diagnostikaga yozilish"}
+                    {t("ctaTelegram")}
                   </span>
                   <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1.5 font-bold">
                     →
                   </span>
-                </Link>
+                </BookingActionLink>
 
                 <a
                   href="https://t.me/anvar_abduqayum"

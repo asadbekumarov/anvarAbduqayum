@@ -3,10 +3,16 @@
  * Controls which modules and sections are rendered in v1 and future releases.
  */
 
+export type BookingMode = "telegram" | "calcom";
+
 export interface FeatureFlags {
-  // Hidden modules for future versions
+  // Reversible public booking flow toggle (default: "telegram" until Cal.com is confirmed)
+  bookingMode: BookingMode;
+
+  // Hidden / temporarily disabled modules
   consulting: boolean;
   investment: boolean;
+  quiz: boolean;
 
   // v1 active sections toggles
   sections: {
@@ -24,20 +30,24 @@ export interface FeatureFlags {
 }
 
 export const featuresConfig: FeatureFlags = {
-  // Consulting & Investment are strictly disabled in v1 as per requirements
+  // Temporary safe handoff to official Telegram administrator pending verified Cal.com config
+  bookingMode: "telegram",
+
+  // Consulting, Investment, and legacy un-migrated /test route are disabled in v1
   consulting: false,
   investment: false,
+  quiz: false,
 
-  // All 9 core v1 sections are enabled by default and toggleable
+  // Active Concept 3 homepage sections (legacy unverified blocks disabled without deletion)
   sections: {
     hero: true,
     dossier: true,
     portfolio: true,
     timeline: true,
     principles: true,
-    numbers: true,
-    exportUzbic: true,
-    mistakes: true,
+    numbers: false,
+    exportUzbic: false,
+    mistakes: false,
     media: true,
     contact: true,
   },

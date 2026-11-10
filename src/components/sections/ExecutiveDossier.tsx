@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState, useRef, KeyboardEvent } from "react";
-import Link from "next/link";
 import { getContent } from "@/config/content";
+import { contactConfig } from "@/config/contact";
+import { BookingActionLink } from "@/components/ui/BookingActionLink";
 
 interface ExecutiveDossierProps {
   locale?: string;
@@ -14,12 +15,10 @@ export const ExecutiveDossier: React.FC<ExecutiveDossierProps> = ({
   const content = getContent(locale);
   const dossier = content.dossier;
 
-  // Fallback if dossier is not defined
   const services = dossier?.services || [];
   const [selectedId, setSelectedId] = useState<string>(
     services[0]?.id || "governance"
   );
-  // Mobile accordion: track which service is open (default to first)
   const [openAccordionId, setOpenAccordionId] = useState<string | null>(
     services[0]?.id || "governance"
   );
@@ -57,343 +56,344 @@ export const ExecutiveDossier: React.FC<ExecutiveDossierProps> = ({
     }
   };
 
-  const toggleAccordion = (id: string) => {
-    setOpenAccordionId((prev) => (prev === id ? null : id));
-  };
-
-  if (!dossier || services.length === 0) {
-    return null;
-  }
+  if (!dossier || !services.length) return null;
 
   return (
     <section
       id="xizmatlar"
-      className="scroll-mt-24 bg-[#F6F3EC] text-[#14161A] border-t border-b border-[#E5E0D6] pt-14 pb-16 sm:pt-18 sm:pb-20 lg:py-28 relative overflow-hidden"
       aria-labelledby="dossier-heading"
+      className="bg-[var(--bg-stone)] border-b border-[var(--border-hairline-editorial)] py-16 lg:py-24 xl:py-28 scroll-mt-24"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="max-w-3xl mb-10 sm:mb-14 lg:mb-16">
-          <div className="inline-flex items-center gap-2 font-mono text-[11px] sm:text-xs font-semibold tracking-wider text-[#D97736] uppercase mb-3 sm:mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#D97736]" aria-hidden="true" />
-            <span>{dossier.eyebrow}</span>
-          </div>
+      <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Editorial Split Header */}
+        <header className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-12 lg:items-end mb-10 lg:mb-12 pb-7 lg:pb-8 border-b border-[var(--border-hairline-editorial)]">
           <h2
             id="dossier-heading"
-            className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#14161A] leading-[1.2] mb-3 sm:mb-4"
+            className="lg:col-span-7 font-serif text-[clamp(30px,4.2vw,50px)] font-semibold leading-[1.1] tracking-[-0.02em] text-[var(--text-ink)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
           >
-            {dossier.title}
+            <span className="font-mono text-[0.42em] font-semibold text-[var(--text-muted-aa)] align-super mr-2">
+              {dossier.sectionNum || "02"}
+            </span>
+            <span>{dossier.title}</span>
           </h2>
-          <p className="text-sm sm:text-base lg:text-lg text-[#5A606E] leading-relaxed">
+
+          <p className="lg:col-span-5 text-[16px] lg:text-[17px] leading-[1.65] text-[var(--text-soft-editorial)] [text-wrap:pretty]">
             {dossier.subtitle}
           </p>
-        </div>
+        </header>
 
-        {/* DESKTOP SPLIT VIEW (lg and up) */}
-        <div className="hidden lg:grid lg:grid-cols-12 gap-8 items-start">
-          {/* Left Column: Interactive Program Tabs */}
+        {/* DESKTOP SPLIT VIEW (Ledger Index + Sticky Pure Paper Folio) */}
+        <div className="hidden lg:grid lg:grid-cols-12 gap-10 items-start">
+          {/* Left Column: Advisory Ledger Tablist */}
           <div
             ref={tabListRef}
             role="tablist"
-            aria-label={dossier.eyebrow}
-            aria-orientation="vertical"
-            className="lg:col-span-5 flex flex-col gap-3"
+            aria-label={dossier.tablistAriaLabel || dossier.eyebrow}
+            className="lg:col-span-5 flex flex-col border-t border-[var(--border-hairline-editorial-strong)]"
           >
             {services.map((service, index) => {
-              const isSelected = service.id === selectedId;
+              const isSelected = service.id === selectedService.id;
+              const numLabel = `0${index + 1}`;
+
               return (
                 <button
                   key={service.id}
                   id={`dossier-tab-${service.id}`}
-                  role="tab"
                   type="button"
+                  role="tab"
                   aria-selected={isSelected}
-                  aria-controls={`dossier-panel-${service.id}`}
+                  aria-controls="dossier-panel"
                   tabIndex={isSelected ? 0 : -1}
                   onClick={() => setSelectedId(service.id)}
                   onKeyDown={(e) => handleKeyDown(e, index)}
-                  className={`text-left p-6 rounded-lg transition-all duration-200 border relative group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D97736] ${
+                  className={`group relative w-full text-left p-5 border-b grid grid-cols-[36px_minmax(0,1fr)_20px] gap-4 items-start transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] ${
                     isSelected
-                      ? "bg-[#FFFFFF] border-[#E5E0D6] shadow-[0_10px_30px_rgba(20,22,26,0.06)]"
-                      : "bg-transparent border-transparent hover:bg-[#FFFFFF]/60 hover:border-[#E5E0D6]/60"
+                      ? "bg-[var(--bg-surface-warm)] border-b-[var(--border-hairline-editorial-strong)]"
+                      : "bg-transparent hover:bg-[var(--bg-hover-ivory)] border-b-[var(--border-hairline-editorial)]"
                   }`}
                 >
-                  {/* Left accent bar on active */}
-                  {isSelected && (
-                    <div
-                      className="absolute left-0 top-3 bottom-3 w-1 bg-[#D97736] rounded-r"
-                      aria-hidden="true"
-                    />
-                  )}
+                  {/* Gold margin rule for active tab */}
+                  <span
+                    className={`absolute left-0 top-0 bottom-0 w-[3px] bg-[var(--accent-gold)] origin-center transition-transform duration-200 ${
+                      isSelected ? "scale-y-100" : "scale-y-0"
+                    }`}
+                    aria-hidden="true"
+                  />
 
-                  <div className="flex flex-col gap-1.5">
+                  <span
+                    className={`font-mono text-[14px] font-bold leading-[1.5] transition-colors ${
+                      isSelected
+                        ? "text-[var(--accent-gold-ink)]"
+                        : "text-[var(--text-muted-aa)]"
+                    }`}
+                  >
+                    {numLabel}
+                  </span>
+
+                  <span className="min-w-0">
                     <span
-                      className={`font-mono text-xs font-semibold tracking-wider ${
-                        isSelected ? "text-[#D97736]" : "text-[#7A808C]"
+                      className={`block text-[12px] font-semibold mb-1 transition-colors ${
+                        isSelected
+                          ? "text-[var(--accent-gold-ink)]"
+                          : "text-[var(--text-muted-aa)]"
                       }`}
                     >
                       {service.code}
                     </span>
-                    <h3
-                      className={`font-serif text-xl font-bold leading-snug transition-colors ${
-                        isSelected ? "text-[#14161A]" : "text-[#14161A]/85 group-hover:text-[#14161A]"
-                      }`}
-                    >
+                    <span className="block font-serif text-[21px] font-semibold leading-[1.25] text-[var(--text-ink)] mb-1">
                       {service.name}
-                    </h3>
-                    <p className="text-sm text-[#5A606E] leading-relaxed line-clamp-2 mt-0.5">
+                    </span>
+                    <span className="block text-[14px] leading-[1.5] text-[var(--text-soft-editorial)]">
                       {service.shortSummary}
-                    </p>
-                  </div>
+                    </span>
+                  </span>
+
+                  <span
+                    className={`mt-6 transition-[transform,opacity,color] duration-200 ${
+                      isSelected
+                        ? "text-[var(--accent-gold-ink)] opacity-100 translate-x-[3px]"
+                        : "text-[var(--text-muted-aa)] opacity-40 group-hover:opacity-100 group-hover:text-[var(--accent-gold-ink)] group-hover:translate-x-[3px]"
+                    }`}
+                    aria-hidden="true"
+                  >
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path
+                        d="M6 3l5 5-5 5"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
                 </button>
               );
             })}
           </div>
 
-          {/* Right Column: Detailed Sticky Dossier Display Panel */}
-          {selectedService && (
+          {/* Right Column: Sticky Specification Paper Sheet */}
+          <div className="lg:col-span-7 sticky top-24">
             <div
-              key={selectedService.id}
-              id={`dossier-panel-${selectedService.id}`}
+              id="dossier-panel"
               role="tabpanel"
               aria-labelledby={`dossier-tab-${selectedService.id}`}
-              className="lg:col-span-7 sticky top-24 bg-[#FFFFFF] border border-[#E5E0D6] rounded-xl p-8 sm:p-10 shadow-[0_16px_40px_rgba(20,22,26,0.04)] transition-opacity duration-200"
+              className="bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial-strong)] rounded-[2px] p-10 xl:px-11"
             >
-              {/* Header Badges */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-[#E5E0D6] text-xs font-mono">
-                <span className="font-semibold text-[#D97736] tracking-wider uppercase">
+              {/* Masthead Strip */}
+              <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-[var(--border-hairline-editorial)] mb-6">
+                <span className="font-mono text-[12px] font-bold text-[var(--accent-gold-ink)]">
                   {selectedService.code}
                 </span>
-                <span className="text-[#7A808C] uppercase tracking-wider bg-[#F6F3EC] px-2.5 py-1 rounded">
-                  {dossier.labels.format}: {selectedService.format}
+                <span className="text-[13px] font-medium text-[var(--text-soft-editorial)] bg-[var(--bg-stone)] px-3 py-1 rounded-[2px]">
+                  {selectedService.format}
                 </span>
               </div>
 
-              {/* Title & Overview */}
-              <div className="mt-6">
-                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#14161A] leading-tight tracking-tight">
-                  {selectedService.name}
-                </h3>
-                <p className="text-base text-[#5A606E] leading-relaxed mt-4">
-                  {selectedService.overview}
-                </p>
-              </div>
+              <h3 className="font-serif text-[32px] font-semibold leading-[1.18] text-[var(--text-ink)] mb-4">
+                {selectedService.name}
+              </h3>
 
-              {/* Specifications Matrix */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6 p-5 rounded-lg bg-[#F6F3EC] border border-[#E5E0D6]/80">
-                <div className="space-y-1">
-                  <span className="block font-mono text-[11px] font-semibold tracking-wider text-[#7A808C] uppercase">
+              <p className="text-[16px] leading-[1.7] text-[var(--text-soft-editorial)] mb-7 [text-wrap:pretty]">
+                {selectedService.overview}
+              </p>
+
+              {/* Hairline Definition Spec Matrix */}
+              <dl className="grid grid-cols-2 gap-6 py-5 border-y border-[var(--border-hairline-editorial)] mb-7">
+                <div>
+                  <dt className="text-[13px] font-semibold text-[var(--text-muted-aa)] mb-1">
                     {dossier.labels.audience}
-                  </span>
-                  <p className="text-sm font-medium text-[#14161A] leading-snug">
+                  </dt>
+                  <dd className="text-[14.5px] font-medium leading-[1.5] text-[var(--text-ink)]">
                     {selectedService.audience}
-                  </p>
+                  </dd>
                 </div>
-                <div className="space-y-1">
-                  <span className="block font-mono text-[11px] font-semibold tracking-wider text-[#7A808C] uppercase">
+                <div>
+                  <dt className="text-[13px] font-semibold text-[var(--text-muted-aa)] mb-1">
                     {dossier.labels.format}
-                  </span>
-                  <p className="text-sm font-medium text-[#14161A] leading-snug">
+                  </dt>
+                  <dd className="text-[14.5px] font-medium leading-[1.5] text-[var(--text-ink)]">
                     {selectedService.format}
-                  </p>
+                  </dd>
                 </div>
-              </div>
+              </dl>
 
-              {/* Key Focus Areas Checklist */}
-              <div className="mb-8">
-                <h4 className="font-mono text-xs font-bold uppercase tracking-wider text-[#14161A] mb-3">
-                  {dossier.labels.focusAreas}
-                </h4>
-                <ul className="space-y-2.5">
-                  {selectedService.focusAreas.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-3">
-                      <svg
-                        className="w-4 h-4 text-[#D97736] shrink-0 mt-1"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      <span className="text-sm text-[#3A3F4A] leading-relaxed">
-                        {item}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {/* Numbered Focus Areas */}
+              <h4 className="text-[14px] font-bold text-[var(--text-ink)] mb-3">
+                {dossier.labels.focusAreas}
+              </h4>
+              <ol className="folio-checklist mb-8">
+                {selectedService.focusAreas.map((area, idx) => (
+                  <li
+                    key={idx}
+                    className="text-[15px] leading-[1.55] text-[var(--text-soft-editorial)]"
+                  >
+                    <span>{area}</span>
+                  </li>
+                ))}
+              </ol>
 
-              {/* Action Row - Factual Format + Direct Booking CTA */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-6 border-t border-[#E5E0D6]">
-                <div className="inline-flex items-center gap-2 text-xs font-mono text-[#7A808C]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#D97736]" aria-hidden="true" />
-                  <span className="uppercase tracking-wider">{selectedService.format}</span>
-                </div>
-
-                <Link
-                  href={`/${locale}/bron`}
-                  className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 bg-[#14161A] hover:bg-[#D97736] text-[#FFFFFF] text-sm font-semibold rounded-md shadow-sm transition-colors duration-200 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D97736] min-h-[48px]"
+              {/* Action Row */}
+              <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-[var(--border-hairline-editorial)]">
+                <BookingActionLink
+                  locale={locale}
+                  className="min-h-[48px] px-6 bg-[var(--bg-dark)] text-[var(--bg-surface-warm)] border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] hover:-translate-y-px hover:shadow-[var(--shadow-editorial-gold)] rounded-[2px] inline-flex items-center justify-center gap-2 text-[14px] font-semibold whitespace-nowrap transition-[background-color,border-color,transform,box-shadow] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
                 >
                   <span>{selectedService.ctaText || dossier.labels.ctaText}</span>
                   <svg
-                    className="w-4 h-4 transition-transform group-hover:translate-x-1"
+                    width="15"
+                    height="15"
+                    viewBox="0 0 16 16"
                     fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
                     aria-hidden="true"
                   >
                     <path
+                      d="M3 8h10M9 4l4 4-4 4"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
                     />
                   </svg>
-                </Link>
+                </BookingActionLink>
+
+                <a
+                  href={contactConfig.telegramDirect.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="min-h-[44px] inline-flex items-center px-1 py-2 text-[13.5px] font-semibold text-[var(--text-soft-editorial)] hover:text-[var(--accent-gold-ink)] whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                >
+                  <span className="border-b border-[var(--border-hairline-editorial-strong)] hover:border-b-[var(--accent-gold-ink)] pb-0.5">
+                    Telegram: {contactConfig.telegramDirect.display}
+                  </span>
+                </a>
               </div>
             </div>
-          )}
+          </div>
         </div>
 
-        {/* MOBILE ACCORDION VIEW (< lg) */}
-        <div className="block lg:hidden space-y-3.5">
+        {/* MOBILE & TABLET EDITORIAL ACCORDION (< 1024px) */}
+        <div className="lg:hidden flex flex-col border-t border-[var(--border-hairline-editorial-strong)]">
           {services.map((service) => {
             const isOpen = openAccordionId === service.id;
+
             return (
               <div
                 key={service.id}
-                className="bg-[#FFFFFF] border border-[#E5E0D6] rounded-lg sm:rounded-xl overflow-hidden shadow-sm transition-all"
+                className={`border-b border-[var(--border-hairline-editorial)] transition-colors duration-200 ${
+                  isOpen ? "bg-[var(--bg-surface-warm)] pb-2" : "bg-transparent"
+                }`}
               >
-                {/* Accordion Header Button (min 56px touch target, clear unclipped labels) */}
                 <button
-                  type="button"
                   id={`accordion-btn-${service.id}`}
+                  type="button"
                   aria-expanded={isOpen}
                   aria-controls={`accordion-panel-${service.id}`}
-                  onClick={() => toggleAccordion(service.id)}
-                  className="w-full p-4 sm:p-5 text-left flex items-start justify-between gap-3 min-h-[56px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D97736] bg-[#FFFFFF] active:bg-[#F6F3EC] transition-colors"
+                  onClick={() =>
+                    setOpenAccordionId((prev) =>
+                      prev === service.id ? null : service.id
+                    )
+                  }
+                  className="w-full min-h-[60px] py-4 px-3 sm:px-5 grid grid-cols-[minmax(0,1fr)_32px] gap-3 items-center text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
                 >
-                  <div className="flex flex-col gap-1 pr-1 sm:pr-2">
-                    <span className="font-mono text-[10px] sm:text-[11px] font-bold text-[#D97736] tracking-wider uppercase">
+                  <span className="min-w-0">
+                    <span className="block font-mono text-[12px] font-bold text-[var(--accent-gold-ink)] mb-1">
                       {service.code}
                     </span>
-                    <h3 className="font-serif text-base sm:text-lg font-bold text-[#14161A] leading-snug">
+                    <span className="block font-serif text-[20px] font-semibold leading-[1.25] text-[var(--text-ink)] mb-1">
                       {service.name}
-                    </h3>
-                    <p className="text-xs sm:text-sm text-[#5A606E] leading-relaxed mt-0.5">
+                    </span>
+                    <span className="block text-[14px] text-[var(--text-soft-editorial)] leading-[1.45]">
                       {service.shortSummary}
-                    </p>
-                  </div>
-                  <div
-                    className={`shrink-0 w-8 h-8 rounded-full bg-[#F6F3EC] flex items-center justify-center transition-transform duration-200 mt-0.5 ${
-                      isOpen ? "rotate-180 bg-[#14161A] text-white" : "text-[#7A808C]"
+                    </span>
+                  </span>
+
+                  <span
+                    className={`flex items-center justify-center transition-transform duration-200 ${
+                      isOpen
+                        ? "rotate-180 text-[var(--accent-gold-ink)]"
+                        : "text-[var(--text-ink)]"
                     }`}
                     aria-hidden="true"
                   >
                     <svg
-                      className="w-4 h-4"
-                      fill="none"
+                      width="16"
+                      height="16"
                       viewBox="0 0 24 24"
+                      fill="none"
                       stroke="currentColor"
-                      strokeWidth="2.5"
+                      strokeWidth="2"
                     >
                       <path
+                        d="M6 9l6 6 6-6"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        d="M19.5 8.25l-7.5 7.5-7.5-7.5"
                       />
                     </svg>
-                  </div>
+                  </span>
                 </button>
 
-                {/* Collapsible Content */}
                 {isOpen && (
                   <div
                     id={`accordion-panel-${service.id}`}
                     role="region"
                     aria-labelledby={`accordion-btn-${service.id}`}
-                    className="px-4 pb-5 pt-3 sm:px-5 sm:pb-6 border-t border-[#E5E0D6]/70 flex flex-col gap-4 sm:gap-5 bg-[#FFFFFF]"
+                    className="px-3 pb-5 sm:px-5 sm:pb-6"
                   >
-                    {/* Overview */}
-                    <p className="text-xs sm:text-sm text-[#5A606E] leading-relaxed">
+                    <p className="text-[14.5px] text-[var(--text-soft-editorial)] leading-[1.65]">
                       {service.overview}
                     </p>
 
-                    {/* Specifications */}
-                    <div className="bg-[#F6F3EC] p-3.5 sm:p-4 rounded-lg border border-[#E5E0D6]/80 space-y-2.5">
+                    <dl className="border-t border-[var(--border-hairline-editorial)] pt-4 my-4 grid grid-cols-1 gap-3">
                       <div>
-                        <span className="block font-mono text-[10px] font-semibold tracking-wider text-[#7A808C] uppercase">
+                        <dt className="text-[12px] font-bold text-[var(--text-muted-aa)] mb-0.5">
                           {dossier.labels.audience}
-                        </span>
-                        <p className="text-xs sm:text-sm font-medium text-[#14161A] mt-0.5">
+                        </dt>
+                        <dd className="text-[14px] text-[var(--text-ink)] font-medium">
                           {service.audience}
-                        </p>
+                        </dd>
                       </div>
-                      <div className="pt-2 border-t border-[#E5E0D6]/60">
-                        <span className="block font-mono text-[10px] font-semibold tracking-wider text-[#7A808C] uppercase">
+                      <div>
+                        <dt className="text-[12px] font-bold text-[var(--text-muted-aa)] mb-0.5">
                           {dossier.labels.format}
-                        </span>
-                        <p className="text-xs sm:text-sm font-medium text-[#14161A] mt-0.5">
+                        </dt>
+                        <dd className="text-[14px] text-[var(--text-ink)] font-medium">
                           {service.format}
-                        </p>
+                        </dd>
                       </div>
-                    </div>
+                    </dl>
 
-                    {/* Key Focus Areas Checklist */}
-                    <div>
-                      <h4 className="font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#14161A] mb-2">
-                        {dossier.labels.focusAreas}
-                      </h4>
-                      <ul className="space-y-2">
-                        {service.focusAreas.map((item, idx) => (
-                          <li key={idx} className="flex items-start gap-2.5">
-                            <svg
-                              className="w-3.5 h-3.5 text-[#D97736] shrink-0 mt-0.5"
-                              viewBox="0 0 20 20"
-                              fill="currentColor"
-                              aria-hidden="true"
-                            >
-                              <path
-                                fillRule="evenodd"
-                                d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-                                clipRule="evenodd"
-                              />
-                            </svg>
-                            <span className="text-xs sm:text-sm text-[#3A3F4A] leading-relaxed">
-                              {item}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Booking CTA Button (Full width, minimum 48px height, safe padding) */}
-                    <div className="pt-2 pb-1">
-                      <Link
-                        href={`/${locale}/bron`}
-                        className="w-full min-h-[48px] flex items-center justify-center gap-2 px-4 py-3.5 bg-[#14161A] active:bg-[#D97736] text-[#FFFFFF] text-xs sm:text-sm font-semibold rounded-md shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D97736]"
-                      >
-                        <span>{service.ctaText || dossier.labels.ctaText}</span>
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth="2.5"
-                          aria-hidden="true"
+                    <ol className="folio-checklist mb-5">
+                      {service.focusAreas.map((item, idx) => (
+                        <li
+                          key={idx}
+                          className="text-[14.5px] leading-[1.55] text-[var(--text-soft-editorial)]"
                         >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                          />
-                        </svg>
-                      </Link>
-                    </div>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ol>
+
+                    <BookingActionLink
+                      locale={locale}
+                      className="w-full min-h-[48px] px-5 bg-[var(--bg-dark)] text-[var(--bg-surface-warm)] border border-[var(--bg-dark)] active:bg-[var(--accent-gold)] active:border-[var(--accent-gold)] rounded-[2px] inline-flex items-center justify-center gap-2 text-[14px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                    >
+                      <span>{service.ctaText || dossier.labels.ctaText}</span>
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M3 8h10M9 4l4 4-4 4"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </BookingActionLink>
                   </div>
                 )}
               </div>

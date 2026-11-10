@@ -3,6 +3,7 @@
 import React from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
+import { featuresConfig } from "@/config/features";
 import { useApplyModal } from "@/features/apply/context/ApplyModalContext";
 import { MaskedHeading } from "@/components/ui/MaskedHeading";
 
@@ -53,16 +54,18 @@ export function CtaBand({ onOpenApply, onOpenModal }: CtaBandProps) {
 
             {/* Right Column (lg:col-span-4 lg:flex lg:justify-end) */}
             <div className="lg:col-span-4 flex flex-col gap-3 w-full sm:w-auto items-stretch lg:items-end justify-end">
-              <Link
-                href="/test"
-                className="group relative overflow-hidden inline-flex items-center justify-between gap-4 bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] px-6 sm:px-7 py-3.5 sm:py-4 text-xs uppercase tracking-[0.14em] font-medium rounded-none transition-all duration-300 w-full sm:w-auto cursor-pointer shadow-[0_4px_16px_rgba(197,168,128,0.2)] whitespace-nowrap"
-              >
-                <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
-                <span className="relative z-10 whitespace-nowrap">{t("startTest")}</span>
-                <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1.5 shrink-0">
-                  →
-                </span>
-              </Link>
+              {featuresConfig.quiz && (
+                <Link
+                  href="/test"
+                  className="group relative overflow-hidden inline-flex items-center justify-between gap-4 bg-[#C5A880] hover:bg-[#d4b992] text-[#0A0A0A] px-6 sm:px-7 py-3.5 sm:py-4 text-xs uppercase tracking-[0.14em] font-medium rounded-none transition-all duration-300 w-full sm:w-auto cursor-pointer shadow-[0_4px_16px_rgba(197,168,128,0.2)] whitespace-nowrap"
+                >
+                  <span className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
+                  <span className="relative z-10 whitespace-nowrap">{t("startTest")}</span>
+                  <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1.5 shrink-0">
+                    →
+                  </span>
+                </Link>
+              )}
               <button
                 type="button"
                 onClick={() => handleApply(t("strategicAnalysis"))}

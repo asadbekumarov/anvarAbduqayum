@@ -1,346 +1,809 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import { activeBookingMode } from "@/config/booking";
 import { getContent } from "@/config/content";
 import { contactConfig } from "@/config/contact";
+import { BookingActionLink } from "@/components/ui/BookingActionLink";
+import {
+  cleanUzbekPhone,
+  formatUzbekPhone,
+  isUzbekPhoneComplete,
+} from "@/lib/formatPhone";
 
 interface ContactSectionProps {
   locale?: string;
 }
 
+interface FormState {
+  name: string;
+  business: string;
+  topic: string;
+  message: string;
+  honeypot: string;
+}
+
+interface FieldErrors {
+  name?: string;
+  phone?: string;
+  business?: string;
+  message?: string;
+}
+
+interface SubmittedSummary {
+  name: string;
+  phone: string;
+  business: string;
+  topic: string;
+  message: string;
+}
+
+interface ApiResponsePayload {
+  ok?: boolean;
+  error?: string;
+  errors?: Record<string, string[] | undefined>;
+}
+
 export const ContactSection: React.FC<ContactSectionProps> = ({
   locale = "uz",
 }) => {
-  const content = getContent(locale);
+  const safeLocale = locale === "ru" || locale === "en" ? locale : "uz";
+  const content = getContent(safeLocale);
+  const { booking, directory, form: formCopy } = content.contact;
+  const displayedBookingRoute =
+    activeBookingMode === "telegram"
+      ? contactConfig.telegramDirect.display
+      : `/${safeLocale}/bron`;
 
-  // Form state
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormState>({
     name: "",
-    topic: "coop",
-    phone: "+998 ",
+    business: "",
+    topic: formCopy.topicOptions[0]?.id || "coop",
     message: "",
-    // Honeypot field (should remain empty for real humans)
-    website_check: "",
+    honeypot: "",
   });
-
+  const [displayPhone, setDisplayPhone] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [submittedSummary, setSubmittedSummary] = useState<SubmittedSummary | null>(null);
 
-  // Phone masking for Uzbekistan (+998 __ ___ __ __)
+  // Prevent concurrent submissions within the same frame before state re-renders
+  const submitLockRef = useRef(false);
+  const nameInputRef = useRef<HTMLInputElement | null>(null);
+  const phoneInputRef = useRef<HTMLInputElement | null>(null);
+  const businessInputRef = useRef<HTMLInputElement | null>(null);
+  const messageInputRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const isSubmitting = status === "submitting";
+
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let val = e.target.value.replace(/[^\d+]/g, "");
-    if (!val.startsWith("+998")) {
-      val = "+998";
-    }
+    const raw = e.target.value;
+    const digitsOnly = raw.replace(/\D/g, "");
+    const nextValue =
+      digitsOnly.length === 0 || (raw.startsWith("+") && digitsOnly.length <= 3)
+        ? ""
+        : formatUzbekPhone(raw);
+    setDisplayPhone(nextValue);
 
-    // Limit length to +998 followed by 9 digits
-    const digitsOnly = val.slice(4).replace(/\D/g, "").slice(0, 9);
-    let formatted = "+998";
-
-    if (digitsOnly.length > 0) {
-      formatted += ` (${digitsOnly.slice(0, 2)}`;
+    if (fieldErrors.phone && isUzbekPhoneComplete(nextValue)) {
+      setFieldErrors((prev) => ({ ...prev, phone: undefined }));
     }
-    if (digitsOnly.length >= 3) {
-      formatted += `) ${digitsOnly.slice(2, 5)}`;
-    }
-    if (digitsOnly.length >= 6) {
-      formatted += `-${digitsOnly.slice(5, 7)}`;
-    }
-    if (digitsOnly.length >= 8) {
-      formatted += `-${digitsOnly.slice(7, 9)}`;
-    }
-
-    setFormData((prev) => ({ ...prev, phone: formatted }));
+    if (serverError) setServerError(null);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleFieldChange = (
+    field: keyof FormState,
+    value: string
+  ) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (field in fieldErrors) {
+      setFieldErrors((prev) => ({ ...prev, [field]: undefined }));
+    }
+    if (serverError) setServerError(null);
+  };
 
-    // Spam honeypot trap: if bot filled this, silently fake success without sending
-    if (formData.website_check.trim() !== "") {
-      setStatus("success");
+  const validateClient = (): FieldErrors => {
+    const errors: FieldErrors = {};
+    const cleanName = formData.name.trim();
+    const cleanBusiness = formData.business.trim();
+    const cleanMessage = formData.message.trim();
+
+    if (cleanName.length < 2 || cleanName.length > 60) {
+      errors.name = formCopy.errors.nameRequired;
+    }
+
+    if (!isUzbekPhoneComplete(displayPhone)) {
+      errors.phone = formCopy.errors.phoneInvalid;
+    }
+
+    if (cleanBusiness.length < 2 || cleanBusiness.length > 120) {
+      errors.business = formCopy.errors.businessRequired;
+    }
+
+    if (cleanMessage.length > 1000) {
+      errors.message = formCopy.errors.messageTooLong;
+    }
+
+    return errors;
+  };
+
+  const focusFirstError = (errors: FieldErrors) => {
+    if (errors.name) {
+      nameInputRef.current?.focus();
+    } else if (errors.phone) {
+      phoneInputRef.current?.focus();
+    } else if (errors.business) {
+      businessInputRef.current?.focus();
+    } else if (errors.message) {
+      messageInputRef.current?.focus();
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (submitLockRef.current || status === "submitting") return;
+
+    setServerError(null);
+
+    const clientErrors = validateClient();
+    if (Object.keys(clientErrors).length > 0) {
+      setFieldErrors(clientErrors);
+      setStatus("error");
+      focusFirstError(clientErrors);
       return;
     }
 
+    setFieldErrors({});
+    submitLockRef.current = true;
     setStatus("submitting");
 
+    const normalizedPhone = cleanUzbekPhone(displayPhone);
+    const cleanName = formData.name.trim();
+    const cleanBusiness = formData.business.trim();
+    const cleanMessage = formData.message.trim();
+    const selectedTopicOption = formCopy.topicOptions.find(
+      (opt) => opt.id === formData.topic
+    );
+    const topicLabel = selectedTopicOption?.label || formData.topic;
+
     try {
-      // Send to existing lead API or simulated submission
-      const res = await fetch("/api/lead", {
+      const response = await fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-          topic: formData.topic,
-          message: formData.message,
-          source: "qolip-contact-v1",
+          name: cleanName,
+          phone: normalizedPhone,
+          business: cleanBusiness,
+          service: topicLabel,
+          question: cleanMessage,
+          locale: safeLocale,
+          pageUrl:
+            typeof window !== "undefined" ? window.location.href : undefined,
+          honeypot: formData.honeypot,
         }),
       });
 
-      if (!res.ok) {
-        // Fallback for resilient UX even if API is offline
-        setStatus("success");
-      } else {
-        setStatus("success");
+      let payload: ApiResponsePayload | null = null;
+      try {
+        payload = (await response.json()) as ApiResponsePayload;
+      } catch {
+        payload = null;
       }
+
+      if (response.status === 429) {
+        const retryAfter = response.headers.get("Retry-After");
+        const rateMsg = retryAfter
+          ? `${formCopy.errors.rateLimited} (${formCopy.errors.retrySuffix} ${retryAfter})`
+          : payload?.error || formCopy.errors.rateLimited;
+        setStatus("error");
+        setServerError(rateMsg);
+        return;
+      }
+
+      if (response.status === 400) {
+        const serverFieldErrors: FieldErrors = {};
+        if (payload?.errors?.name?.[0]) {
+          serverFieldErrors.name = payload.errors.name[0];
+        }
+        if (payload?.errors?.phone?.[0]) {
+          serverFieldErrors.phone = payload.errors.phone[0];
+        }
+        if (payload?.errors?.business?.[0]) {
+          serverFieldErrors.business = payload.errors.business[0];
+        }
+        if (payload?.errors?.question?.[0]) {
+          serverFieldErrors.message = payload.errors.question[0];
+        }
+        setFieldErrors(serverFieldErrors);
+        setStatus("error");
+        setServerError(payload?.error || formCopy.errors.validationSummary);
+        focusFirstError(serverFieldErrors);
+        return;
+      }
+
+      if (!response.ok || payload?.ok !== true) {
+        setStatus("error");
+        setServerError(payload?.error || formCopy.errors.serverError);
+        return;
+      }
+
+      setSubmittedSummary({
+        name: cleanName,
+        phone: formatUzbekPhone(normalizedPhone),
+        business: cleanBusiness,
+        topic: topicLabel,
+        message: cleanMessage || formCopy.summaryLabels.messageEmpty,
+      });
+      setStatus("success");
+      setFormData({
+        name: "",
+        business: "",
+        topic: formCopy.topicOptions[0]?.id || "coop",
+        message: "",
+        honeypot: "",
+      });
+      setDisplayPhone("");
     } catch {
-      setStatus("success"); // Graceful degrade so user is not blocked
+      setStatus("error");
+      setServerError(formCopy.errors.networkError);
+    } finally {
+      submitLockRef.current = false;
     }
   };
 
+  const handleReset = () => {
+    setStatus("idle");
+    setServerError(null);
+    setFieldErrors({});
+    setSubmittedSummary(null);
+  };
+
+  const officialChannels = [
+    {
+      id: "phone",
+      label: directory.phoneLabel,
+      value: contactConfig.phone.display,
+      href: contactConfig.phone.href,
+      cue: directory.cues.call,
+      external: false,
+    },
+    {
+      id: "tg-admin",
+      label: directory.tgAdminLabel,
+      value: contactConfig.telegramDirect.display,
+      href: contactConfig.telegramDirect.url,
+      cue: directory.cues.message,
+      external: true,
+    },
+    {
+      id: "tg-channel",
+      label: directory.tgChannelLabel,
+      value: contactConfig.telegramChannel.display,
+      href: contactConfig.telegramChannel.url,
+      cue: directory.cues.open,
+      external: true,
+    },
+    {
+      id: "email",
+      label: directory.emailLabel,
+      value: contactConfig.email.address,
+      href: contactConfig.email.href,
+      cue: directory.cues.email,
+      external: false,
+    },
+    {
+      id: "instagram",
+      label: directory.instagramLabel,
+      value: contactConfig.instagram.display,
+      href: contactConfig.instagram.url,
+      cue: directory.cues.open,
+      external: true,
+    },
+    {
+      id: "youtube",
+      label: directory.youtubeLabel,
+      value: contactConfig.youtube.display,
+      href: contactConfig.youtube.url,
+      cue: directory.cues.open,
+      external: true,
+    },
+  ];
+
   return (
-    <section id="aloqa" className="py-20 lg:py-28 bg-[#EBE4D6] relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="mb-14 sm:mb-18 space-y-3">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-[#E2541B]" />
-            <span className="font-mono text-xs uppercase tracking-wider text-[#6B645A]">
-              {content.contact.moduleLabel}
-            </span>
-          </div>
+    <section
+      id="aloqa"
+      aria-labelledby="contact-heading"
+      className="relative"
+    >
+      {/* BAND 1: CONSULTATION BOOKING COMMITMENT (OBSIDIAN EDITORIAL) */}
+      <div
+        id="konsultatsiya-band"
+        className="bg-[var(--bg-dark)] text-[var(--text-on-dark)] border-b border-[var(--border-on-dark)] py-20 lg:py-24"
+      >
+        <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+            <div className="lg:col-span-7 min-w-0">
+              <div className="flex items-baseline gap-3 min-w-0">
+                <span className="font-mono text-[14px] font-medium tabular-nums text-[var(--accent-gold-light)] shrink-0">
+                  {booking.ordinal}
+                </span>
+                <h2
+                  id="booking-heading"
+                  className="font-serif text-[clamp(30px,4vw,48px)] font-semibold leading-[1.09] tracking-[-0.02em] text-[var(--text-on-dark)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
+                >
+                  {booking.title}
+                </h2>
+              </div>
 
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#1C1A17]">
-            {content.contact.title}
-            <span className="font-editorial-italic font-medium text-[#E2541B]">
-              {content.contact.titleEmphasis}
-            </span>
-          </h2>
-          <p className="mt-2 text-base text-[#6B645A] max-w-2xl leading-relaxed">
-            {content.contact.subtitle}
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
-          {/* Left Column: Direct Telegram & Social Links */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="mold-card p-6 sm:p-8 bg-[#F4EFE6] border border-[#1C1A17]/20">
-              <span className="corner-mark-tl" />
-              <span className="corner-mark-br" />
-
-              <span className="font-mono text-xs uppercase tracking-wider text-[#E2541B] block mb-2 font-bold">
-                BIRLAMCHI PROTOKOL
-              </span>
-              <h3 className="font-serif text-2xl font-bold text-[#1C1A17] mb-3">
-                {content.contact.directTitle}
-              </h3>
-              <p className="text-sm text-[#6B645A] leading-relaxed mb-6">
-                {content.contact.directText}
+              <p className="mt-4 text-[17px] leading-[1.65] text-[var(--text-muted-on-dark)] max-w-[56ch] [text-wrap:pretty]">
+                {booking.lead}
               </p>
 
-              {/* High-visibility Telegram CTA Button */}
-              <a
-                href={contactConfig.telegramDirect.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="tap-target-48 w-full px-6 py-4 bg-[#E2541B] text-white hover:bg-[#C94512] font-mono text-sm tracking-wider uppercase font-semibold rounded-[2px] border border-[#C94512] flex items-center justify-center gap-3 shadow-md transition-all active:scale-[0.98]"
+              <dl className="mt-10 border-t border-[var(--border-on-dark)] grid grid-cols-1 sm:grid-cols-3">
+                {booking.specs.map((spec, idx) => (
+                  <div
+                    key={spec.label}
+                    className={`py-4 border-b border-[var(--border-on-dark-subtle)] sm:border-b-0 ${
+                      idx > 0
+                        ? "sm:pl-4 sm:border-l sm:border-[var(--border-on-dark-subtle)]"
+                        : ""
+                    } ${idx < booking.specs.length - 1 ? "sm:pr-4" : ""}`}
+                  >
+                    <dt className="text-[13.5px] font-semibold text-[var(--accent-gold-light)]">
+                      {spec.label}
+                    </dt>
+                    <dd className="mt-1 text-[15.5px] font-medium text-[var(--text-on-dark)] leading-[1.45]">
+                      {spec.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+
+            <aside
+              aria-labelledby="booking-card-title"
+              className="lg:col-span-5 bg-[var(--bg-dark-elevated)] text-[var(--text-on-dark)] border border-[var(--border-on-dark)] border-t-2 border-t-[var(--accent-gold-light)] rounded-[2px] p-6 sm:p-8 flex flex-col gap-4"
+            >
+              <h3
+                id="booking-card-title"
+                className="font-serif text-[24px] font-medium leading-[1.25] text-[var(--text-on-dark)] [text-wrap:balance]"
               >
-                <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.75-.55 2.92-1.27 4.86-2.11 5.83-2.52 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .39z" />
-                </svg>
-                <span>Telegramda yozish (Admin)</span>
-              </a>
+                {booking.cardTitle}
+              </h3>
 
-              {/* Direct Phone */}
-              <div className="mt-4 pt-4 border-t border-[#1C1A17]/10 flex items-center justify-between font-mono text-xs">
-                <span className="text-[#6B645A]">Bosh ofis telefoni:</span>
-                <a
-                  href={contactConfig.phone.href}
-                  className="font-bold text-[#1C1A17] hover:text-[#E2541B]"
-                >
-                  {contactConfig.phone.display}
-                </a>
+              <p className="text-[15.5px] leading-[1.62] text-[var(--text-muted-on-dark)]">
+                {booking.cardDescription}
+              </p>
+
+              <div
+                className="flex items-center justify-between gap-3 px-4 py-3 bg-[var(--bg-dark)] border border-[var(--border-on-dark)] text-[13.5px] [overflow-wrap:anywhere]"
+              >
+                <span className="font-sans font-medium text-[var(--text-muted-on-dark)]">
+                  {booking.routeLabel}
+                </span>
+                <span className="font-mono text-[var(--accent-gold-light)]">
+                  {displayedBookingRoute}
+                </span>
               </div>
-            </div>
 
-            {/* Social channels matrix */}
-            <div className="mold-card p-6 bg-[#F4EFE6] border border-[#1C1A17]/15">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#6B645A] block mb-4">
-                Rasmiy Ijtimoiy Tarmoqlar
+              <div className="pt-2 flex flex-wrap items-center gap-3">
+                <BookingActionLink
+                  locale={safeLocale}
+                  className="min-h-[48px] px-6 bg-[var(--bg-surface)] text-[var(--text-ink)] border border-[var(--bg-surface)] hover:bg-[var(--accent-gold-light)] hover:border-[var(--accent-gold-light)] active:opacity-90 rounded-[2px] text-[15px] font-semibold inline-flex items-center justify-center whitespace-nowrap transition-[background-color,border-color,color,opacity] duration-150 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+                >
+                  {booking.primaryCta}
+                </BookingActionLink>
+
+                {activeBookingMode === "calcom" ? (
+                  <a
+                    href={contactConfig.telegramDirect.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="min-h-[48px] px-3 text-[14.5px] font-semibold text-[var(--text-on-dark)] hover:text-[var(--accent-gold-light)] active:text-[var(--accent-gold-light)] border-b border-[var(--border-on-dark)] hover:border-[var(--accent-gold-light)] inline-flex items-center transition-[color,border-color] duration-150 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+                  >
+                    {booking.telegramCta}
+                  </a>
+                ) : (
+                  <a
+                    href={contactConfig.phone.href}
+                    className="min-h-[48px] px-3 text-[14.5px] font-semibold tabular-nums text-[var(--text-on-dark)] hover:text-[var(--accent-gold-light)] active:text-[var(--accent-gold-light)] border-b border-[var(--border-on-dark)] hover:border-[var(--accent-gold-light)] inline-flex items-center transition-[color,border-color] duration-150 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+                  >
+                    {contactConfig.phone.display}
+                  </a>
+                )}
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+
+      {/* BAND 2: CONTACT DIRECTORY & ACCESSIBLE INQUIRY FORM (WARM STONE) */}
+      <div
+        id="aloqa-kanallar"
+        className="bg-[var(--bg-stone)] text-[var(--text-ink)] border-b border-[var(--border-hairline-editorial)] py-20 lg:py-28 scroll-mt-20"
+      >
+        <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
+          {/* Header Row */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-10 items-end pb-6 border-b border-[var(--border-hairline-editorial)] mb-12 lg:mb-16">
+            <div className="lg:col-span-7 flex items-baseline gap-3 min-w-0">
+              <span className="font-mono text-[14px] font-medium tabular-nums text-[var(--accent-gold-ink)] shrink-0">
+                {directory.ordinal}
               </span>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <a
-                  href={contactConfig.telegramChannel.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="tap-target-48 p-3 border border-[#1C1A17]/15 bg-[#EBE4D6]/50 rounded-[2px] font-mono text-xs text-[#1C1A17] hover:border-[#E2541B] flex items-center justify-between"
-                >
-                  <span>Telegram Kanal</span>
-                  <span className="text-[#E2541B]">↗</span>
-                </a>
-
-                <a
-                  href={contactConfig.instagram.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="tap-target-48 p-3 border border-[#1C1A17]/15 bg-[#EBE4D6]/50 rounded-[2px] font-mono text-xs text-[#1C1A17] hover:border-[#E2541B] flex items-center justify-between"
-                >
-                  <span>Instagram</span>
-                  <span className="text-[#E2541B]">↗</span>
-                </a>
-
-                <a
-                  href={contactConfig.youtube.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="tap-target-48 p-3 border border-[#1C1A17]/15 bg-[#EBE4D6]/50 rounded-[2px] font-mono text-xs text-[#1C1A17] hover:border-[#E2541B] flex items-center justify-between"
-                >
-                  <span>YouTube</span>
-                  <span className="text-[#E2541B]">↗</span>
-                </a>
-
-                <a
-                  href={contactConfig.linkedin.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="tap-target-48 p-3 border border-[#1C1A17]/15 bg-[#EBE4D6]/50 rounded-[2px] font-mono text-xs text-[#1C1A17] hover:border-[#E2541B] flex items-center justify-between"
-                >
-                  <span>LinkedIn</span>
-                  <span className="text-[#E2541B]">↗</span>
-                </a>
-              </div>
+              <h2
+                id="contact-heading"
+                className="font-serif text-[clamp(30px,4vw,48px)] font-semibold leading-[1.08] tracking-[-0.02em] text-[var(--text-ink)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
+              >
+                {directory.title}
+              </h2>
             </div>
+            <p className="lg:col-span-5 text-[16px] leading-[1.65] text-[var(--text-soft-editorial)] max-w-[54ch] [text-wrap:pretty]">
+              {directory.lead}
+            </p>
           </div>
 
-          {/* Right Column: Clean Form with Phone Mask & Honeypot */}
-          <div className="lg:col-span-7">
-            <div className="mold-card p-6 sm:p-8 bg-[#F4EFE6] border border-[#1C1A17]/20">
-              <span className="corner-mark-tl" />
-              <span className="corner-mark-br" />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+            {/* Left Column: Ruled Official Contact Ledger */}
+            <div className="lg:col-span-5 min-w-0">
+              <h3 className="font-serif text-[24px] font-semibold leading-[1.25] text-[var(--text-ink)] mb-1 [text-wrap:balance]">
+                {directory.heading}
+              </h3>
+              <p className="text-[15.5px] leading-[1.6] text-[var(--text-soft-editorial)] mb-6">
+                {directory.subheading}
+              </p>
 
-              <div className="flex items-center justify-between pb-3 mb-6 border-b border-[#1C1A17]/15 font-mono text-xs text-[#6B645A]">
-                <span className="font-semibold text-[#1C1A17]">RASMIY MUROJAAT FORMASI</span>
-                <span>STANDART PROTOKOL</span>
+              <ul className="border-t border-[var(--border-hairline-editorial-strong)]">
+                {officialChannels.map((channel) => (
+                  <li
+                    key={channel.id}
+                    className="border-b border-[var(--border-hairline-editorial)]"
+                  >
+                    <a
+                      href={channel.href}
+                      target={channel.external ? "_blank" : undefined}
+                      rel={channel.external ? "noopener noreferrer" : undefined}
+                      className="group grid grid-cols-[minmax(0,1fr)_auto] gap-2 items-center py-4 px-2 min-h-[60px] hover:bg-[var(--accent-gold-soft)] active:bg-[var(--accent-gold-soft)] transition-colors duration-150 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                    >
+                      <span className="min-w-0">
+                        <span className="block text-[14px] font-medium text-[var(--text-muted-aa)]">
+                          {channel.label}
+                        </span>
+                        <span className="block text-[clamp(14.5px,4.2vw,17px)] font-semibold text-[var(--text-ink)] mt-0.5 tabular-nums [overflow-wrap:break-word] transition-transform duration-150 motion-safe:group-hover:translate-x-0.5 motion-reduce:transition-none">
+                          {channel.value}
+                        </span>
+                      </span>
+                      <span className="text-[13.5px] font-semibold text-[var(--accent-gold-ink)] transition-transform duration-150 motion-safe:group-hover:translate-x-0.5 motion-reduce:transition-none">
+                        {channel.cue}
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-6 p-4 bg-[var(--bg-alabaster)] border border-[var(--border-hairline-editorial-strong)] rounded-[2px]">
+                <p className="text-[14.5px] font-semibold text-[var(--text-ink)]">
+                  {directory.officeTitle}
+                </p>
+                <p className="mt-1 text-[14.5px] leading-[1.55] text-[var(--text-soft-editorial)]">
+                  {directory.officeCopy}
+                </p>
+              </div>
+            </div>
+
+            {/* Right Column: Accessible Inquiry Form */}
+            <div className="lg:col-span-7 bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial-strong)] rounded-[2px] p-6 sm:p-10 shadow-[var(--shadow-editorial-subtle)] min-w-0">
+              <div className="pb-4 border-b border-[var(--border-hairline-editorial)] mb-6">
+                <h3 className="font-serif text-[26px] font-semibold leading-[1.22] text-[var(--text-ink)] [text-wrap:balance]">
+                  {formCopy.title}
+                </h3>
+                <p className="mt-2 text-[14.5px] leading-[1.55] text-[var(--text-soft-editorial)]">
+                  {formCopy.subtitle}
+                </p>
               </div>
 
-              {status === "success" ? (
-                <div className="p-6 bg-[#EBE4D6] border border-[#1C1A17]/20 rounded-[2px] text-center space-y-3">
-                  <div className="w-10 h-10 bg-[#E2541B] text-white rounded-[2px] mx-auto flex items-center justify-center font-mono text-lg font-bold">
-                    ✓
-                  </div>
-                  <h4 className="font-serif text-xl font-bold text-[#1C1A17]">
-                    Murojaatingiz qabul qilindi
+              {status === "success" && submittedSummary ? (
+                <div
+                  id="contact-success-panel"
+                  role="status"
+                  aria-live="polite"
+                  className="p-6 bg-[var(--bg-alabaster)] border border-[var(--status-success-border)] rounded-[2px] flex flex-col gap-4"
+                >
+                  <h4 className="font-serif text-[22px] font-semibold leading-[1.3] text-[var(--status-success-ink)]">
+                    {formCopy.successTitle}
                   </h4>
-                  <p className="text-sm text-[#6B645A] max-w-md mx-auto">
-                    {content.contact.form.successMessage}
+                  <p className="text-[15px] leading-[1.6] text-[var(--text-soft-editorial)]">
+                    {formCopy.successMessage}
                   </p>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setStatus("idle");
-                      setFormData({
-                        name: "",
-                        topic: "coop",
-                        phone: "+998 ",
-                        message: "",
-                        website_check: "",
-                      });
-                    }}
-                    className="tap-target-48 px-4 py-2 bg-[#1C1A17] text-white font-mono text-xs rounded-[2px] uppercase mt-2"
-                  >
-                    Yangi murojaat yuborish
-                  </button>
+
+                  <ul className="border-t border-[var(--border-hairline-editorial)] pt-3 grid gap-1.5 text-[14.5px] text-[var(--text-ink)]">
+                    <li>
+                      <strong>{formCopy.summaryLabels.name}: </strong>
+                      {submittedSummary.name}
+                    </li>
+                    <li>
+                      <strong>{formCopy.summaryLabels.phone}: </strong>
+                      {submittedSummary.phone}
+                    </li>
+                    <li>
+                      <strong>{formCopy.summaryLabels.business}: </strong>
+                      {submittedSummary.business}
+                    </li>
+                    <li>
+                      <strong>{formCopy.summaryLabels.topic}: </strong>
+                      {submittedSummary.topic}
+                    </li>
+                    <li>
+                      <strong>{formCopy.summaryLabels.message}: </strong>
+                      {submittedSummary.message}
+                    </li>
+                  </ul>
+
+                  <div className="pt-1 flex flex-wrap gap-3">
+                    <button
+                      type="button"
+                      onClick={handleReset}
+                      className="min-h-[46px] px-5 bg-[var(--bg-dark)] text-[var(--bg-surface-warm)] border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] rounded-[2px] text-[14.5px] font-semibold inline-flex items-center transition-[background-color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                    >
+                      {formCopy.resetButton}
+                    </button>
+                    <BookingActionLink
+                      locale={safeLocale}
+                      className="min-h-[46px] px-4 bg-transparent text-[var(--text-ink)] border border-[var(--border-hairline-editorial-strong)] hover:border-[var(--accent-gold-ink)] hover:bg-[var(--accent-gold-soft)] rounded-[2px] text-[14.5px] font-semibold inline-flex items-center transition-[background-color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                    >
+                      {formCopy.bookingFallbackButton}
+                    </BookingActionLink>
+                  </div>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  {/* Honeypot field (hidden from view, robots will fill it) */}
-                  <div className="hidden" aria-hidden="true">
-                    <label htmlFor="website_check">Website</label>
+                <form
+                  id="contact-inquiry-form"
+                  onSubmit={handleSubmit}
+                  noValidate
+                  className="flex flex-col gap-5"
+                >
+                  {/* Anti-spam honeypot matching /api/apply contract (offscreen) */}
+                  <div
+                    aria-hidden="true"
+                    className="absolute -left-[9999px] w-px h-px opacity-0 pointer-events-none"
+                  >
+                    <label htmlFor="contact-honeypot">Website</label>
                     <input
+                      id="contact-honeypot"
+                      name="honeypot"
                       type="text"
-                      id="website_check"
-                      name="website_check"
                       tabIndex={-1}
                       autoComplete="off"
-                      value={formData.website_check}
+                      value={formData.honeypot}
                       onChange={(e) =>
-                        setFormData({ ...formData, website_check: e.target.value })
+                        handleFieldChange("honeypot", e.target.value)
                       }
                     />
                   </div>
 
-                  {/* Name field */}
-                  <div>
-                    <label className="block font-mono text-xs text-[#6B645A] uppercase tracking-wider mb-1.5">
-                      {content.contact.form.nameLabel} *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.name}
-                      onChange={(e) =>
-                        setFormData({ ...formData, name: e.target.value })
-                      }
-                      placeholder={content.contact.form.namePlaceholder}
-                      className="tap-target-48 w-full px-3.5 py-2.5 bg-[#EBE4D6] border border-[#1C1A17]/20 rounded-[2px] text-sm text-[#1C1A17] placeholder-[#6B645A]/60 focus:outline-none focus:border-[#E2541B]"
-                    />
+                  {/* Row 1: Name + Phone */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="flex flex-col gap-1.5 min-w-0">
+                      <label
+                        htmlFor="contact-name"
+                        className="text-[15px] font-semibold text-[var(--text-ink)]"
+                      >
+                        {formCopy.nameLabel} *
+                      </label>
+                      <input
+                        ref={nameInputRef}
+                        id="contact-name"
+                        name="name"
+                        type="text"
+                        required
+                        maxLength={60}
+                        autoComplete="name"
+                        value={formData.name}
+                        onChange={(e) => handleFieldChange("name", e.target.value)}
+                        placeholder={formCopy.namePlaceholder}
+                        aria-invalid={fieldErrors.name ? "true" : undefined}
+                        aria-describedby={fieldErrors.name ? "contact-name-error" : undefined}
+                        className={`w-full min-h-[48px] px-4 py-2.5 border rounded-[2px] text-[16px] leading-[1.4] text-[var(--text-ink)] placeholder:text-[var(--text-muted-aa)] transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] ${
+                          fieldErrors.name
+                            ? "bg-[var(--status-error-wash)] border-[var(--status-error-border)]"
+                            : "bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] focus:bg-[var(--bg-surface)]"
+                        }`}
+                      />
+                      {fieldErrors.name && (
+                        <span
+                          id="contact-name-error"
+                          role="alert"
+                          className="text-[13.5px] font-medium text-[var(--status-error-ink)]"
+                        >
+                          {fieldErrors.name}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col gap-1.5 min-w-0">
+                      <label
+                        htmlFor="contact-phone"
+                        className="text-[15px] font-semibold text-[var(--text-ink)]"
+                      >
+                        {formCopy.phoneLabel} *
+                      </label>
+                      <input
+                        ref={phoneInputRef}
+                        id="contact-phone"
+                        name="phone"
+                        type="tel"
+                        required
+                        inputMode="tel"
+                        autoComplete="tel"
+                        value={displayPhone}
+                        onChange={handlePhoneChange}
+                        placeholder={formCopy.phonePlaceholder}
+                        aria-invalid={fieldErrors.phone ? "true" : undefined}
+                        aria-describedby={fieldErrors.phone ? "contact-phone-error" : undefined}
+                        className={`w-full min-h-[48px] px-4 py-2.5 border rounded-[2px] text-[16px] leading-[1.4] tabular-nums text-[var(--text-ink)] placeholder:text-[var(--text-muted-aa)] transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] ${
+                          fieldErrors.phone
+                            ? "bg-[var(--status-error-wash)] border-[var(--status-error-border)]"
+                            : "bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] focus:bg-[var(--bg-surface)]"
+                        }`}
+                      />
+                      {fieldErrors.phone && (
+                        <span
+                          id="contact-phone-error"
+                          role="alert"
+                          className="text-[13.5px] font-medium text-[var(--status-error-ink)]"
+                        >
+                          {fieldErrors.phone}
+                        </span>
+                      )}
+                    </div>
                   </div>
 
-                  {/* Topic dropdown */}
-                  <div>
-                    <label className="block font-mono text-xs text-[#6B645A] uppercase tracking-wider mb-1.5">
-                      {content.contact.form.topicLabel}
-                    </label>
-                    <select
-                      value={formData.topic}
-                      onChange={(e) =>
-                        setFormData({ ...formData, topic: e.target.value })
-                      }
-                      className="tap-target-48 w-full px-3.5 py-2.5 bg-[#EBE4D6] border border-[#1C1A17]/20 rounded-[2px] text-sm text-[#1C1A17] focus:outline-none focus:border-[#E2541B]"
+                  {/* Row 2: Business + Topic */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="flex flex-col gap-1.5 min-w-0">
+                      <label
+                        htmlFor="contact-business"
+                        className="text-[15px] font-semibold text-[var(--text-ink)]"
+                      >
+                        {formCopy.businessLabel} *
+                      </label>
+                      <input
+                        ref={businessInputRef}
+                        id="contact-business"
+                        name="business"
+                        type="text"
+                        required
+                        maxLength={120}
+                        autoComplete="organization"
+                        value={formData.business}
+                        onChange={(e) =>
+                          handleFieldChange("business", e.target.value)
+                        }
+                        placeholder={formCopy.businessPlaceholder}
+                        aria-invalid={fieldErrors.business ? "true" : undefined}
+                        aria-describedby={
+                          fieldErrors.business ? "contact-business-error" : undefined
+                        }
+                        className={`w-full min-h-[48px] px-4 py-2.5 border rounded-[2px] text-[16px] leading-[1.4] text-[var(--text-ink)] placeholder:text-[var(--text-muted-aa)] transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] ${
+                          fieldErrors.business
+                            ? "bg-[var(--status-error-wash)] border-[var(--status-error-border)]"
+                            : "bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] focus:bg-[var(--bg-surface)]"
+                        }`}
+                      />
+                      {fieldErrors.business && (
+                        <span
+                          id="contact-business-error"
+                          role="alert"
+                          className="text-[13.5px] font-medium text-[var(--status-error-ink)]"
+                        >
+                          {fieldErrors.business}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex flex-col gap-1.5 min-w-0">
+                      <label
+                        htmlFor="contact-topic"
+                        className="text-[15px] font-semibold text-[var(--text-ink)]"
+                      >
+                        {formCopy.topicLabel}
+                      </label>
+                      <select
+                        id="contact-topic"
+                        name="topic"
+                        value={formData.topic}
+                        onChange={(e) => handleFieldChange("topic", e.target.value)}
+                        className="w-full min-h-[48px] px-4 py-2.5 bg-[var(--bg-alabaster)] border border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] focus:bg-[var(--bg-surface)] rounded-[2px] text-[16px] leading-[1.4] text-[var(--text-ink)] cursor-pointer transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)]"
+                      >
+                        {formCopy.topicOptions.map((opt) => (
+                          <option key={opt.id} value={opt.id}>
+                            {opt.label}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Row 3: Brief Message */}
+                  <div className="flex flex-col gap-1.5 min-w-0">
+                    <label
+                      htmlFor="contact-message"
+                      className="text-[15px] font-semibold text-[var(--text-ink)]"
                     >
-                      {content.contact.form.topicOptions.map((opt) => (
-                        <option key={opt.id} value={opt.id}>
-                          {opt.label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {/* Phone with +998 Mask */}
-                  <div>
-                    <label className="block font-mono text-xs text-[#6B645A] uppercase tracking-wider mb-1.5">
-                      {content.contact.form.phoneLabel} *
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      value={formData.phone}
-                      onChange={handlePhoneChange}
-                      placeholder={content.contact.form.phonePlaceholder}
-                      className="tap-target-48 w-full px-3.5 py-2.5 bg-[#EBE4D6] border border-[#1C1A17]/20 rounded-[2px] font-mono text-sm text-[#1C1A17] placeholder-[#6B645A]/60 focus:outline-none focus:border-[#E2541B]"
-                    />
-                  </div>
-
-                  {/* Message textarea */}
-                  <div>
-                    <label className="block font-mono text-xs text-[#6B645A] uppercase tracking-wider mb-1.5">
-                      {content.contact.form.messageLabel}
+                      {formCopy.messageLabel}
                     </label>
                     <textarea
-                      rows={4}
+                      ref={messageInputRef}
+                      id="contact-message"
+                      name="message"
+                      rows={3}
+                      maxLength={1000}
                       value={formData.message}
                       onChange={(e) =>
-                        setFormData({ ...formData, message: e.target.value })
+                        handleFieldChange("message", e.target.value)
                       }
-                      placeholder={content.contact.form.messagePlaceholder}
-                      className="w-full p-3.5 bg-[#EBE4D6] border border-[#1C1A17]/20 rounded-[2px] text-sm text-[#1C1A17] placeholder-[#6B645A]/60 focus:outline-none focus:border-[#E2541B]"
+                      placeholder={formCopy.messagePlaceholder}
+                      aria-invalid={fieldErrors.message ? "true" : undefined}
+                      aria-describedby={
+                        fieldErrors.message ? "contact-message-error" : undefined
+                      }
+                      className={`w-full min-h-[112px] px-4 py-3 border rounded-[2px] text-[16px] leading-[1.55] text-[var(--text-ink)] placeholder:text-[var(--text-muted-aa)] resize-y transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] ${
+                        fieldErrors.message
+                          ? "bg-[var(--status-error-wash)] border-[var(--status-error-border)]"
+                          : "bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] focus:bg-[var(--bg-surface)]"
+                      }`}
                     />
+                    {fieldErrors.message && (
+                      <span
+                        id="contact-message-error"
+                        role="alert"
+                        className="text-[13.5px] font-medium text-[var(--status-error-ink)]"
+                      >
+                        {fieldErrors.message}
+                      </span>
+                    )}
                   </div>
 
-                  {/* Submit button */}
-                  <button
-                    type="submit"
-                    disabled={status === "submitting"}
-                    className="tap-target-48 w-full px-6 py-3.5 bg-[#1C1A17] text-[#F4EFE6] hover:bg-[#E2541B] font-mono text-xs tracking-wider uppercase font-semibold rounded-[2px] border border-[#1C1A17] transition-colors flex items-center justify-center gap-2"
-                  >
-                    <span>
-                      {status === "submitting"
-                        ? content.contact.form.submitting
-                        : content.contact.form.submitButton}
-                    </span>
-                    <span>→</span>
-                  </button>
+                  {/* Server / Rate-Limit / Network Error Banner */}
+                  {serverError && (
+                    <div
+                      id="contact-server-error"
+                      role="alert"
+                      className="p-4 bg-[var(--status-error-wash)] border border-[var(--status-error-border)] rounded-[2px] flex flex-col gap-3"
+                    >
+                      <p className="text-[14.5px] font-medium leading-[1.5] text-[var(--status-error-ink)]">
+                        {serverError}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        <a
+                          href={contactConfig.telegramDirect.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="min-h-[44px] px-4 bg-[var(--bg-surface)] text-[var(--text-ink)] border border-[var(--border-hairline-editorial-strong)] hover:border-[var(--accent-gold-ink)] rounded-[2px] text-[13.5px] font-semibold inline-flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                        >
+                          {formCopy.telegramFallbackButton}
+                        </a>
+                        <a
+                          href={contactConfig.phone.href}
+                          className="min-h-[44px] px-4 bg-[var(--bg-surface)] text-[var(--text-ink)] border border-[var(--border-hairline-editorial-strong)] hover:border-[var(--accent-gold-ink)] rounded-[2px] text-[13.5px] font-semibold inline-flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                        >
+                          {formCopy.callFallbackButton}: {contactConfig.phone.display}
+                        </a>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Submit Button */}
+                  <div className="pt-1 flex flex-wrap items-center justify-between gap-4">
+                    <button
+                      id="contact-submit-btn"
+                      type="submit"
+                      disabled={isSubmitting}
+                      aria-busy={isSubmitting}
+                      className="min-h-[48px] px-8 bg-[var(--bg-dark)] text-[var(--bg-surface-warm)] border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] active:bg-[var(--bg-dark)] disabled:opacity-60 disabled:cursor-not-allowed rounded-[2px] text-[15px] font-semibold inline-flex items-center justify-center whitespace-nowrap transition-[background-color,border-color] duration-150 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                    >
+                      {isSubmitting ? formCopy.submitting : formCopy.submitButton}
+                    </button>
+                  </div>
                 </form>
               )}
             </div>
@@ -350,4 +813,3 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     </section>
   );
 };
-

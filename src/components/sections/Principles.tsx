@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState, useRef, KeyboardEvent } from "react";
 import { getContent } from "@/config/content";
 
 interface PrinciplesProps {
@@ -7,125 +9,265 @@ interface PrinciplesProps {
 
 export const Principles: React.FC<PrinciplesProps> = ({ locale = "uz" }) => {
   const content = getContent(locale);
+  const principles = content.principles;
 
-  // SVG technical schematics for the 4 modules
-  const renderModuleIcon = (type: "sop" | "governance" | "metrics" | "culture") => {
-    switch (type) {
-      case "sop":
-        return (
-          <svg className="w-6 h-6 text-[#E2541B]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <rect x="3" y="4" width="18" height="16" rx="1" strokeWidth="1.5" />
-            <line x1="7" y1="9" x2="17" y2="9" strokeWidth="1.5" />
-            <line x1="7" y1="13" x2="14" y2="13" strokeWidth="1.5" />
-            <line x1="7" y1="17" x2="11" y2="17" strokeWidth="1.5" />
-          </svg>
-        );
-      case "governance":
-        return (
-          <svg className="w-6 h-6 text-[#1F2F5C]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <circle cx="12" cy="7" r="4" strokeWidth="1.5" />
-            <path d="M5 21v-2a7 7 0 0114 0v2" strokeWidth="1.5" />
-            <circle cx="18" cy="14" r="2" strokeWidth="1.2" />
-            <circle cx="6" cy="14" r="2" strokeWidth="1.2" />
-          </svg>
-        );
-      case "metrics":
-        return (
-          <svg className="w-6 h-6 text-[#E2541B]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <line x1="18" y1="20" x2="18" y2="10" strokeWidth="1.5" />
-            <line x1="12" y1="20" x2="12" y2="4" strokeWidth="1.5" />
-            <line x1="6" y1="20" x2="6" y2="14" strokeWidth="1.5" />
-            <line x1="2" y1="20" x2="22" y2="20" strokeWidth="1.5" />
-          </svg>
-        );
-      case "culture":
-        return (
-          <svg className="w-6 h-6 text-[#1F2F5C]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" strokeWidth="1.5" />
-          </svg>
-        );
+  const modules = principles.modules || [];
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+
+  const tabListRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  const activeModule = modules[activeIndex] || modules[0];
+
+  const handleTabKeyDown = (
+    e: KeyboardEvent<HTMLButtonElement>,
+    index: number
+  ) => {
+    let nextIndex = -1;
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+      e.preventDefault();
+      nextIndex = (index + 1) % modules.length;
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+      e.preventDefault();
+      nextIndex = (index - 1 + modules.length) % modules.length;
+    } else if (e.key === "Home") {
+      e.preventDefault();
+      nextIndex = 0;
+    } else if (e.key === "End") {
+      e.preventDefault();
+      nextIndex = modules.length - 1;
+    }
+
+    if (nextIndex !== -1) {
+      setActiveIndex(nextIndex);
+      const buttons =
+        tabListRef.current?.querySelectorAll<HTMLButtonElement>('[role="tab"]');
+      buttons?.[nextIndex]?.focus();
     }
   };
 
+  const handleSummarySelect = (index: number) => {
+    setActiveIndex(index);
+    panelRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  };
+
+  if (!principles || !modules.length || !activeModule) return null;
+
   return (
-    <section id="tamoyil" className="py-20 lg:py-28 bg-[#F4EFE6] border-b border-[#1C1A17]/10 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="mb-14 sm:mb-18 space-y-3">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 bg-[#E2541B]" />
-            <span className="font-mono text-xs uppercase tracking-wider text-[#6B645A]">
-              {content.principles.moduleLabel}
-            </span>
-          </div>
-
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#1C1A17]">
-            {content.principles.title}
-            <span className="font-editorial-italic font-medium text-[#E2541B]">
-              {content.principles.titleEmphasis}
-            </span>
-          </h2>
-          <p className="mt-2 text-base text-[#6B645A] max-w-2xl leading-relaxed">
-            {content.principles.subtitle}
-          </p>
-        </div>
-
-        {/* Manifesto Quote Banner */}
-        <div className="mb-14 p-6 sm:p-8 border-l-4 border-[#E2541B] bg-[#EBE4D6] rounded-[2px] shadow-sm">
-          <p className="font-serif text-lg sm:text-xl text-[#1C1A17] italic leading-relaxed">
-            {content.principles.manifesto}
-          </p>
-          <div className="mt-4 font-mono text-xs text-[#6B645A] uppercase tracking-wider flex items-center justify-between">
-            <span>Anvar Abduqayum // Boshqaruv Falsafasi</span>
-            <span className="text-[#E2541B]">QOLIP: AVTONOM TIZIM</span>
-          </div>
-        </div>
-
-        {/* CSS/SVG Snapping Grid Modules */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-          {content.principles.modules.map((item, idx) => (
-            <div
-              key={item.index}
-              className="mold-card group p-6 sm:p-8 bg-[#F4EFE6] border border-[#1C1A17]/15 hover:border-[#1C1A17]/40 transition-all"
+    <section
+      id="tamoyil"
+      aria-labelledby="philosophy-heading"
+      className="bg-[var(--bg-alabaster)] py-20 lg:py-28 scroll-mt-24 border-b border-[var(--border-hairline-editorial)]"
+    >
+      <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
+        {/* Editorial Split Header */}
+        <header className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-10 lg:items-end pb-6 border-b border-[var(--border-hairline-editorial)] mb-6">
+          <div className="lg:col-span-7 flex items-baseline gap-3 min-w-0">
+            <span
+              className="font-mono text-[14px] font-medium text-[var(--text-muted-aa)] shrink-0"
+              aria-hidden="true"
             >
-              <span className="corner-mark-tl" />
-              <span className="corner-mark-br" />
+              {principles.sectionNum || "05"}
+            </span>
+            <h2
+              id="philosophy-heading"
+              className="font-serif text-[clamp(32px,4.1vw,52px)] font-semibold leading-[1.08] tracking-[-0.02em] text-[var(--text-ink)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
+            >
+              {principles.title}
+              {principles.titleEmphasis ? ` ${principles.titleEmphasis}` : ""}
+            </h2>
+          </div>
 
-              {/* Module Header */}
-              <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#1C1A17]/10">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-[#EBE4D6] border border-[#1C1A17]/10 rounded-[2px]">
-                    {renderModuleIcon(item.iconType)}
-                  </div>
-                  <div>
-                    <span className="font-mono text-xs font-bold text-[#E2541B]">
-                      {item.index}
-                    </span>
-                    <h3 className="font-serif text-xl sm:text-2xl font-bold text-[#1C1A17]">
-                      {item.title}
-                    </h3>
-                  </div>
-                </div>
-                <span className="font-mono text-[11px] text-[#6B645A] hidden sm:inline">
-                  TIZIM №0{idx + 1}
+          <p className="lg:col-span-5 text-[16px] leading-[1.65] text-[var(--text-soft-editorial)] max-w-[58ch] [text-wrap:pretty]">
+            {principles.subtitle}
+          </p>
+        </header>
+
+        {/* Obsidian Editorial Business Philosophy Statement Band */}
+        <article
+          aria-labelledby="ph-statement-heading"
+          className="bg-[var(--bg-dark)] text-[var(--text-on-dark)] p-6 sm:p-10 lg:px-16 lg:py-14 border border-[var(--accent-gold-border)] rounded-[2px] mb-12 lg:mb-16"
+        >
+          <div className="max-w-[72ch] border-l-2 border-[var(--accent-gold-light)] pl-6 lg:pl-10">
+            <h3
+              id="ph-statement-heading"
+              className="font-sans text-[16px] font-semibold text-[var(--accent-gold-light)] mb-3"
+            >
+              {principles.statementHeading || "Boshqaruv falsafasi"}
+            </h3>
+
+            <p
+              id="ph-manifesto"
+              className="font-serif italic text-[clamp(22px,2.5vw,31px)] font-medium leading-[1.42] text-[var(--text-on-dark)] mb-6"
+            >
+              {principles.manifesto}
+            </p>
+
+            <div className="flex flex-wrap items-baseline justify-between gap-4 pt-4 border-t border-[var(--border-on-dark)]">
+              <span
+                id="ph-framework"
+                className="text-[15px] font-semibold text-[var(--accent-gold-light)]"
+              >
+                {principles.frameworkTag || principles.moduleLabel}
+              </span>
+
+              {principles.caveat && (
+                <span className="text-[13px] text-[var(--text-muted-on-dark)] max-w-[48ch]">
+                  {principles.caveat}
                 </span>
-              </div>
-
-              {/* Description */}
-              <p className="text-sm sm:text-base text-[#6B645A] leading-relaxed mb-6">
-                {item.description}
-              </p>
-
-              {/* Technical Rule Bar */}
-              <div className="pt-3 border-t border-[#1C1A17]/10 font-mono text-xs text-[#1F2F5C] bg-[#EBE4D6]/60 p-2.5 rounded-[1px] flex items-center gap-2">
-                <span className="w-1.5 h-1.5 bg-[#1F2F5C] shrink-0" />
-                <span className="font-medium text-[11px] sm:text-xs">{item.technicalRule}</span>
-              </div>
+              )}
             </div>
+          </div>
+        </article>
+
+        {/* Interactive 4-Pillar Mold Inspector Tabs */}
+        <div
+          ref={tabListRef}
+          role="tablist"
+          aria-label={principles.tablistAriaLabel || principles.title}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-3 mb-6"
+        >
+          {modules.map((mod, idx) => {
+            const isSelected = idx === activeIndex;
+            const tabKey = mod.id || mod.iconType;
+
+            return (
+              <button
+                key={tabKey}
+                id={`mold-tab-${tabKey}`}
+                type="button"
+                role="tab"
+                aria-selected={isSelected}
+                aria-controls="mold-panel"
+                tabIndex={isSelected ? 0 : -1}
+                onClick={() => setActiveIndex(idx)}
+                onKeyDown={(e) => handleTabKeyDown(e, idx)}
+                className={`min-h-[52px] px-4 py-3 text-left rounded-[2px] border flex flex-col justify-center gap-0.5 transition-[background-color,border-color,color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] disabled:opacity-55 disabled:cursor-not-allowed ${
+                  isSelected
+                    ? "bg-[var(--bg-dark)] border-[var(--bg-dark)] text-[var(--bg-surface-warm)]"
+                    : "bg-[var(--bg-surface-warm)] border-[var(--border-hairline-editorial)] text-[var(--text-ink)] hover:border-[var(--text-ink)] active:bg-[var(--bg-stone)]"
+                }`}
+              >
+                <span
+                  className={`font-mono text-[12px] font-medium ${
+                    isSelected
+                      ? "text-[var(--accent-gold-light)]"
+                      : "text-[var(--accent-gold-ink)]"
+                  }`}
+                >
+                  {mod.index}
+                </span>
+                <span className="text-[14px] font-semibold leading-[1.3] text-inherit">
+                  {mod.title}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Active Module Specification + Contrast Well */}
+        <div
+          ref={panelRef}
+          id="mold-panel"
+          role="tabpanel"
+          aria-labelledby={`mold-tab-${activeModule.id || activeModule.iconType}`}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial-strong)] rounded-[2px] p-6 lg:p-10 mb-12 lg:mb-16 scroll-mt-24"
+        >
+          {/* Left Narrative & Application Context */}
+          <div className="lg:col-span-6 min-w-0">
+            <h3 className="font-serif text-[clamp(26px,2.8vw,34px)] font-semibold leading-[1.18] text-[var(--text-ink)] mb-4">
+              {activeModule.title}
+            </h3>
+
+            <div className="text-[14px] font-semibold text-[var(--accent-gold-ink)] pb-4 border-b border-[var(--border-hairline-editorial)] mb-4">
+              {activeModule.technicalRule}
+            </div>
+
+            <p className="text-[16px] leading-[1.7] text-[var(--text-soft-editorial)] max-w-[60ch] [text-wrap:pretty] mb-6">
+              {activeModule.description}
+            </p>
+
+            {activeModule.appContext && (
+              <dl className="border-t border-[var(--border-hairline-editorial)] pt-4">
+                <dt className="text-[12px] font-semibold text-[var(--text-muted-aa)] mb-1">
+                  {principles.labels?.appContext || "Context"}
+                </dt>
+                <dd className="text-[14.5px] font-medium leading-[1.55] text-[var(--text-ink)]">
+                  {activeModule.appContext}
+                </dd>
+              </dl>
+            )}
+          </div>
+
+          {/* Right Operational Shift Contrast Well */}
+          <aside
+            aria-label={principles.contrastAriaLabel || "Operational contrast"}
+            className="lg:col-span-6 bg-[var(--bg-stone)] p-6 flex flex-col justify-between gap-6"
+          >
+            <div className="flex flex-col gap-4">
+              {activeModule.beforeText && (
+                <div className="pb-4 border-b border-[var(--border-hairline-editorial)]">
+                  <span className="block text-[12px] font-semibold text-[var(--text-muted-aa)] mb-1">
+                    {principles.labels?.before || "Manual management"}
+                  </span>
+                  <p className="text-[15px] text-[var(--text-soft-editorial)] leading-[1.5]">
+                    {activeModule.beforeText}
+                  </p>
+                </div>
+              )}
+
+              {activeModule.afterText && (
+                <div>
+                  <span className="block text-[12px] font-semibold text-[var(--accent-gold-ink)] mb-1">
+                    {principles.labels?.after || "The Mold approach"}
+                  </span>
+                  <p className="font-serif text-[19px] font-semibold leading-[1.35] text-[var(--text-ink)]">
+                    {activeModule.afterText}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {principles.labels?.disclaimer && (
+              <p className="text-[13px] leading-[1.5] text-[var(--text-soft-editorial)] pt-4 border-t border-[var(--border-hairline-editorial)]">
+                {principles.labels.disclaimer}
+              </p>
+            )}
+          </aside>
+        </div>
+
+        {/* All 4 Pillars Hairline Summary Matrix */}
+        <div
+          id="pillars-summary-grid"
+          className="grid grid-cols-1 md:grid-cols-2 border-t border-[var(--border-hairline-editorial-strong)]"
+        >
+          {modules.map((mod, idx) => (
+            <button
+              key={mod.id || mod.iconType}
+              type="button"
+              aria-pressed={idx === activeIndex}
+              onClick={() => handleSummarySelect(idx)}
+              className={`min-h-[64px] w-full text-left py-6 px-4 flex gap-4 items-start bg-transparent border-b border-[var(--border-hairline-editorial)] hover:bg-[var(--bg-surface-warm)] transition-[background-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] disabled:opacity-55 disabled:cursor-not-allowed ${
+                idx % 2 === 0
+                  ? "md:border-r md:border-r-[var(--border-hairline-editorial)] md:pr-10"
+                  : "md:pl-10"
+              }`}
+            >
+              <span className="font-serif text-[20px] font-semibold text-[var(--accent-gold-ink)] leading-[1.2] shrink-0">
+                0{idx + 1}
+              </span>
+              <span>
+                <span className="block text-[16px] font-semibold text-[var(--text-ink)] mb-1">
+                  {mod.title}
+                </span>
+                <span className="block text-[14px] text-[var(--text-soft-editorial)] leading-[1.5]">
+                  {mod.shortSummary || mod.technicalRule}
+                </span>
+              </span>
+            </button>
           ))}
         </div>
       </div>
     </section>
   );
 };
-

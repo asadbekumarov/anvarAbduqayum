@@ -3,10 +3,18 @@ import { quizSubmissionSchema } from "@/features/quiz/schemas/quizSchema";
 import { sendTelegramQuizLead } from "@/features/quiz/lib/telegramQuiz";
 import { calculateQuizScore, getQuizTier } from "@/features/quiz/data/quizData";
 import { checkRateLimit } from "@/lib/rateLimit";
+import { featuresConfig } from "@/config/features";
 
 export const runtime = "nodejs";
 
 export async function POST(req: NextRequest) {
+  if (!featuresConfig.quiz) {
+    return NextResponse.json(
+      { ok: false, error: "Not found" },
+      { status: 404 }
+    );
+  }
+
   try {
     // 1. Client IP for sliding window rate limiting
     const forwardedFor = req.headers.get("x-forwarded-for");

@@ -1,3 +1,4 @@
+/* Hallmark Concept 3: Contemporary Luxury Editorial | editorial | alabaster-stone-gold */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,20 +6,64 @@
 :root {
   /* Concept 3: Contemporary Luxury Editorial Tokens */
   --bg-alabaster: #FBF9F5;
+  --bg-alabaster-glass: rgba(251, 249, 245, 0.95);
   --bg-surface: #FFFFFF;
   --bg-stone: #F4EFE6;
   --bg-dark: #111215;
   --bg-dark-card: #17181D;
+  --bg-backdrop: rgba(17, 18, 21, 0.5);
   --border-hairline: rgba(17, 18, 21, 0.1);
+  --border-hairline-subtle: rgba(17, 18, 21, 0.08);
+  --border-hairline-strong: rgba(17, 18, 21, 0.15);
   --border-stone: rgba(17, 18, 21, 0.06);
   --border-gold: rgba(184, 134, 11, 0.4);
   --border-gold-subtle: rgba(184, 134, 11, 0.2);
+  --border-gold-mat: rgba(184, 134, 11, 0.3);
   --text-ink: #111215;
   --text-soft: #4B515D;
   --text-muted: #7A8290;
   --accent-gold: #B8860B;
   --accent-gold-light: #D4AF37;
   --accent-gold-soft: rgba(184, 134, 11, 0.08);
+  --shadow-editorial-header: 0 4px 24px rgba(17, 18, 21, 0.06);
+  --shadow-editorial-drawer: -10px 0 30px rgba(0, 0, 0, 0.12);
+  --shadow-editorial-card: 0 20px 48px rgba(17, 18, 21, 0.08);
+  --shadow-editorial-gold: 0 8px 24px rgba(184, 134, 11, 0.25);
+
+  /* Phase 3.2 & 3.3: Paper Contrast, Role Taxonomy & Institutional Separation */
+  --bg-surface-warm: #FFFEFA;
+  --bg-stone-soft: #F7F3EB;
+  --bg-hover-ivory: rgba(255, 255, 255, 0.55);
+  --bg-dark-elevated: #1A1C22;
+  --bg-scrim: rgba(17, 18, 21, 0.72);
+  --text-soft-editorial: #3D424D;
+  --text-muted-aa: #555C69;
+  --text-on-dark: #FBF9F5;
+  --text-muted-on-dark: #C2C7D1;
+  --accent-gold-ink: #7A5600;
+  --accent-gold-border: rgba(184, 134, 11, 0.35);
+  --border-hairline-editorial: rgba(17, 18, 21, 0.12);
+  --border-hairline-editorial-strong: rgba(17, 18, 21, 0.24);
+  --border-on-dark: rgba(251, 249, 245, 0.16);
+  --shadow-editorial-subtle: 0 4px 16px rgba(17, 18, 21, 0.04);
+  --shadow-editorial-modal: 0 24px 56px rgba(17, 18, 21, 0.28);
+  --shadow-sticky-top: 0 -4px 20px rgba(17, 18, 21, 0.08);
+
+  /* Phase 3.4: Media Modal Backdrop & Poster Scrim Tokens */
+  --bg-backdrop-media: rgba(17, 18, 21, 0.84);
+  --poster-scrim-start: rgba(17, 18, 21, 0.92);
+  --poster-scrim-mid: rgba(17, 18, 21, 0.56);
+  --poster-scrim-end: rgba(17, 18, 21, 0.04);
+  --outline-inset-media: rgba(17, 18, 21, 0.1);
+
+  /* Phase 3.5: Booking Band, Form Validation Status & Colophon Tokens */
+  --border-on-dark-subtle: rgba(251, 249, 245, 0.1);
+  --status-error-ink: #8E1B1B;
+  --status-error-border: #B42318;
+  --status-error-wash: rgba(180, 35, 24, 0.07);
+  --status-success-ink: #165B33;
+  --status-success-border: #1E7A45;
+  --status-success-wash: rgba(22, 91, 51, 0.07);
 
   /* Legacy & Baseline Tokens */
   --dark-canvas: #090A0D;
@@ -48,6 +93,7 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
   scroll-padding-bottom: 6rem;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -56,7 +102,7 @@ body {
   background-color: var(--bg-alabaster);
   color: var(--text-ink);
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Typography styles */
@@ -84,7 +130,7 @@ body {
 .portrait-archival-mat {
   background: var(--bg-stone);
   border: 1px solid var(--border-stone);
-  padding: 10px;
+  padding: 12px;
   position: relative;
 }
 
@@ -93,7 +139,7 @@ body {
   width: 100%;
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  background: #111215;
+  background: var(--bg-dark);
   border: 1px solid var(--border-hairline);
 }
 
@@ -101,7 +147,7 @@ body {
   content: '';
   position: absolute;
   inset: 8px;
-  border: 1px solid rgba(184, 134, 11, 0.3);
+  border: 1px solid var(--border-gold-mat);
   pointer-events: none;
   z-index: 2;
 }
@@ -131,6 +177,40 @@ body {
 }
 
 /* Reduced motion compliance */
+/* Phase 3.2 Accessible Modal Scroll Lock & Editorial Checklist Counters */
+body.modal-locked,
+html.modal-locked {
+  overflow: hidden;
+  touch-action: none;
+}
+
+.folio-checklist {
+  list-style: none;
+  counter-reset: focus-counter;
+}
+
+.folio-checklist > li {
+  counter-increment: focus-counter;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-hairline-subtle);
+}
+
+.folio-checklist > li:last-child {
+  border-bottom: none;
+}
+
+.folio-checklist > li::before {
+  content: "0" counter(focus-counter);
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent-gold-ink);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
