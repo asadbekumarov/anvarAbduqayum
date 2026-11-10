@@ -7,7 +7,8 @@ import { Footer } from "@/components/layout/Footer";
 import { MobileStickyBar } from "@/components/layout/MobileStickyBar";
 import { QuizView } from "@/features/quiz/components/QuizView";
 import { featuresConfig } from "@/config/features";
-import { SITE_URL, isIndexingEnabled } from "@/config/siteConfig";
+import { SITE_URL } from "@/config/siteConfig";
+import { OG_IMAGE_URL, getRobotsMetadata } from "@/lib/seo";
 import { routing } from "@/i18n/routing";
 
 interface TestPageProps {
@@ -53,9 +54,7 @@ export async function generateMetadata({
   return {
     title,
     description,
-    robots: isIndexingEnabled
-      ? { index: true, follow: true }
-      : { index: false, follow: false },
+    robots: getRobotsMetadata(),
     alternates: {
       canonical: canonicalUrl,
       languages: {
@@ -74,7 +73,7 @@ export async function generateMetadata({
       siteName: "Anvar Abduqayum",
       images: [
         {
-          url: `${SITE_URL}/og-image.png`,
+          url: OG_IMAGE_URL,
           width: 1200,
           height: 630,
           alt: title,
@@ -85,7 +84,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title,
       description,
-      images: [`${SITE_URL}/og-image.png`],
+      images: [OG_IMAGE_URL],
     },
   };
 }

@@ -9,7 +9,8 @@ import { contactConfig } from "@/config/contact";
 import { featuresConfig } from "@/config/features";
 import { getDemoCopy } from "@/config/demoCopy";
 import { ConceptDisclosureBanner } from "@/components/ui/ConceptDisclosureBanner";
-import { SITE_URL, isIndexingEnabled } from "@/config/siteConfig";
+import { SITE_URL } from "@/config/siteConfig";
+import { buildLocalizedMetadata } from "@/lib/seo";
 import "../globals.css";
 
 const playfair = Playfair_Display({
@@ -56,47 +57,13 @@ export async function generateMetadata({
     : content.meta.siteDescription;
   const siteName = isDemo ? demoMeta.siteName : content.meta.founderName;
 
-  return {
+  return buildLocalizedMetadata({
+    locale,
+    routeSegment: "",
     title,
     description,
-    metadataBase: new URL(SITE_URL),
-    robots: isIndexingEnabled
-      ? { index: true, follow: true }
-      : { index: false, follow: false },
-    alternates: isDemo
-      ? undefined
-      : {
-          canonical: `/${locale}`,
-          languages: {
-            uz: "/uz",
-            ru: "/ru",
-            en: "/en",
-            "x-default": "/uz",
-          },
-        },
-    openGraph: {
-      title,
-      description,
-      type: "website",
-      locale: locale === "uz" ? "uz_UZ" : locale === "ru" ? "ru_RU" : "en_US",
-      url: isDemo ? undefined : `${SITE_URL}/${locale}`,
-      siteName,
-      images: [
-        {
-          url: `${SITE_URL}/images/brand/og-image.png`,
-          width: 1200,
-          height: 630,
-          alt: siteName,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [`${SITE_URL}/images/brand/og-image.png`],
-    },
-  };
+    siteName,
+  });
 }
 
 export const viewport: Viewport = {

@@ -1,16 +1,32 @@
 import { contactConfig } from "./contact";
 import { featuresConfig } from "./features";
 
-const getBaseUrl = (): string => {
-  if (process.env.NEXT_PUBLIC_SITE_URL) {
-    return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
+export const OFFICIAL_PRODUCTION_ORIGIN = "https://anvarabduqayum.uz";
+export const DEMO_ORIGIN = "https://anvar-abduqayum-flax.vercel.app";
+
+const resolveDemoOrigin = (): string => {
+  const explicitDemo = process.env.NEXT_PUBLIC_DEMO_URL?.trim().replace(/\/$/, "");
+  if (explicitDemo) return explicitDemo;
+
+  const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/$/, "");
+  if (configured && configured !== OFFICIAL_PRODUCTION_ORIGIN) {
+    return configured;
   }
-  return "https://anvarabduqayum.uz";
+
+  return DEMO_ORIGIN;
+};
+
+const getBaseUrl = (): string => {
+  if (featuresConfig.demoMode) {
+    return resolveDemoOrigin();
+  }
+  if (process.env.NEXT_PUBLIC_SITE_URL) {
+    return process.env.NEXT_PUBLIC_SITE_URL.trim().replace(/\/$/, "");
+  }
+  return OFFICIAL_PRODUCTION_ORIGIN;
 };
 
 export const SITE_URL = getBaseUrl();
-
-export const OFFICIAL_PRODUCTION_ORIGIN = "https://anvarabduqayum.uz";
 
 /**
  * Explicit opt-in search engine indexing control.

@@ -2,7 +2,13 @@ import { ReactNode } from "react";
 import type { Metadata } from "next";
 import { featuresConfig } from "@/config/features";
 import { getDemoCopy } from "@/config/demoCopy";
-import { SITE_URL, isIndexingEnabled } from "@/config/siteConfig";
+import { SITE_URL } from "@/config/siteConfig";
+import {
+  OG_IMAGE_URL,
+  getDefaultOgImageAlt,
+  getOgImageDescriptor,
+  getRobotsMetadata,
+} from "@/lib/seo";
 
 const demoRootMeta = getDemoCopy("uz").meta;
 const rootTitle = featuresConfig.demoMode
@@ -14,36 +20,28 @@ const rootDescription = featuresConfig.demoMode
 const rootSiteName = featuresConfig.demoMode
   ? demoRootMeta.siteName
   : "Anvar Abduqayum";
+const rootOgAlt = getDefaultOgImageAlt("uz");
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  robots: isIndexingEnabled
-    ? { index: true, follow: true }
-    : { index: false, follow: false },
+  robots: getRobotsMetadata(),
   title: rootTitle,
   description: rootDescription,
   openGraph: {
     title: rootTitle,
     description: rootDescription,
     type: "website",
-    url: featuresConfig.demoMode ? undefined : SITE_URL,
+    locale: "uz_UZ",
+    alternateLocale: ["ru_RU", "en_US"],
+    url: SITE_URL,
     siteName: rootSiteName,
-    images: [
-      {
-        url: `${SITE_URL}/images/brand/og-image.png`,
-        secureUrl: `${SITE_URL}/images/brand/og-image.png`,
-        width: 1200,
-        height: 630,
-        type: "image/png",
-        alt: rootSiteName,
-      },
-    ],
+    images: [getOgImageDescriptor(rootOgAlt)],
   },
   twitter: {
     card: "summary_large_image",
     title: rootTitle,
     description: rootDescription,
-    images: [`${SITE_URL}/images/brand/og-image.png`],
+    images: [{ url: OG_IMAGE_URL, alt: rootOgAlt }],
   },
   icons: {
     icon: [

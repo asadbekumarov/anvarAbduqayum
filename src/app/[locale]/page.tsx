@@ -1,4 +1,5 @@
 import React from "react";
+import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -16,10 +17,40 @@ import { ContactSection } from "@/components/sections/ContactSection";
 import { ConsultingModule } from "@/components/sections/ConsultingModule";
 import { InvestmentModule } from "@/components/sections/InvestmentModule";
 import { featuresConfig } from "@/config/features";
+import { getContent } from "@/config/content";
+import { getDemoCopy } from "@/config/demoCopy";
+import { buildLocalizedMetadata } from "@/lib/seo";
 import { routing } from "@/i18n/routing";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const content = getContent(locale);
+  const demoMeta = getDemoCopy(locale).meta;
+  const isDemo = featuresConfig.demoMode;
+
+  const title = isDemo
+    ? `${content.meta.siteTitle} — ${demoMeta.siteTitleSuffix}`
+    : content.meta.siteTitle;
+  const description = isDemo
+    ? demoMeta.siteDescription
+    : content.meta.siteDescription;
+  const siteName = isDemo ? demoMeta.siteName : content.meta.founderName;
+
+  return buildLocalizedMetadata({
+    locale,
+    routeSegment: "",
+    title,
+    description,
+    siteName,
+  });
 }
 
 export default async function HomePage({

@@ -28,6 +28,7 @@ export interface DemoCopy {
     siteTitleSuffix: string;
     siteDescription: string;
     siteName: string;
+    ogImageAlt: string;
     bronTitleSuffix: string;
     bronDescription: string;
   };
@@ -70,6 +71,8 @@ const DEMO_COPY: Record<DemoLocale, DemoCopy> = {
       siteDescription:
         "Mustaqil dizayn konsepsiyasi (demo). Ushbu sayt Anvar Abduqayum yoki uning jamoasi tomonidan buyurtma qilinmagan va tasdiqlanmagan.",
       siteName: "Anvar Abduqayum — Concept Demo",
+      ogImageAlt:
+        "Anvar Abduqayum — Sanoat, Tizimli boshqaruv, Eksport. Mustaqil veb-sayt konsepsiyasi",
       bronTitleSuffix: "Demo namoyish",
       bronDescription:
         "Mustaqil dizayn konsepsiyasi doirasidagi uchrashuv sahifasi namoyishi. Avtomatik xabar yuborilmaydi.",
@@ -111,6 +114,8 @@ const DEMO_COPY: Record<DemoLocale, DemoCopy> = {
       siteDescription:
         "Независимая дизайн-концепция (демо). Данный сайт не заказан и не одобрен Анваром Абдукаюмом или его командой.",
       siteName: "Анвар Абдукаюм — Concept Demo",
+      ogImageAlt:
+        "Анвар Абдукаюм — Промышленность, Системное управление, Экспорт. Независимая концепция сайта",
       bronTitleSuffix: "Демо-просмотр",
       bronDescription:
         "Демонстрационная страница согласования встречи в рамках независимой концепции. Автоматические сообщения не отправляются.",
@@ -152,6 +157,8 @@ const DEMO_COPY: Record<DemoLocale, DemoCopy> = {
       siteDescription:
         "Independent design concept preview showcasing a portfolio architecture. Not commissioned, approved, or endorsed by Anvar Abduqayum or his team.",
       siteName: "Anvar Abduqayum — Concept Demo",
+      ogImageAlt:
+        "Anvar Abduqayum — Industry, Systemic Governance, Export. Independent Website Concept",
       bronTitleSuffix: "Demo Preview",
       bronDescription:
         "Demonstration meeting coordination page for an independent design concept. No automatic messages are sent.",

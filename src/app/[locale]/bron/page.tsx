@@ -8,7 +8,7 @@ import { BookingView } from "@/features/booking/components/BookingView";
 import { activeBookingMode } from "@/config/booking";
 import { featuresConfig } from "@/config/features";
 import { getDemoCopy } from "@/config/demoCopy";
-import { SITE_URL, isIndexingEnabled } from "@/config/siteConfig";
+import { buildLocalizedMetadata } from "@/lib/seo";
 import { routing } from "@/i18n/routing";
 
 interface BookingPageProps {
@@ -60,50 +60,13 @@ export async function generateMetadata({
   const description = isDemo ? demoMeta.bronDescription : baseDescription;
   const siteName = isDemo ? demoMeta.siteName : "Anvar Abduqayum";
 
-  const pagePath = `/${locale}/bron`;
-  const canonicalUrl = `${SITE_URL}${pagePath}`;
-
-  return {
+  return buildLocalizedMetadata({
+    locale,
+    routeSegment: "bron",
     title,
     description,
-    metadataBase: new URL(SITE_URL),
-    robots: isIndexingEnabled
-      ? { index: true, follow: true }
-      : { index: false, follow: false },
-    alternates: isDemo
-      ? undefined
-      : {
-          canonical: canonicalUrl,
-          languages: {
-            uz: `${SITE_URL}/uz/bron`,
-            ru: `${SITE_URL}/ru/bron`,
-            en: `${SITE_URL}/en/bron`,
-            "x-default": `${SITE_URL}/uz/bron`,
-          },
-        },
-    openGraph: {
-      title,
-      description,
-      type: "website",
-      locale: locale === "uz" ? "uz_UZ" : locale === "ru" ? "ru_RU" : "en_US",
-      url: isDemo ? undefined : canonicalUrl,
-      siteName,
-      images: [
-        {
-          url: `${SITE_URL}/images/brand/og-image.png`,
-          width: 1200,
-          height: 630,
-          alt: title,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [`${SITE_URL}/images/brand/og-image.png`],
-    },
-  };
+    siteName,
+  });
 }
 
 export default async function BookingPage({ params }: BookingPageProps) {
