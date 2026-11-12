@@ -1,8 +1,20 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import Image from "next/image";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "framer-motion";
+import Link from "next/link";
 import { getContent } from "@/config/content";
+import { featuresConfig } from "@/config/features";
+import { getDossierUiCopy } from "@/features/dossiers/config/dossierData";
+import { MonolithImage } from "@/components/ui/MonolithImage";
+import { RevealMask } from "@/components/ui/RevealMask";
+import { SectionDivider } from "@/components/ui/SectionDivider";
 
 interface PortfolioProps {
   locale?: string;
@@ -15,7 +27,7 @@ const MONOGRAM_PATHS = (
     <rect x="1.5" y="1.5" width="13" height="13" stroke="currentColor" strokeWidth="1.2" />
     <path
       d="M5 11V5l3 3.5L11 5v6"
-      stroke="#B8860B"
+      stroke="#D4AF37"
       strokeWidth="1.2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -48,12 +60,14 @@ const EXTERNAL_ARROW_SVG = (
 );
 
 export const Portfolio: React.FC<PortfolioProps> = ({ locale = "uz" }) => {
+  const shouldReduceMotion = useReducedMotion();
   const content = getContent(locale);
   const portfolio = content.portfolio;
 
   const [selectedCategory, setSelectedCategory] = useState<CategoryKey>("all");
   const [activeCompanyId, setActiveCompanyId] = useState<string | null>(null);
 
+  const containerRef = useRef<HTMLElement | null>(null);
   const lastFocusedTriggerRef = useRef<HTMLElement | null>(null);
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const modalDialogRef = useRef<HTMLDivElement | null>(null);
@@ -66,12 +80,30 @@ export const Portfolio: React.FC<PortfolioProps> = ({ locale = "uz" }) => {
     return c.category === selectedCategory;
   });
 
-  const ventureCompanies = filteredCompanies.filter((c) => c.category !== "council");
-  const uzbicCompany = companies.find((c) => c.id === "uzbic") || null;
-  const showCouncilBand =
-    selectedCategory === "all" || selectedCategory === "council";
-
   const activeCompany = companies.find((c) => c.id === activeCompanyId) || null;
+
+  // Pinned horizontal scroll translation with heavy, deliberate spring smoothing
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 75,
+    damping: 26,
+    mass: 0.95,
+  });
+
+  const maxShiftPercent = Math.min(
+    72,
+    Math.max(0, (filteredCompanies.length - 2) * 16)
+  );
+  const x = useTransform(
+    smoothProgress,
+    [0, 1],
+    ["0%", `-${maxShiftPercent}%`]
+  );
+  const progressBarScale = useTransform(smoothProgress, [0, 1], [0.06, 1]);
 
   const openModal = (companyId: string, triggerEl: HTMLElement) => {
     lastFocusedTriggerRef.current = triggerEl;
@@ -142,348 +174,235 @@ export const Portfolio: React.FC<PortfolioProps> = ({ locale = "uz" }) => {
     };
   }, [activeCompany]);
 
-  const roleBadgeClasses = (roleType?: string) => {
+  const roleBadgeClasses = (roleType?: string, verificationStatus?: string) => {
+    if (verificationStatus === "pending") {
+      return "text-[#C2C7D1] bg-[#14161A] border border-dashed border-[rgba(255,255,255,0.22)]";
+    }
     if (roleType === "is-founder") {
-      return "text-[var(--accent-gold-ink)] bg-[var(--accent-gold-soft)] border border-[var(--accent-gold-border)]";
+      return "text-[#D4AF37] bg-[rgba(212,175,55,0.1)] border border-[rgba(212,175,55,0.38)]";
     }
     if (roleType === "is-internal") {
-      return "text-[var(--text-soft-editorial)] bg-[var(--bg-alabaster)] border border-dashed border-[var(--border-hairline-editorial-strong)]";
+      return "text-[#C2C7D1] bg-[#12141A] border border-dashed border-[rgba(255,255,255,0.18)]";
     }
-    return "text-[var(--text-ink)] bg-[var(--bg-stone)] border border-[var(--border-hairline-editorial)]";
+    return "text-[#F5F4F0] bg-[#181B24] border border-[rgba(255,255,255,0.14)]";
   };
 
-  const ventureGridColsClass =
-    ventureCompanies.length === 3
-      ? "md:grid-cols-3"
-      : ventureCompanies.length === 1
-      ? "md:grid-cols-[minmax(0,760px)]"
-      : "md:grid-cols-2";
+  const getVerificationLabel = (status?: string) => {
+    if (status === "pending") return portfolio.modal.pendingBadge || "Pending confirmation";
+    if (status === "public") return portfolio.modal.publicBadge || "Public platform";
+    if (status === "historical") {
+      return portfolio.taxonomy?.historical || "Historical record";
+    }
+    if (status === "verified") {
+      return portfolio.modal.verifiedBadge || "Verified";
+    }
+    return null;
+  };
 
   const filterKeys: CategoryKey[] = ["all", "mfg", "horeca", "service", "council"];
 
   return (
     <section
+      ref={containerRef}
       id="portfel"
       aria-labelledby="portfolio-heading"
-      className="bg-[var(--bg-alabaster)] text-[var(--text-ink)] py-16 lg:py-24 xl:py-28 border-b border-[var(--border-hairline-editorial)] scroll-mt-24"
+      className="relative bg-[#090909] text-[#F5F4F0] border-b border-[rgba(212,175,55,0.2)] scroll-mt-20 md:h-[300vh]"
     >
-      <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Editorial Split Header */}
-        <header className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-12 lg:items-end mb-6">
-          <h2
-            id="portfolio-heading"
-            className="lg:col-span-7 font-serif text-[clamp(30px,4.2vw,50px)] font-semibold leading-[1.1] tracking-[-0.02em] text-[var(--text-ink)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
-          >
-            {portfolio.title}
-            {portfolio.titleEmphasis ? ` ${portfolio.titleEmphasis}` : ""}
-          </h2>
-
-          <p className="lg:col-span-5 text-[16px] lg:text-[17px] leading-[1.65] text-[var(--text-soft-editorial)] [text-wrap:pretty]">
-            {portfolio.subtitle}
-          </p>
-        </header>
-
-        {/* Role Taxonomy Key (Clean Distinction: Commercial vs Partner vs Internal IT vs Public Council) */}
-        {portfolio.taxonomy && (
-          <div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-5 py-4 border-y border-[var(--border-hairline-editorial)] mb-7"
-            aria-label={portfolio.taxonomy.ariaLabel}
-          >
-            <div className="flex items-center gap-3 text-[13px] font-medium text-[var(--text-soft-editorial)] min-w-0">
-              <span
-                className="w-2.5 h-2.5 rounded-[1px] bg-[var(--accent-gold)] shrink-0"
-                aria-hidden="true"
-              />
-              <span>{portfolio.taxonomy.founder}</span>
+      {/* Sticky Pinned Viewport */}
+      <div className="md:sticky md:top-0 md:h-screen flex flex-col justify-between overflow-hidden py-8 md:py-10">
+        <div className="max-w-[1320px] w-full mx-auto px-4 sm:px-6 lg:px-8 shrink-0">
+          {/* Editorial Split Header */}
+          <header className="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-10 lg:items-end mb-4">
+            <div className="lg:col-span-7 min-w-0">
+              <span className="font-mono text-[11px] font-bold uppercase tracking-[0.2em] text-[#D4AF37] block mb-1.5">
+                {portfolio.eyebrow}
+              </span>
+              <RevealMask>
+                <h2
+                  id="portfolio-heading"
+                  className="font-serif text-[clamp(26px,3.6vw,44px)] font-semibold leading-[1.08] tracking-[-0.02em] text-[#F5F4F0] [overflow-wrap:break-word] [text-wrap:balance]"
+                >
+                  {portfolio.title}
+                  {portfolio.titleEmphasis ? ` ${portfolio.titleEmphasis}` : ""}
+                </h2>
+              </RevealMask>
             </div>
 
-            <div className="flex items-center gap-3 text-[13px] font-medium text-[var(--text-soft-editorial)] min-w-0">
-              <span
-                className="w-2.5 h-2.5 rounded-[1px] bg-[var(--bg-dark)] shrink-0"
-                aria-hidden="true"
-              />
-              <span>{portfolio.taxonomy.partner}</span>
+            <p className="lg:col-span-5 text-[14.5px] lg:text-[15.5px] leading-[1.55] text-[#A1A7B3] [text-wrap:pretty]">
+              {portfolio.subtitle}
+            </p>
+          </header>
+
+          <SectionDivider tone="dark" className="mb-4" />
+
+          {/* Category Filter Tabs + Horizontal Scroll Progress */}
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div
+              className="flex flex-wrap gap-1.5"
+              role="tablist"
+              aria-label={portfolio.eyebrow}
+            >
+              {filterKeys.map((catKey) => {
+                const isActive = selectedCategory === catKey;
+                return (
+                  <button
+                    key={catKey}
+                    type="button"
+                    role="tab"
+                    aria-selected={isActive}
+                    onClick={() => setSelectedCategory(catKey)}
+                    className={`min-h-[38px] px-3.5 py-1.5 rounded-[2px] border text-[12px] font-semibold whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] ${
+                      isActive
+                        ? "bg-[#D4AF37] border-[#D4AF37] text-[#090909]"
+                        : "bg-[#12141A] border-[rgba(255,255,255,0.14)] text-[#C2C7D1] hover:border-[#D4AF37] hover:text-[#F5F4F0]"
+                    }`}
+                  >
+                    {portfolio.filters[catKey]}
+                  </button>
+                );
+              })}
             </div>
 
-            <div className="flex items-center gap-3 text-[13px] font-medium text-[var(--text-soft-editorial)] min-w-0">
-              <span
-                className="w-2.5 h-2.5 rounded-[1px] bg-[var(--text-muted-aa)] shrink-0"
-                aria-hidden="true"
-              />
-              <span>{portfolio.taxonomy.internal}</span>
-            </div>
-
-            <div className="flex items-center gap-3 text-[13px] font-medium text-[var(--text-soft-editorial)] min-w-0">
-              <span
-                className="w-2.5 h-2.5 rounded-[1px] border-2 border-[var(--accent-gold)] bg-transparent shrink-0"
-                aria-hidden="true"
-              />
-              <span>{portfolio.taxonomy.public}</span>
+            <div className="hidden md:flex items-center gap-3">
+              <span className="font-mono text-[11px] text-[#8E95A5] tabular-nums">
+                {String(filteredCompanies.length).padStart(2, "0")} PROJECTS
+              </span>
+              <div className="w-32 h-[2px] bg-[rgba(255,255,255,0.12)] overflow-hidden">
+                <motion.div
+                  style={shouldReduceMotion ? undefined : { scaleX: progressBarScale }}
+                  className="h-full w-full origin-left bg-[#D4AF37]"
+                />
+              </div>
             </div>
           </div>
-        )}
-
-        {/* Category Filter Tabs */}
-        <div
-          className="flex flex-wrap gap-2 mb-9"
-          role="tablist"
-          aria-label={portfolio.eyebrow}
-        >
-          {filterKeys.map((catKey) => {
-            const isActive = selectedCategory === catKey;
-            return (
-              <button
-                key={catKey}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                onClick={() => setSelectedCategory(catKey)}
-                className={`min-h-[44px] px-4 py-2 rounded-[2px] border text-[13px] font-semibold whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] ${
-                  isActive
-                    ? "bg-[var(--bg-dark)] border-[var(--bg-dark)] text-[var(--bg-surface-warm)]"
-                    : "bg-[var(--bg-surface-warm)] border-[var(--border-hairline-editorial)] text-[var(--text-soft-editorial)] hover:border-[var(--text-ink)] hover:text-[var(--text-ink)]"
-                }`}
-              >
-                {portfolio.filters[catKey]}
-              </button>
-            );
-          })}
         </div>
 
-        {/* PART A: COMMERCIAL VENTURES, CO-FOUNDED ENTERPRISES & INTERNAL IT */}
-        {ventureCompanies.length > 0 && (
-          <div className="mb-12">
-            {portfolio.groups?.ventures && (
-              <div className="flex items-center justify-between gap-3 mb-4">
-                <span className="text-[14px] font-semibold text-[var(--text-muted-aa)]">
-                  {portfolio.groups.ventures} ({ventureCompanies.length})
-                </span>
-              </div>
-            )}
-
-            <div className={`grid grid-cols-1 ${ventureGridColsClass} gap-5`}>
-              {ventureCompanies.map((company) => (
-                <article
-                  key={company.id}
-                  onClick={(e) => {
-                    if ((e.target as HTMLElement).closest("a, button")) return;
-                    const triggerBtn = e.currentTarget.querySelector<HTMLButtonElement>(
-                      'button[data-portfolio-trigger="true"]'
-                    );
-                    openModal(company.id, triggerBtn || e.currentTarget);
-                  }}
-                  className="group bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial)] rounded-[2px] py-6 px-5 sm:py-7 sm:px-8 flex flex-col justify-between cursor-pointer transition-[border-color,transform,box-shadow] duration-200 hover:border-[var(--accent-gold)] hover:-translate-y-0.5 hover:shadow-[var(--shadow-editorial-subtle)]"
-                >
-                  <div>
-                    {/* Top Index + Year */}
-                    <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[var(--border-hairline-subtle)] mb-4">
-                      <span className="font-mono text-[12px] font-bold text-[var(--text-muted-aa)]">
-                        {company.code}
-                      </span>
-                      <span className="font-mono text-[12px] font-semibold text-[var(--text-ink)] bg-[var(--bg-stone)] px-2.5 py-1 rounded-[2px]">
-                        {company.year}
-                      </span>
-                    </div>
-
-                    {/* Identity Plaque + Role Classification Badge */}
-                    <div className="flex items-center justify-between flex-wrap gap-3 mb-4">
-                      {company.hasLogo && company.logoUrl ? (
-                        <span className="h-12 px-4 bg-[var(--bg-dark)] border border-[var(--accent-gold-border)] rounded-[2px] inline-flex items-center justify-center shrink-0">
-                          <Image
-                            src={company.logoUrl}
-                            alt={`${company.name} logo`}
-                            width={280}
-                            height={96}
-                            className="h-8 w-auto object-contain block"
-                          />
-                        </span>
-                      ) : (
-                        <span className="h-11 px-4 bg-[var(--bg-stone)] border border-[var(--border-hairline-editorial)] rounded-[2px] inline-flex items-center gap-2 font-mono text-[13px] font-bold text-[var(--text-ink)] shrink-0">
-                          {MONOGRAM_PATHS}
-                          <span>
-                            {company.monogram || company.name.slice(0, 2).toUpperCase()}
-                          </span>
-                        </span>
-                      )}
-
-                      <span
-                        className={`inline-flex items-center text-[12px] font-semibold px-3 py-1 rounded-[2px] ${roleBadgeClasses(
-                          company.roleType
-                        )}`}
-                      >
-                        {company.roleBadge || company.role}
-                      </span>
-                    </div>
-
-                    {/* Card Name, Subtitle, Description */}
-                    <h3 className="font-serif text-[25px] font-semibold leading-[1.2] text-[var(--text-ink)] mb-2">
-                      {company.name}
-                    </h3>
-
-                    <p className="text-[14px] font-semibold text-[var(--text-ink)] mb-2">
-                      {company.activity}
-                    </p>
-
-                    <p className="text-[15px] leading-[1.62] text-[var(--text-soft-editorial)] mb-5 [text-wrap:pretty]">
-                      {company.desc}
-                    </p>
-
-                    {/* Discipline Tags */}
-                    <div className="flex flex-wrap gap-2 mb-5">
-                      {company.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="text-[12px] font-medium text-[var(--text-soft-editorial)] bg-[var(--bg-alabaster)] border border-[var(--border-hairline-subtle)] px-3 py-1 rounded-[2px]"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Bottom Status + Detail Action */}
-                  <div className="pt-4 border-t border-[var(--border-hairline-subtle)] flex items-center justify-between gap-3">
-                    <span className="text-[13px] text-[var(--text-muted-aa)] font-medium leading-[1.35] flex-1 min-w-0">
-                      {company.status}
+        {/* Horizontal Scroll Card Track */}
+        <div className="w-full overflow-x-auto md:overflow-visible px-4 sm:px-6 lg:px-8 py-5 md:my-auto">
+          <motion.div
+            style={shouldReduceMotion ? undefined : { x }}
+            className="flex md:w-max gap-5 lg:gap-6 snap-x snap-mandatory md:snap-none will-change-transform"
+          >
+            {filteredCompanies.map((company) => (
+              <article
+                key={company.id}
+                onClick={(e) => {
+                  if ((e.target as HTMLElement).closest("a, button")) return;
+                  const triggerBtn = e.currentTarget.querySelector<HTMLButtonElement>(
+                    'button[data-portfolio-trigger="true"]'
+                  );
+                  openModal(company.id, triggerBtn || e.currentTarget);
+                }}
+                className="group shrink-0 w-[85vw] sm:w-[370px] lg:w-[420px] snap-start bg-[#111215] border border-[rgba(255,255,255,0.1)] hover:border-[#D4AF37] rounded-[2px] p-5 lg:p-6 flex flex-col justify-between cursor-pointer transition-colors duration-300"
+              >
+                <div>
+                  {/* Top Index + Year */}
+                  <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-[rgba(255,255,255,0.08)] mb-3.5">
+                    <span className="font-mono text-[11.5px] font-bold text-[#D4AF37]">
+                      {company.code}
                     </span>
-
-                    <button
-                      type="button"
-                      data-portfolio-trigger="true"
-                      aria-haspopup="dialog"
-                      aria-label={`${portfolio.detailBtn}: ${company.name}`}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        openModal(company.id, e.currentTarget);
-                      }}
-                      className="min-h-[44px] px-4 bg-[var(--bg-alabaster)] text-[var(--text-ink)] border border-[var(--border-hairline-editorial-strong)] group-hover:bg-[var(--bg-dark)] group-hover:text-[var(--bg-surface-warm)] group-hover:border-[var(--bg-dark)] hover:bg-[var(--bg-dark)] hover:text-[var(--bg-surface-warm)] hover:border-[var(--bg-dark)] rounded-[2px] text-[13px] font-semibold inline-flex items-center gap-2 whitespace-nowrap shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
-                    >
-                      <span>{portfolio.detailBtn}</span>
-                      {ARROW_RIGHT_SVG}
-                    </button>
+                    <span className="font-mono text-[11.5px] font-semibold text-[#C2C7D1] bg-[#181B24] px-2 py-0.5 rounded-[2px]">
+                      {company.year}
+                    </span>
                   </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        )}
 
-        {/* PART B: INDEPENDENT PUBLIC PLATFORM BAND (UZBIC SEPARATION) */}
-        {showCouncilBand && uzbicCompany && (
-          <div>
-            {portfolio.groups?.council && (
-              <div className="flex items-center justify-between gap-3 mb-4">
-                <span className="text-[14px] font-semibold text-[var(--text-muted-aa)]">
-                  {portfolio.groups.council}
-                </span>
-              </div>
-            )}
+                  {/* MonolithImage Plaque / Monogram + Role Badge */}
+                  <div className="flex items-center justify-between flex-wrap gap-2.5 mb-3.5">
+                    {company.hasLogo && company.logoUrl ? (
+                      <MonolithImage
+                        src={company.logoUrl}
+                        alt={`${company.name} logo`}
+                        width={240}
+                        height={80}
+                        parallaxOffset={6}
+                        containerClassName="h-12 w-36 px-3 bg-[#090909] border-[rgba(212,175,55,0.3)] rounded-[2px] flex items-center justify-center shrink-0"
+                        imageClassName="h-7 w-auto object-contain"
+                      />
+                    ) : (
+                      <span className="h-11 px-3.5 bg-[#181B24] border border-[rgba(255,255,255,0.12)] rounded-[2px] inline-flex items-center gap-2 font-mono text-[12px] font-bold text-[#F5F4F0] shrink-0">
+                        {MONOGRAM_PATHS}
+                        <span>
+                          {company.monogram || company.name.slice(0, 2).toUpperCase()}
+                        </span>
+                      </span>
+                    )}
 
-            <article
-              aria-labelledby="uzbic-heading"
-              className="bg-[var(--bg-dark)] text-[var(--text-on-dark)] border border-[var(--accent-gold-border)] rounded-[2px] py-7 px-5 sm:px-7 md:py-10 md:px-11 relative"
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-12 items-center">
-                {/* Left Narrative + Legal Separation Callout */}
-                <div className="lg:col-span-7">
-                  <span className="inline-flex items-center gap-2 text-[12px] font-semibold text-[var(--accent-gold-light)] border border-[var(--accent-gold-border)] px-3 py-1 rounded-[2px] mb-4">
-                    {portfolio.councilHighlight?.pill || uzbicCompany.badge}
-                  </span>
+                    <span
+                      className={`inline-flex items-center text-[11px] font-semibold px-2.5 py-1 rounded-[2px] ${roleBadgeClasses(
+                        company.roleType,
+                        company.verificationStatus
+                      )}`}
+                    >
+                      {company.roleBadge || company.role}
+                    </span>
+                  </div>
 
-                  <h3
-                    id="uzbic-heading"
-                    className="font-serif text-[clamp(26px,3.2vw,34px)] font-semibold text-[var(--text-on-dark)] leading-[1.2] mb-3"
-                  >
-                    {portfolio.councilHighlight?.title || uzbicCompany.name}
-                  </h3>
-
-                  <p className="text-[16px] leading-[1.68] text-[var(--text-muted-on-dark)] mb-5">
-                    {portfolio.councilHighlight?.desc || uzbicCompany.desc}
-                  </p>
-
-                  {portfolio.councilHighlight?.legalNote && (
-                    <div className="text-[13.5px] leading-[1.55] text-[var(--accent-gold-light)] border-l-2 border-[var(--accent-gold-light)] pl-4 mb-6">
-                      {portfolio.councilHighlight.legalNote}
+                  {(company.verificationStatus === "pending" ||
+                    company.verificationStatus === "historical") && (
+                    <div className="mb-2">
+                      <span className="inline-flex items-center text-[10.5px] font-mono font-semibold text-[#8E95A5] border border-dashed border-[rgba(255,255,255,0.2)] px-2 py-0.5 rounded-[2px]">
+                        {getVerificationLabel(company.verificationStatus)}
+                      </span>
                     </div>
                   )}
 
-                  <div className="flex flex-wrap gap-3 items-center">
-                    <button
-                      type="button"
-                      aria-haspopup="dialog"
-                      onClick={(e) => openModal(uzbicCompany.id, e.currentTarget)}
-                      className="min-h-[44px] px-6 bg-[var(--accent-gold-light)] text-[var(--bg-dark)] border border-[var(--accent-gold-light)] hover:bg-[var(--bg-surface-warm)] hover:border-[var(--bg-surface-warm)] rounded-[2px] text-[13px] font-bold inline-flex items-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
-                    >
-                      <span>
-                        {portfolio.councilHighlight?.detailBtn || portfolio.detailBtn}
-                      </span>
-                      {ARROW_RIGHT_SVG}
-                    </button>
+                  {/* Card Name, Activity, Description */}
+                  <h3 className="font-serif text-[22px] font-semibold leading-[1.2] text-[#F5F4F0] mb-1.5">
+                    {company.name}
+                  </h3>
 
-                    {uzbicCompany.websiteUrl && (
-                      <a
-                        href={uzbicCompany.websiteUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="min-h-[44px] px-5 bg-transparent text-[var(--text-on-dark)] border border-[var(--border-on-dark)] hover:border-[var(--accent-gold-light)] hover:bg-[var(--bg-dark-elevated)] rounded-[2px] text-[13px] font-semibold inline-flex items-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+                  <p className="text-[13px] font-semibold text-[#D4AF37] mb-2">
+                    {company.activity}
+                  </p>
+
+                  <p className="text-[14px] leading-[1.58] text-[#A1A7B3] mb-4 line-clamp-3 [text-wrap:pretty]">
+                    {company.desc}
+                  </p>
+
+                  {/* Discipline Tags */}
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {company.tags.slice(0, 3).map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-[11px] font-medium text-[#C2C7D1] bg-[#181B24] border border-[rgba(255,255,255,0.08)] px-2.5 py-0.5 rounded-[2px]"
                       >
-                        <span>uzbic.uz</span>
-                        {EXTERNAL_ARROW_SVG}
-                      </a>
-                    )}
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                 </div>
 
-                {/* Right Institutional Seal Panel */}
-                <div className="lg:col-span-5 bg-[var(--bg-dark-elevated)] text-[var(--text-on-dark)] border border-[var(--border-on-dark)] p-6 rounded-[2px]">
-                  <div className="pb-4 border-b border-[var(--border-on-dark)] mb-4 flex items-center justify-between gap-3">
-                    {uzbicCompany.logoUrl && (
-                      <Image
-                        src={uzbicCompany.logoUrl}
-                        alt={`${uzbicCompany.name} logo`}
-                        width={280}
-                        height={96}
-                        className="h-9 w-auto object-contain block"
-                      />
-                    )}
-                    <span className="font-mono text-[12px] text-[var(--accent-gold-light)] font-bold">
-                      {uzbicCompany.year}
-                    </span>
-                  </div>
+                {/* Bottom Status + Detail Action */}
+                <div className="pt-3 border-t border-[rgba(255,255,255,0.08)] flex items-center justify-between gap-2.5">
+                  <span className="text-[12px] text-[#8E95A5] font-medium leading-[1.3] flex-1 min-w-0 truncate">
+                    {company.status}
+                  </span>
 
-                  <div className="flex flex-col gap-3 text-[13.5px]">
-                    <div className="flex justify-between gap-3 pb-2 border-b border-[var(--border-on-dark)]">
-                      <span className="text-[12.5px] text-[var(--text-muted-on-dark)]">
-                        {portfolio.councilHighlight?.roleLabel || portfolio.modal.role}
-                      </span>
-                      <span className="font-semibold text-[var(--text-on-dark)] text-right">
-                        {portfolio.councilHighlight?.roleValue || uzbicCompany.role}
-                      </span>
-                    </div>
-
-                    <div className="flex justify-between gap-3 pb-2 border-b border-[var(--border-on-dark)]">
-                      <span className="text-[12.5px] text-[var(--text-muted-on-dark)]">
-                        {portfolio.councilHighlight?.typeLabel || portfolio.modal.model}
-                      </span>
-                      <span className="font-semibold text-[var(--text-on-dark)] text-right">
-                        {portfolio.councilHighlight?.typeValue || uzbicCompany.model}
-                      </span>
-                    </div>
-
-                    <div className="flex justify-between gap-3">
-                      <span className="text-[12.5px] text-[var(--text-muted-on-dark)]">
-                        {portfolio.councilHighlight?.sourceLabel || portfolio.modal.source || "Manba:"}
-                      </span>
-                      <span className="font-semibold text-[var(--text-on-dark)] text-right">
-                        {portfolio.councilHighlight?.sourceValue || uzbicCompany.source}
-                      </span>
-                    </div>
-                  </div>
+                  <button
+                    type="button"
+                    data-portfolio-trigger="true"
+                    aria-haspopup="dialog"
+                    aria-label={`${portfolio.detailBtn}: ${company.name}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openModal(company.id, e.currentTarget);
+                    }}
+                    className="min-h-[38px] px-3.5 bg-transparent text-[#D4AF37] border border-[rgba(212,175,55,0.45)] group-hover:bg-[#D4AF37] group-hover:text-[#090909] group-hover:border-[#D4AF37] rounded-[2px] text-[12px] font-semibold inline-flex items-center gap-1.5 whitespace-nowrap shrink-0 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
+                  >
+                    <span>{portfolio.detailBtn}</span>
+                    {ARROW_RIGHT_SVG}
+                  </button>
                 </div>
-              </div>
-            </article>
-          </div>
-        )}
+              </article>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* Bottom Architectural Legend */}
+        <div className="max-w-[1320px] w-full mx-auto px-4 sm:px-6 lg:px-8 hidden md:flex items-center justify-between text-[11.5px] font-mono text-[#8E95A5] shrink-0">
+          <span>{portfolio.moldLegend || "QOLIP INDUSTRIAL PORTFOLIO"}</span>
+          <span className="text-[#D4AF37]">SCROLL TO NAVIGATE →</span>
+        </div>
       </div>
 
       {/* ACCESSIBLE EDITORIAL MODAL DIALOG */}
@@ -534,6 +453,35 @@ export const Portfolio: React.FC<PortfolioProps> = ({ locale = "uz" }) => {
               <div className="text-[15px] leading-[1.68] text-[var(--text-soft-editorial)] mb-6 py-4 px-5 bg-[var(--bg-alabaster)] border-l-2 border-[var(--accent-gold)]">
                 {activeCompany.fullDesc}
               </div>
+
+              {activeCompany.verificationStatus === "pending" &&
+                portfolio.modal.pendingNotice && (
+                  <div className="text-[13.5px] leading-[1.55] text-[var(--text-ink)] mb-5 py-3 px-4 bg-[var(--bg-stone)] border border-dashed border-[var(--border-hairline-editorial-strong)] rounded-[2px]">
+                    {portfolio.modal.pendingNotice}
+                  </div>
+                )}
+
+              {activeCompany.legalMilestones &&
+                activeCompany.legalMilestones.length > 0 && (
+                  <div className="mb-6 bg-[var(--bg-alabaster)] border border-[var(--border-hairline-editorial)] rounded-[2px] p-4">
+                    <h4 className="font-mono text-[12px] font-bold uppercase tracking-[0.08em] text-[var(--accent-gold-ink)] mb-3">
+                      {portfolio.modal.legalMilestones || "Chronology"}
+                    </h4>
+                    <ul className="space-y-2">
+                      {activeCompany.legalMilestones.map((m) => (
+                        <li
+                          key={`${m.year}-${m.label}`}
+                          className="flex items-baseline gap-3 text-[13.5px] leading-[1.45] text-[var(--text-soft-editorial)]"
+                        >
+                          <span className="font-mono font-bold text-[var(--text-ink)] shrink-0 tabular-nums">
+                            {m.year}
+                          </span>
+                          <span>{m.label}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
               {/* Specifications Table */}
               <table className="w-full border-collapse mb-5 sm:mb-7">
@@ -598,7 +546,18 @@ export const Portfolio: React.FC<PortfolioProps> = ({ locale = "uz" }) => {
 
               {/* Modal Actions Footer */}
               <div className="flex flex-wrap items-center justify-between gap-3 pt-5 border-t border-[var(--border-hairline-editorial)]">
-                <div>
+                <div className="flex flex-wrap items-center gap-2.5">
+                  {featuresConfig.ventureDossiers && (
+                    <Link
+                      href={`/${locale}/portfel/${activeCompany.id}`}
+                      onClick={() => closeModal()}
+                      className="min-h-[44px] px-4 bg-[var(--bg-stone)] border border-[var(--accent-gold)] hover:bg-[var(--accent-gold)] hover:text-[#090909] rounded-[2px] text-[13px] font-semibold text-[var(--accent-gold-ink)] inline-flex items-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                    >
+                      <span>{getDossierUiCopy(locale).openDossierLabel}</span>
+                      {ARROW_RIGHT_SVG}
+                    </Link>
+                  )}
+
                   {activeCompany.websiteUrl ? (
                     <a
                       href={activeCompany.websiteUrl}

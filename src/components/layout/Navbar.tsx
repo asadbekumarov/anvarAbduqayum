@@ -88,11 +88,12 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
     }
 
     const navSectionIds = new Set([
-      "xizmatlar",
       "portfel",
       "yol",
+      "tashabbuslar",
       "tamoyil",
       "media",
+      "xizmatlar",
       "aloqa",
     ]);
 
@@ -158,55 +159,125 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
       ? "Tashkent, 2026"
       : "Toshkent, 2026";
 
-  // Navigation items synced with existing homepage section IDs
+  // Navigation items synced with approved Business Ecosystem homepage section IDs
   const navLinks = [
-    {
-      id: "xizmatlar",
-      href: "#xizmatlar",
-      label: content.navigation.consulting || "Xizmatlar",
-      drawerLabel:
-        locale === "ru"
-          ? "Услуги и досье"
-          : locale === "en"
-          ? "Services & Dossier"
-          : `${content.navigation.consulting || "Xizmatlar"} va Dossier`,
-    },
     {
       id: "portfel",
       href: "#portfel",
-      label: content.navigation.portfolio || "Bizneslar",
+      desktopPrimary: true,
+      label:
+        locale === "ru"
+          ? "Экосистема"
+          : locale === "en"
+          ? "Portfolio"
+          : "Ekotizim",
       drawerLabel:
         locale === "ru"
-          ? "Направления и проекты (7)"
+          ? "02 — Экосистема и проекты"
           : locale === "en"
-          ? "Ecosystem & Projects (7)"
-          : `${content.navigation.portfolio || "Bizneslar"} (7 Yo‘nalish)`,
+          ? "02 — Business Portfolio"
+          : "02 — Biznes ekotizimi",
     },
     {
       id: "yol",
       href: "#yol",
-      label: content.navigation.timeline || "Faoliyat yo‘li",
-      drawerLabel: content.navigation.timeline || "Bosib o‘tilgan yo‘l",
+      desktopPrimary: true,
+      label:
+        locale === "ru"
+          ? "Хроника"
+          : locale === "en"
+          ? "Journey"
+          : "Faoliyat yo‘li",
+      drawerLabel:
+        locale === "ru"
+          ? "03 — Путь предпринимателя"
+          : locale === "en"
+          ? "03 — Entrepreneurial Journey"
+          : "03 — Bosib o‘tilgan yo‘l",
+    },
+    {
+      id: "tashabbuslar",
+      href: "#tashabbuslar",
+      desktopPrimary: true,
+      label:
+        locale === "ru"
+          ? "Инициативы"
+          : locale === "en"
+          ? "Initiatives"
+          : "Tashabbuslar",
+      drawerLabel:
+        locale === "ru"
+          ? "04 — Текущие инициативы"
+          : locale === "en"
+          ? "04 — Current Initiatives"
+          : "04 — Joriy tashabbuslar",
     },
     {
       id: "tamoyil",
       href: "#tamoyil",
-      label: content.navigation.principles || "Qolip tamoyili",
-      drawerLabel: content.navigation.principles || "Qolip tamoyili",
+      desktopPrimary: true,
+      label:
+        locale === "ru"
+          ? "Принцип"
+          : locale === "en"
+          ? "Philosophy"
+          : "Qolip tamoyili",
+      drawerLabel:
+        locale === "ru"
+          ? "05 — Принцип «Колип»"
+          : locale === "en"
+          ? "05 — Management Philosophy"
+          : "05 — Qolip tamoyili",
     },
     {
       id: "media",
       href: "#media",
-      label: content.navigation.media || "Media",
-      drawerLabel: content.navigation.media || "Media va suhbatlar",
+      desktopPrimary: true,
+      label:
+        locale === "ru"
+          ? "Медиа"
+          : locale === "en"
+          ? "Media"
+          : "Media",
+      drawerLabel:
+        locale === "ru"
+          ? "06 — Знания и медиа"
+          : locale === "en"
+          ? "06 — Knowledge & Media"
+          : "06 — Bilimlar va media",
+    },
+    {
+      id: "xizmatlar",
+      href: "#xizmatlar",
+      desktopPrimary: false,
+      label:
+        locale === "ru"
+          ? "B2B-диалог"
+          : locale === "en"
+          ? "Collaboration"
+          : "Hamkorlik",
+      drawerLabel:
+        locale === "ru"
+          ? "07 — Концепция B2B-диалога"
+          : locale === "en"
+          ? "07 — B2B Collaboration Concept"
+          : "07 — B2B hamkorlik (Demo)",
     },
     {
       id: "aloqa",
       href: "#aloqa",
+      desktopPrimary: true,
       label: content.navigation.contact || "Aloqa",
-      drawerLabel: content.navigation.contact || "Aloqa va konsultatsiya",
+      drawerLabel:
+        locale === "ru"
+          ? "08 — Официальные контакты"
+          : locale === "en"
+          ? "08 — Official Contact"
+          : "08 — Rasmiy aloqa",
     },
   ];
+
+  const desktopNavLinks = navLinks.filter((item) => item.desktopPrimary);
 
   const handleLanguageChange = (newLocale: string) => {
     if (newLocale === locale) return;
@@ -276,7 +347,7 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
               }
               className="hidden xl:flex items-center gap-3.5 2xl:gap-7"
             >
-              {navLinks.map((item) => {
+              {desktopNavLinks.map((item) => {
                 const targetHref = isHomePage
                   ? item.href
                   : `/${locale}${item.href}`;

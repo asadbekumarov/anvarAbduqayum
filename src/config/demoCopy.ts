@@ -19,10 +19,12 @@ export interface DemoCopy {
     outboundNotice: string;
     channelsBadge: string;
     channelsNote: string;
+    pendingContactsNote: string;
   };
   footer: {
     colophonNote: string;
     externalChannelsNote: string;
+    pendingContactsNote: string;
   };
   meta: {
     siteTitleSuffix: string;
@@ -55,16 +57,20 @@ const DEMO_COPY: Record<DemoLocale, DemoCopy> = {
     },
     externalChannels: {
       outboundNotice:
-        "Tashqi havolalar Anvar Abduqayumning haqiqiy ommaviy kanallariga olib boradi — ushbu mustaqil demo sayt funksiyasi emas.",
-      channelsBadge: "Tashqi kanallar · Demo tarkibida emas",
+        "Uchrashuv va to‘g‘ridan-to‘g‘ri admin kontaktlari rasmiy tasdiqdan o‘tgach faollashtiriladi. Demo rejimda avtomatik ariza yuborilmaydi.",
+      channelsBadge: "Tasdiqlangan ommaviy kanallar",
       channelsNote:
-        "Quyidagi Telegram, telefon va pochta havolalari Anvar Abduqayumning haqiqiy tashqi manzillariga olib boradi. Murojaat shakli esa faqat demo tekshiruvdir.",
+        "Quyidagi havolalar faqat ochiq manbalarda tasdiqlangan Instagram va YouTube sahifalariga olib boradi. Telefon, elektron pochta va Telegram admin kontaktlari rasmiy tasdiqsiz ko‘rsatilmaydi.",
+      pendingContactsNote:
+        "To‘g‘ridan-to‘g‘ri telefon raqami, elektron pochta va Telegram admin manzili muallif jamoasi tasdig‘idan so‘ng qo‘shiladi.",
     },
     footer: {
       colophonNote:
         "Mustaqil dizayn konsepsiyasi (Demo). Ushbu sayt Anvar Abduqayum yoki uning jamoasi tomonidan buyurtma qilinmagan va tasdiqlanmagan.",
       externalChannelsNote:
-        "Tashqi havolalar — ushbu demo saytdan tashqariga olib chiqadi",
+        "Ommaviy kanallar — saytdan tashqariga olib chiqadi",
+      pendingContactsNote:
+        "Telefon, pochta va to‘g‘ridan-to‘g‘ri Telegram admin kontaktlari rasmiy tasdiqdan so‘ng joylanadi.",
     },
     meta: {
       siteTitleSuffix: "Mustaqil dizayn konsepsiyasi (Demo)",
@@ -98,16 +104,20 @@ const DEMO_COPY: Record<DemoLocale, DemoCopy> = {
     },
     externalChannels: {
       outboundNotice:
-        "Внешние ссылки ведут на реальные публичные каналы Анвара Абдукаюма и не относятся к функционалу этого демо-сайта.",
-      channelsBadge: "Внешние каналы · Вне демо",
+        "Прямые контакты для записи активируются только после официального подтверждения командой. В демо-режиме заявки не отправляются.",
+      channelsBadge: "Подтвержденные публичные каналы",
       channelsNote:
-        "Ссылки ниже (Telegram, телефон и почта) ведут на реальные внешние контакты Анвара Абдукаюма. Форма обращения работает только в режиме демо-проверки.",
+        "Ссылки ниже ведут только на подтвержденные в открытых источниках страницы Instagram и YouTube. Телефон, email и Telegram-администратор не публикуются без официального подтверждения.",
+      pendingContactsNote:
+        "Прямой телефон, электронная почта и контакт Telegram-администратора будут добавлены после официального подтверждения командой.",
     },
     footer: {
       colophonNote:
         "Независимая дизайн-концепция (Демо). Данный сайт не заказан и не одобрен Анваром Абдукаюмом или его командой.",
       externalChannelsNote:
-        "Внешние ссылки — ведут за пределы данного демо",
+        "Публичные каналы — ведут за пределы данного демо",
+      pendingContactsNote:
+        "Телефон, email и прямой Telegram-администратор не публикуются до официального подтверждения.",
     },
     meta: {
       siteTitleSuffix: "Независимая дизайн-концепция (Демо)",
@@ -141,16 +151,20 @@ const DEMO_COPY: Record<DemoLocale, DemoCopy> = {
     },
     externalChannels: {
       outboundNotice:
-        "External links open Anvar Abduqayum's real public channels directly and operate outside this independent demo.",
-      channelsBadge: "External channels · Outside demo",
+        "Direct meeting and administrator links remain paused in demo mode until officially verified by the team. No bookings or messages are dispatched.",
+      channelsBadge: "Verified public channels",
       channelsNote:
-        "The Telegram, telephone, and email links below open Anvar Abduqayum's real external contacts. The inquiry form runs demo validation only.",
+        "The links below open publicly verified Instagram and YouTube profiles only. Direct phone, email, and Telegram administrator handles are omitted pending official confirmation.",
+      pendingContactsNote:
+        "Direct telephone, email, and Telegram administrator contacts will appear here only after official team confirmation.",
     },
     footer: {
       colophonNote:
         "Independent design concept (Demo). This website has not been commissioned or endorsed by Anvar Abduqayum or his team.",
       externalChannelsNote:
-        "External links — navigate outside this demo",
+        "Public channels — navigate outside this demo",
+      pendingContactsNote:
+        "Telephone, email, and Telegram administrator contacts are omitted pending official verification.",
     },
     meta: {
       siteTitleSuffix: "Independent Design Concept (Demo)",

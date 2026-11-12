@@ -1,9 +1,10 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
-import { activeBookingMode } from "@/config/booking";
+import { activeBookingMode, hasVerifiedBookingChannel } from "@/config/booking";
 import { contactConfig } from "@/config/contact";
 import { featuresConfig } from "@/config/features";
 import { getDemoCopy } from "@/config/demoCopy";
@@ -13,11 +14,98 @@ const CalcomBookingWidget = dynamic(() => import("./CalcomBookingWidget"), {
   loading: () => null,
 });
 
+function InformationalDemoBookingState() {
+  const t = useTranslations("booking");
+  const locale = useLocale();
+  const safeLocale = locale === "ru" || locale === "en" ? locale : "uz";
+  const demoCopy = getDemoCopy(safeLocale);
+
+  return (
+    <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+      <header className="mb-8 sm:mb-10 pb-8 border-b border-[var(--border-hairline-editorial)] max-w-4xl">
+        <div className="mb-3">
+          <span className="text-[13.5px] font-semibold text-[var(--accent-gold-ink)]">
+            {t("demoUnverifiedKicker")}
+          </span>
+        </div>
+
+        <h1 className="font-serif text-[clamp(30px,4.2vw,52px)] text-[var(--text-ink)] font-semibold tracking-[-0.02em] leading-[1.09] [overflow-wrap:break-word] [text-wrap:balance]">
+          {t("demoUnverifiedTitle")}
+        </h1>
+
+        <p className="mt-4 text-[16.5px] sm:text-[17px] text-[var(--text-soft-editorial)] font-normal leading-[1.65] max-w-[60ch] [text-wrap:pretty]">
+          {t("demoUnverifiedDescription")}
+        </p>
+      </header>
+
+      <section
+        aria-labelledby="demo-booking-info-title"
+        className="w-full border border-[var(--border-on-dark)] border-t-2 border-t-[var(--accent-gold-light)] bg-[var(--bg-dark)] text-[var(--text-on-dark)] rounded-[2px] shadow-[var(--shadow-editorial-card)] p-6 sm:p-10 lg:p-12"
+      >
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <div className="lg:col-span-7 flex flex-col gap-4 min-w-0">
+            <h2
+              id="demo-booking-info-title"
+              className="font-serif text-[clamp(24px,3vw,34px)] font-semibold leading-[1.18] tracking-[-0.015em] text-[var(--text-on-dark)] [text-wrap:balance]"
+            >
+              {t("demoUnverifiedPanelTitle")}
+            </h2>
+
+            <p className="text-[16px] leading-[1.68] text-[var(--text-muted-on-dark)] max-w-[54ch] [text-wrap:pretty]">
+              {t("demoUnverifiedPanelBody")}
+            </p>
+
+            <p className="text-[14px] leading-[1.55] text-[var(--text-muted-on-dark)] border-l-2 border-[var(--accent-gold-light)] pl-4 mt-1">
+              {demoCopy.externalChannels.outboundNotice}
+            </p>
+          </div>
+
+          <aside
+            aria-label={t("demoUnverifiedStatusLabel")}
+            className="lg:col-span-5 bg-[var(--bg-dark-elevated)] border border-[var(--border-on-dark)] rounded-[2px] p-6 sm:p-8 flex flex-col gap-4 min-w-0"
+          >
+            <div className="pb-4 border-b border-[var(--border-on-dark-subtle)]">
+              <p className="text-[13px] font-medium text-[var(--accent-gold-light)]">
+                {t("demoUnverifiedStatusLabel")}
+              </p>
+              <p className="mt-1 font-mono text-[15px] font-semibold text-[var(--text-on-dark)] [overflow-wrap:anywhere]">
+                {t("demoUnverifiedStatusValue")}
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3 pt-1">
+              <Link
+                href={`/${safeLocale}#aloqa`}
+                className="min-h-[48px] w-full inline-flex items-center justify-center gap-2 bg-[var(--bg-surface)] hover:bg-[var(--accent-gold-light)] text-[var(--text-ink)] px-6 py-3 rounded-[2px] text-[15px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+              >
+                <span>{t("demoUnverifiedBackToContact")}</span>
+              </Link>
+
+              {contactConfig.youtube.isVerified && contactConfig.youtube.url && (
+                <a
+                  href={contactConfig.youtube.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="min-h-[48px] w-full inline-flex items-center justify-center gap-2 bg-transparent hover:border-[var(--accent-gold-light)] hover:text-[var(--accent-gold-light)] text-[var(--text-on-dark)] border border-[var(--border-on-dark)] px-6 py-3 rounded-[2px] text-[14.5px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+                >
+                  <span>YouTube: {contactConfig.youtube.display}</span>
+                </a>
+              )}
+            </div>
+          </aside>
+        </div>
+      </section>
+    </div>
+  );
+}
+
 function TelegramBookingHandoff() {
   const t = useTranslations("booking");
   const locale = useLocale();
   const isDemoMode = featuresConfig.demoMode;
   const demoCopy = getDemoCopy(locale);
+  const hasPhone =
+    contactConfig.phone.isVerified && Boolean(contactConfig.phone.href);
 
   return (
     <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
@@ -37,24 +125,26 @@ function TelegramBookingHandoff() {
           {t("handoffDescription")}
         </p>
 
-        {/* Verified Official Channel Ledger (No Unconfirmed Commercial Promises) */}
+        {/* Verified Official Channel Ledger */}
         <dl className="mt-6 pt-5 border-t border-[var(--border-hairline-subtle)] grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
           <div>
             <dt className="text-[12.5px] font-medium text-[var(--text-muted-aa)]">
               {t("handoffChannelLabel")}
             </dt>
             <dd className="text-[15px] font-semibold text-[var(--text-ink)] mt-0.5 font-mono">
-              {t("handoffChannelValue")}
+              {contactConfig.telegramDirect.display}
             </dd>
           </div>
-          <div>
-            <dt className="text-[12.5px] font-medium text-[var(--text-muted-aa)]">
-              {t("handoffPhoneLabel")}
-            </dt>
-            <dd className="text-[15px] font-semibold text-[var(--text-ink)] mt-0.5 tabular-nums">
-              {contactConfig.phone.display}
-            </dd>
-          </div>
+          {hasPhone && (
+            <div>
+              <dt className="text-[12.5px] font-medium text-[var(--text-muted-aa)]">
+                {t("handoffPhoneLabel")}
+              </dt>
+              <dd className="text-[15px] font-semibold text-[var(--text-ink)] mt-0.5 tabular-nums">
+                {contactConfig.phone.display}
+              </dd>
+            </div>
+          )}
         </dl>
       </header>
 
@@ -114,28 +204,30 @@ function TelegramBookingHandoff() {
                 <span>{t("handoffPrimaryCta")}</span>
               </a>
 
-              <a
-                href={contactConfig.phone.href}
-                className="min-h-[48px] w-full inline-flex items-center justify-center gap-2.5 bg-transparent hover:border-[var(--accent-gold-light)] hover:text-[var(--accent-gold-light)] text-[var(--text-on-dark)] border border-[var(--border-on-dark)] px-6 py-3 rounded-[2px] text-[14.5px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
-              >
-                <svg
-                  className="w-4 h-4 text-[var(--accent-gold-light)] shrink-0"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
+              {hasPhone && (
+                <a
+                  href={contactConfig.phone.href}
+                  className="min-h-[48px] w-full inline-flex items-center justify-center gap-2.5 bg-transparent hover:border-[var(--accent-gold-light)] hover:text-[var(--accent-gold-light)] text-[var(--text-on-dark)] border border-[var(--border-on-dark)] px-6 py-3 rounded-[2px] text-[14.5px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.8}
-                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                  />
-                </svg>
-                <span className="tabular-nums">
-                  {t("handoffSecondaryCta")}: {contactConfig.phone.display}
-                </span>
-              </a>
+                  <svg
+                    className="w-4 h-4 text-[var(--accent-gold-light)] shrink-0"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.8}
+                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                    />
+                  </svg>
+                  <span className="tabular-nums">
+                    {t("handoffSecondaryCta")}: {contactConfig.phone.display}
+                  </span>
+                </a>
+              )}
 
               {isDemoMode && (
                 <p className="text-[12.5px] leading-[1.55] text-[var(--text-muted-on-dark)] border-t border-[var(--border-on-dark-subtle)] pt-3">
@@ -155,5 +247,13 @@ export function BookingView() {
     return <CalcomBookingWidget />;
   }
 
-  return <TelegramBookingHandoff />;
+  if (
+    hasVerifiedBookingChannel &&
+    contactConfig.telegramDirect.isVerified &&
+    contactConfig.telegramDirect.url
+  ) {
+    return <TelegramBookingHandoff />;
+  }
+
+  return <InformationalDemoBookingState />;
 }

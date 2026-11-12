@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <title>Bizneslar portfeli — Anvar Abduqayum (Phase 4.6.4A Prototipi)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="concept-banner" role="region" aria-label="Konsept eslatmasi">
+    <div class="container concept-banner__inner">
+      <span class="concept-banner__tag">MUSTAQIL KONSEPT · DEMO REJIM · NOINDEX</span>
+      <span class="concept-banner__text">Batafsil sahifa prototipi: `/[locale]/bizneslar`.</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand-mark" href="./index.html">
+        <span class="brand-mark__monogram">AA</span>
+        <span>
+          <span class="brand-mark__name">Anvar Abduqayum</span>
+          <span class="brand-mark__sub">Bizneslar Portfeli</span>
+        </span>
+      </a>
+      <nav class="desktop-nav" aria-label="Asosiy navigatsiya">
+        <a class="desktop-nav__link" href="./index.html">Bosh sahifa</a>
+        <a class="desktop-nav__link is-active" href="./bizneslar.html">Bizneslar</a>
+        <a class="desktop-nav__link" href="./index.html#faoliyat-preview">Faoliyat</a>
+        <a class="desktop-nav__link" href="./index.html#tashabbuslar">Tashabbuslar</a>
+        <a class="desktop-nav__link" href="./media.html">Media</a>
+        <a class="desktop-nav__link" href="./index.html#aloqa">Aloqa</a>
+      </nav>
+      <div class="header-actions">
+        <a class="btn btn--secondary" href="./index.html">← Bosh sahifaga</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Sahifa yo‘li">
+          <a href="./index.html">Bosh sahifa</a>
+          <span>/</span>
+          <span>Bizneslar portfeli</span>
+        </nav>
+
+        <span class="eyebrow">To‘liq biznes arxivi</span>
+        <h1 class="h1-editorial">Sanoat, HoReCa va <em>tasdiq kutilayotgan</em> yo‘nalishlar</h1>
+        <p class="lead">
+          Ushbu sahifa bosh sahifadan chiqarilgan batafsil portfelni jamlaydi: tasdiqlangan sanoat bosqichlari alohida, huquqiy tuzilmasi tasdiqlanmagan yozuvlar esa aniq belgi bilan ajratilgan.
+        </p>
+
+        <div class="tabs" role="tablist" aria-label="Yo‘nalish filtrlari">
+          <button class="tab-btn is-active" type="button" data-filter="all">Barchasi (5 biznes + 1 kengash)</button>
+          <button class="tab-btn" type="button" data-filter="mfg">Sanoat va Ishlab chiqarish</button>
+          <button class="tab-btn" type="button" data-filter="horeca">HoReCa</button>
+          <button class="tab-btn" type="button" data-filter="pending">Tasdiq kutilmoqda</button>
+        </div>
+
+        <div class="grid-2" id="ventureGrid">
+          <article class="card" id="toybola" data-category="mfg">
+            <div>
+              <div class="card__meta">
+                <span>Sanoat · 2008 / 2009 / 2010 / 2012</span>
+                <span class="badge">Tasdiqlangan</span>
+              </div>
+              <h2 class="h3-editorial">Toybola / VISAGE ELECTRIC</h2>
+              <p class="card__body">
+                2005-yilda qadoqlash faoliyati boshlangan; 2008-yilda VISAGE ELECTRIC MChJ ro‘yxatga olingan; 2009-yilda o‘yinchoq ishlab chiqarish, 2010-yilda o‘yinchoq eksporti va 2012-yilda elektronika eksporti qo‘shilgan.
+              </p>
+            </div>
+            <button class="btn btn--secondary" type="button" data-modal="toybola">Huquqiy va tarixiy bosqichlar</button>
+          </article>
+
+          <article class="card" id="afiyet" data-category="horeca">
+            <div>
+              <div class="card__meta">
+                <span>HoReCa · 2020</span>
+                <span class="badge">Ommaviy manba</span>
+              </div>
+              <h2 class="h3-editorial">AFIYET Kebab</h2>
+              <p class="card__body">
+                Toshkentdagi restoran loyihasi. Xizmat sifati va oshxona jarayonlarini standartlashtirish bo‘yicha ommaviy chiqishlarda yoritilgan.
+              </p>
+            </div>
+            <span class="card__meta">Holat: Ommaviy tasdiqlangan</span>
+          </article>
+
+          <article class="card" id="puro" data-category="horeca">
+            <div>
+              <div class="card__meta">
+                <span>HoReCa · 2021</span>
+                <span class="badge">Ommaviy manba</span>
+              </div>
+              <h2 class="h3-editorial">PURO Gelateria</h2>
+              <p class="card__body">
+                Artizan muzqaymoq va qahvaxona formatidagi HoReCa loyihasi.
+              </p>
+            </div>
+            <span class="card__meta">Holat: Ommaviy tasdiqlangan</span>
+          </article>
+
+          <article class="card" id="samtech" data-category="pending">
+            <div>
+              <div class="card__meta">
+                <span>Xizmat / Texnologiya · 2015</span>
+                <span class="badge badge--pending">Tasdiq kutilmoqda</span>
+              </div>
+              <h2 class="h3-editorial">Samtech</h2>
+              <p class="card__body">
+                Avvalgi ommaviy materiallarda tilga olingan, biroq huquqiy tuzilmasi va joriy egalik roli mustaqil ravishda tasdiqlanmagan.
+              </p>
+            </div>
+            <span class="card__meta">Eslatma: Rasmiy tasdiq talab qilinadi</span>
+          </article>
+
+          <article class="card" id="itsupport" data-category="pending">
+            <div>
+              <div class="card__meta">
+                <span>IT Xizmatlar</span>
+                <span class="badge badge--pending">Tasdiq kutilmoqda</span>
+              </div>
+              <h2 class="h3-editorial">IT Support &amp; Service</h2>
+              <p class="card__body">
+                verificationStatus: pending — huquqiy tuzilmasi va Anvar Abduqayumning joriy roli mustaqil manbalar bilan tasdiqlanmagan; egallikdagi kompaniya sifatida taqdim etilmaydi.
+              </p>
+            </div>
+            <span class="card__meta">Eslatma: Mijoz tasdig‘i ro‘yxatida</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Institutional Separation: UZBIC -->
+    <section class="section section--dark" id="uzbic">
+      <div class="container">
+        <span class="eyebrow">Jamoat va institutsional faoliyat (xususiy biznesdan alohida)</span>
+        <h2 class="h2-editorial">UZBIC — O‘zbekiston-Xitoy Ishbilarmonlar Kengashi</h2>
+        <p class="lead">
+          2022-yildan buyon Anvar Abduqayum raisligida faoliyat yuritayotgan tadbirkorlar hamjamiyati. U xususiy tijorat kompaniyasi emas, balki tadbirkorlar o‘rtasida Xitoy bilan sanoat va savdo aloqalarini qo‘llab-quvvatlovchi jamoat platformasidir.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="detailModal" hidden role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:1rem; margin-bottom:1rem;">
+        <h3 class="h3-editorial" id="modalTitle" style="margin:0;">Toybola / VISAGE ELECTRIC xronologiyasi</h3>
+        <button class="menu-toggle" type="button" id="closeModalBtn" aria-label="Yopish">✕</button>
+      </div>
+      <ul style="padding-left:1.25rem; margin:0 0 1rem; color:var(--text-soft-editorial);">
+        <li><strong>2005:</strong> Qadoqlash mahsulotlari ishlab chiqarish boshlanishi.</li>
+        <li><strong>2008:</strong> VISAGE ELECTRIC MChJ yuridik ro‘yxatdan o‘tkazilishi.</li>
+        <li><strong>2009:</strong> O‘yinchoq ishlab chiqarish yo‘nalishini rivojlantirish.</li>
+        <li><strong>2010:</strong> O‘yinchoq eksporti boshlanishi (Spot.uz manbasiga ko‘ra).</li>
+        <li><strong>2012:</strong> Eksport tarkibiga elektronika mahsulotlari qo‘shilishi.</li>
+      </ul>
+      <p class="card__body">Barcha sanalar bir-biridan ajratilgan holda keltirilgan va yagona ta’sis sanasiga birlashtirilmagan.</p>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="padding-top:0;">
+      <span>Phase 4.6.4A · Bizneslar sahifasi prototipi (`/[locale]/bizneslar`)</span>
+      <a class="btn--link" href="./index.html">Bosh sahifaga qaytish →</a>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const buttons = document.querySelectorAll('.tab-btn');
+      const cards = document.querySelectorAll('#ventureGrid [data-category]');
+      buttons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          buttons.forEach((b) => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          const filter = btn.getAttribute('data-filter');
+          cards.forEach((card) => {
+            card.hidden = filter !== 'all' && card.getAttribute('data-category') !== filter;
+          });
+        });
+      });
+
+      const modal = document.getElementById('detailModal');
+      const closeBtn = document.getElementById('closeModalBtn');
+      document.querySelectorAll('[data-modal]').forEach((el) => {
+        el.addEventListener('click', () => {
+          modal.hidden = false;
+          closeBtn.focus();
+        });
+      });
+      closeBtn.addEventListener('click', () => (modal.hidden = true));
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.hidden = true;
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.hidden) modal.hidden = true;
+      });
+    })();
+  </script>
+</body>
+</html>
+

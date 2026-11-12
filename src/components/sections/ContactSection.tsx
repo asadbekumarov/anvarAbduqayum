@@ -1,12 +1,17 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { activeBookingMode } from "@/config/booking";
+import { activeBookingMode, hasVerifiedBookingChannel } from "@/config/booking";
 import { getContent } from "@/config/content";
 import { contactConfig } from "@/config/contact";
 import { featuresConfig } from "@/config/features";
 import { getDemoCopy } from "@/config/demoCopy";
 import { BookingActionLink } from "@/components/ui/BookingActionLink";
+import {
+  MagneticPull,
+  ScrollReveal,
+  StaggeredTextReveal,
+} from "@/components/ui/LuxuryMotion";
 import {
   cleanUzbekPhone,
   formatUzbekPhone,
@@ -55,7 +60,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   const demoCopy = getDemoCopy(safeLocale);
   const { booking, directory, form: formCopy } = content.contact;
   const displayedBookingRoute =
-    activeBookingMode === "telegram"
+    activeBookingMode === "telegram" &&
+    contactConfig.telegramDirect.isVerified &&
+    contactConfig.telegramDirect.display
       ? contactConfig.telegramDirect.display
       : `/${safeLocale}/bron`;
 
@@ -280,55 +287,73 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   };
 
   const officialChannels = [
-    {
-      id: "phone",
-      label: directory.phoneLabel,
-      value: contactConfig.phone.display,
-      href: contactConfig.phone.href,
-      cue: directory.cues.call,
-      external: false,
-    },
-    {
-      id: "tg-admin",
-      label: directory.tgAdminLabel,
-      value: contactConfig.telegramDirect.display,
-      href: contactConfig.telegramDirect.url,
-      cue: directory.cues.message,
-      external: true,
-    },
-    {
-      id: "tg-channel",
-      label: directory.tgChannelLabel,
-      value: contactConfig.telegramChannel.display,
-      href: contactConfig.telegramChannel.url,
-      cue: directory.cues.open,
-      external: true,
-    },
-    {
-      id: "email",
-      label: directory.emailLabel,
-      value: contactConfig.email.address,
-      href: contactConfig.email.href,
-      cue: directory.cues.email,
-      external: false,
-    },
-    {
-      id: "instagram",
-      label: directory.instagramLabel,
-      value: contactConfig.instagram.display,
-      href: contactConfig.instagram.url,
-      cue: directory.cues.open,
-      external: true,
-    },
-    {
-      id: "youtube",
-      label: directory.youtubeLabel,
-      value: contactConfig.youtube.display,
-      href: contactConfig.youtube.url,
-      cue: directory.cues.open,
-      external: true,
-    },
-  ];
+    contactConfig.phone.isVerified && contactConfig.phone.href
+      ? {
+          id: "phone",
+          label: directory.phoneLabel,
+          value: contactConfig.phone.display,
+          href: contactConfig.phone.href,
+          cue: directory.cues.call,
+          external: false,
+        }
+      : null,
+    contactConfig.telegramDirect.isVerified && contactConfig.telegramDirect.url
+      ? {
+          id: "tg-admin",
+          label: directory.tgAdminLabel,
+          value: contactConfig.telegramDirect.display,
+          href: contactConfig.telegramDirect.url,
+          cue: directory.cues.message,
+          external: true,
+        }
+      : null,
+    contactConfig.telegramChannel.isVerified && contactConfig.telegramChannel.url
+      ? {
+          id: "tg-channel",
+          label: directory.tgChannelLabel,
+          value: contactConfig.telegramChannel.display,
+          href: contactConfig.telegramChannel.url,
+          cue: directory.cues.open,
+          external: true,
+        }
+      : null,
+    contactConfig.email.isVerified && contactConfig.email.href
+      ? {
+          id: "email",
+          label: directory.emailLabel,
+          value: contactConfig.email.address,
+          href: contactConfig.email.href,
+          cue: directory.cues.email,
+          external: false,
+        }
+      : null,
+    contactConfig.instagram.isVerified && contactConfig.instagram.url
+      ? {
+          id: "instagram",
+          label: directory.instagramLabel,
+          value: contactConfig.instagram.display,
+          href: contactConfig.instagram.url,
+          cue: directory.cues.open,
+          external: true,
+        }
+      : null,
+    contactConfig.youtube.isVerified && contactConfig.youtube.url
+      ? {
+          id: "youtube",
+          label: directory.youtubeLabel,
+          value: contactConfig.youtube.display,
+          href: contactConfig.youtube.url,
+          cue: directory.cues.open,
+          external: true,
+        }
+      : null,
+  ].filter((item): item is NonNullable<typeof item> => item !== null);
+
+  const hasAnyDirectVerifiedChannel =
+    (contactConfig.phone.isVerified && Boolean(contactConfig.phone.href)) ||
+    (contactConfig.telegramDirect.isVerified && Boolean(contactConfig.telegramDirect.url)) ||
+    (contactConfig.telegramChannel.isVerified && Boolean(contactConfig.telegramChannel.url)) ||
+    (contactConfig.email.isVerified && Boolean(contactConfig.email.href));
 
   return (
     <section
@@ -339,7 +364,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
       {/* BAND 1: CONSULTATION BOOKING COMMITMENT (OBSIDIAN EDITORIAL) */}
       <div
         id="konsultatsiya-band"
-        className="bg-[var(--bg-dark)] text-[var(--text-on-dark)] border-b border-[var(--border-on-dark)] py-20 lg:py-24"
+        className="bg-[var(--bg-dark)] text-[var(--text-on-dark)] border-b border-[var(--border-on-dark)] py-8 lg:py-11"
       >
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
@@ -348,7 +373,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                 id="booking-heading"
                 className="font-serif text-[clamp(30px,4vw,48px)] font-semibold leading-[1.09] tracking-[-0.02em] text-[var(--text-on-dark)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
               >
-                {booking.title}
+                <StaggeredTextReveal text={booking.title} />
               </h2>
 
               <p className="mt-4 text-[17px] leading-[1.65] text-[var(--text-muted-on-dark)] max-w-[56ch] [text-wrap:pretty]">
@@ -376,9 +401,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
               </dl>
             </div>
 
+            <ScrollReveal delay={0.12} y={32} className="lg:col-span-5">
             <aside
               aria-labelledby="booking-card-title"
-              className="lg:col-span-5 bg-[var(--bg-dark-elevated)] text-[var(--text-on-dark)] border border-[var(--border-on-dark)] border-t-2 border-t-[var(--accent-gold-light)] rounded-[2px] p-6 sm:p-8 flex flex-col gap-4"
+              className="bg-[var(--bg-dark-elevated)] text-[var(--text-on-dark)] border border-[var(--border-on-dark)] border-t-2 border-t-[var(--accent-gold-light)] rounded-[2px] p-6 sm:p-8 flex flex-col gap-4"
             >
               <h3
                 id="booking-card-title"
@@ -403,14 +429,18 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
               </div>
 
               <div className="pt-2 flex flex-wrap items-center gap-3">
-                <BookingActionLink
-                  locale={safeLocale}
-                  className="min-h-[48px] px-6 bg-[var(--bg-surface)] text-[var(--text-ink)] border border-[var(--bg-surface)] hover:bg-[var(--accent-gold-light)] hover:border-[var(--accent-gold-light)] active:opacity-90 rounded-[2px] text-[15px] font-semibold inline-flex items-center justify-center whitespace-nowrap transition-[background-color,border-color,color,opacity] duration-150 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
-                >
-                  {booking.primaryCta}
-                </BookingActionLink>
+                <MagneticPull>
+                  <BookingActionLink
+                    locale={safeLocale}
+                    className="min-h-[48px] px-6 bg-[var(--bg-surface)] text-[var(--text-ink)] border border-[var(--bg-surface)] hover:bg-[var(--accent-gold-light)] hover:border-[var(--accent-gold-light)] active:opacity-90 rounded-[2px] text-[15px] font-semibold inline-flex items-center justify-center whitespace-nowrap transition-[background-color,border-color,color,opacity] duration-150 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+                  >
+                    {booking.primaryCta}
+                  </BookingActionLink>
+                </MagneticPull>
 
-                {activeBookingMode === "calcom" ? (
+                {activeBookingMode === "calcom" &&
+                contactConfig.telegramDirect.isVerified &&
+                contactConfig.telegramDirect.url ? (
                   <a
                     href={contactConfig.telegramDirect.url}
                     target="_blank"
@@ -419,14 +449,16 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                   >
                     {booking.telegramCta}
                   </a>
-                ) : (
+                ) : hasVerifiedBookingChannel &&
+                  contactConfig.phone.isVerified &&
+                  contactConfig.phone.href ? (
                   <a
                     href={contactConfig.phone.href}
                     className="min-h-[48px] px-3 text-[14.5px] font-semibold tabular-nums text-[var(--text-on-dark)] hover:text-[var(--accent-gold-light)] active:text-[var(--accent-gold-light)] border-b border-[var(--border-on-dark)] hover:border-[var(--accent-gold-light)] inline-flex items-center transition-[color,border-color] duration-150 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
                   >
                     {contactConfig.phone.display}
                   </a>
-                )}
+                ) : null}
               </div>
 
               {isDemoMode && (
@@ -435,6 +467,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                 </p>
               )}
             </aside>
+            </ScrollReveal>
           </div>
         </div>
       </div>
@@ -517,6 +550,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                 <p className="mt-1 text-[14.5px] leading-[1.55] text-[var(--text-soft-editorial)]">
                   {directory.officeCopy}
                 </p>
+                {!hasAnyDirectVerifiedChannel && (
+                  <p className="mt-2 pt-2 border-t border-[var(--border-hairline-subtle)] text-[13px] leading-[1.5] text-[var(--text-muted-aa)]">
+                    {demoCopy.externalChannels.pendingContactsNote}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -841,20 +879,26 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                         {serverError}
                       </p>
                       <div className="flex flex-wrap gap-2">
-                        <a
-                          href={contactConfig.telegramDirect.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="min-h-[44px] px-4 bg-[var(--bg-surface)] text-[var(--text-ink)] border border-[var(--border-hairline-editorial-strong)] hover:border-[var(--accent-gold-ink)] rounded-[2px] text-[13.5px] font-semibold inline-flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
-                        >
-                          {formCopy.telegramFallbackButton}
-                        </a>
-                        <a
-                          href={contactConfig.phone.href}
-                          className="min-h-[44px] px-4 bg-[var(--bg-surface)] text-[var(--text-ink)] border border-[var(--border-hairline-editorial-strong)] hover:border-[var(--accent-gold-ink)] rounded-[2px] text-[13.5px] font-semibold inline-flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
-                        >
-                          {formCopy.callFallbackButton}: {contactConfig.phone.display}
-                        </a>
+                        {contactConfig.telegramDirect.isVerified &&
+                          contactConfig.telegramDirect.url && (
+                            <a
+                              href={contactConfig.telegramDirect.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="min-h-[44px] px-4 bg-[var(--bg-surface)] text-[var(--text-ink)] border border-[var(--border-hairline-editorial-strong)] hover:border-[var(--accent-gold-ink)] rounded-[2px] text-[13.5px] font-semibold inline-flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                            >
+                              {formCopy.telegramFallbackButton}
+                            </a>
+                          )}
+                        {contactConfig.phone.isVerified &&
+                          contactConfig.phone.href && (
+                            <a
+                              href={contactConfig.phone.href}
+                              className="min-h-[44px] px-4 bg-[var(--bg-surface)] text-[var(--text-ink)] border border-[var(--border-hairline-editorial-strong)] hover:border-[var(--accent-gold-ink)] rounded-[2px] text-[13.5px] font-semibold inline-flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                            >
+                              {formCopy.callFallbackButton}: {contactConfig.phone.display}
+                            </a>
+                          )}
                       </div>
                     </div>
                   )}

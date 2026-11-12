@@ -11,7 +11,7 @@ type TimelineFilterKey = "all" | "personal" | "partner" | "council";
 
 export const Timeline: React.FC<TimelineProps> = ({ locale = "uz" }) => {
   const content = getContent(locale);
-  const timeline = content.timeline;
+  const timeline = content.ecosystemTimeline || content.timeline;
 
   const [selectedFilter, setSelectedFilter] = useState<TimelineFilterKey>("all");
   const [expandedIds, setExpandedIds] = useState<Set<string>>(
@@ -84,7 +84,7 @@ export const Timeline: React.FC<TimelineProps> = ({ locale = "uz" }) => {
     <section
       id="yol"
       aria-labelledby="timeline-heading"
-      className="bg-[var(--bg-stone)] border-b border-[var(--border-hairline-editorial)] py-20 lg:py-28 scroll-mt-24"
+      className="bg-[var(--bg-alabaster)] border-b border-[var(--border-hairline-editorial)] py-12 lg:py-16 scroll-mt-24"
     >
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
         {/* Editorial Split Header */}
@@ -190,7 +190,7 @@ export const Timeline: React.FC<TimelineProps> = ({ locale = "uz" }) => {
               <article
                 key={stepKey}
                 aria-labelledby={`tl-stage-title-${stepKey}`}
-                className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 py-10 lg:px-4 border-b border-[var(--border-hairline-editorial)] items-start transition-[background-color] duration-200 lg:hover:bg-[var(--bg-stone-soft)]"
+                className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 py-5 lg:px-4 border-b border-[var(--border-hairline-editorial)] items-start transition-[background-color] duration-200 lg:hover:bg-[var(--bg-stone-soft)]"
               >
                 {/* Col 1: Year Display + Attribution Tag */}
                 <div className="lg:col-span-3 flex flex-col gap-2">

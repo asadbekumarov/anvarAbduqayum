@@ -2,13 +2,27 @@
 
 import React, { useState, useEffect, useRef, KeyboardEvent } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { getContent } from "@/config/content";
+import { featuresConfig } from "@/config/features";
+import { getMediaLibraryUiCopy } from "@/features/media-library/config/mediaLibraryContent";
+import {
+  VERIFIED_YOUTUBE_MANIFEST,
+  type MediaTopicCategory,
+} from "@/config/mediaManifest";
+import {
+  MagneticPull,
+  ScrollReveal,
+  StaggeredTextReveal,
+} from "@/components/ui/LuxuryMotion";
+import { MONOGRAPH_EASE } from "@/components/ui/RevealMask";
 
 interface MediaSectionProps {
   locale?: string;
 }
 
-type VideoFilterKey = "all" | "published" | "archive";
+type TopicFilterKey = "all" | MediaTopicCategory;
 type PressFilterKey = "all" | "profile" | "public";
 type ModalPlayerState = "idle" | "loading" | "ready" | "fallback";
 
@@ -21,18 +35,25 @@ interface ActiveModalVideo {
 }
 
 export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => {
-  const content = getContent(locale);
+  const shouldReduceMotion = useReducedMotion();
+  const safeLocale = locale === "ru" || locale === "en" ? locale : "uz";
+  const content = getContent(safeLocale);
   const media = content.media;
   const featured = media.featured;
   const ui = media.ui;
+  const knowledgeMedia = content.knowledgeMedia;
 
-  const [videoFilter, setVideoFilter] = useState<VideoFilterKey>("all");
+  const [topicFilter, setTopicFilter] = useState<TopicFilterKey>("all");
   const [pressFilter, setPressFilter] = useState<PressFilterKey>("all");
   const [activeVideo, setActiveVideo] = useState<ActiveModalVideo | null>(null);
   const [playerState, setPlayerState] = useState<ModalPlayerState>("idle");
   const [failedPosters, setFailedPosters] = useState<Record<string, boolean>>({});
+  const [dragX, setDragX] = useState<number>(0);
+  const [maxDrag, setMaxDrag] = useState<number>(0);
 
   const videoTabListRef = useRef<HTMLDivElement>(null);
+  const carouselOuterRef = useRef<HTMLDivElement>(null);
+  const carouselTrackRef = useRef<HTMLDivElement>(null);
   const pressTabListRef = useRef<HTMLDivElement>(null);
   const modalDialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -40,17 +61,47 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
   const lastTriggerRef = useRef<HTMLElement | null>(null);
   const playerReadyRef = useRef<boolean>(false);
 
-  const videoFilterKeys: VideoFilterKey[] = ["all", "published", "archive"];
+  const topicFilterKeys: TopicFilterKey[] = [
+    "all",
+    "systemization",
+    "manufacturing",
+    "export",
+    "entrepreneurship",
+    "interviews",
+    "investment",
+  ];
   const pressFilterKeys: PressFilterKey[] = ["all", "profile", "public"];
 
-  const filteredVideos = (media.videos || []).filter((video) => {
-    if (videoFilter === "all") return true;
-    const cat = video.filterCat || (video.isAvailable !== false ? "published" : "archive");
-    return cat === videoFilter;
+  const topicMatchedVideos = VERIFIED_YOUTUBE_MANIFEST.filter((video) => {
+    if (topicFilter === "all") return true;
+    return video.topicCategory === topicFilter;
   });
 
-  const posterVideo = filteredVideos.find((v) => v.hasCleanPoster && v.isAvailable !== false);
-  const sideVideos = filteredVideos.filter((v) => v !== posterVideo);
+  useEffect(() => {
+    const updateBounds = () => {
+      if (!carouselOuterRef.current || !carouselTrackRef.current) return;
+      const overflow =
+        carouselTrackRef.current.scrollWidth - carouselOuterRef.current.clientWidth;
+      const nextMax = Math.max(0, overflow);
+      setMaxDrag(nextMax);
+      setDragX((prev) => Math.max(-nextMax, Math.min(0, prev)));
+    };
+
+    updateBounds();
+    window.addEventListener("resize", updateBounds);
+    return () => window.removeEventListener("resize", updateBounds);
+  }, [topicFilter, topicMatchedVideos.length]);
+
+  const scrollVideoCarousel = (direction: "prev" | "next") => {
+    const step = Math.max(
+      320,
+      Math.round((carouselOuterRef.current?.clientWidth || 720) * 0.72)
+    );
+    setDragX((prev) => {
+      const target = direction === "next" ? prev - step : prev + step;
+      return Math.max(-maxDrag, Math.min(0, target));
+    });
+  };
 
   const filteredPress = (media.pressMentions || []).filter((item) => {
     if (pressFilter === "all") return true;
@@ -236,7 +287,7 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
           height={720}
           priority={priorityLoad}
           onError={() => markPosterFailed(posterId)}
-          className="relative z-[1] w-full h-full object-cover object-[center_20%] contrast-[1.03] saturate-[0.92] block"
+          className="relative z-[1] w-full h-full object-cover object-[center_20%] grayscale brightness-75 contrast-[1.05] block transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:grayscale-0 group-hover:brightness-100 group-hover:scale-105"
         />
       </div>
     );
@@ -258,28 +309,43 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
       {/* =================================================================
           BAND 1: FEATURED DOCUMENTARY & CURATED VIDEO COLLECTION (WARM STONE)
           ================================================================= */}
-      <div className="bg-[var(--bg-stone)] border-b border-[var(--border-hairline-editorial)] py-20 lg:py-28">
+      <div className="bg-[var(--bg-stone)] border-b border-[var(--border-hairline-editorial)] py-8 lg:py-10">
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
           {/* Editorial Split Header */}
-          <header className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-10 lg:items-end pb-6 border-b border-[var(--border-hairline-editorial)] mb-10">
+          <header className="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-10 lg:items-end pb-4 border-b border-[var(--border-hairline-editorial)] mb-6">
             <h2
               id="media-heading"
-              className="lg:col-span-7 font-serif text-[clamp(32px,4.1vw,52px)] font-semibold leading-[1.08] tracking-[-0.02em] text-[var(--text-ink)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
+              className="lg:col-span-7 font-serif text-[clamp(28px,3.8vw,46px)] font-semibold leading-[1.08] tracking-[-0.02em] text-[var(--text-ink)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
             >
-              {media.title}
-              {media.titleEmphasis ? ` ${media.titleEmphasis}` : ""}
+              <StaggeredTextReveal
+                text={`${media.title}${
+                  media.titleEmphasis ? ` ${media.titleEmphasis}` : ""
+                }`}
+              />
             </h2>
 
-            <p className="lg:col-span-5 text-[16px] leading-[1.65] text-[var(--text-soft-editorial)] max-w-[58ch] [text-wrap:pretty]">
-              {media.subtitle}
-            </p>
+            <ScrollReveal delay={0.1} y={24} className="lg:col-span-5">
+              <p className="text-[15px] lg:text-[15.5px] leading-[1.55] text-[var(--text-soft-editorial)] max-w-[58ch] [text-wrap:pretty]">
+                {media.subtitle}
+              </p>
+              {featuresConfig.mediaLibrary && (
+                <Link
+                  href={`/${safeLocale}/kutubxona`}
+                  className="mt-3 inline-flex min-h-[40px] items-center gap-2 font-mono text-[11.5px] font-semibold uppercase tracking-[0.12em] text-[var(--accent-gold-ink)] underline underline-offset-4 hover:text-[var(--text-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                >
+                  <span>{getMediaLibraryUiCopy(safeLocale).homepageLinkLabel}</span>
+                  <span aria-hidden="true">→</span>
+                </Link>
+              )}
+            </ScrollReveal>
           </header>
 
           {/* Featured Editorial Interview (7:5 Split Showcase) */}
           {featured && (
+            <ScrollReveal y={32} className="mb-8">
             <article
               aria-labelledby="featured-interview-title"
-              className="bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial-strong)] rounded-[2px] p-4 sm:p-6 lg:p-10 mb-14 lg:mb-16 shadow-[var(--shadow-editorial-subtle)]"
+              className="bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial-strong)] rounded-[2px] p-4 sm:p-5 lg:p-6 shadow-[var(--shadow-editorial-subtle)]"
             >
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center">
                 {/* 7-Col Editorial 16:9 Poster Frame */}
@@ -384,28 +450,30 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
                   </dl>
 
                   <div className="flex flex-wrap items-center gap-3">
-                    <button
-                      id="featured-watch-btn"
-                      type="button"
-                      onClick={(e) =>
-                        openVideoModal(
-                          {
-                            youtubeId: featured.youtubeId,
-                            title: featured.title,
-                            channel: featured.channel,
-                            url: featured.url,
-                            posterUrl: featured.thumbUrl,
-                          },
-                          e.currentTarget
-                        )
-                      }
-                      className="min-h-[46px] px-6 bg-[var(--bg-dark)] text-[var(--bg-surface-warm)] border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] rounded-[2px] text-[14px] font-semibold inline-flex items-center gap-2 whitespace-nowrap transition-[background-color,border-color,transform] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
-                    >
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                      <span>{featured.watchLabel}</span>
-                    </button>
+                    <MagneticPull>
+                      <button
+                        id="featured-watch-btn"
+                        type="button"
+                        onClick={(e) =>
+                          openVideoModal(
+                            {
+                              youtubeId: featured.youtubeId,
+                              title: featured.title,
+                              channel: featured.channel,
+                              url: featured.url,
+                              posterUrl: featured.thumbUrl,
+                            },
+                            e.currentTarget
+                          )
+                        }
+                        className="min-h-[46px] px-6 bg-[var(--bg-dark)] text-[var(--bg-surface-warm)] border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] rounded-[2px] text-[14px] font-semibold inline-flex items-center gap-2 whitespace-nowrap transition-[background-color,border-color,transform] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                      >
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                        <span>{featured.watchLabel}</span>
+                      </button>
+                    </MagneticPull>
 
                     <a
                       id="featured-ext-link"
@@ -429,45 +497,85 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
                 </div>
               </div>
             </article>
+            </ScrollReveal>
           )}
 
-          {/* Curated Video & Archive Collection */}
+          {/* Verified Business Knowledge & YouTube Catalog (Horizontal Snap Carousel) */}
           <div id="media-videos">
-            <div className="flex flex-wrap items-baseline justify-between gap-4 pb-3 border-b border-[var(--border-hairline-editorial-strong)] mb-6">
-              <h3 className="font-serif text-[clamp(22px,2.4vw,28px)] font-semibold leading-[1.2] text-[var(--text-ink)]">
-                {media.youtubeHeading}
-              </h3>
-              {media.videosSubmeta && (
-                <span className="text-[13.5px] font-medium text-[var(--text-muted-aa)]">
-                  {media.videosSubmeta}
+            <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-[var(--border-hairline-editorial-strong)] mb-4">
+              <div>
+                <h3 className="font-serif text-[clamp(20px,2.2vw,26px)] font-semibold leading-[1.2] text-[var(--text-ink)]">
+                  {knowledgeMedia?.heading || media.youtubeHeading}
+                </h3>
+                <span className="text-[12.5px] font-medium text-[var(--text-muted-aa)]">
+                  {knowledgeMedia?.submeta || media.videosSubmeta}
                 </span>
-              )}
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => scrollVideoCarousel("prev")}
+                  aria-label="Previous videos"
+                  className="w-10 h-10 bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial-strong)] hover:bg-[var(--bg-dark)] hover:text-[var(--bg-surface-warm)] rounded-[2px] inline-flex items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => scrollVideoCarousel("next")}
+                  aria-label="Next videos"
+                  className="w-10 h-10 bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial-strong)] hover:bg-[var(--bg-dark)] hover:text-[var(--bg-surface-warm)] rounded-[2px] inline-flex items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+              </div>
             </div>
 
-            {media.videoFilters && (
+            {knowledgeMedia?.filters && (
               <div
                 ref={videoTabListRef}
                 id="media-video-filters"
                 role="tablist"
-                aria-label={media.videoFilters.ariaLabel}
-                className="flex flex-wrap gap-2 mb-6"
+                aria-label={knowledgeMedia.ariaLabel || media.videoFilters?.ariaLabel}
+                className="flex flex-wrap gap-1.5 mb-5"
               >
-                {videoFilterKeys.map((key, idx) => {
-                  const isActive = videoFilter === key;
-                  const label = media.videoFilters![key];
+                {topicFilterKeys.map((key, idx) => {
+                  const isSelected = topicFilter === key;
+                  const count =
+                    key === "all"
+                      ? VERIFIED_YOUTUBE_MANIFEST.length
+                      : VERIFIED_YOUTUBE_MANIFEST.filter(
+                          (v) => v.topicCategory === key
+                        ).length;
+                  const label = `${knowledgeMedia.filters[key]} (${count})`;
                   return (
                     <button
                       key={key}
                       id={`media-vflt-${key}`}
                       type="button"
                       role="tab"
-                      aria-selected={isActive}
-                      onClick={() => setVideoFilter(key)}
+                      aria-selected={isSelected}
+                      tabIndex={isSelected ? 0 : -1}
+                      onClick={() => {
+                        setTopicFilter(key);
+                        setDragX(0);
+                      }}
                       onKeyDown={(e) =>
-                        handleTabKeyDown(e, idx, videoFilterKeys, setVideoFilter, videoTabListRef)
+                        handleTabKeyDown(
+                          e,
+                          idx,
+                          topicFilterKeys,
+                          setTopicFilter,
+                          videoTabListRef
+                        )
                       }
-                      className={`min-h-[44px] px-4 py-2 rounded-[2px] border text-[14px] font-medium transition-[background-color,color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] ${
-                        isActive
+                      className={`min-h-[38px] px-3.5 py-1.5 rounded-[2px] border text-[12.5px] font-medium whitespace-nowrap transition-[background-color,color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] ${
+                        isSelected
                           ? "bg-[var(--bg-dark)] text-[var(--bg-surface-warm)] border-[var(--bg-dark)]"
                           : "bg-[var(--bg-surface-warm)] text-[var(--text-soft-editorial)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] hover:text-[var(--text-ink)]"
                       }`}
@@ -480,299 +588,167 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
             )}
 
             <div
-              id="media-video-collection-grid"
-              className={`grid grid-cols-1 gap-6 ${
-                posterVideo && sideVideos.length > 0 ? "lg:grid-cols-12 lg:items-start" : ""
-              }`}
+              ref={carouselOuterRef}
+              className="overflow-hidden cursor-grab active:cursor-grabbing -mx-4 px-4 sm:mx-0 sm:px-0"
             >
-              {/* Published Studio Poster Card */}
-              {posterVideo && (
-                <article
-                  className={`bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial)] hover:border-[var(--accent-gold)] rounded-[2px] overflow-hidden flex flex-col transition-colors duration-200 min-w-0 ${
-                    sideVideos.length > 0 ? "lg:col-span-7" : "lg:col-span-12"
-                  }`}
-                >
-                  <div
-                    onClick={(e) => {
-                      const btn = e.currentTarget.querySelector<HTMLButtonElement>("button");
-                      openVideoModal(
-                        {
-                          youtubeId: posterVideo.youtubeId,
-                          title: posterVideo.title,
-                          channel: posterVideo.channel,
-                          url:
-                            posterVideo.url ||
-                            `https://www.youtube.com/watch?v=${posterVideo.youtubeId}`,
-                          posterUrl: posterVideo.thumbUrl,
-                        },
-                        btn
-                      );
-                    }}
-                    className="group relative block w-full aspect-video bg-[var(--bg-dark)] overflow-hidden cursor-pointer"
-                  >
-                    {renderPosterArtwork(
-                      posterVideo.id,
-                      posterVideo.thumbUrl || "",
-                      posterVideo.title,
-                      false
-                    )}
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute inset-0"
-                      style={{
-                        background:
-                          "linear-gradient(to top, var(--poster-scrim-start) 0%, var(--poster-scrim-mid) 36%, var(--poster-scrim-end) 72%)",
-                      }}
-                    />
-                    <div className="absolute left-3 right-3 bottom-3 sm:left-6 sm:right-6 sm:bottom-6 z-10 flex items-center justify-start">
-                      <button
-                        id="featured-poster-btn"
-                        type="button"
-                        aria-label={`${featured?.playLabel || ui?.watchCard}: ${posterVideo.title}`}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          openVideoModal(
-                            {
-                              youtubeId: posterVideo.youtubeId,
-                              title: posterVideo.title,
-                              channel: posterVideo.channel,
-                              url:
-                                posterVideo.url ||
-                                `https://www.youtube.com/watch?v=${posterVideo.youtubeId}`,
-                              posterUrl: posterVideo.thumbUrl,
-                            },
-                            e.currentTarget
-                          );
-                        }}
-                        className="min-h-[44px] sm:min-h-[48px] px-4 sm:px-6 bg-[var(--bg-surface-warm)] text-[var(--text-ink)] border border-[var(--bg-surface-warm)] group-hover:bg-[var(--accent-gold-ink)] group-hover:border-[var(--accent-gold-ink)] group-hover:text-[var(--bg-surface-warm)] group-hover:-translate-y-0.5 hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] hover:text-[var(--bg-surface-warm)] rounded-[2px] text-[13.5px] sm:text-[14px] font-semibold inline-flex items-center gap-2 whitespace-nowrap transition-[background-color,border-color,color,transform] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
-                      >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                        <span>{featured?.playLabel || ui?.watchCard}</span>
-                      </button>
-                    </div>
-                  </div>
+              <motion.div
+                ref={carouselTrackRef}
+                id="media-video-collection-grid"
+                drag={shouldReduceMotion ? false : "x"}
+                dragConstraints={{ left: -maxDrag, right: 0 }}
+                dragElastic={0.08}
+                animate={{ x: dragX }}
+                onDragEnd={(_, info) => {
+                  const projected = dragX + info.offset.x + info.velocity.x * 0.15;
+                  setDragX(Math.max(-maxDrag, Math.min(0, projected)));
+                }}
+                transition={{ duration: 0.65, ease: MONOGRAPH_EASE }}
+                className="flex w-max gap-4 pb-2 will-change-transform"
+              >
+                {topicMatchedVideos.map((entry) => {
+                  const topicLabel =
+                    knowledgeMedia?.filters[entry.topicCategory] ||
+                    entry.topicCategory;
+                  const badgeLabel = entry.featuredInCuratedList
+                    ? knowledgeMedia?.statusLabels.curated || "Curated"
+                    : knowledgeMedia?.statusLabels.verified || "Verified";
+                  const cardPosterUrl = `https://i.ytimg.com/vi/${entry.videoId}/hqdefault.jpg`;
 
-                  <div className="p-6 flex flex-col gap-4">
-                    <div className="flex flex-wrap items-center justify-between gap-2 text-[13px] text-[var(--text-muted-aa)]">
-                      <span className="font-semibold text-[var(--accent-gold-ink)]">
-                        {posterVideo.channel}
-                      </span>
-                      <span className="font-mono text-[12.5px] tabular-nums">
-                        {posterVideo.dateIso && posterVideo.dateFormatted ? (
-                          <time dateTime={posterVideo.dateIso}>{posterVideo.dateFormatted}</time>
-                        ) : null}
-                        {posterVideo.dateFormatted ? ` / ${posterVideo.durationPlaceholder}` : posterVideo.durationPlaceholder}
-                      </span>
-                    </div>
-
-                    <span className="inline-flex items-center self-start min-h-[28px] px-3 py-1 rounded-[2px] text-[12.5px] font-semibold bg-[var(--accent-gold-soft)] text-[var(--accent-gold-ink)] border border-[var(--accent-gold-border)]">
-                      {posterVideo.statusNote || posterVideo.topicBadge}
-                    </span>
-
-                    <h4 className="font-serif text-[clamp(20px,2vw,24px)] font-semibold leading-[1.25] text-[var(--text-ink)] [overflow-wrap:break-word] min-w-0">
-                      {posterVideo.title}
-                    </h4>
-
-                    {posterVideo.summary && (
-                      <p className="text-[15px] leading-[1.6] text-[var(--text-soft-editorial)] max-w-[58ch]">
-                        {posterVideo.summary}
-                      </p>
-                    )}
-
-                    <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-[var(--border-hairline-subtle)]">
-                      <button
-                        type="button"
-                        onClick={(e) =>
-                          openVideoModal(
-                            {
-                              youtubeId: posterVideo.youtubeId,
-                              title: posterVideo.title,
-                              channel: posterVideo.channel,
-                              url:
-                                posterVideo.url ||
-                                `https://www.youtube.com/watch?v=${posterVideo.youtubeId}`,
-                              posterUrl: posterVideo.thumbUrl,
-                            },
-                            e.currentTarget
-                          )
-                        }
-                        className="min-h-[46px] px-5 bg-[var(--bg-dark)] text-[var(--bg-surface-warm)] border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] rounded-[2px] text-[14px] font-semibold inline-flex items-center gap-2 whitespace-nowrap transition-[background-color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
-                      >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                        <span>{ui?.watchCard}</span>
-                      </button>
-
-                      <a
-                        href={posterVideo.url || `https://www.youtube.com/watch?v=${posterVideo.youtubeId}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="min-h-[46px] px-4 bg-transparent text-[var(--text-ink)] border border-[var(--border-hairline-editorial-strong)] hover:border-[var(--accent-gold-ink)] hover:bg-[var(--accent-gold-soft)] rounded-[2px] text-[14px] font-medium inline-flex items-center gap-2 whitespace-nowrap transition-[background-color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
-                      >
-                        <span>{ui?.extCard}</span>
-                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                          <path
-                            d="M4 12L12 4M6 4h6v6"
-                            stroke="currentColor"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
-                </article>
-              )}
-
-              {/* Side Stack: Published Broadcast Entry & Safe Obsidian Archive Fallback */}
-              {sideVideos.length > 0 && (
-                <div
-                  className={`flex flex-col gap-6 min-w-0 ${
-                    posterVideo ? "lg:col-span-5" : "lg:col-span-12"
-                  }`}
-                >
-                  {sideVideos.map((entry) => {
-                    const isAvailable = entry.isAvailable !== false;
-
-                    if (isAvailable) {
-                      return (
-                        <article
-                          key={entry.id}
-                          className="bg-[var(--bg-stone-soft)] border border-[var(--border-hairline-editorial)] rounded-[2px] p-6 flex flex-col gap-3 min-w-0"
+                  return (
+                    <article
+                      key={entry.id}
+                      className="group shrink-0 w-[82vw] sm:w-[340px] lg:w-[370px] bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial)] hover:border-[var(--accent-gold)] rounded-[2px] overflow-hidden flex flex-col justify-between transition-[border-color,box-shadow] duration-300 hover:shadow-[var(--shadow-editorial-subtle)] min-w-0"
+                    >
+                      <div>
+                        {/* Industrial Grayscale -> Color Thumbnail + Magnetic/Glowing Play */}
+                        <div
+                          onClick={(e) => {
+                            const btn = e.currentTarget.querySelector<HTMLButtonElement>("button");
+                            openVideoModal(
+                              {
+                                youtubeId: entry.videoId,
+                                title: entry.exactTitle,
+                                channel: entry.channel,
+                                url: entry.sourceUrl,
+                                posterUrl: cardPosterUrl,
+                              },
+                              btn
+                            );
+                          }}
+                          className="relative aspect-video w-full bg-[#090909] overflow-hidden cursor-pointer border-b border-[var(--border-hairline-subtle)]"
                         >
-                          <div className="flex flex-wrap items-center justify-between gap-2 text-[13px] text-[var(--text-muted-aa)]">
+                          {renderPosterArtwork(entry.id, cardPosterUrl, entry.exactTitle, false)}
+                          <span
+                            aria-hidden="true"
+                            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"
+                          />
+                          <div className="absolute inset-0 z-10 flex items-center justify-center">
+                            <MagneticPull strength={0.22}>
+                              <button
+                                type="button"
+                                aria-label={`${knowledgeMedia?.watchLabel || ui?.watchCard}: ${entry.exactTitle}`}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  openVideoModal(
+                                    {
+                                      youtubeId: entry.videoId,
+                                      title: entry.exactTitle,
+                                      channel: entry.channel,
+                                      url: entry.sourceUrl,
+                                      posterUrl: cardPosterUrl,
+                                    },
+                                    e.currentTarget
+                                  );
+                                }}
+                                className="w-12 h-12 rounded-full bg-[#090909]/85 border border-[#D4AF37]/60 text-[#D4AF37] flex items-center justify-center transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:bg-[#D4AF37] group-hover:text-[#090909] group-hover:shadow-[0_0_24px_rgba(212,175,55,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
+                              >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                  <path d="M8 5v14l11-7z" />
+                                </svg>
+                              </button>
+                            </MagneticPull>
+                          </div>
+                        </div>
+
+                        <div className="p-4 sm:p-5 flex flex-col gap-2.5">
+                          <div className="flex flex-wrap items-center justify-between gap-2 pb-2 border-b border-[var(--border-hairline-subtle)] text-[12px]">
                             <span className="font-semibold text-[var(--accent-gold-ink)]">
                               {entry.channel}
                             </span>
-                            <span className="font-mono text-[12.5px] tabular-nums">
-                              {entry.dateIso && entry.dateFormatted ? (
-                                <time dateTime={entry.dateIso}>{entry.dateFormatted}</time>
-                              ) : null}
-                              {entry.dateFormatted ? ` / ${entry.durationPlaceholder}` : entry.durationPlaceholder}
+                            <span className="font-mono text-[11.5px] tabular-nums text-[var(--text-muted-aa)]">
+                              <time dateTime={entry.publishedDate}>
+                                {entry.publishedDate}
+                              </time>{" "}
+                              / {entry.duration}
                             </span>
                           </div>
 
-                          <span className="inline-flex items-center self-start min-h-[28px] px-3 py-1 rounded-[2px] text-[12.5px] font-semibold bg-[var(--accent-gold-soft)] text-[var(--accent-gold-ink)] border border-[var(--accent-gold-border)]">
-                            {entry.statusNote || entry.topicBadge}
-                          </span>
+                          <div className="flex flex-wrap items-center gap-1.5">
+                            <span className="inline-flex items-center min-h-[24px] px-2 py-0.5 rounded-[2px] text-[11px] font-semibold bg-[var(--accent-gold-soft)] text-[var(--accent-gold-ink)] border border-[var(--accent-gold-border)]">
+                              {topicLabel}
+                            </span>
+                            <span className="inline-flex items-center min-h-[24px] px-2 py-0.5 rounded-[2px] text-[11px] font-medium bg-[var(--bg-stone)] text-[var(--text-soft-editorial)] border border-[var(--border-hairline-editorial)]">
+                              {badgeLabel}
+                            </span>
+                          </div>
 
-                          <h4 className="font-serif text-[clamp(20px,2vw,24px)] font-semibold leading-[1.25] text-[var(--text-ink)] [overflow-wrap:break-word] min-w-0">
-                            {entry.title}
+                          <h4 className="font-serif text-[17.5px] font-semibold leading-[1.26] text-[var(--text-ink)] [overflow-wrap:break-word] line-clamp-2">
+                            {entry.exactTitle}
                           </h4>
 
-                          {entry.summary && (
-                            <p className="text-[15px] leading-[1.6] text-[var(--text-soft-editorial)] max-w-[58ch]">
-                              {entry.summary}
-                            </p>
-                          )}
-
-                          <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-[var(--border-hairline-subtle)]">
-                            <button
-                              type="button"
-                              onClick={(e) =>
-                                openVideoModal(
-                                  {
-                                    youtubeId: entry.youtubeId,
-                                    title: entry.title,
-                                    channel: entry.channel,
-                                    url:
-                                      entry.url ||
-                                      `https://www.youtube.com/watch?v=${entry.youtubeId}`,
-                                  },
-                                  e.currentTarget
-                                )
-                              }
-                              className="min-h-[46px] px-5 bg-[var(--bg-dark)] text-[var(--bg-surface-warm)] border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] rounded-[2px] text-[14px] font-semibold inline-flex items-center gap-2 whitespace-nowrap transition-[background-color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
-                            >
-                              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                <path d="M8 5v14l11-7z" />
-                              </svg>
-                              <span>{ui?.watchCard}</span>
-                            </button>
-
-                            <a
-                              href={entry.url || `https://www.youtube.com/watch?v=${entry.youtubeId}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="min-h-[46px] px-4 bg-transparent text-[var(--text-ink)] border border-[var(--border-hairline-editorial-strong)] hover:border-[var(--accent-gold-ink)] hover:bg-[var(--accent-gold-soft)] rounded-[2px] text-[14px] font-medium inline-flex items-center gap-2 whitespace-nowrap transition-[background-color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
-                            >
-                              <span>{ui?.extCard}</span>
-                              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                                <path
-                                  d="M4 12L12 4M6 4h6v6"
-                                  stroke="currentColor"
-                                  strokeWidth="1.5"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                            </a>
-                          </div>
-                        </article>
-                      );
-                    }
-
-                    // Unavailable / Archive-in-Production Slate: Obsidian surface, zero broken YouTube requests
-                    return (
-                      <article
-                        key={entry.id}
-                        aria-label={entry.statusNote || entry.topicBadge}
-                        className="bg-[var(--bg-dark)] text-[var(--text-on-dark)] border border-[var(--border-on-dark)] rounded-[2px] p-6 flex flex-col gap-4 min-w-0"
-                      >
-                        <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[var(--border-on-dark)] text-[12.5px] text-[var(--text-muted-on-dark)]">
-                          <span>{entry.channel}</span>
-                          <span className="px-2 py-1 border border-[var(--accent-gold-border)] text-[var(--accent-gold-light)] rounded-[2px] text-[12px] font-semibold">
-                            {entry.statusNote || entry.topicBadge}
-                          </span>
-                        </div>
-
-                        <h4 className="font-serif text-[20px] font-medium leading-[1.3] text-[var(--text-on-dark)] [overflow-wrap:break-word]">
-                          {entry.title}
-                        </h4>
-
-                        {entry.summary && (
-                          <p className="text-[14.5px] leading-[1.6] text-[var(--text-muted-on-dark)]">
-                            {entry.summary}
+                          <p className="text-[13.5px] leading-[1.5] text-[var(--text-soft-editorial)] line-clamp-2">
+                            {entry.localizedSummary[safeLocale]}
                           </p>
-                        )}
+                        </div>
+                      </div>
 
-                        <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-[var(--border-on-dark)]">
+                      <div className="px-4 pb-4 sm:px-5 sm:pb-5 flex flex-wrap items-center gap-2 pt-2.5 border-t border-[var(--border-hairline-subtle)]">
+                        <MagneticPull strength={0.18}>
                           <button
                             type="button"
-                            disabled
-                            aria-disabled="true"
-                            className="min-h-[44px] px-4 bg-[var(--bg-dark-elevated)] text-[var(--text-muted-on-dark)] border border-[var(--border-on-dark)] rounded-[2px] text-[13.5px] font-medium inline-flex items-center gap-2 disabled:opacity-65 disabled:cursor-not-allowed"
+                            onClick={(e) =>
+                              openVideoModal(
+                                {
+                                  youtubeId: entry.videoId,
+                                  title: entry.exactTitle,
+                                  channel: entry.channel,
+                                  url: entry.sourceUrl,
+                                  posterUrl: cardPosterUrl,
+                                },
+                                e.currentTarget
+                              )
+                            }
+                            className="min-h-[38px] px-3.5 bg-[var(--bg-dark)] text-[var(--bg-surface-warm)] border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] hover:shadow-[0_0_20px_rgba(212,175,55,0.35)] rounded-[2px] text-[12.5px] font-semibold inline-flex items-center gap-1.5 whitespace-nowrap transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
                           >
-                            <span>{ui?.archiveSoonBtn}</span>
-                          </button>
-
-                          <a
-                            href={entry.channelUrl || ui?.officialChannelUrl || "https://www.youtube.com/@AnvarAbduqayum"}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="min-h-[44px] px-4 border border-[var(--accent-gold-border)] text-[var(--accent-gold-light)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-light)] hover:text-[var(--bg-surface-warm)] rounded-[2px] text-[13.5px] font-semibold inline-flex items-center gap-2 whitespace-nowrap transition-[background-color,border-color,color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
-                          >
-                            <span>{ui?.officialChannelBtn}</span>
-                            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                              <path
-                                d="M4 12L12 4M6 4h6v6"
-                                stroke="currentColor"
-                                strokeWidth="1.5"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                              <path d="M8 5v14l11-7z" />
                             </svg>
-                          </a>
-                        </div>
-                      </article>
-                    );
-                  })}
-                </div>
-              )}
+                            <span>{knowledgeMedia?.watchLabel || ui?.watchCard}</span>
+                          </button>
+                        </MagneticPull>
+
+                        <a
+                          href={entry.sourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="min-h-[38px] px-3 bg-transparent text-[var(--text-ink)] border border-[var(--border-hairline-editorial-strong)] hover:border-[var(--accent-gold-ink)] hover:bg-[var(--accent-gold-soft)] rounded-[2px] text-[12.5px] font-medium inline-flex items-center gap-1.5 whitespace-nowrap transition-[background-color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                        >
+                          <span>{knowledgeMedia?.extLabel || ui?.extCard}</span>
+                          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                            <path
+                              d="M4 12L12 4M6 4h6v6"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </a>
+                      </div>
+                    </article>
+                  );
+                })}
+              </motion.div>
             </div>
           </div>
         </div>
@@ -783,7 +759,7 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
           ================================================================= */}
       <div
         id="media-press"
-        className="bg-[var(--bg-alabaster)] border-b border-[var(--border-hairline-editorial)] py-20 lg:py-28"
+        className="bg-[var(--bg-alabaster)] border-b border-[var(--border-hairline-editorial)] py-8 lg:py-10"
       >
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
           <div className="flex flex-wrap items-baseline justify-between gap-4 pb-3 border-b border-[var(--border-hairline-editorial-strong)] mb-6">
@@ -839,7 +815,7 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
             {filteredPress.map((press) => (
               <article
                 key={press.id}
-                className="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-6 py-6 lg:px-2 border-b border-[var(--border-hairline-editorial)] items-center hover:bg-[var(--bg-stone-soft)] transition-colors duration-150"
+                className="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-6 py-4 lg:px-2 border-b border-[var(--border-hairline-editorial)] items-center hover:bg-[var(--bg-stone-soft)] transition-colors duration-150"
               >
                 <div className="lg:col-span-2 flex flex-col gap-0.5">
                   <span className="text-[15.5px] font-bold text-[var(--text-ink)]">
@@ -932,19 +908,28 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
       </div>
 
       {/* =================================================================
-          ACCESSIBLE YOUTUBE MODAL (Mounts ONLY on activation + Safe Fallback)
+          ACCESSIBLE YOUTUBE MODAL (Mounts ONLY on activation + Cinematic Fade)
           ================================================================= */}
+      <AnimatePresence>
       {activeVideo && (
-        <div
+        <motion.div
           id="media-video-modal"
           role="dialog"
           aria-modal="true"
           aria-labelledby="media-modal-title"
+          initial={shouldReduceMotion ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={shouldReduceMotion ? undefined : { opacity: 0 }}
+          transition={{ duration: 0.4, ease: MONOGRAPH_EASE }}
           onClick={closeVideoModal}
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--bg-backdrop-media)]"
         >
-          <div
+          <motion.div
             ref={modalDialogRef}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 16, scale: 0.985 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={shouldReduceMotion ? undefined : { opacity: 0, y: 10, scale: 0.99 }}
+            transition={{ duration: 0.55, ease: MONOGRAPH_EASE }}
             onClick={(e) => e.stopPropagation()}
             className="w-full max-w-[58rem] bg-[var(--bg-dark)] text-[var(--text-on-dark)] border border-[var(--border-on-dark)] rounded-[2px] overflow-hidden"
           >
@@ -1083,9 +1068,10 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
                 </>
               )}
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </section>
   );
 };

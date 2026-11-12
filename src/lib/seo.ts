@@ -50,7 +50,13 @@ export function getDefaultOgImageAlt(locale: string): string {
 
 export interface BuildLocalizedMetadataInput {
   locale: string;
-  routeSegment?: "" | "bron";
+  routeSegment?:
+    | ""
+    | "bron"
+    | "hamkorlik"
+    | "kutubxona"
+    | "export"
+    | `portfel/${string}`;
   title: string;
   description: string;
   siteName: string;

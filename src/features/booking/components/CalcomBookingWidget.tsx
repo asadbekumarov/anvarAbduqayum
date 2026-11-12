@@ -206,14 +206,17 @@ export default function CalcomBookingWidget() {
                   <span>{t("errorCalCta")}</span>
                 </a>
               )}
-              <a
-                href={contactConfig.telegramDirect.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="min-h-[48px] w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[var(--bg-dark-elevated)] hover:border-[var(--accent-gold-light)] text-[var(--text-on-dark)] border border-[var(--border-on-dark)] px-7 py-3 rounded-[2px] text-[14.5px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
-              >
-                <span>{t("errorTelegramCta")}</span>
-              </a>
+              {contactConfig.telegramDirect.isVerified &&
+                contactConfig.telegramDirect.url && (
+                  <a
+                    href={contactConfig.telegramDirect.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="min-h-[48px] w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[var(--bg-dark-elevated)] hover:border-[var(--accent-gold-light)] text-[var(--text-on-dark)] border border-[var(--border-on-dark)] px-7 py-3 rounded-[2px] text-[14.5px] font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+                  >
+                    <span>{t("errorTelegramCta")}</span>
+                  </a>
+                )}
             </div>
           </div>
         ) : (

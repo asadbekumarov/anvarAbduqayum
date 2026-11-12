@@ -13,6 +13,22 @@ const resolveDemoMode = (): boolean => {
   return true;
 };
 
+const resolvePartnershipIntake = (): boolean => {
+  return process.env.NEXT_PUBLIC_PARTNERSHIP_INTAKE?.trim().toLowerCase() === "true";
+};
+
+const resolveVentureDossiers = (): boolean => {
+  return process.env.NEXT_PUBLIC_VENTURE_DOSSIERS?.trim().toLowerCase() === "true";
+};
+
+const resolveMediaLibrary = (): boolean => {
+  return process.env.NEXT_PUBLIC_MEDIA_LIBRARY?.trim().toLowerCase() === "true";
+};
+
+const resolveExportPortal = (): boolean => {
+  return process.env.NEXT_PUBLIC_EXPORT_PORTAL?.trim().toLowerCase() === "true";
+};
+
 export interface FeatureFlags {
   // Reversible private demo safety mode (discloses independent concept & blocks real lead delivery)
   demoMode: boolean;
@@ -24,6 +40,10 @@ export interface FeatureFlags {
   consulting: boolean;
   investment: boolean;
   quiz: boolean;
+  partnershipIntake: boolean;
+  ventureDossiers: boolean;
+  mediaLibrary: boolean;
+  exportPortal: boolean;
 
   // v1 active sections toggles
   sections: {
@@ -31,6 +51,7 @@ export interface FeatureFlags {
     dossier: boolean;
     portfolio: boolean;
     timeline: boolean;
+    initiatives: boolean;
     principles: boolean;
     numbers: boolean;
     exportUzbic: boolean;
@@ -47,17 +68,22 @@ export const featuresConfig: FeatureFlags = {
   // Temporary safe handoff to official Telegram administrator pending verified Cal.com config
   bookingMode: "telegram",
 
-  // Consulting, Investment, and legacy un-migrated /test route are disabled in v1
+  // Consulting, Investment, legacy /test, and isolated B2B intake prototype are disabled by default
   consulting: false,
   investment: false,
   quiz: false,
+  partnershipIntake: resolvePartnershipIntake(),
+  ventureDossiers: resolveVentureDossiers(),
+  mediaLibrary: resolveMediaLibrary(),
+  exportPortal: resolveExportPortal(),
 
-  // Active Concept 3 homepage sections (legacy unverified blocks disabled without deletion)
+  // Active Concept 3 homepage sections (compact 5-section landing page)
   sections: {
     hero: true,
-    dossier: true,
+    dossier: false,
     portfolio: true,
-    timeline: true,
+    timeline: false,
+    initiatives: false,
     principles: true,
     numbers: false,
     exportUzbic: false,

@@ -17,10 +17,10 @@ export const ExecutiveDossier: React.FC<ExecutiveDossierProps> = ({
 
   const services = dossier?.services || [];
   const [selectedId, setSelectedId] = useState<string>(
-    services[0]?.id || "governance"
+    services[0]?.id || "industrial-cooperation"
   );
   const [openAccordionId, setOpenAccordionId] = useState<string | null>(
-    services[0]?.id || "governance"
+    services[0]?.id || "industrial-cooperation"
   );
 
   const tabListRef = useRef<HTMLDivElement>(null);
@@ -62,22 +62,44 @@ export const ExecutiveDossier: React.FC<ExecutiveDossierProps> = ({
     <section
       id="xizmatlar"
       aria-labelledby="dossier-heading"
-      className="bg-[var(--bg-stone)] border-b border-[var(--border-hairline-editorial)] py-16 lg:py-24 xl:py-28 scroll-mt-24"
+      className="bg-[var(--bg-stone)] border-b border-[var(--border-hairline-editorial)] py-12 lg:py-16 scroll-mt-24"
     >
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Editorial Split Header */}
-        <header className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-12 lg:items-end mb-10 lg:mb-12 pb-7 lg:pb-8 border-b border-[var(--border-hairline-editorial)]">
-          <h2
-            id="dossier-heading"
-            className="lg:col-span-7 font-serif text-[clamp(30px,4.2vw,50px)] font-semibold leading-[1.1] tracking-[-0.02em] text-[var(--text-ink)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
-          >
-            {dossier.title}
-          </h2>
+        <header className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-12 lg:items-end mb-6 pb-7 lg:pb-8 border-b border-[var(--border-hairline-editorial)]">
+          <div className="lg:col-span-7 min-w-0">
+            <div className="inline-flex items-center gap-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-[var(--accent-gold-ink)] mb-3">
+              <span
+                className="w-6 h-[1.5px] bg-[var(--accent-gold)] shrink-0"
+                aria-hidden="true"
+              />
+              <span>{dossier.eyebrow}</span>
+            </div>
+            <h2
+              id="dossier-heading"
+              className="font-serif text-[clamp(30px,4.2vw,50px)] font-semibold leading-[1.1] tracking-[-0.02em] text-[var(--text-ink)] [overflow-wrap:break-word] [text-wrap:balance]"
+            >
+              {dossier.title}
+            </h2>
+          </div>
 
           <p className="lg:col-span-5 text-[16px] lg:text-[17px] leading-[1.65] text-[var(--text-soft-editorial)] [text-wrap:pretty]">
             {dossier.subtitle}
           </p>
         </header>
+
+        {/* Explicit Non-Commercial Concept Disclaimer */}
+        {dossier.disclaimer && (
+          <aside
+            role="note"
+            aria-label={dossier.eyebrow}
+            className="bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial-strong)] border-l-[3px] border-l-[var(--accent-gold)] rounded-[2px] px-5 py-4 mb-10"
+          >
+            <p className="text-[14px] font-medium leading-[1.6] text-[var(--text-ink)]">
+              {dossier.disclaimer}
+            </p>
+          </aside>
+        )}
 
         {/* DESKTOP SPLIT VIEW (Ledger Index + Sticky Pure Paper Folio) */}
         <div className="hidden lg:grid lg:grid-cols-12 gap-10 items-start">
@@ -253,16 +275,19 @@ export const ExecutiveDossier: React.FC<ExecutiveDossierProps> = ({
                   </svg>
                 </BookingActionLink>
 
-                <a
-                  href={contactConfig.telegramDirect.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="min-h-[44px] inline-flex items-center px-1 py-2 text-[13.5px] font-semibold text-[var(--text-soft-editorial)] hover:text-[var(--accent-gold-ink)] whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
-                >
-                  <span className="border-b border-[var(--border-hairline-editorial-strong)] hover:border-b-[var(--accent-gold-ink)] pb-0.5">
-                    Telegram: {contactConfig.telegramDirect.display}
-                  </span>
-                </a>
+                {contactConfig.telegramDirect.isVerified &&
+                  contactConfig.telegramDirect.url && (
+                    <a
+                      href={contactConfig.telegramDirect.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="min-h-[44px] inline-flex items-center px-1 py-2 text-[13.5px] font-semibold text-[var(--text-soft-editorial)] hover:text-[var(--accent-gold-ink)] whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                    >
+                      <span className="border-b border-[var(--border-hairline-editorial-strong)] hover:border-b-[var(--accent-gold-ink)] pb-0.5">
+                        Telegram: {contactConfig.telegramDirect.display}
+                      </span>
+                    </a>
+                  )}
               </div>
             </div>
           </div>

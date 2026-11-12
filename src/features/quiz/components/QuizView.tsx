@@ -4,6 +4,7 @@ import React, { useState, useTransition, useCallback } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { motion, AnimatePresence } from "framer-motion";
 import { BookingActionLink } from "@/components/ui/BookingActionLink";
+import { contactConfig } from "@/config/contact";
 import {
   QUIZ_QUESTIONS,
   calculateQuizScore,
@@ -686,14 +687,17 @@ export function QuizView() {
                   </span>
                 </BookingActionLink>
 
-                <a
-                  href="https://t.me/anvar_abduqayum"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/[0.04] text-[#9A9A9A] hover:text-white border border-[#1E1E1E] hover:border-[#D4AF37]/60 px-6 py-4 text-xs uppercase tracking-[0.14em] font-medium transition-all duration-300 cursor-pointer text-center"
-                >
-                  <span>{t("telegramDirectAction")}</span>
-                </a>
+                {contactConfig.telegramChannel.isVerified &&
+                  contactConfig.telegramChannel.url && (
+                    <a
+                      href={contactConfig.telegramChannel.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/[0.04] text-[#9A9A9A] hover:text-white border border-[#1E1E1E] hover:border-[#D4AF37]/60 px-6 py-4 text-xs uppercase tracking-[0.14em] font-medium transition-all duration-300 cursor-pointer text-center"
+                    >
+                      <span>{t("telegramDirectAction")}</span>
+                    </a>
+                  )}
 
                 <button
                   type="button"

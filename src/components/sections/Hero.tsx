@@ -1,9 +1,19 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { getContent } from "@/config/content";
 import { featuresConfig } from "@/config/features";
 import { siteMedia } from "@/config/siteMedia";
 import { BookingActionLink } from "@/components/ui/BookingActionLink";
+import {
+  MagneticPull,
+  ParallaxLayer,
+  ScrollReveal,
+  StaggeredTextReveal,
+  SWISS_EASE,
+} from "@/components/ui/LuxuryMotion";
 
 interface HeroProps {
   locale?: string;
@@ -17,16 +27,16 @@ export const Hero: React.FC<HeroProps> = ({ locale = "uz" }) => {
 
   const metrics = content.hero.verifiedMetrics || [
     {
-      value: "2009 / 2012",
-      label: "Toybola sex amaliyoti va fabrika tashkili",
+      value: "2008 / 2012",
+      label: "VISAGE ELECTRIC MChJ va Toybola zavodi tashkili",
     },
     {
       value: "2015 — 2022",
-      label: "Samtech, Visage hammuassisligi, HoReCa va UZBIC",
+      label: "Samtech, HoReCa loyihalari va UZBIC jamoat kengashi",
     },
     {
-      value: "7 yo‘nalish",
-      label: "3 sanoat, 2 HoReCa, 1 ichki IT va UZBIC jamoat kengashi",
+      value: "6 yo‘nalish",
+      label: "Toybola (VISAGE ELECTRIC), Samtech, 2 HoReCa, ichki IT va UZBIC",
     },
   ];
 
@@ -44,23 +54,40 @@ export const Hero: React.FC<HeroProps> = ({ locale = "uz" }) => {
       aria-labelledby="hero-heading"
       className={`relative bg-[var(--bg-alabaster)] border-b border-[var(--border-hairline)] ${
         featuresConfig.demoMode
-          ? "pt-6 sm:pt-10 lg:pt-16"
-          : "pt-[84px] sm:pt-28 lg:pt-36"
-      } pb-24 sm:pb-20 lg:pb-24 overflow-hidden`}
+          ? "pt-5 sm:pt-8 lg:pt-11"
+          : "pt-[76px] sm:pt-24 lg:pt-28"
+      } pb-12 sm:pb-14 lg:pb-16 overflow-hidden`}
     >
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Subtle Architectural Parallax Accents */}
+        <ParallaxLayer
+          aria-hidden={true}
+          offset={28}
+          className="pointer-events-none absolute -top-10 right-8 w-64 h-64 border border-[var(--accent-gold-border)] opacity-25 hidden lg:block"
+        />
+        <ParallaxLayer
+          aria-hidden={true}
+          offset={-20}
+          className="pointer-events-none absolute bottom-6 left-4 w-32 h-32 border-l border-b border-[var(--border-hairline-editorial)] opacity-40 hidden lg:block"
+        />
+
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] xl:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] gap-9 sm:gap-12 lg:gap-16 xl:gap-20 items-center">
           
           {/* Left Column: Monograph Editorial Content */}
           <div className="flex flex-col min-w-0">
             {/* Kicker Bar */}
-            <div className="inline-flex items-center gap-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-[var(--accent-gold-ink)] mb-3.5 sm:mb-6">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: SWISS_EASE }}
+              className="inline-flex items-center gap-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-[var(--accent-gold-ink)] mb-3.5 sm:mb-6"
+            >
               <span
                 className="w-6 h-[1.5px] bg-[var(--accent-gold)] shrink-0"
                 aria-hidden="true"
               />
               <span>{kickerBadge}</span>
-            </div>
+            </motion.div>
 
             {/* Main Editorial Headline */}
             <h1
@@ -68,45 +95,65 @@ export const Hero: React.FC<HeroProps> = ({ locale = "uz" }) => {
               className="font-serif text-3xl sm:text-5xl lg:text-[54px] xl:text-[62px] font-semibold leading-[1.08] text-[var(--text-ink)] tracking-tight mb-3.5 sm:mb-7 [overflow-wrap:break-word] min-w-0"
             >
               <em className="font-editorial-italic font-normal text-[var(--accent-gold-ink)] not-italic pr-2">
-                {content.hero.headlineEmphasis}
+                <StaggeredTextReveal
+                  text={content.hero.headlineEmphasis}
+                  trigger="mount"
+                  delay={0.05}
+                />
               </em>{" "}
-              <span>{content.hero.headlineSuffix}</span>
+              <StaggeredTextReveal
+                text={content.hero.headlineSuffix}
+                trigger="mount"
+                delay={0.18}
+              />
             </h1>
 
             {/* Manifesto / Executive Summary */}
-            <p className="text-sm sm:text-base lg:text-lg leading-[1.68] sm:leading-[1.7] text-[var(--text-soft)] max-w-[620px] mb-5 sm:mb-9">
+            <motion.p
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: SWISS_EASE, delay: 0.28 }}
+              className="text-sm sm:text-base lg:text-lg leading-[1.68] sm:leading-[1.7] text-[var(--text-soft)] max-w-[620px] mb-5 sm:mb-9"
+            >
               {content.hero.summary}
-            </p>
+            </motion.p>
 
             {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 mb-6 sm:mb-12">
-              <BookingActionLink
-                locale={locale}
-                className="min-h-[48px] sm:min-h-[52px] px-7 sm:px-8 bg-[var(--bg-dark)] text-[var(--bg-surface)] text-xs font-sans font-semibold uppercase tracking-[0.14em] inline-flex items-center justify-center gap-2.5 border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] hover:-translate-y-0.5 hover:shadow-[var(--shadow-editorial-gold)] active:translate-y-0 transition-[background-color,border-color,color,transform,box-shadow] duration-200 rounded-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-alabaster)]"
-              >
-                <span>{content.hero.ctaPrimary || "Uchrashuv bo‘yicha yozish"}</span>
-                <svg
-                  className="w-3.5 h-3.5 shrink-0"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  aria-hidden="true"
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: SWISS_EASE, delay: 0.36 }}
+              className="flex flex-wrap items-center gap-2.5 sm:gap-4 mb-6 sm:mb-12"
+            >
+              <MagneticPull>
+                <BookingActionLink
+                  locale={locale}
+                  className="min-h-[48px] sm:min-h-[52px] px-7 sm:px-8 bg-[var(--bg-dark)] text-[var(--bg-surface)] text-xs font-sans font-semibold uppercase tracking-[0.14em] inline-flex items-center justify-center gap-2.5 border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] hover:-translate-y-0.5 hover:shadow-[var(--shadow-editorial-gold)] active:translate-y-0 transition-[background-color,border-color,color,transform,box-shadow] duration-200 rounded-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-alabaster)]"
                 >
-                  <path
-                    d="M3 8h10M9 4l4 4-4 4"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </BookingActionLink>
+                  <span>{content.hero.ctaPrimary || "Uchrashuv bo‘yicha yozish"}</span>
+                  <svg
+                    className="w-3.5 h-3.5 shrink-0"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M3 8h10M9 4l4 4-4 4"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </BookingActionLink>
+              </MagneticPull>
               <a
-                href="#xizmatlar"
+                href="#portfel"
                 className="min-h-[48px] sm:min-h-[52px] px-6 sm:px-7 bg-transparent text-[var(--text-ink)] text-xs font-sans font-semibold uppercase tracking-[0.14em] inline-flex items-center justify-center gap-2 border border-[var(--border-hairline-strong)] hover:border-[var(--text-ink)] hover:bg-[var(--bg-surface)] hover:-translate-y-0.5 active:translate-y-0 transition-[background-color,border-color,color,transform] duration-200 rounded-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-alabaster)]"
               >
-                <span>{content.hero.ctaSecondary || "Xizmatlar va dasturlar"}</span>
+                <span>{content.hero.ctaSecondary || "Biznes ekotizimi"}</span>
               </a>
-            </div>
+            </motion.div>
 
             {/* 3 Verified Metric Columns (Strict Factual Accuracy & Clear Mobile Clearance) */}
             <div
@@ -138,8 +185,12 @@ export const Hero: React.FC<HeroProps> = ({ locale = "uz" }) => {
           </div>
 
           {/* Right Column: Hero Editorial Gallery Frame with Archival Matting */}
-          <div className="w-full max-w-[480px] mx-auto lg:max-w-none min-w-0">
-            <div className="bg-[var(--bg-surface)] border border-[var(--border-hairline)] p-3.5 sm:p-4 shadow-[var(--shadow-editorial-card)]">
+          <ScrollReveal
+            delay={0.15}
+            y={36}
+            className="w-full max-w-[480px] mx-auto lg:max-w-none min-w-0"
+          >
+            <div className="group/portrait bg-[var(--bg-surface)] border border-[var(--border-hairline)] p-3.5 sm:p-4 shadow-[var(--shadow-editorial-card)]">
               {/*
                 INTERNAL ASSET DOCUMENTATION:
                 Temporary archival portrait (/images/hero/portrait.webp) is framed via .portrait-img-editorial
@@ -147,8 +198,8 @@ export const Hero: React.FC<HeroProps> = ({ locale = "uz" }) => {
                 Anvar Abduqayum's authentic facial identity without AI manipulation. Replace with official
                 studio photography asset once available.
               */}
-              <div className="portrait-archival-mat">
-                <div className="portrait-image-wrapper">
+              <div className="portrait-archival-mat overflow-hidden">
+                <div className="portrait-image-wrapper transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/portrait:scale-[1.035]">
                   <Image
                     src={siteMedia.hero.portrait.src}
                     alt={`${content.hero.portraitCaption} — ${
@@ -186,7 +237,7 @@ export const Hero: React.FC<HeroProps> = ({ locale = "uz" }) => {
                 </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
         </div>
       </div>

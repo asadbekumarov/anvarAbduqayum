@@ -65,7 +65,13 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
               {footer.navHeading}
             </h2>
             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
-              {footer.indexLinks.map((item) => {
+              {footer.indexLinks
+                .filter((item) =>
+                  ["#hero", "#portfel", "#tamoyil", "#media", "#aloqa"].includes(
+                    item.anchor
+                  )
+                )
+                .map((item) => {
                 const targetHref = isHomePage
                   ? item.anchor
                   : `/${safeLocale}${item.anchor}`;
@@ -97,42 +103,60 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
               </p>
             )}
             <ul className="flex flex-col">
-              <li>
-                <a
-                  href={contactConfig.phone.href}
-                  className="inline-flex items-center min-h-[44px] text-[15px] text-[var(--text-muted-on-dark)] hover:text-[var(--text-on-dark)] border-b border-transparent hover:border-[var(--accent-gold-light)] tabular-nums [overflow-wrap:anywhere] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
-                >
-                  {contactConfig.phone.display}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={contactConfig.email.href}
-                  className="inline-flex items-center min-h-[44px] text-[15px] text-[var(--text-muted-on-dark)] hover:text-[var(--text-on-dark)] border-b border-transparent hover:border-[var(--accent-gold-light)] [overflow-wrap:anywhere] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
-                >
-                  {contactConfig.email.address}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={contactConfig.telegramDirect.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center min-h-[44px] text-[15px] text-[var(--text-muted-on-dark)] hover:text-[var(--text-on-dark)] border-b border-transparent hover:border-[var(--accent-gold-light)] [overflow-wrap:anywhere] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
-                >
-                  Telegram admin: {contactConfig.telegramDirect.display}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={contactConfig.telegramChannel.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center min-h-[44px] text-[15px] text-[var(--text-muted-on-dark)] hover:text-[var(--text-on-dark)] border-b border-transparent hover:border-[var(--accent-gold-light)] [overflow-wrap:anywhere] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
-                >
-                  Telegram: {contactConfig.telegramChannel.display}
-                </a>
-              </li>
+              {contactConfig.phone.isVerified && contactConfig.phone.href && (
+                <li>
+                  <a
+                    href={contactConfig.phone.href}
+                    className="inline-flex items-center min-h-[44px] text-[15px] text-[var(--text-muted-on-dark)] hover:text-[var(--text-on-dark)] border-b border-transparent hover:border-[var(--accent-gold-light)] tabular-nums [overflow-wrap:anywhere] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+                  >
+                    {contactConfig.phone.display}
+                  </a>
+                </li>
+              )}
+              {contactConfig.email.isVerified && contactConfig.email.href && (
+                <li>
+                  <a
+                    href={contactConfig.email.href}
+                    className="inline-flex items-center min-h-[44px] text-[15px] text-[var(--text-muted-on-dark)] hover:text-[var(--text-on-dark)] border-b border-transparent hover:border-[var(--accent-gold-light)] [overflow-wrap:anywhere] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+                  >
+                    {contactConfig.email.address}
+                  </a>
+                </li>
+              )}
+              {contactConfig.telegramDirect.isVerified &&
+                contactConfig.telegramDirect.url && (
+                  <li>
+                    <a
+                      href={contactConfig.telegramDirect.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center min-h-[44px] text-[15px] text-[var(--text-muted-on-dark)] hover:text-[var(--text-on-dark)] border-b border-transparent hover:border-[var(--accent-gold-light)] [overflow-wrap:anywhere] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+                    >
+                      Telegram admin: {contactConfig.telegramDirect.display}
+                    </a>
+                  </li>
+                )}
+              {contactConfig.telegramChannel.isVerified &&
+                contactConfig.telegramChannel.url && (
+                  <li>
+                    <a
+                      href={contactConfig.telegramChannel.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center min-h-[44px] text-[15px] text-[var(--text-muted-on-dark)] hover:text-[var(--text-on-dark)] border-b border-transparent hover:border-[var(--accent-gold-light)] [overflow-wrap:anywhere] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+                    >
+                      Telegram: {contactConfig.telegramChannel.display}
+                    </a>
+                  </li>
+                )}
+              {!contactConfig.phone.isVerified &&
+                !contactConfig.email.isVerified &&
+                !contactConfig.telegramDirect.isVerified &&
+                !contactConfig.telegramChannel.isVerified && (
+                  <li className="text-[14px] leading-[1.55] text-[var(--text-muted-on-dark)] py-2">
+                    {demoCopy.footer.pendingContactsNote}
+                  </li>
+                )}
             </ul>
           </div>
 
@@ -142,26 +166,31 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
               {footer.platformsHeading}
             </h2>
             <ul className="flex flex-col">
-              <li>
-                <a
-                  href={contactConfig.instagram.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center min-h-[44px] text-[15px] text-[var(--text-muted-on-dark)] hover:text-[var(--text-on-dark)] border-b border-transparent hover:border-[var(--accent-gold-light)] [overflow-wrap:anywhere] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
-                >
-                  Instagram: {contactConfig.instagram.display}
-                </a>
-              </li>
-              <li>
-                <a
-                  href={contactConfig.youtube.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center min-h-[44px] text-[15px] text-[var(--text-muted-on-dark)] hover:text-[var(--text-on-dark)] border-b border-transparent hover:border-[var(--accent-gold-light)] [overflow-wrap:anywhere] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
-                >
-                  YouTube: {contactConfig.youtube.display}
-                </a>
-              </li>
+              {contactConfig.instagram.isVerified &&
+                contactConfig.instagram.url && (
+                  <li>
+                    <a
+                      href={contactConfig.instagram.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center min-h-[44px] text-[15px] text-[var(--text-muted-on-dark)] hover:text-[var(--text-on-dark)] border-b border-transparent hover:border-[var(--accent-gold-light)] [overflow-wrap:anywhere] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+                    >
+                      Instagram: {contactConfig.instagram.display}
+                    </a>
+                  </li>
+                )}
+              {contactConfig.youtube.isVerified && contactConfig.youtube.url && (
+                <li>
+                  <a
+                    href={contactConfig.youtube.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center min-h-[44px] text-[15px] text-[var(--text-muted-on-dark)] hover:text-[var(--text-on-dark)] border-b border-transparent hover:border-[var(--accent-gold-light)] [overflow-wrap:anywhere] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+                  >
+                    YouTube: {contactConfig.youtube.display}
+                  </a>
+                </li>
+              )}
               <li>
                 <BookingActionLink
                   locale={safeLocale}

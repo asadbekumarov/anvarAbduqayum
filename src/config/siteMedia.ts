@@ -11,7 +11,43 @@ export interface MediaAsset {
   alt: string;
 }
 
-export type { VideoItem, PartnerLogo, CityEvent, DiplomaItem } from "@/types/media";
+export interface VideoItem {
+  id: string;
+  title: string;
+  thumb: string;
+  duration?: string;
+  client?: string;
+  company?: string;
+  author?: string;
+  role?: string;
+  result?: string;
+}
+
+export interface DiplomaItem {
+  id: string;
+  src: string;
+  thumb: string;
+  title: string;
+  issuer: string;
+  year: string;
+  alt: string;
+}
+
+export interface EventItem {
+  id: string;
+  country: string;
+  city: string;
+  image: string;
+  alt: string;
+  title: string;
+  date: string;
+}
+
+export interface PartnerItem {
+  id: string;
+  logo: string;
+  name: string;
+}
 
 export const siteMedia = {
   brand: {
@@ -80,7 +116,7 @@ export const siteMedia = {
     },
     visage: {
       logo: "/images/partners/atla_plast.webp",
-      alt: "Visage Electric elektrotexnika majmuasi",
+      alt: "VISAGE ELECTRIC MChJ — Toybola bolalar o'yinchoqlari ishlab chiqarish korxonasi",
     },
     puro: {
       logo: "/images/partners/puro.webp",
@@ -100,79 +136,6 @@ export const siteMedia = {
     },
   },
 
-  diplomas: [
-    {
-      id: "diplom-1",
-      title: "Xalqaro Sanoat va Boshqaruv Diplomi",
-      issuer: "Xalqaro Standartlar Instituti",
-      year: "2018",
-      src: "/images/diplomas/diplom-1.webp",
-      thumb: "/images/diplomas/diplom-1.webp",
-      width: 800,
-      height: 1100,
-      alt: "Sanoat va xalqaro boshqaruv diplomi",
-    },
-    {
-      id: "diplom-2",
-      title: "Eksport va Standartlashtirish Sertifikati",
-      issuer: "Tashqi Iqtisodiy Hamkorlik Palatasi",
-      year: "2021",
-      src: "/images/diplomas/diplom-2.webp",
-      thumb: "/images/diplomas/diplom-2.webp",
-      width: 800,
-      height: 1100,
-      alt: "Xalqaro standartlashtirish sertifikati",
-    },
-  ],
-
-  events: [
-    {
-      id: "tashkent",
-      city: "Toshkent",
-      country: "O'zbekiston",
-      title: "Ishlab chiqarish va Eksport Forumi",
-      date: "Yillik Bosh Forum",
-      image: "/images/events/tashkent.webp",
-      width: 600,
-      height: 800,
-      alt: "Toshkentdagi Ishlab chiqarish va Eksport Forumi",
-    },
-  ],
-
-  testimonials: [] as Array<{
-    id: string;
-    youtubeId: string;
-    title: string;
-    author: string;
-    role: string;
-    company: string;
-    client?: string;
-    result?: string;
-    quote: string;
-    duration: string;
-    verified: boolean;
-    thumb: string;
-  }>,
-
-  webinars: [] as Array<{
-    id: string;
-    youtubeId: string;
-    title: string;
-    description: string;
-    duration: string;
-    date: string;
-    tag: string;
-    thumb: string;
-  }>,
-
-  partners: [] as Array<{
-    id: string;
-    name: string;
-    logo: string;
-    width: number;
-    height: number;
-  }>,
-
   pressLogos: {
     gazeta: {
       name: "Gazeta.uz",
@@ -191,4 +154,10 @@ export const siteMedia = {
       domain: "daryo.uz",
     },
   },
+
+  diplomas: [] as DiplomaItem[],
+  events: [] as EventItem[],
+  partners: [] as PartnerItem[],
+  testimonials: [] as VideoItem[],
+  webinars: [] as VideoItem[],
 } as const;

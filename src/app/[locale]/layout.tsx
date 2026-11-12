@@ -8,6 +8,7 @@ import { getContent } from "@/config/content";
 import { contactConfig } from "@/config/contact";
 import { featuresConfig } from "@/config/features";
 import { getDemoCopy } from "@/config/demoCopy";
+import { ConceptDisclosureBanner } from "@/components/ui/ConceptDisclosureBanner";
 import { SITE_URL } from "@/config/siteConfig";
 import { buildLocalizedMetadata } from "@/lib/seo";
 import "../globals.css";
@@ -107,8 +108,12 @@ export default async function LocaleLayout({
         description: content.meta.siteDescription,
         url: `${SITE_URL}/${locale}`,
         image: `${SITE_URL}/images/hero/portrait.webp`,
-        telephone: contactConfig.phone.clean,
-        email: contactConfig.email.address,
+        ...(contactConfig.phone.isVerified && contactConfig.phone.clean
+          ? { telephone: contactConfig.phone.clean }
+          : {}),
+        ...(contactConfig.email.isVerified && contactConfig.email.address
+          ? { email: contactConfig.email.address }
+          : {}),
         address: {
           "@type": "PostalAddress",
           addressLocality: locale === "ru" ? "Ташкент" : locale === "en" ? "Tashkent" : "Toshkent",
@@ -120,10 +125,10 @@ export default async function LocaleLayout({
           url: "https://uzbic.uz",
         },
         sameAs: [
-          contactConfig.telegramChannel.url,
-          contactConfig.instagram.url,
-          contactConfig.youtube.url,
-        ],
+          contactConfig.telegramChannel.isVerified ? contactConfig.telegramChannel.url : "",
+          contactConfig.instagram.isVerified ? contactConfig.instagram.url : "",
+          contactConfig.youtube.isVerified ? contactConfig.youtube.url : "",
+        ].filter(Boolean),
       },
     ],
   };
@@ -147,6 +152,7 @@ export default async function LocaleLayout({
           />
         )}
         <NextIntlClientProvider locale={locale} messages={messages}>
+          {featuresConfig.demoMode && <ConceptDisclosureBanner locale={locale} />}
           {children}
         </NextIntlClientProvider>
       </body>

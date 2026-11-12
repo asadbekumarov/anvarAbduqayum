@@ -38,6 +38,12 @@ export const activeBookingMode: BookingMode =
     ? "calcom"
     : "telegram";
 
+export const hasVerifiedBookingChannel: boolean =
+  (activeBookingMode === "calcom" && Boolean(verifiedCalLink)) ||
+  (activeBookingMode === "telegram" &&
+    contactConfig.telegramDirect.isVerified &&
+    Boolean(contactConfig.telegramDirect.url));
+
 export interface BookingCtaTarget {
   href: string;
   isExternal: boolean;
@@ -45,19 +51,32 @@ export interface BookingCtaTarget {
 
 /**
  * Single source of truth for all public-facing booking CTA destinations.
+ * Never routes users to an unverified external administrator; falls back to
+ * the localized informational demo state at /[locale]/bron.
  */
 export function getBookingCtaTarget(locale: string = "uz"): BookingCtaTarget {
-  if (activeBookingMode === "calcom") {
-    const safeLocale = locale === "ru" || locale === "en" ? locale : "uz";
+  const safeLocale = locale === "ru" || locale === "en" ? locale : "uz";
+
+  if (activeBookingMode === "calcom" && Boolean(verifiedCalLink)) {
     return {
       href: `/${safeLocale}/bron`,
       isExternal: false,
     };
   }
 
+  if (
+    contactConfig.telegramDirect.isVerified &&
+    Boolean(contactConfig.telegramDirect.url)
+  ) {
+    return {
+      href: contactConfig.telegramDirect.url,
+      isExternal: true,
+    };
+  }
+
   return {
-    href: contactConfig.telegramDirect.url,
-    isExternal: true,
+    href: `/${safeLocale}/bron`,
+    isExternal: false,
   };
 }
 

@@ -34,9 +34,62 @@ function withRuntimeSecurityHeaders(
 }
 
 export default function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
   if (!featuresConfig.quiz) {
-    const { pathname } = request.nextUrl;
     if (/^(?:\/(uz|ru|en))?\/test(?:\/|$)/.test(pathname)) {
+      const matchedLocale =
+        pathname.match(/^\/(uz|ru|en)(?:\/|$)/)?.[1] || routing.defaultLocale;
+      return withRuntimeSecurityHeaders(
+        request,
+        NextResponse.rewrite(
+          new URL(`/${matchedLocale}/__route-disabled__`, request.url)
+        )
+      );
+    }
+  }
+
+  if (!featuresConfig.partnershipIntake) {
+    if (/^(?:\/(uz|ru|en))?\/hamkorlik(?:\/|$)/.test(pathname)) {
+      const matchedLocale =
+        pathname.match(/^\/(uz|ru|en)(?:\/|$)/)?.[1] || routing.defaultLocale;
+      return withRuntimeSecurityHeaders(
+        request,
+        NextResponse.rewrite(
+          new URL(`/${matchedLocale}/__route-disabled__`, request.url)
+        )
+      );
+    }
+  }
+
+  if (!featuresConfig.ventureDossiers) {
+    if (/^(?:\/(uz|ru|en))?\/portfel(?:\/|$)/.test(pathname)) {
+      const matchedLocale =
+        pathname.match(/^\/(uz|ru|en)(?:\/|$)/)?.[1] || routing.defaultLocale;
+      return withRuntimeSecurityHeaders(
+        request,
+        NextResponse.rewrite(
+          new URL(`/${matchedLocale}/__route-disabled__`, request.url)
+        )
+      );
+    }
+  }
+
+  if (!featuresConfig.mediaLibrary) {
+    if (/^(?:\/(uz|ru|en))?\/kutubxona(?:\/|$)/.test(pathname)) {
+      const matchedLocale =
+        pathname.match(/^\/(uz|ru|en)(?:\/|$)/)?.[1] || routing.defaultLocale;
+      return withRuntimeSecurityHeaders(
+        request,
+        NextResponse.rewrite(
+          new URL(`/${matchedLocale}/__route-disabled__`, request.url)
+        )
+      );
+    }
+  }
+
+  if (!featuresConfig.exportPortal) {
+    if (/^(?:\/(uz|ru|en))?\/export(?:\/|$)/.test(pathname)) {
       const matchedLocale =
         pathname.match(/^\/(uz|ru|en)(?:\/|$)/)?.[1] || routing.defaultLocale;
       return withRuntimeSecurityHeaders(

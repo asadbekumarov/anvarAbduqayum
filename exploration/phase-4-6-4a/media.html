@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow, noarchive" />
+  <title>Bilimlar va Media arxivi — Anvar Abduqayum (Phase 4.6.4A Prototipi)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="concept-banner" role="region" aria-label="Konsept eslatmasi">
+    <div class="container concept-banner__inner">
+      <span class="concept-banner__tag">MUSTAQIL KONSEPT · DEMO REJIM · NOINDEX</span>
+      <span class="concept-banner__text">Batafsil sahifa prototipi: `/[locale]/media`.</span>
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="brand-mark" href="./index.html">
+        <span class="brand-mark__monogram">AA</span>
+        <span>
+          <span class="brand-mark__name">Anvar Abduqayum</span>
+          <span class="brand-mark__sub">Bilimlar va Media</span>
+        </span>
+      </a>
+      <nav class="desktop-nav" aria-label="Asosiy navigatsiya">
+        <a class="desktop-nav__link" href="./index.html">Bosh sahifa</a>
+        <a class="desktop-nav__link" href="./bizneslar.html">Bizneslar</a>
+        <a class="desktop-nav__link" href="./index.html#faoliyat-preview">Faoliyat</a>
+        <a class="desktop-nav__link" href="./index.html#tashabbuslar">Tashabbuslar</a>
+        <a class="desktop-nav__link is-active" href="./media.html">Media</a>
+        <a class="desktop-nav__link" href="./index.html#aloqa">Aloqa</a>
+      </nav>
+      <div class="header-actions">
+        <a class="btn btn--secondary" href="./index.html">← Bosh sahifaga</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <nav class="breadcrumb" aria-label="Sahifa yo‘li">
+          <a href="./index.html">Bosh sahifa</a>
+          <span>/</span>
+          <span>Bilimlar va Media arxivi</span>
+        </nav>
+
+        <span class="eyebrow">Tasdiqlangan 12 ta YouTube video</span>
+        <h1 class="h1-editorial">Ochiq ma’ruzalar, <em>intervyular</em> va matbuot arxivi</h1>
+        <p class="lead">
+          Bosh sahifadagi qisqa 3 ta tanlangan videodan farqli ravishda, bu sahifada barcha 12 ta tasdiqlangan YouTube video mavzular bo‘yicha filtrlanadi.
+        </p>
+
+        <div class="tabs" role="tablist" aria-label="Media mavzulari">
+          <button class="tab-btn is-active" type="button" data-topic="all">Barchasi (12)</button>
+          <button class="tab-btn" type="button" data-topic="interviews">Intervyular</button>
+          <button class="tab-btn" type="button" data-topic="systemization">Tizimlashtirish</button>
+          <button class="tab-btn" type="button" data-topic="manufacturing">Ishlab chiqarish va Eksport</button>
+        </div>
+
+        <div class="grid-3" id="videoCatalog">
+          <article class="card" data-topic="interviews">
+            <div class="video-thumb"><img src="https://i.ytimg.com/vi/yi6UAsstdw4/hqdefault.jpg" alt="SUBYEKTIV" /><span class="video-thumb__dur">1:34:41</span></div>
+            <div class="card__meta"><span>Intervyu</span><span>yi6UAsstdw4</span></div>
+            <h2 class="h3-editorial">SUBYEKTIV: Xitoy tajribasi va ishlab chiqarish intizomi</h2>
+          </article>
+
+          <article class="card" id="avtopilot" data-topic="systemization">
+            <div class="video-thumb"><img src="https://i.ytimg.com/vi/ZiWr2ND4LSo/hqdefault.jpg" alt="Avtopilot" /><span class="video-thumb__dur">56:54</span></div>
+            <div class="card__meta"><span>Tizimlashtirish</span><span>ZiWr2ND4LSo</span></div>
+            <h2 class="h3-editorial">Biznesni AVTOPILOTGA qo‘yishning 8 bosqichi</h2>
+          </article>
+
+          <article class="card" data-topic="interviews">
+            <div class="video-thumb"><img src="https://i.ytimg.com/vi/4HRt-WTp3-A/hqdefault.jpg" alt="Inter Nation" /><span class="video-thumb__dur">58:12</span></div>
+            <div class="card__meta"><span>Intervyu</span><span>4HRt-WTp3-A</span></div>
+            <h2 class="h3-editorial">Inter Nation: Tadbirkorlik fikrlashi va mas’uliyat</h2>
+          </article>
+
+          <article class="card" data-topic="manufacturing">
+            <div class="video-thumb"><img src="https://i.ytimg.com/vi/73WXbwiMBzI/hqdefault.jpg" alt="Toybola sexlari" /><span class="video-thumb__dur">2:26:06</span></div>
+            <div class="card__meta"><span>Ishlab chiqarish</span><span>73WXbwiMBzI</span></div>
+            <h2 class="h3-editorial">Toybola ishlab chiqarish sexlari va ovqatlanish obyektlari</h2>
+          </article>
+
+          <article class="card" data-topic="systemization">
+            <div class="video-thumb"><img src="https://i.ytimg.com/vi/qHAo5gJmjaE/hqdefault.jpg" alt="Samo tizimi" /><span class="video-thumb__dur">1:41:07</span></div>
+            <div class="card__meta"><span>Tizimlashtirish</span><span>qHAo5gJmjaE</span></div>
+            <h2 class="h3-editorial">Samo kompaniyasining tizimi va o‘sish strategiyasi</h2>
+          </article>
+
+          <article class="card" data-topic="manufacturing">
+            <div class="video-thumb"><img src="https://i.ytimg.com/vi/9G3zmqkxAWA/hqdefault.jpg" alt="Korxona ichki jarayonlari" /><span class="video-thumb__dur">1:01:02</span></div>
+            <div class="card__meta"><span>Tadbirkorlik</span><span>9G3zmqkxAWA</span></div>
+            <h2 class="h3-editorial">Korxona ichki jarayonlari va operatsion boshqaruv</h2>
+          </article>
+        </div>
+
+        <div style="margin-top:2rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
+          <p class="card__body">Dastlab 6 ta asosiy video ko‘rsatiladi; qolgan 6 ta tasdiqlangan video bitta tugma bilan ochiladi.</p>
+          <button class="btn btn--secondary" type="button" id="toggleMoreVideos">Qolgan 6 ta videoni ko‘rsatish (Jami 12)</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--stone" id="media-press">
+      <div class="container">
+        <span class="eyebrow">Tasdiqlangan matbuot manbalari</span>
+        <h2 class="h2-editorial">Ommaviy maqolalar reyestri</h2>
+        <div class="grid-2">
+          <article class="card">
+            <div class="card__meta"><span>Spot.uz</span><span>Tarixiy intervyu</span></div>
+            <h3 class="h3-editorial">O‘yinchoq ishlab chiqarish va 2010-yilgi eksport bosqichi</h3>
+            <p class="card__body">Toybola va VISAGE ELECTRIC faoliyati rivojlanish bosqichlarini tasdiqlovchi asosiy matbuot manbasi.</p>
+          </article>
+          <article class="card">
+            <div class="card__meta"><span>Ochiq manbalar</span><span>2022–2026</span></div>
+            <h3 class="h3-editorial">UZBIC va jamoat biznes muloqotlari</h3>
+            <p class="card__body">Xitoy bilan ishbilarmonlik aloqalari va tadbirkorlik ta’limi bo‘yicha ommaviy chiqishlar.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-bottom" style="padding-top:0;">
+      <span>Phase 4.6.4A · Media sahifasi prototipi (`/[locale]/media`)</span>
+      <a class="btn--link" href="./index.html">Bosh sahifaga qaytish →</a>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const extraVideos = [
+        { topic: 'systemization', title: 'Operatsion nazorat va moliyaviy intizom', dur: '19:45' },
+        { topic: 'interviews', title: 'Tadbirkorlar klubi bilan ochiq savol-javob', dur: '47:10' },
+        { topic: 'manufacturing', title: 'Sifat nazorati va qadoqlash standartlari', dur: '28:30' },
+        { topic: 'systemization', title: 'Kichik biznesda boshqaruv xatolari', dur: '22:14' },
+        { topic: 'manufacturing', title: 'B2B hamkorlikda shartnoma intizomi', dur: '33:02' },
+        { topic: 'interviews', title: 'Yosh tadbirkorlar uchun amaliy tavsiyalar', dur: '41:50' }
+      ];
+      let expanded = false;
+      const catalog = document.getElementById('videoCatalog');
+      const toggleBtn = document.getElementById('toggleMoreVideos');
+
+      toggleBtn.addEventListener('click', () => {
+        if (!expanded) {
+          extraVideos.forEach((v) => {
+            const art = document.createElement('article');
+            art.className = 'card extra-video';
+            art.setAttribute('data-topic', v.topic);
+            art.innerHTML = `<div class="card__meta"><span>${v.topic}</span><span>${v.dur}</span></div><h2 class="h3-editorial">${v.title}</h2><span class="badge">Tasdiqlangan arxiv</span>`;
+            catalog.appendChild(art);
+          });
+          expanded = true;
+          toggleBtn.textContent = 'Faqat 6 ta asosiy videoni ko‘rsatish';
+        } else {
+          document.querySelectorAll('.extra-video').forEach((el) => el.remove());
+          expanded = false;
+          toggleBtn.textContent = 'Qolgan 6 ta videoni ko‘rsatish (Jami 12)';
+        }
+      });
+
+      document.querySelectorAll('.tab-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('is-active'));
+          btn.classList.add('is-active');
+          const topic = btn.getAttribute('data-topic');
+          document.querySelectorAll('#videoCatalog [data-topic]').forEach((card) => {
+            card.hidden = topic !== 'all' && card.getAttribute('data-topic') !== topic;
+          });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
