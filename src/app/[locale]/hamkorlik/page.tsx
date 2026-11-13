@@ -60,9 +60,9 @@ export default async function PartnershipPage({
   setRequestLocale(locale);
 
   return (
-    <div className="flex min-h-screen flex-col bg-[var(--bg-alabaster)]">
+    <div className="flex min-h-screen flex-col bg-[#090A0D] text-[#F5F5F7]">
       <Navbar locale={locale} />
-      <main className="flex-1 pt-16 pb-20 md:pb-8">
+      <main className="flex-1 pt-16 pb-20 md:pb-12 bg-gradient-to-b from-[#090A0D] via-[#0E1015] to-[#090A0D]">
         <PartnershipIntakeView locale={locale} />
       </main>
       <Footer locale={locale} />

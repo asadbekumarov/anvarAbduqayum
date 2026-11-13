@@ -2,24 +2,25 @@
 
 import React, { useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/Tabs";
 import { featuresConfig } from "@/config/features";
 import {
   getPartnershipContent,
   type PartnershipLocale,
+  type PartnershipTrack,
+  PARTNERSHIP_TRACKS,
 } from "../config/partnershipContent";
 import {
+  b2bPartnershipSchema,
   normalizeInternationalPhone,
-  PARTNERSHIP_TRACKS,
-  partnershipSchema,
-  type PartnershipFormValues,
-  type PartnershipTrack,
+  type B2BPartnershipFormValues,
 } from "../schemas/partnershipSchema";
 
 interface PartnershipIntakeViewProps {
   locale: string;
 }
 
-type FieldName = keyof PartnershipFormValues;
+type FieldName = keyof B2BPartnershipFormValues;
 type FieldErrors = Partial<Record<FieldName, string>>;
 
 const COUNTRY_CODE_PRESETS = [
@@ -31,34 +32,36 @@ const COUNTRY_CODE_PRESETS = [
   { code: "+44", label: "UK +44" },
   { code: "+1", label: "US +1" },
   { code: "+86", label: "CN +86" },
+  { code: "+994", label: "AZ +994" },
 ] as const;
 
-const INITIAL_VALUES: PartnershipFormValues = {
+const INITIAL_VALUES: B2BPartnershipFormValues = {
   track: "export",
   contactName: "",
-  organization: "",
+  company: "",
   phone: "+998 ",
   email: "",
   notes: "",
   honeypot: "",
-  targetCountry: "",
-  productInterest: "",
-  estimatedVolume: "",
-  distributionRegion: "",
-  salesChannel: "",
-  outletCount: "",
-  cooperationModel: "",
-  productionScope: "",
-  targetTimeline: "",
-  proposalCategory: "",
-  proposalSummary: "",
-};
 
-const TRACK_REQUIRED_FIELDS: Record<PartnershipTrack, FieldName[]> = {
-  export: ["targetCountry", "productInterest"],
-  distribution: ["distributionRegion", "salesChannel"],
-  manufacturing: ["cooperationModel", "productionScope"],
-  other: ["proposalCategory", "proposalSummary"],
+  // Export
+  targetCountry: "",
+  hsCategory: "",
+  volume: "",
+
+  // Distribution
+  region: "",
+  retailCoverage: "",
+  outlets: "",
+
+  // Manufacturing
+  specs: "",
+  capacity: "",
+  toolingModel: "",
+
+  // General
+  inquiryTopic: "",
+  proposalDetails: "",
 };
 
 export function PartnershipIntakeView({ locale }: PartnershipIntakeViewProps) {
@@ -66,28 +69,34 @@ export function PartnershipIntakeView({ locale }: PartnershipIntakeViewProps) {
     locale === "ru" || locale === "en" ? locale : "uz";
   const content = useMemo(() => getPartnershipContent(safeLocale), [safeLocale]);
 
-  const [step, setStep] = useState<1 | 2>(1);
-  const [values, setValues] = useState<PartnershipFormValues>(INITIAL_VALUES);
+  const [activeTrack, setActiveTrack] = useState<PartnershipTrack>("export");
+  const [values, setValues] = useState<B2BPartnershipFormValues>(INITIAL_VALUES);
   const [countryCode, setCountryCode] = useState<string>("+998");
   const [errors, setErrors] = useState<FieldErrors>({});
-  const [hasSummaryError, setHasSummaryError] = useState(false);
-  const [submittedData, setSubmittedData] = useState<PartnershipFormValues | null>(
-    null
-  );
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
+
+  // Success states
+  const [demoSuccessData, setDemoSuccessData] =
+    useState<B2BPartnershipFormValues | null>(null);
+  const [liveSuccessData, setLiveSuccessData] =
+    useState<B2BPartnershipFormValues | null>(null);
 
   const formRef = useRef<HTMLFormElement>(null);
 
   const resolveErrorMessage = (code: string | undefined): string => {
-    if (!code) return content.errors.min2;
+    if (!code) return content.errors.required;
+    if (code === "min2") return content.errors.min2;
     if (code === "min10") return content.errors.min10;
-    if (code === "max80") return content.errors.max80;
-    if (code === "max120") return content.errors.max120;
     if (code === "invalidPhone") return content.errors.invalidPhone;
     if (code === "invalidEmail") return content.errors.invalidEmail;
-    return content.errors.min2;
+    return content.errors.required;
   };
 
-  const updateField = <K extends FieldName>(field: K, value: PartnershipFormValues[K]) => {
+  const updateField = <K extends FieldName>(
+    field: K,
+    value: B2BPartnershipFormValues[K]
+  ) => {
     setValues((prev) => ({ ...prev, [field]: value }));
     setErrors((prev) => {
       if (!prev[field]) return prev;
@@ -95,25 +104,26 @@ export function PartnershipIntakeView({ locale }: PartnershipIntakeViewProps) {
       delete next[field];
       return next;
     });
-    setHasSummaryError(false);
+    setServerError(null);
   };
 
-  const handleTrackChange = (track: PartnershipTrack) => {
+  const handleTrackSelect = (track: PartnershipTrack) => {
+    setActiveTrack(track);
     setValues((prev) => ({ ...prev, track }));
     setErrors({});
-    setHasSummaryError(false);
+    setServerError(null);
   };
 
   const handleCountryCodeChange = (nextCode: string) => {
     setCountryCode(nextCode);
     setValues((prev) => {
       const current = prev.phone.trim();
-      const withoutCurrentCode = current.startsWith(countryCode)
+      const withoutCode = current.startsWith(countryCode)
         ? current.slice(countryCode.length).trimStart()
         : current.replace(/^\+\d{1,4}\s*/, "");
       return {
         ...prev,
-        phone: withoutCurrentCode ? `${nextCode} ${withoutCurrentCode}` : `${nextCode} `,
+        phone: withoutCode ? `${nextCode} ${withoutCode}` : `${nextCode} `,
       };
     });
     setErrors((prev) => {
@@ -124,54 +134,22 @@ export function PartnershipIntakeView({ locale }: PartnershipIntakeViewProps) {
     });
   };
 
-  const focusField = (field: FieldName) => {
-    const el = formRef.current?.querySelector<HTMLElement>(`[name="${field}"]`);
-    el?.focus();
-  };
-
-  const handleNextStep = () => {
-    const requiredForTrack = TRACK_REQUIRED_FIELDS[values.track];
-    const parsed = partnershipSchema.safeParse({
-      ...values,
-      // Provide temporary placeholders for step-2-only fields so step 1 checks only track fields
-      contactName: values.contactName || "__step1__",
-      organization: values.organization || "__step1__",
-      phone: values.phone.trim().length > 4 ? values.phone : "+998901234567",
-      email: "",
-    });
-
-    if (!parsed.success) {
-      const step1Errors: FieldErrors = {};
-      for (const issue of parsed.error.issues) {
-        const key = issue.path[0] as FieldName | undefined;
-        if (key && requiredForTrack.includes(key) && !step1Errors[key]) {
-          step1Errors[key] = resolveErrorMessage(issue.message);
-        }
-      }
-
-      if (Object.keys(step1Errors).length > 0) {
-        setErrors(step1Errors);
-        setHasSummaryError(true);
-        const firstInvalid = requiredForTrack.find((f) => step1Errors[f]);
-        if (firstInvalid) focusField(firstInvalid);
-        return;
-      }
-    }
-
-    setErrors({});
-    setHasSummaryError(false);
-    setStep(2);
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setServerError(null);
 
-    // Honeypot check: silently ignore automated bot fills without network calls
+    // Honeypot anti-spam guard
     if (values.honeypot && values.honeypot.trim().length > 0) {
       return;
     }
 
-    const parsed = partnershipSchema.safeParse(values);
+    const payload: B2BPartnershipFormValues = {
+      ...values,
+      track: activeTrack,
+      phone: normalizeInternationalPhone(values.phone),
+    };
+
+    const parsed = b2bPartnershipSchema.safeParse(payload);
     if (!parsed.success) {
       const nextErrors: FieldErrors = {};
       let firstField: FieldName | null = null;
@@ -183,306 +161,414 @@ export function PartnershipIntakeView({ locale }: PartnershipIntakeViewProps) {
         }
       }
       setErrors(nextErrors);
-      setHasSummaryError(true);
-
-      const requiredForTrack = TRACK_REQUIRED_FIELDS[values.track];
-      if (firstField && requiredForTrack.includes(firstField)) {
-        setStep(1);
-      } else if (firstField) {
-        focusField(firstField);
+      if (firstField) {
+        const el = formRef.current?.querySelector<HTMLElement>(
+          `[name="${firstField}"]`
+        );
+        el?.focus();
       }
       return;
     }
 
-    // In demoMode (and in this isolated prototype), never transmit or persist data.
-    setErrors({});
-    setHasSummaryError(false);
-    setSubmittedData({
-      ...parsed.data,
-      phone: normalizeInternationalPhone(parsed.data.phone),
-    });
+    const validatedData = parsed.data;
+
+    // 4. DEMO MODE GUARD: Strictly respect featuresConfig.demoMode
+    // If demoMode === true, the form must NOT hit the API. It validates on client and renders success state.
+    if (featuresConfig.demoMode) {
+      setDemoSuccessData(validatedData);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    // Live mode: POST payload to /api/apply
+    try {
+      setIsSubmitting(true);
+      const apiPayload = {
+        name: validatedData.contactName,
+        phone: validatedData.phone,
+        company: validatedData.company,
+        business: validatedData.company,
+        track: validatedData.track,
+        country: validatedData.targetCountry || validatedData.region || "",
+        targetCountry: validatedData.targetCountry || "",
+        volume: validatedData.volume || validatedData.capacity || "",
+        category:
+          validatedData.hsCategory ||
+          validatedData.retailCoverage ||
+          validatedData.inquiryTopic ||
+          "",
+        productInterest: validatedData.hsCategory || validatedData.specs || "",
+        region: validatedData.region || "",
+        retailCoverage: validatedData.retailCoverage || "",
+        specs: validatedData.specs || "",
+        capacity: validatedData.capacity || "",
+        email: validatedData.email || "",
+        notes: validatedData.notes || validatedData.proposalDetails || "",
+        question:
+          validatedData.proposalDetails ||
+          validatedData.notes ||
+          `B2B Track: ${validatedData.track}`,
+        service: `B2B Partnership (${validatedData.track.toUpperCase()})`,
+        locale: safeLocale,
+        pageUrl: typeof window !== "undefined" ? window.location.href : undefined,
+      };
+
+      const res = await fetch("/api/apply", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(apiPayload),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok || !result.ok) {
+        setServerError(result.error || content.errors.serverError);
+        return;
+      }
+
+      setLiveSuccessData(validatedData);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch {
+      setServerError(content.errors.networkError);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleReset = () => {
-    setSubmittedData(null);
+    setDemoSuccessData(null);
+    setLiveSuccessData(null);
     setValues(INITIAL_VALUES);
     setCountryCode("+998");
     setErrors({});
-    setHasSummaryError(false);
-    setStep(1);
+    setServerError(null);
   };
 
-  const activeTrackMeta =
-    content.tracks.find((t) => t.id === (submittedData?.track ?? values.track)) ??
-    content.tracks[0];
+  const activeTrackMeta = content.tracks[activeTrack];
 
-  const inputBaseClass =
-    "w-full min-h-[44px] rounded-[2px] border border-[var(--border-hairline-editorial)] bg-[var(--bg-alabaster)] px-3.5 py-2.5 text-[15px] text-[var(--text-ink)] placeholder:text-[var(--text-muted-aa)] transition-colors focus:border-[var(--accent-gold)] focus:outline-none";
+  // Dark "Swiss Luxury" styling tokens
+  const inputBaseClasses =
+    "w-full min-h-[46px] rounded-[2px] border border-white/10 bg-[#0B0C0E] px-4 py-2.5 text-[15px] text-[#F5F5F7] placeholder:text-zinc-500 transition-colors focus:border-[#C5A059] focus:outline-none focus:ring-1 focus:ring-[#C5A059]";
 
-  const errorInputClass =
-    "border-[var(--status-error-border)] bg-[var(--status-error-wash)]";
+  const inputErrorClasses =
+    "border-red-500/80 bg-red-950/20 text-red-200 placeholder:text-red-400/50 focus:border-red-400 focus:ring-red-500/50";
 
   return (
-    <section
-      className="mx-auto w-full max-w-[920px] px-4 py-8 sm:px-6 sm:py-12"
-      aria-labelledby="partnership-page-title"
-    >
-      {/* Top navigation & editorial header */}
-      <div className="mb-8 border-b border-[var(--border-hairline-editorial)] pb-7">
-        <Link
-          href={`/${safeLocale}`}
-          className="inline-flex min-h-[44px] items-center gap-2 text-xs font-medium uppercase tracking-[0.14em] text-[var(--text-soft-editorial)] transition-colors hover:text-[var(--accent-gold-ink)]"
-        >
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            aria-hidden="true"
+    <div className="mx-auto w-full max-w-[1040px] px-4 py-8 sm:px-6 sm:py-12">
+      {/* Editorial Header */}
+      <header className="mb-8 border-b border-white/10 pb-8">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <Link
+            href={`/${safeLocale}`}
+            className="inline-flex min-h-[44px] items-center gap-2 text-xs font-mono uppercase tracking-[0.18em] text-[#C5A059] transition-colors hover:text-[#E5C378]"
           >
-            <path d="M19 12H5M12 19l-7-7 7-7" />
-          </svg>
-          <span>{content.header.backHome}</span>
-        </Link>
-
-        <p className="mt-4 font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-[var(--accent-gold-ink)]">
-          {content.header.eyebrow}
-        </p>
-        <h1
-          id="partnership-page-title"
-          className="mt-2 font-serif text-3xl font-medium tracking-tight text-[var(--text-ink)] sm:text-4xl"
-        >
-          {content.header.title}
-        </h1>
-        <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-[var(--text-soft-editorial)]">
-          {content.header.subtitle}
-        </p>
-      </div>
-
-      {/* Demo & Privacy Notice */}
-      <div
-        role="note"
-        className="mb-8 rounded-[2px] border border-[var(--border-hairline-editorial)] bg-[var(--bg-stone)] p-4 sm:p-5"
-      >
-        <div className="flex flex-wrap items-center gap-2.5">
-          <span className="inline-flex items-center rounded-[2px] border border-[var(--accent-gold)] bg-[var(--bg-surface-warm)] px-2.5 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.1em] text-[var(--accent-gold-ink)]">
-            {content.demoNotice.badge}
+            <span aria-hidden="true">←</span>
+            <span>{content.hero.backHome}</span>
+          </Link>
+          <span className="font-mono text-[11px] tracking-[0.14em] uppercase text-zinc-400">
+            {content.hero.industrialKicker}
           </span>
         </div>
-        <p className="mt-2.5 text-sm leading-relaxed text-[var(--text-soft-editorial)]">
-          {content.demoNotice.privacyWarning}
-        </p>
-      </div>
 
-      {submittedData ? (
-        <div
+        <div className="mt-6">
+          <span className="inline-block font-mono text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C5A059]">
+            {content.hero.badge}
+          </span>
+          <h1 className="mt-3 font-serif text-3xl font-medium tracking-tight text-[#FBF9F5] sm:text-4xl lg:text-5xl">
+            {content.hero.title}{" "}
+            <span className="text-[#C5A059]">{content.hero.titleAccent}</span>
+          </h1>
+          <p className="mt-3.5 max-w-3xl text-[15px] leading-relaxed text-zinc-300">
+            {content.hero.subtitle}
+          </p>
+        </div>
+
+        {/* Demo Mode Notice Badge */}
+        {featuresConfig.demoMode && (
+          <div
+            role="note"
+            className="mt-6 rounded-[2px] border border-[#C5A059]/30 bg-[#16181F] p-4 text-xs leading-relaxed text-zinc-300"
+          >
+            <div className="flex items-center gap-2 text-[#C5A059] font-mono font-semibold tracking-wider">
+              <span className="inline-block h-2 w-2 rounded-full bg-[#C5A059] animate-pulse" />
+              <span>{content.demoNotice.badge}</span>
+            </div>
+            <p className="mt-1.5">{content.demoNotice.text}</p>
+          </div>
+        )}
+      </header>
+
+      {/* Success View: Demo Mode */}
+      {demoSuccessData && (
+        <section
           role="status"
           aria-live="polite"
-          className="rounded-[2px] border border-[var(--status-success-border)] bg-[var(--bg-surface-warm)] p-6 sm:p-8"
+          className="rounded-[2px] border border-[#C5A059]/50 bg-[#121419] p-6 shadow-2xl sm:p-10"
         >
-          <span className="inline-flex items-center rounded-[2px] border border-[var(--status-success-border)] bg-[var(--status-success-wash)] px-3 py-1 font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-[var(--status-success-ink)]">
-            {content.confirmation.badge}
-          </span>
+          <div className="inline-flex items-center gap-2 rounded-[2px] border border-[#C5A059]/40 bg-[#C5A059]/10 px-3 py-1 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[#E5C378]">
+            <span className="h-2 w-2 rounded-full bg-[#E5C378]" />
+            <span>{content.demoSuccess.badge}</span>
+          </div>
 
-          <h2 className="mt-4 font-serif text-2xl font-medium text-[var(--text-ink)]">
-            {content.confirmation.title}
+          <h2 className="mt-5 font-serif text-2xl font-medium text-[#FBF9F5] sm:text-3xl">
+            {content.demoSuccess.title}
           </h2>
-          <p className="mt-2 max-w-2xl text-[15px] leading-relaxed text-[var(--text-soft-editorial)]">
-            {content.confirmation.description}
+          <p className="mt-2.5 max-w-2xl text-[15px] leading-relaxed text-zinc-300">
+            {content.demoSuccess.subtitle}
+          </p>
+          <p className="mt-1.5 text-xs text-zinc-400">
+            {content.demoSuccess.explanation}
           </p>
 
-          <dl className="mt-6 grid grid-cols-1 gap-4 border-t border-[var(--border-hairline-editorial)] pt-5 sm:grid-cols-3">
-            <div>
-              <dt className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted-aa)]">
-                {content.confirmation.trackLabel}
-              </dt>
-              <dd className="mt-1 text-sm font-medium text-[var(--text-ink)]">
-                {activeTrackMeta.title}
-              </dd>
-            </div>
-            <div>
-              <dt className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted-aa)]">
-                {content.confirmation.organizationLabel}
-              </dt>
-              <dd className="mt-1 break-words text-sm font-medium text-[var(--text-ink)]">
-                {submittedData.organization}
-              </dd>
-            </div>
-            <div>
-              <dt className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted-aa)]">
-                {content.confirmation.phoneLabel}
-              </dt>
-              <dd className="mt-1 font-mono text-sm font-medium text-[var(--text-ink)]">
-                {submittedData.phone}
-              </dd>
-            </div>
-          </dl>
+          <div className="mt-8 border-t border-white/10 pt-6">
+            <h3 className="font-mono text-xs uppercase tracking-[0.16em] text-[#C5A059]">
+              {content.demoSuccess.summaryTitle}
+            </h3>
 
-          <div className="mt-7">
+            <dl className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="rounded-[2px] border border-white/5 bg-[#0B0C0E] p-3.5">
+                <dt className="font-mono text-[11px] uppercase tracking-wider text-zinc-400">
+                  {content.demoSuccess.trackLabel}
+                </dt>
+                <dd className="mt-1 text-sm font-semibold text-[#F5F5F7]">
+                  {content.tracks[demoSuccessData.track].title}
+                </dd>
+              </div>
+
+              <div className="rounded-[2px] border border-white/5 bg-[#0B0C0E] p-3.5">
+                <dt className="font-mono text-[11px] uppercase tracking-wider text-zinc-400">
+                  {content.demoSuccess.companyLabel}
+                </dt>
+                <dd className="mt-1 text-sm font-semibold text-[#F5F5F7] truncate">
+                  {demoSuccessData.company}
+                </dd>
+              </div>
+
+              <div className="rounded-[2px] border border-white/5 bg-[#0B0C0E] p-3.5">
+                <dt className="font-mono text-[11px] uppercase tracking-wider text-zinc-400">
+                  {content.demoSuccess.contactLabel}
+                </dt>
+                <dd className="mt-1 text-sm font-semibold text-[#F5F5F7]">
+                  {demoSuccessData.contactName}
+                </dd>
+              </div>
+
+              <div className="rounded-[2px] border border-white/5 bg-[#0B0C0E] p-3.5">
+                <dt className="font-mono text-[11px] uppercase tracking-wider text-zinc-400">
+                  {content.demoSuccess.phoneLabel}
+                </dt>
+                <dd className="mt-1 font-mono text-sm font-semibold text-[#C5A059]">
+                  {demoSuccessData.phone}
+                </dd>
+              </div>
+
+              <div className="rounded-[2px] border border-white/5 bg-[#0B0C0E] p-3.5">
+                <dt className="font-mono text-[11px] uppercase tracking-wider text-zinc-400">
+                  {content.demoSuccess.param1Label}
+                </dt>
+                <dd className="mt-1 text-sm font-semibold text-[#F5F5F7] truncate">
+                  {demoSuccessData.targetCountry ||
+                    demoSuccessData.region ||
+                    demoSuccessData.specs ||
+                    demoSuccessData.inquiryTopic}
+                </dd>
+              </div>
+
+              <div className="rounded-[2px] border border-white/5 bg-[#0B0C0E] p-3.5">
+                <dt className="font-mono text-[11px] uppercase tracking-wider text-zinc-400">
+                  {content.demoSuccess.param2Label}
+                </dt>
+                <dd className="mt-1 text-sm font-semibold text-[#F5F5F7] truncate">
+                  {demoSuccessData.volume ||
+                    demoSuccessData.retailCoverage ||
+                    demoSuccessData.capacity ||
+                    "Standart B2B"}
+                </dd>
+              </div>
+            </dl>
+          </div>
+
+          <div className="mt-8 border-t border-white/10 pt-6">
             <button
               type="button"
               onClick={handleReset}
-              className="inline-flex min-h-[44px] items-center justify-center rounded-[2px] border border-[var(--text-ink)] bg-[var(--bg-dark)] px-6 py-2.5 text-sm font-medium text-[var(--text-on-dark)] transition-opacity hover:opacity-90"
+              className="inline-flex min-h-[46px] items-center justify-center rounded-[2px] border border-[#C5A059] bg-[#C5A059] px-7 py-2.5 text-sm font-semibold text-[#0B0C0E] transition-colors hover:bg-[#E5C378]"
             >
-              {content.confirmation.resetButton}
+              {content.buttons.reset}
             </button>
           </div>
-        </div>
-      ) : (
-        <form
-          ref={formRef}
-          onSubmit={handleSubmit}
-          noValidate
-          className="rounded-[2px] border border-[var(--border-hairline-editorial)] bg-[var(--bg-surface-warm)] p-5 sm:p-8"
-        >
-          {/* Stepper indicator */}
-          <ol
-            className="mb-7 grid grid-cols-1 gap-2 border-b border-[var(--border-hairline-editorial)] pb-5 sm:grid-cols-2"
-            aria-label="Form steps"
-          >
-            <li
-              aria-current={step === 1 ? "step" : undefined}
-              className={`flex min-h-[44px] items-center border-l-2 px-3 py-2 font-mono text-xs uppercase tracking-[0.12em] ${
-                step === 1
-                  ? "border-[var(--accent-gold)] bg-[var(--bg-stone)] font-semibold text-[var(--text-ink)]"
-                  : "border-transparent text-[var(--text-muted-aa)]"
-              }`}
-            >
-              {content.steps.step1Label}
-            </li>
-            <li
-              aria-current={step === 2 ? "step" : undefined}
-              className={`flex min-h-[44px] items-center border-l-2 px-3 py-2 font-mono text-xs uppercase tracking-[0.12em] ${
-                step === 2
-                  ? "border-[var(--accent-gold)] bg-[var(--bg-stone)] font-semibold text-[var(--text-ink)]"
-                  : "border-transparent text-[var(--text-muted-aa)]"
-              }`}
-            >
-              {content.steps.step2Label}
-            </li>
-          </ol>
+        </section>
+      )}
 
-          {hasSummaryError && (
+      {/* Success View: Live Dispatched Lead */}
+      {liveSuccessData && (
+        <section
+          role="status"
+          aria-live="polite"
+          className="rounded-[2px] border border-emerald-500/40 bg-[#121419] p-6 shadow-2xl sm:p-10"
+        >
+          <div className="inline-flex items-center gap-2 rounded-[2px] border border-emerald-500/30 bg-emerald-950/40 px-3 py-1 font-mono text-xs font-semibold uppercase tracking-[0.16em] text-emerald-400">
+            <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
+            <span>{content.liveSuccess.badge}</span>
+          </div>
+
+          <h2 className="mt-5 font-serif text-2xl font-medium text-[#FBF9F5] sm:text-3xl">
+            {content.liveSuccess.title}
+          </h2>
+          <p className="mt-2.5 max-w-2xl text-[15px] leading-relaxed text-zinc-300">
+            {content.liveSuccess.subtitle}
+          </p>
+          <div className="mt-4 rounded-[2px] border border-white/10 bg-[#0B0C0E] p-4 text-sm text-zinc-300">
+            <p className="font-medium text-[#C5A059]">
+              ⚡ {content.liveSuccess.eta}
+            </p>
+          </div>
+
+          <div className="mt-8">
+            <button
+              type="button"
+              onClick={handleReset}
+              className="inline-flex min-h-[46px] items-center justify-center rounded-[2px] border border-white/20 bg-[#1A1C22] px-7 py-2.5 text-sm font-semibold text-[#F5F5F7] transition-colors hover:border-[#C5A059] hover:text-[#C5A059]"
+            >
+              {content.buttons.reset}
+            </button>
+          </div>
+        </section>
+      )}
+
+      {/* Main Form View */}
+      {!demoSuccessData && !liveSuccessData && (
+        <div className="rounded-[2px] border border-white/10 bg-[#13151A] p-5 shadow-2xl sm:p-8 lg:p-10">
+          {serverError && (
             <div
               role="alert"
-              className="mb-6 rounded-[2px] border border-[var(--status-error-border)] bg-[var(--status-error-wash)] px-4 py-3 text-sm font-medium text-[var(--status-error-ink)]"
+              className="mb-7 rounded-[2px] border border-red-500/60 bg-red-950/30 p-4 text-sm text-red-200"
             >
-              {content.errors.summary}
+              {serverError}
             </div>
           )}
 
-          {/* Honeypot field for spam mitigation */}
-          <div className="hidden" aria-hidden="true">
-            <label htmlFor="partnership-company-website">Website</label>
-            <input
-              id="partnership-company-website"
-              name="honeypot"
-              type="text"
-              tabIndex={-1}
-              autoComplete="off"
-              value={values.honeypot ?? ""}
-              onChange={(e) => updateField("honeypot", e.target.value)}
-            />
-          </div>
+          {/* Radix UI Tabs for 4 B2B Tracks */}
+          <Tabs
+            value={activeTrack}
+            onValueChange={(val) => handleTrackSelect(val as PartnershipTrack)}
+            className="w-full"
+          >
+            <div className="mb-6">
+              <span className="block font-mono text-xs uppercase tracking-[0.16em] text-[#C5A059]">
+                01 // {content.tabs.ariaLabel}
+              </span>
 
-          {step === 1 ? (
-            <div className="space-y-8">
-              {/* Track selector */}
-              <div>
-                <span
-                  id="partnership-tracks-label"
-                  className="block font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-ink)]"
-                >
-                  {content.tracksLabel}
+              <TabsList className="mt-3 grid grid-cols-1 gap-2.5 border-b-0 sm:grid-cols-2 lg:grid-cols-4">
+                {PARTNERSHIP_TRACKS.map((trackKey) => {
+                  const trackMeta = content.tracks[trackKey];
+                  const isSelected = activeTrack === trackKey;
+                  return (
+                    <TabsTrigger
+                      key={trackKey}
+                      value={trackKey}
+                      className={`flex flex-col items-start justify-between rounded-[2px] border p-3.5 text-left transition-all ${
+                        isSelected
+                          ? "border-[#C5A059] bg-[#1A1C24] text-[#FBF9F5] shadow-[0_0_15px_rgba(197,160,89,0.12)]"
+                          : "border-white/10 bg-[#0B0C0E] text-zinc-400 hover:border-white/20 hover:text-zinc-200"
+                      }`}
+                    >
+                      <div className="flex w-full items-center justify-between">
+                        <span className="font-mono text-[10.5px] font-semibold tracking-[0.16em] text-[#C5A059]">
+                          {trackMeta.code}
+                        </span>
+                        <span
+                          className={`h-2.5 w-2.5 rounded-full border ${
+                            isSelected
+                              ? "border-[#C5A059] bg-[#C5A059]"
+                              : "border-zinc-600 bg-transparent"
+                          }`}
+                        />
+                      </div>
+                      <div className="mt-2">
+                        <div className="text-[14px] font-semibold text-[#F5F5F7]">
+                          {trackMeta.title}
+                        </div>
+                        <div className="mt-1 line-clamp-2 text-[11.5px] leading-relaxed text-zinc-400">
+                          {trackMeta.summary}
+                        </div>
+                      </div>
+                    </TabsTrigger>
+                  );
+                })}
+              </TabsList>
+            </div>
+
+            {/* Track Highlights Card */}
+            <div className="mb-8 rounded-[2px] border border-[#C5A059]/20 bg-[#0E1015] p-4 sm:p-5">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/5 pb-2.5">
+                <span className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[#C5A059]">
+                  {activeTrackMeta.badge}
                 </span>
+                <span className="text-xs text-zinc-400">
+                  {activeTrackMeta.title}
+                </span>
+              </div>
+              <ul className="mt-3 grid grid-cols-1 gap-2 text-xs text-zinc-300 sm:grid-cols-3">
+                {activeTrackMeta.highlights.map((item, idx) => (
+                  <li key={idx} className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#C5A059]" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-                <div
-                  role="radiogroup"
-                  aria-labelledby="partnership-tracks-label"
-                  className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2"
-                >
-                  {PARTNERSHIP_TRACKS.map((trackId) => {
-                    const track = content.tracks.find((t) => t.id === trackId);
-                    if (!track) return null;
-                    const isSelected = values.track === trackId;
-                    return (
-                      <button
-                        key={trackId}
-                        type="button"
-                        role="radio"
-                        aria-checked={isSelected}
-                        onClick={() => handleTrackChange(trackId)}
-                        className={`flex min-h-[88px] flex-col items-start justify-between rounded-[2px] border p-4 text-left transition-colors ${
-                          isSelected
-                            ? "border-[var(--accent-gold)] bg-[var(--bg-stone)]"
-                            : "border-[var(--border-hairline-editorial)] bg-[var(--bg-alabaster)] hover:border-[var(--text-muted-aa)]"
-                        }`}
-                      >
-                        <div className="flex w-full items-center justify-between gap-2">
-                          <span className="font-mono text-[11px] font-semibold tracking-[0.14em] text-[var(--accent-gold-ink)]">
-                            {track.code}
-                          </span>
-                          <span
-                            aria-hidden="true"
-                            className={`h-3 w-3 rounded-full border ${
-                              isSelected
-                                ? "border-[var(--accent-gold)] bg-[var(--accent-gold)]"
-                                : "border-[var(--text-muted-aa)] bg-transparent"
-                            }`}
-                          />
-                        </div>
-                        <div className="mt-2">
-                          <div className="text-base font-medium text-[var(--text-ink)]">
-                            {track.title}
-                          </div>
-                          <div className="mt-1 text-xs leading-relaxed text-[var(--text-soft-editorial)]">
-                            {track.summary}
-                          </div>
-                        </div>
-                      </button>
-                    );
-                  })}
-                </div>
+            {/* Intake Form */}
+            <form ref={formRef} onSubmit={handleSubmit} noValidate>
+              {/* Anti-spam honeypot */}
+              <div className="hidden" aria-hidden="true">
+                <input
+                  name="honeypot"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={values.honeypot || ""}
+                  onChange={(e) => updateField("honeypot", e.target.value)}
+                />
               </div>
 
-              {/* Context-specific conditional fields */}
-              <div className="border-t border-[var(--border-hairline-editorial)] pt-6">
-                <h2 className="font-serif text-xl font-medium text-[var(--text-ink)]">
-                  {content.conditionalHeadings[values.track]}
-                </h2>
+              {/* Segmented Track Requirements */}
+              <div className="border-t border-white/10 pt-6">
+                <span className="block font-mono text-xs uppercase tracking-[0.16em] text-[#C5A059]">
+                  02 // {activeTrackMeta.title}
+                </span>
 
-                {values.track === "export" && (
-                  <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {/* Track a: Export (Target country & HS-category/volume) */}
+                <TabsContent value="export" className="mt-4 space-y-5 outline-none">
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                     <div>
                       <label
                         htmlFor="targetCountry"
-                        className="mb-1.5 block text-sm font-medium text-[var(--text-ink)]"
+                        className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-300"
                       >
-                        {content.fields.targetCountry.label} *
+                        {content.fields.targetCountry.label}
                       </label>
                       <input
                         id="targetCountry"
                         name="targetCountry"
                         type="text"
                         required
-                        value={values.targetCountry ?? ""}
-                        onChange={(e) => updateField("targetCountry", e.target.value)}
+                        value={values.targetCountry || ""}
+                        onChange={(e) =>
+                          updateField("targetCountry", e.target.value)
+                        }
                         placeholder={content.fields.targetCountry.placeholder}
                         aria-invalid={Boolean(errors.targetCountry)}
-                        aria-describedby={
-                          errors.targetCountry ? "targetCountry-error" : undefined
-                        }
-                        className={`${inputBaseClass} ${
-                          errors.targetCountry ? errorInputClass : ""
+                        className={`${inputBaseClasses} ${
+                          errors.targetCountry ? inputErrorClasses : ""
                         }`}
                       />
+                      <p className="mt-1 text-[11px] text-zinc-400">
+                        {content.fields.targetCountry.hint}
+                      </p>
                       {errors.targetCountry && (
-                        <p
-                          id="targetCountry-error"
-                          className="mt-1 text-xs text-[var(--status-error-ink)]"
-                        >
+                        <p className="mt-1 text-xs text-red-400">
                           {errors.targetCountry}
                         </p>
                       )}
@@ -490,544 +576,546 @@ export function PartnershipIntakeView({ locale }: PartnershipIntakeViewProps) {
 
                     <div>
                       <label
-                        htmlFor="productInterest"
-                        className="mb-1.5 block text-sm font-medium text-[var(--text-ink)]"
+                        htmlFor="hsCategory"
+                        className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-300"
                       >
-                        {content.fields.productInterest.label} *
+                        {content.fields.hsCategory.label}
+                      </label>
+                      <select
+                        id="hsCategory"
+                        name="hsCategory"
+                        required
+                        value={values.hsCategory || ""}
+                        onChange={(e) => updateField("hsCategory", e.target.value)}
+                        aria-invalid={Boolean(errors.hsCategory)}
+                        className={`${inputBaseClasses} ${
+                          errors.hsCategory ? inputErrorClasses : ""
+                        }`}
+                      >
+                        <option value="" className="bg-[#0B0C0E] text-zinc-400">
+                          {content.fields.hsCategory.placeholder}
+                        </option>
+                        {content.fields.hsCategory.options.map((opt) => (
+                          <option
+                            key={opt}
+                            value={opt}
+                            className="bg-[#0B0C0E] text-[#F5F5F7]"
+                          >
+                            {opt}
+                          </option>
+                        ))}
+                      </select>
+                      <p className="mt-1 text-[11px] text-zinc-400">
+                        {content.fields.hsCategory.hint}
+                      </p>
+                      {errors.hsCategory && (
+                        <p className="mt-1 text-xs text-red-400">
+                          {errors.hsCategory}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="volume"
+                      className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-300"
+                    >
+                      {content.fields.volume.label}
+                    </label>
+                    <input
+                      id="volume"
+                      name="volume"
+                      type="text"
+                      required
+                      value={values.volume || ""}
+                      onChange={(e) => updateField("volume", e.target.value)}
+                      placeholder={content.fields.volume.placeholder}
+                      aria-invalid={Boolean(errors.volume)}
+                      className={`${inputBaseClasses} ${
+                        errors.volume ? inputErrorClasses : ""
+                      }`}
+                    />
+                    <p className="mt-1 text-[11px] text-zinc-400">
+                      {content.fields.volume.hint}
+                    </p>
+                    {errors.volume && (
+                      <p className="mt-1 text-xs text-red-400">
+                        {errors.volume}
+                      </p>
+                    )}
+                  </div>
+                </TabsContent>
+
+                {/* Track b: Distribution (Region & retail coverage) */}
+                <TabsContent
+                  value="distribution"
+                  className="mt-4 space-y-5 outline-none"
+                >
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    <div>
+                      <label
+                        htmlFor="region"
+                        className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-300"
+                      >
+                        {content.fields.region.label}
                       </label>
                       <input
-                        id="productInterest"
-                        name="productInterest"
+                        id="region"
+                        name="region"
                         type="text"
                         required
-                        value={values.productInterest ?? ""}
-                        onChange={(e) => updateField("productInterest", e.target.value)}
-                        placeholder={content.fields.productInterest.placeholder}
-                        aria-invalid={Boolean(errors.productInterest)}
-                        aria-describedby={
-                          errors.productInterest ? "productInterest-error" : undefined
-                        }
-                        className={`${inputBaseClass} ${
-                          errors.productInterest ? errorInputClass : ""
+                        value={values.region || ""}
+                        onChange={(e) => updateField("region", e.target.value)}
+                        placeholder={content.fields.region.placeholder}
+                        aria-invalid={Boolean(errors.region)}
+                        className={`${inputBaseClasses} ${
+                          errors.region ? inputErrorClasses : ""
                         }`}
                       />
-                      {errors.productInterest && (
-                        <p
-                          id="productInterest-error"
-                          className="mt-1 text-xs text-[var(--status-error-ink)]"
-                        >
-                          {errors.productInterest}
+                      <p className="mt-1 text-[11px] text-zinc-400">
+                        {content.fields.region.hint}
+                      </p>
+                      {errors.region && (
+                        <p className="mt-1 text-xs text-red-400">
+                          {errors.region}
                         </p>
                       )}
                     </div>
 
-                    <div className="sm:col-span-2">
-                      <label
-                        htmlFor="estimatedVolume"
-                        className="mb-1.5 block text-sm font-medium text-[var(--text-ink)]"
-                      >
-                        {content.fields.estimatedVolume.label}
-                      </label>
-                      <input
-                        id="estimatedVolume"
-                        name="estimatedVolume"
-                        type="text"
-                        value={values.estimatedVolume ?? ""}
-                        onChange={(e) => updateField("estimatedVolume", e.target.value)}
-                        placeholder={content.fields.estimatedVolume.placeholder}
-                        className={inputBaseClass}
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {values.track === "distribution" && (
-                  <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>
                       <label
-                        htmlFor="distributionRegion"
-                        className="mb-1.5 block text-sm font-medium text-[var(--text-ink)]"
+                        htmlFor="retailCoverage"
+                        className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-300"
                       >
-                        {content.fields.distributionRegion.label} *
+                        {content.fields.retailCoverage.label}
                       </label>
-                      <input
-                        id="distributionRegion"
-                        name="distributionRegion"
-                        type="text"
+                      <select
+                        id="retailCoverage"
+                        name="retailCoverage"
                         required
-                        value={values.distributionRegion ?? ""}
+                        value={values.retailCoverage || ""}
                         onChange={(e) =>
-                          updateField("distributionRegion", e.target.value)
+                          updateField("retailCoverage", e.target.value)
                         }
-                        placeholder={content.fields.distributionRegion.placeholder}
-                        aria-invalid={Boolean(errors.distributionRegion)}
-                        aria-describedby={
-                          errors.distributionRegion
-                            ? "distributionRegion-error"
-                            : undefined
-                        }
-                        className={`${inputBaseClass} ${
-                          errors.distributionRegion ? errorInputClass : ""
-                        }`}
-                      />
-                      {errors.distributionRegion && (
-                        <p
-                          id="distributionRegion-error"
-                          className="mt-1 text-xs text-[var(--status-error-ink)]"
-                        >
-                          {errors.distributionRegion}
-                        </p>
-                      )}
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="salesChannel"
-                        className="mb-1.5 block text-sm font-medium text-[var(--text-ink)]"
-                      >
-                        {content.fields.salesChannel.label} *
-                      </label>
-                      <select
-                        id="salesChannel"
-                        name="salesChannel"
-                        required
-                        value={values.salesChannel ?? ""}
-                        onChange={(e) => updateField("salesChannel", e.target.value)}
-                        aria-invalid={Boolean(errors.salesChannel)}
-                        aria-describedby={
-                          errors.salesChannel ? "salesChannel-error" : undefined
-                        }
-                        className={`${inputBaseClass} ${
-                          errors.salesChannel ? errorInputClass : ""
+                        aria-invalid={Boolean(errors.retailCoverage)}
+                        className={`${inputBaseClasses} ${
+                          errors.retailCoverage ? inputErrorClasses : ""
                         }`}
                       >
-                        <option value="">{content.fields.salesChannel.placeholder}</option>
-                        {content.fields.salesChannel.options.map((opt) => (
-                          <option key={opt} value={opt}>
-                            {opt}
-                          </option>
-                        ))}
-                      </select>
-                      {errors.salesChannel && (
-                        <p
-                          id="salesChannel-error"
-                          className="mt-1 text-xs text-[var(--status-error-ink)]"
-                        >
-                          {errors.salesChannel}
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="sm:col-span-2">
-                      <label
-                        htmlFor="outletCount"
-                        className="mb-1.5 block text-sm font-medium text-[var(--text-ink)]"
-                      >
-                        {content.fields.outletCount.label}
-                      </label>
-                      <input
-                        id="outletCount"
-                        name="outletCount"
-                        type="text"
-                        value={values.outletCount ?? ""}
-                        onChange={(e) => updateField("outletCount", e.target.value)}
-                        placeholder={content.fields.outletCount.placeholder}
-                        className={inputBaseClass}
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {values.track === "manufacturing" && (
-                  <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-                    <div>
-                      <label
-                        htmlFor="cooperationModel"
-                        className="mb-1.5 block text-sm font-medium text-[var(--text-ink)]"
-                      >
-                        {content.fields.cooperationModel.label} *
-                      </label>
-                      <select
-                        id="cooperationModel"
-                        name="cooperationModel"
-                        required
-                        value={values.cooperationModel ?? ""}
-                        onChange={(e) => updateField("cooperationModel", e.target.value)}
-                        aria-invalid={Boolean(errors.cooperationModel)}
-                        aria-describedby={
-                          errors.cooperationModel ? "cooperationModel-error" : undefined
-                        }
-                        className={`${inputBaseClass} ${
-                          errors.cooperationModel ? errorInputClass : ""
-                        }`}
-                      >
-                        <option value="">
-                          {content.fields.cooperationModel.placeholder}
+                        <option value="" className="bg-[#0B0C0E] text-zinc-400">
+                          {content.fields.retailCoverage.placeholder}
                         </option>
-                        {content.fields.cooperationModel.options.map((opt) => (
-                          <option key={opt} value={opt}>
+                        {content.fields.retailCoverage.options.map((opt) => (
+                          <option
+                            key={opt}
+                            value={opt}
+                            className="bg-[#0B0C0E] text-[#F5F5F7]"
+                          >
                             {opt}
                           </option>
                         ))}
                       </select>
-                      {errors.cooperationModel && (
-                        <p
-                          id="cooperationModel-error"
-                          className="mt-1 text-xs text-[var(--status-error-ink)]"
-                        >
-                          {errors.cooperationModel}
+                      <p className="mt-1 text-[11px] text-zinc-400">
+                        {content.fields.retailCoverage.hint}
+                      </p>
+                      {errors.retailCoverage && (
+                        <p className="mt-1 text-xs text-red-400">
+                          {errors.retailCoverage}
                         </p>
                       )}
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="productionScope"
-                        className="mb-1.5 block text-sm font-medium text-[var(--text-ink)]"
-                      >
-                        {content.fields.productionScope.label} *
-                      </label>
-                      <input
-                        id="productionScope"
-                        name="productionScope"
-                        type="text"
-                        required
-                        value={values.productionScope ?? ""}
-                        onChange={(e) => updateField("productionScope", e.target.value)}
-                        placeholder={content.fields.productionScope.placeholder}
-                        aria-invalid={Boolean(errors.productionScope)}
-                        aria-describedby={
-                          errors.productionScope ? "productionScope-error" : undefined
-                        }
-                        className={`${inputBaseClass} ${
-                          errors.productionScope ? errorInputClass : ""
-                        }`}
-                      />
-                      {errors.productionScope && (
-                        <p
-                          id="productionScope-error"
-                          className="mt-1 text-xs text-[var(--status-error-ink)]"
-                        >
-                          {errors.productionScope}
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="sm:col-span-2">
-                      <label
-                        htmlFor="targetTimeline"
-                        className="mb-1.5 block text-sm font-medium text-[var(--text-ink)]"
-                      >
-                        {content.fields.targetTimeline.label}
-                      </label>
-                      <input
-                        id="targetTimeline"
-                        name="targetTimeline"
-                        type="text"
-                        value={values.targetTimeline ?? ""}
-                        onChange={(e) => updateField("targetTimeline", e.target.value)}
-                        placeholder={content.fields.targetTimeline.placeholder}
-                        className={inputBaseClass}
-                      />
                     </div>
                   </div>
-                )}
 
-                {values.track === "other" && (
-                  <div className="mt-4 space-y-4">
+                  <div>
+                    <label
+                      htmlFor="outlets"
+                      className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-300"
+                    >
+                      {content.fields.outlets.label}
+                    </label>
+                    <input
+                      id="outlets"
+                      name="outlets"
+                      type="text"
+                      value={values.outlets || ""}
+                      onChange={(e) => updateField("outlets", e.target.value)}
+                      placeholder={content.fields.outlets.placeholder}
+                      className={inputBaseClasses}
+                    />
+                    <p className="mt-1 text-[11px] text-zinc-400">
+                      {content.fields.outlets.hint}
+                    </p>
+                  </div>
+                </TabsContent>
+
+                {/* Track c: Manufacturing / OEM (Specs & capacity) */}
+                <TabsContent
+                  value="manufacturing"
+                  className="mt-4 space-y-5 outline-none"
+                >
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                     <div>
                       <label
-                        htmlFor="proposalCategory"
-                        className="mb-1.5 block text-sm font-medium text-[var(--text-ink)]"
+                        htmlFor="toolingModel"
+                        className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-300"
                       >
-                        {content.fields.proposalCategory.label} *
+                        {content.fields.toolingModel.label}
                       </label>
                       <select
-                        id="proposalCategory"
-                        name="proposalCategory"
-                        required
-                        value={values.proposalCategory ?? ""}
-                        onChange={(e) => updateField("proposalCategory", e.target.value)}
-                        aria-invalid={Boolean(errors.proposalCategory)}
-                        aria-describedby={
-                          errors.proposalCategory ? "proposalCategory-error" : undefined
+                        id="toolingModel"
+                        name="toolingModel"
+                        value={values.toolingModel || ""}
+                        onChange={(e) =>
+                          updateField("toolingModel", e.target.value)
                         }
-                        className={`${inputBaseClass} ${
-                          errors.proposalCategory ? errorInputClass : ""
-                        }`}
+                        className={inputBaseClasses}
                       >
-                        <option value="">
-                          {content.fields.proposalCategory.placeholder}
+                        <option value="" className="bg-[#0B0C0E] text-zinc-400">
+                          {content.fields.toolingModel.placeholder}
                         </option>
-                        {content.fields.proposalCategory.options.map((opt) => (
-                          <option key={opt} value={opt}>
+                        {content.fields.toolingModel.options.map((opt) => (
+                          <option
+                            key={opt}
+                            value={opt}
+                            className="bg-[#0B0C0E] text-[#F5F5F7]"
+                          >
                             {opt}
                           </option>
                         ))}
                       </select>
-                      {errors.proposalCategory && (
-                        <p
-                          id="proposalCategory-error"
-                          className="mt-1 text-xs text-[var(--status-error-ink)]"
-                        >
-                          {errors.proposalCategory}
-                        </p>
-                      )}
+                      <p className="mt-1 text-[11px] text-zinc-400">
+                        {content.fields.toolingModel.hint}
+                      </p>
                     </div>
 
                     <div>
                       <label
-                        htmlFor="proposalSummary"
-                        className="mb-1.5 block text-sm font-medium text-[var(--text-ink)]"
+                        htmlFor="capacity"
+                        className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-300"
                       >
-                        {content.fields.proposalSummary.label} *
+                        {content.fields.capacity.label}
                       </label>
-                      <textarea
-                        id="proposalSummary"
-                        name="proposalSummary"
-                        rows={3}
+                      <input
+                        id="capacity"
+                        name="capacity"
+                        type="text"
                         required
-                        value={values.proposalSummary ?? ""}
-                        onChange={(e) => updateField("proposalSummary", e.target.value)}
-                        placeholder={content.fields.proposalSummary.placeholder}
-                        aria-invalid={Boolean(errors.proposalSummary)}
-                        aria-describedby={
-                          errors.proposalSummary ? "proposalSummary-error" : undefined
-                        }
-                        className={`${inputBaseClass} min-h-[96px] ${
-                          errors.proposalSummary ? errorInputClass : ""
+                        value={values.capacity || ""}
+                        onChange={(e) => updateField("capacity", e.target.value)}
+                        placeholder={content.fields.capacity.placeholder}
+                        aria-invalid={Boolean(errors.capacity)}
+                        className={`${inputBaseClasses} ${
+                          errors.capacity ? inputErrorClasses : ""
                         }`}
                       />
-                      {errors.proposalSummary && (
-                        <p
-                          id="proposalSummary-error"
-                          className="mt-1 text-xs text-[var(--status-error-ink)]"
-                        >
-                          {errors.proposalSummary}
+                      <p className="mt-1 text-[11px] text-zinc-400">
+                        {content.fields.capacity.hint}
+                      </p>
+                      {errors.capacity && (
+                        <p className="mt-1 text-xs text-red-400">
+                          {errors.capacity}
                         </p>
                       )}
                     </div>
                   </div>
-                )}
-              </div>
 
-              <div className="flex justify-end border-t border-[var(--border-hairline-editorial)] pt-5">
-                <button
-                  type="button"
-                  onClick={handleNextStep}
-                  className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-[2px] bg-[var(--bg-dark)] px-6 py-2.5 text-sm font-medium text-[var(--text-on-dark)] transition-opacity hover:opacity-90"
-                >
-                  <span>{content.steps.nextButton}</span>
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    aria-hidden="true"
-                  >
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="space-y-5">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div>
-                  <label
-                    htmlFor="contactName"
-                    className="mb-1.5 block text-sm font-medium text-[var(--text-ink)]"
-                  >
-                    {content.fields.contactName.label} *
-                  </label>
-                  <input
-                    id="contactName"
-                    name="contactName"
-                    type="text"
-                    required
-                    autoComplete="name"
-                    value={values.contactName}
-                    onChange={(e) => updateField("contactName", e.target.value)}
-                    placeholder={content.fields.contactName.placeholder}
-                    aria-invalid={Boolean(errors.contactName)}
-                    aria-describedby={errors.contactName ? "contactName-error" : undefined}
-                    className={`${inputBaseClass} ${
-                      errors.contactName ? errorInputClass : ""
-                    }`}
-                  />
-                  {errors.contactName && (
-                    <p
-                      id="contactName-error"
-                      className="mt-1 text-xs text-[var(--status-error-ink)]"
+                  <div>
+                    <label
+                      htmlFor="specs"
+                      className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-300"
                     >
-                      {errors.contactName}
+                      {content.fields.specs.label}
+                    </label>
+                    <textarea
+                      id="specs"
+                      name="specs"
+                      rows={3}
+                      required
+                      value={values.specs || ""}
+                      onChange={(e) => updateField("specs", e.target.value)}
+                      placeholder={content.fields.specs.placeholder}
+                      aria-invalid={Boolean(errors.specs)}
+                      className={`${inputBaseClasses} min-h-[90px] ${
+                        errors.specs ? inputErrorClasses : ""
+                      }`}
+                    />
+                    <p className="mt-1 text-[11px] text-zinc-400">
+                      {content.fields.specs.hint}
                     </p>
-                  )}
-                </div>
+                    {errors.specs && (
+                      <p className="mt-1 text-xs text-red-400">
+                        {errors.specs}
+                      </p>
+                    )}
+                  </div>
+                </TabsContent>
 
-                <div>
-                  <label
-                    htmlFor="organization"
-                    className="mb-1.5 block text-sm font-medium text-[var(--text-ink)]"
-                  >
-                    {content.fields.organization.label} *
-                  </label>
-                  <input
-                    id="organization"
-                    name="organization"
-                    type="text"
-                    required
-                    autoComplete="organization"
-                    value={values.organization}
-                    onChange={(e) => updateField("organization", e.target.value)}
-                    placeholder={content.fields.organization.placeholder}
-                    aria-invalid={Boolean(errors.organization)}
-                    aria-describedby={
-                      errors.organization ? "organization-error" : undefined
-                    }
-                    className={`${inputBaseClass} ${
-                      errors.organization ? errorInputClass : ""
-                    }`}
-                  />
-                  {errors.organization && (
-                    <p
-                      id="organization-error"
-                      className="mt-1 text-xs text-[var(--status-error-ink)]"
+                {/* Track d: General Inquiry */}
+                <TabsContent value="general" className="mt-4 space-y-5 outline-none">
+                  <div>
+                    <label
+                      htmlFor="inquiryTopic"
+                      className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-300"
                     >
-                      {errors.organization}
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              {/* Isolated International E.164 Phone Input */}
-              <div>
-                <label
-                  htmlFor="phone"
-                  className="mb-1.5 block text-sm font-medium text-[var(--text-ink)]"
-                >
-                  {content.fields.phone.label} *
-                </label>
-                <div className="grid grid-cols-1 gap-2 sm:grid-cols-[150px_1fr]">
-                  <select
-                    aria-label={content.fields.phone.codeLabel}
-                    value={countryCode}
-                    onChange={(e) => handleCountryCodeChange(e.target.value)}
-                    className={inputBaseClass}
-                  >
-                    {COUNTRY_CODE_PRESETS.map((preset) => (
-                      <option key={preset.code} value={preset.code}>
-                        {preset.label}
+                      {content.fields.inquiryTopic.label}
+                    </label>
+                    <select
+                      id="inquiryTopic"
+                      name="inquiryTopic"
+                      required
+                      value={values.inquiryTopic || ""}
+                      onChange={(e) => updateField("inquiryTopic", e.target.value)}
+                      aria-invalid={Boolean(errors.inquiryTopic)}
+                      className={`${inputBaseClasses} ${
+                        errors.inquiryTopic ? inputErrorClasses : ""
+                      }`}
+                    >
+                      <option value="" className="bg-[#0B0C0E] text-zinc-400">
+                        {content.fields.inquiryTopic.placeholder}
                       </option>
-                    ))}
-                  </select>
-                  <input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    inputMode="tel"
-                    required
-                    autoComplete="tel"
-                    value={values.phone}
-                    onChange={(e) => updateField("phone", e.target.value)}
-                    placeholder={content.fields.phone.placeholder}
-                    aria-invalid={Boolean(errors.phone)}
-                    aria-describedby={
-                      errors.phone ? "phone-hint phone-error" : "phone-hint"
-                    }
-                    className={`${inputBaseClass} font-mono ${
-                      errors.phone ? errorInputClass : ""
-                    }`}
-                  />
+                      {content.fields.inquiryTopic.options.map((opt) => (
+                        <option
+                          key={opt}
+                          value={opt}
+                          className="bg-[#0B0C0E] text-[#F5F5F7]"
+                        >
+                          {opt}
+                        </option>
+                      ))}
+                    </select>
+                    <p className="mt-1 text-[11px] text-zinc-400">
+                      {content.fields.inquiryTopic.hint}
+                    </p>
+                    {errors.inquiryTopic && (
+                      <p className="mt-1 text-xs text-red-400">
+                        {errors.inquiryTopic}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="proposalDetails"
+                      className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-300"
+                    >
+                      {content.fields.proposalDetails.label}
+                    </label>
+                    <textarea
+                      id="proposalDetails"
+                      name="proposalDetails"
+                      rows={4}
+                      required
+                      value={values.proposalDetails || ""}
+                      onChange={(e) =>
+                        updateField("proposalDetails", e.target.value)
+                      }
+                      placeholder={content.fields.proposalDetails.placeholder}
+                      aria-invalid={Boolean(errors.proposalDetails)}
+                      className={`${inputBaseClasses} min-h-[100px] ${
+                        errors.proposalDetails ? inputErrorClasses : ""
+                      }`}
+                    />
+                    <p className="mt-1 text-[11px] text-zinc-400">
+                      {content.fields.proposalDetails.hint}
+                    </p>
+                    {errors.proposalDetails && (
+                      <p className="mt-1 text-xs text-red-400">
+                        {errors.proposalDetails}
+                      </p>
+                    )}
+                  </div>
+                </TabsContent>
+              </div>
+
+              {/* Universal Corporate Contact Details */}
+              <div className="mt-8 border-t border-white/10 pt-6">
+                <span className="block font-mono text-xs uppercase tracking-[0.16em] text-[#C5A059]">
+                  03 // {content.demoSuccess.contactLabel} &amp; {content.demoSuccess.companyLabel}
+                </span>
+
+                <div className="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                  <div>
+                    <label
+                      htmlFor="contactName"
+                      className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-300"
+                    >
+                      {content.fields.contactName.label}
+                    </label>
+                    <input
+                      id="contactName"
+                      name="contactName"
+                      type="text"
+                      required
+                      autoComplete="name"
+                      value={values.contactName}
+                      onChange={(e) => updateField("contactName", e.target.value)}
+                      placeholder={content.fields.contactName.placeholder}
+                      aria-invalid={Boolean(errors.contactName)}
+                      className={`${inputBaseClasses} ${
+                        errors.contactName ? inputErrorClasses : ""
+                      }`}
+                    />
+                    {errors.contactName && (
+                      <p className="mt-1 text-xs text-red-400">
+                        {errors.contactName}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="company"
+                      className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-300"
+                    >
+                      {content.fields.company.label}
+                    </label>
+                    <input
+                      id="company"
+                      name="company"
+                      type="text"
+                      required
+                      autoComplete="organization"
+                      value={values.company}
+                      onChange={(e) => updateField("company", e.target.value)}
+                      placeholder={content.fields.company.placeholder}
+                      aria-invalid={Boolean(errors.company)}
+                      className={`${inputBaseClasses} ${
+                        errors.company ? inputErrorClasses : ""
+                      }`}
+                    />
+                    {errors.company && (
+                      <p className="mt-1 text-xs text-red-400">
+                        {errors.company}
+                      </p>
+                    )}
+                  </div>
                 </div>
-                <p
-                  id="phone-hint"
-                  className="mt-1.5 text-xs text-[var(--text-muted-aa)]"
-                >
-                  {content.fields.phone.hint}
+
+                {/* International E.164 Phone with preset picker */}
+                <div className="mt-5">
+                  <label
+                    htmlFor="phone"
+                    className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-300"
+                  >
+                    {content.fields.phone.label}
+                  </label>
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-[140px_1fr]">
+                    <select
+                      aria-label={content.fields.phone.codeLabel}
+                      value={countryCode}
+                      onChange={(e) => handleCountryCodeChange(e.target.value)}
+                      className={`${inputBaseClasses} font-mono text-sm`}
+                    >
+                      {COUNTRY_CODE_PRESETS.map((preset) => (
+                        <option
+                          key={preset.code}
+                          value={preset.code}
+                          className="bg-[#0B0C0E] text-[#F5F5F7]"
+                        >
+                          {preset.label}
+                        </option>
+                      ))}
+                    </select>
+
+                    <input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      inputMode="tel"
+                      required
+                      autoComplete="tel"
+                      value={values.phone}
+                      onChange={(e) => updateField("phone", e.target.value)}
+                      placeholder={content.fields.phone.placeholder}
+                      aria-invalid={Boolean(errors.phone)}
+                      className={`${inputBaseClasses} font-mono ${
+                        errors.phone ? inputErrorClasses : ""
+                      }`}
+                    />
+                  </div>
+                  <p className="mt-1 text-[11px] text-zinc-400">
+                    {content.fields.phone.hint}
+                  </p>
+                  {errors.phone && (
+                    <p className="mt-1 text-xs text-red-400">
+                      {errors.phone}
+                    </p>
+                  )}
+                </div>
+
+                <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-300"
+                    >
+                      {content.fields.email.label}
+                    </label>
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      value={values.email || ""}
+                      onChange={(e) => updateField("email", e.target.value)}
+                      placeholder={content.fields.email.placeholder}
+                      aria-invalid={Boolean(errors.email)}
+                      className={`${inputBaseClasses} ${
+                        errors.email ? inputErrorClasses : ""
+                      }`}
+                    />
+                    {errors.email && (
+                      <p className="mt-1 text-xs text-red-400">
+                        {errors.email}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="notes"
+                      className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-zinc-300"
+                    >
+                      {content.fields.notes.label}
+                    </label>
+                    <input
+                      id="notes"
+                      name="notes"
+                      type="text"
+                      value={values.notes || ""}
+                      onChange={(e) => updateField("notes", e.target.value)}
+                      placeholder={content.fields.notes.placeholder}
+                      className={inputBaseClasses}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Submit CTA */}
+              <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6">
+                <p className="text-xs text-zinc-400">
+                  {featuresConfig.demoMode
+                    ? "🛡️ Demo rejim: ma'lumotlar brauzerda tekshiriladi, serverga jo'natilmaydi."
+                    : "🔒 Ma'lumotlarning to'liq konfidensialligi kafolatlanadi."}
                 </p>
-                {errors.phone && (
-                  <p
-                    id="phone-error"
-                    className="mt-1 text-xs text-[var(--status-error-ink)]"
-                  >
-                    {errors.phone}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="email"
-                  className="mb-1.5 block text-sm font-medium text-[var(--text-ink)]"
-                >
-                  {content.fields.email.label}
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  value={values.email}
-                  onChange={(e) => updateField("email", e.target.value)}
-                  placeholder={content.fields.email.placeholder}
-                  aria-invalid={Boolean(errors.email)}
-                  aria-describedby={errors.email ? "email-error" : undefined}
-                  className={`${inputBaseClass} ${errors.email ? errorInputClass : ""}`}
-                />
-                {errors.email && (
-                  <p
-                    id="email-error"
-                    className="mt-1 text-xs text-[var(--status-error-ink)]"
-                  >
-                    {errors.email}
-                  </p>
-                )}
-              </div>
-
-              <div>
-                <label
-                  htmlFor="notes"
-                  className="mb-1.5 block text-sm font-medium text-[var(--text-ink)]"
-                >
-                  {content.fields.notes.label}
-                </label>
-                <textarea
-                  id="notes"
-                  name="notes"
-                  rows={3}
-                  value={values.notes ?? ""}
-                  onChange={(e) => updateField("notes", e.target.value)}
-                  placeholder={content.fields.notes.placeholder}
-                  className={`${inputBaseClass} min-h-[88px]`}
-                />
-              </div>
-
-              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[var(--border-hairline-editorial)] pt-5">
-                <button
-                  type="button"
-                  onClick={() => setStep(1)}
-                  className="inline-flex min-h-[44px] items-center justify-center rounded-[2px] border border-[var(--border-hairline-editorial)] bg-[var(--bg-alabaster)] px-5 py-2.5 text-sm font-medium text-[var(--text-ink)] transition-colors hover:bg-[var(--bg-stone)]"
-                >
-                  {content.steps.prevButton}
-                </button>
 
                 <button
                   type="submit"
-                  className="inline-flex min-h-[44px] items-center justify-center rounded-[2px] bg-[var(--bg-dark)] px-6 py-2.5 text-sm font-medium text-[var(--text-on-dark)] transition-opacity hover:opacity-90"
+                  disabled={isSubmitting}
+                  className="inline-flex min-h-[48px] items-center justify-center rounded-[2px] border border-[#C5A059] bg-[#C5A059] px-8 py-2.5 text-sm font-semibold text-[#0B0C0E] transition-all hover:bg-[#E5C378] hover:shadow-[0_0_20px_rgba(197,160,89,0.3)] disabled:opacity-50"
                 >
-                  {featuresConfig.demoMode
-                    ? content.steps.submitDemoButton
-                    : content.steps.submitProdButton}
+                  {isSubmitting
+                    ? content.buttons.submitting
+                    : featuresConfig.demoMode
+                    ? content.buttons.demoSubmit
+                    : content.buttons.submit}
                 </button>
               </div>
-            </div>
-          )}
-        </form>
+            </form>
+          </Tabs>
+        </div>
       )}
-    </section>
+    </div>
   );
 }
-

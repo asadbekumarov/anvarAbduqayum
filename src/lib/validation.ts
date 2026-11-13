@@ -1,7 +1,11 @@
 import { z } from "zod";
 
-// Phone matches Uzbekistan format +998 followed by 9 digits
-export const phoneRegex = /^\+998\d{9}$/;
+/**
+ * Standard international E.164 phone regex (+ followed by 1 to 15 digits).
+ * Allows global numbers from Uzbekistan (+998), CIS (+7), Europe (+49, +44), UAE (+971), China (+86), USA (+1), etc.
+ */
+export const internationalPhoneRegex = /^\+[1-9]\d{1,14}$/;
+export const phoneRegex = internationalPhoneRegex;
 
 export const applyFormSchema = z.object({
   name: z
@@ -12,8 +16,9 @@ export const applyFormSchema = z.object({
   phone: z
     .string()
     .trim()
-    .regex(phoneRegex, {
-      message: "Telefon raqami +998XXXXXXXXX formatida bo'lishi kerak",
+    .transform((val) => val.replace(/[\s\-()]/g, ""))
+    .refine((val) => internationalPhoneRegex.test(val), {
+      message: "Telefon raqami xalqaro formatda bo'lishi kerak (masalan, +998901234567 yoki +79161234567)",
     }),
   business: z
     .string()

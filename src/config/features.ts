@@ -12,7 +12,9 @@ const resolveDemoMode = (): boolean => {
 };
 
 const resolvePartnershipIntake = (): boolean => {
-  return process.env.NEXT_PUBLIC_PARTNERSHIP_INTAKE?.trim().toLowerCase() === "true";
+  const envVal = process.env.NEXT_PUBLIC_PARTNERSHIP_INTAKE?.trim().toLowerCase();
+  if (envVal === "false") return false;
+  return true;
 };
 
 const resolveVentureDossiers = (): boolean => {
@@ -66,7 +68,7 @@ export const featuresConfig: FeatureFlags = {
   // Temporary safe handoff to official Telegram administrator pending verified Cal.com config
   bookingMode: "telegram",
 
-  // Consulting, Investment, legacy /test, and isolated B2B intake prototype are disabled by default
+  // Consulting, Investment, legacy /test are disabled; B2B International Partnership Portal is enabled
   consulting: false,
   investment: false,
   quiz: false,

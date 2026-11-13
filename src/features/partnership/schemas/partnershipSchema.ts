@@ -1,10 +1,11 @@
 import { z } from "zod";
+import { internationalPhoneRegex } from "@/features/apply/schemas/applySchema";
 
 export const PARTNERSHIP_TRACKS = [
   "export",
   "distribution",
   "manufacturing",
-  "other",
+  "general",
 ] as const;
 
 export type PartnershipTrack = (typeof PARTNERSHIP_TRACKS)[number];
@@ -18,17 +19,11 @@ export function normalizeInternationalPhone(raw: string): string {
   return cleaned.startsWith("+") ? cleaned : `+${cleaned}`;
 }
 
-/**
- * Isolated E.164 international phone validation for the Phase 4.8 B2B prototype.
- * Does NOT modify the production +998 validation in src/lib/validation.ts.
- */
-export const internationalPhoneRegex = /^\+[1-9]\d{6,14}$/;
-
-export const partnershipSchema = z
+export const b2bPartnershipSchema = z
   .object({
     track: z.enum(PARTNERSHIP_TRACKS),
     contactName: z.string().trim().min(2, "min2").max(80, "max80"),
-    organization: z.string().trim().min(2, "min2").max(120, "max120"),
+    company: z.string().trim().min(2, "min2").max(120, "max120"),
     phone: z
       .string()
       .trim()
@@ -40,31 +35,33 @@ export const partnershipSchema = z
       .string()
       .trim()
       .max(120)
+      .optional()
+      .or(z.literal(""))
       .refine(
-        (val) => val === "" || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val),
+        (val) => !val || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val),
         { message: "invalidEmail" }
       ),
-    notes: z.string().trim().max(800).optional().or(z.literal("")),
+    notes: z.string().trim().max(1000).optional().or(z.literal("")),
     honeypot: z.string().optional(),
 
-    // Export track fields
-    targetCountry: z.string().trim().max(100).optional().or(z.literal("")),
-    productInterest: z.string().trim().max(120).optional().or(z.literal("")),
-    estimatedVolume: z.string().trim().max(100).optional().or(z.literal("")),
+    // Track a) Export: target country & HS-category/volume
+    targetCountry: z.string().trim().max(120).optional().or(z.literal("")),
+    hsCategory: z.string().trim().max(120).optional().or(z.literal("")),
+    volume: z.string().trim().max(120).optional().or(z.literal("")),
 
-    // Distribution track fields
-    distributionRegion: z.string().trim().max(100).optional().or(z.literal("")),
-    salesChannel: z.string().trim().max(100).optional().or(z.literal("")),
-    outletCount: z.string().trim().max(60).optional().or(z.literal("")),
+    // Track b) Distribution: region & retail coverage
+    region: z.string().trim().max(120).optional().or(z.literal("")),
+    retailCoverage: z.string().trim().max(120).optional().or(z.literal("")),
+    outlets: z.string().trim().max(80).optional().or(z.literal("")),
 
-    // Manufacturing track fields
-    cooperationModel: z.string().trim().max(100).optional().or(z.literal("")),
-    productionScope: z.string().trim().max(120).optional().or(z.literal("")),
-    targetTimeline: z.string().trim().max(80).optional().or(z.literal("")),
+    // Track c) Manufacturing / OEM: specs & capacity
+    specs: z.string().trim().max(300).optional().or(z.literal("")),
+    capacity: z.string().trim().max(120).optional().or(z.literal("")),
+    toolingModel: z.string().trim().max(120).optional().or(z.literal("")),
 
-    // Other business proposals track fields
-    proposalCategory: z.string().trim().max(100).optional().or(z.literal("")),
-    proposalSummary: z.string().trim().max(800).optional().or(z.literal("")),
+    // Track d) General Inquiry: topic & proposal details
+    inquiryTopic: z.string().trim().max(120).optional().or(z.literal("")),
+    proposalDetails: z.string().trim().max(1000).optional().or(z.literal("")),
   })
   .superRefine((data, ctx) => {
     if (data.track === "export") {
@@ -75,66 +72,70 @@ export const partnershipSchema = z
           message: "min2",
         });
       }
-      if (!data.productInterest || data.productInterest.trim().length < 2) {
+      if (!data.hsCategory || data.hsCategory.trim().length < 2) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          path: ["productInterest"],
+          path: ["hsCategory"],
           message: "min2",
         });
       }
-    }
-
-    if (data.track === "distribution") {
-      if (!data.distributionRegion || data.distributionRegion.trim().length < 2) {
+      if (!data.volume || data.volume.trim().length < 2) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          path: ["distributionRegion"],
+          path: ["volume"],
           message: "min2",
         });
       }
-      if (!data.salesChannel || data.salesChannel.trim().length < 2) {
+    } else if (data.track === "distribution") {
+      if (!data.region || data.region.trim().length < 2) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          path: ["salesChannel"],
+          path: ["region"],
           message: "min2",
         });
       }
-    }
-
-    if (data.track === "manufacturing") {
-      if (!data.cooperationModel || data.cooperationModel.trim().length < 2) {
+      if (!data.retailCoverage || data.retailCoverage.trim().length < 2) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          path: ["cooperationModel"],
+          path: ["retailCoverage"],
           message: "min2",
         });
       }
-      if (!data.productionScope || data.productionScope.trim().length < 2) {
+    } else if (data.track === "manufacturing") {
+      if (!data.specs || data.specs.trim().length < 2) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          path: ["productionScope"],
+          path: ["specs"],
           message: "min2",
         });
       }
-    }
-
-    if (data.track === "other") {
-      if (!data.proposalCategory || data.proposalCategory.trim().length < 2) {
+      if (!data.capacity || data.capacity.trim().length < 2) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          path: ["proposalCategory"],
+          path: ["capacity"],
           message: "min2",
         });
       }
-      if (!data.proposalSummary || data.proposalSummary.trim().length < 10) {
+    } else if (data.track === "general") {
+      if (!data.inquiryTopic || data.inquiryTopic.trim().length < 2) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          path: ["proposalSummary"],
+          path: ["inquiryTopic"],
+          message: "min2",
+        });
+      }
+      if (!data.proposalDetails || data.proposalDetails.trim().length < 10) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          path: ["proposalDetails"],
           message: "min10",
         });
       }
     }
   });
 
-export type PartnershipFormValues = z.infer<typeof partnershipSchema>;
+export type B2BPartnershipFormValues = z.infer<typeof b2bPartnershipSchema>;
 
+// Backwards-compatibility aliases
+export const partnershipSchema = b2bPartnershipSchema;
+export type PartnershipFormValues = B2BPartnershipFormValues;

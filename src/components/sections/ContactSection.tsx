@@ -13,10 +13,21 @@ import {
   StaggeredTextReveal,
 } from "@/components/ui/LuxuryMotion";
 import {
-  cleanUzbekPhone,
   formatUzbekPhone,
-  isUzbekPhoneComplete,
 } from "@/lib/formatPhone";
+import { internationalPhoneRegex } from "@/features/apply/schemas/applySchema";
+
+const COUNTRY_CODE_PRESETS = [
+  { code: "+998", label: "UZ +998" },
+  { code: "+7", label: "RU/KZ +7" },
+  { code: "+90", label: "TR +90" },
+  { code: "+971", label: "AE +971" },
+  { code: "+49", label: "DE +49" },
+  { code: "+44", label: "UK +44" },
+  { code: "+1", label: "US +1" },
+  { code: "+86", label: "CN +86" },
+  { code: "+994", label: "AZ +994" },
+] as const;
 
 interface ContactSectionProps {
   locale?: string;
@@ -73,6 +84,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     message: "",
     honeypot: "",
   });
+  const [countryCode, setCountryCode] = useState<string>("+998");
   const [displayPhone, setDisplayPhone] = useState("");
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -88,16 +100,30 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
 
   const isSubmitting = status === "submitting";
 
+  const handleCountryCodeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const nextCode = e.target.value;
+    setCountryCode(nextCode);
+    setDisplayPhone((prev) => {
+      const current = prev.trim();
+      const withoutCode = current.startsWith(countryCode)
+        ? current.slice(countryCode.length).trimStart()
+        : current.replace(/^\+\d{1,4}\s*/, "");
+      return withoutCode ? `${nextCode} ${withoutCode}` : `${nextCode} `;
+    });
+    if (fieldErrors.phone) {
+      setFieldErrors((prev) => ({ ...prev, phone: undefined }));
+    }
+    if (serverError) setServerError(null);
+  };
+
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value;
-    const digitsOnly = raw.replace(/\D/g, "");
-    const nextValue =
-      digitsOnly.length === 0 || (raw.startsWith("+") && digitsOnly.length <= 3)
-        ? ""
-        : formatUzbekPhone(raw);
-    setDisplayPhone(nextValue);
-
-    if (fieldErrors.phone && isUzbekPhoneComplete(nextValue)) {
+    setDisplayPhone(raw);
+    const cleaned = raw.replace(/[\s\-()]/g, "");
+    const fullPhone = cleaned.startsWith("+")
+      ? cleaned
+      : `${countryCode}${cleaned.replace(/^\+/, "")}`;
+    if (fieldErrors.phone && internationalPhoneRegex.test(fullPhone)) {
       setFieldErrors((prev) => ({ ...prev, phone: undefined }));
     }
     if (serverError) setServerError(null);
@@ -124,7 +150,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
       errors.name = formCopy.errors.nameRequired;
     }
 
-    if (!isUzbekPhoneComplete(displayPhone)) {
+    const cleanedPhone = displayPhone.trim().replace(/[\s\-()]/g, "");
+    const fullPhone = cleanedPhone.startsWith("+")
+      ? cleanedPhone
+      : `${countryCode}${cleanedPhone.replace(/^\+/, "")}`;
+    const isPhoneValid = internationalPhoneRegex.test(fullPhone);
+
+    if (!isPhoneValid || cleanedPhone.length < 5) {
       errors.phone = formCopy.errors.phoneInvalid;
     }
 
@@ -185,7 +217,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     submitLockRef.current = true;
     setStatus("submitting");
 
-    const normalizedPhone = cleanUzbekPhone(displayPhone);
+    const cleanedPhone = displayPhone.trim().replace(/[\s\-()]/g, "");
+    const normalizedPhone = cleanedPhone.startsWith("+")
+      ? cleanedPhone
+      : `${countryCode}${cleanedPhone.replace(/^\+/, "")}`;
     const cleanName = formData.name.trim();
     const cleanBusiness = formData.business.trim();
     const cleanMessage = formData.message.trim();
@@ -731,25 +766,39 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                       >
                         {formCopy.phoneLabel} *
                       </label>
-                      <input
-                        ref={phoneInputRef}
-                        id="contact-phone"
-                        name="phone"
-                        type="tel"
-                        required
-                        inputMode="tel"
-                        autoComplete="tel"
-                        value={displayPhone}
-                        onChange={handlePhoneChange}
-                        placeholder={formCopy.phonePlaceholder}
-                        aria-invalid={fieldErrors.phone ? "true" : undefined}
-                        aria-describedby={fieldErrors.phone ? "contact-phone-error" : undefined}
-                        className={`w-full min-h-[48px] px-4 py-2.5 border rounded-[2px] text-[16px] leading-[1.4] tabular-nums text-[var(--text-ink)] placeholder:text-[var(--text-muted-aa)] transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] ${
-                          fieldErrors.phone
-                            ? "bg-[var(--status-error-wash)] border-[var(--status-error-border)]"
-                            : "bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] focus:bg-[var(--bg-surface)]"
-                        }`}
-                      />
+                      <div className="grid grid-cols-1 sm:grid-cols-[135px_1fr] gap-2">
+                        <select
+                          aria-label="Davlat kodi"
+                          value={countryCode}
+                          onChange={handleCountryCodeChange}
+                          className="min-h-[48px] px-3 border rounded-[2px] text-[15px] font-mono text-[var(--text-ink)] bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--accent-gold)]"
+                        >
+                          {COUNTRY_CODE_PRESETS.map((preset) => (
+                            <option key={preset.code} value={preset.code}>
+                              {preset.label}
+                            </option>
+                          ))}
+                        </select>
+                        <input
+                          ref={phoneInputRef}
+                          id="contact-phone"
+                          name="phone"
+                          type="tel"
+                          required
+                          inputMode="tel"
+                          autoComplete="tel"
+                          value={displayPhone}
+                          onChange={handlePhoneChange}
+                          placeholder={countryCode === "+998" ? "(90) 123-45-67" : "123 45 67"}
+                          aria-invalid={fieldErrors.phone ? "true" : undefined}
+                          aria-describedby={fieldErrors.phone ? "contact-phone-error" : undefined}
+                          className={`w-full min-h-[48px] px-4 py-2.5 border rounded-[2px] text-[16px] leading-[1.4] tabular-nums font-mono text-[var(--text-ink)] placeholder:text-[var(--text-muted-aa)] transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] ${
+                            fieldErrors.phone
+                              ? "bg-[var(--status-error-wash)] border-[var(--status-error-border)]"
+                              : "bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] focus:bg-[var(--bg-surface)]"
+                          }`}
+                        />
+                      </div>
                       {fieldErrors.phone && (
                         <span
                           id="contact-phone-error"
