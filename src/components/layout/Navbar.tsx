@@ -145,13 +145,6 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
     };
   }, [isHomePage]);
 
-  const taglineItems =
-    locale === "ru"
-      ? ["Промышленность", "Системное управление", "Экспорт"]
-      : locale === "en"
-      ? ["Industry", "Systemic Governance", "Export"]
-      : ["Sanoat", "Tizimli Boshqaruv", "Eksport"];
-
   const cityLabel =
     locale === "ru"
       ? "Ташкент, 2026"
@@ -261,7 +254,7 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
           ? "07 — Концепция B2B-диалога"
           : locale === "en"
           ? "07 — B2B Collaboration Concept"
-          : "07 — B2B hamkorlik (Demo)",
+          : "07 — B2B hamkorlik",
     },
     {
       id: "aloqa",
@@ -278,6 +271,8 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
   ];
 
   const desktopNavLinks = navLinks.filter((item) => item.desktopPrimary);
+
+  const ctaLabel = content.navigation.ctaButton || "Hamkorlik tartibi";
 
   const handleLanguageChange = (newLocale: string) => {
     if (newLocale === locale) return;
@@ -311,21 +306,8 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
               href={`/${locale}`}
               className="group min-h-[44px] flex flex-col justify-center py-1 min-w-0 shrink-0 rounded-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-alabaster)]"
             >
-              <span className="font-serif text-base sm:text-xl xl:text-[22px] font-bold tracking-[0.12em] text-[var(--text-ink)] uppercase leading-none">
+              <span className="font-serif text-base sm:text-xl xl:text-[22px] font-bold tracking-[0.12em] text-[var(--text-ink)] uppercase leading-none whitespace-nowrap">
                 ANVAR ABDUQAYUM<span className="text-[var(--accent-gold-ink)]">.</span>
-              </span>
-              <span className="hidden sm:inline-flex items-center gap-2 2xl:whitespace-nowrap text-[9.5px] font-sans font-semibold tracking-[0.12em] uppercase text-[var(--text-muted-aa)] mt-1">
-                {taglineItems.map((item, idx) => (
-                  <React.Fragment key={item}>
-                    {idx > 0 && (
-                      <span
-                        className="w-px h-2.5 bg-[var(--border-hairline)]"
-                        aria-hidden="true"
-                      />
-                    )}
-                    <span>{item}</span>
-                  </React.Fragment>
-                ))}
               </span>
               <span className="sr-only">
                 {locale === "ru"
@@ -345,7 +327,7 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
                   ? "Primary navigation"
                   : "Asosiy menyu"
               }
-              className="hidden xl:flex items-center gap-3.5 2xl:gap-7"
+              className="hidden xl:flex items-center gap-1.5 xl:gap-2 2xl:gap-5 shrink-0"
             >
               {desktopNavLinks.map((item) => {
                 const targetHref = isHomePage
@@ -358,13 +340,13 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
                     key={item.id}
                     href={targetHref}
                     aria-current={isActive ? "true" : undefined}
-                    className={`group relative min-h-[44px] min-w-[44px] inline-flex items-center justify-center text-center leading-tight px-1.5 py-2 text-[11.5px] font-sans font-semibold uppercase tracking-[0.12em] transition-colors rounded-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-alabaster)] active:opacity-80 ${
+                    className={`group relative min-h-[44px] inline-flex items-center justify-center whitespace-nowrap px-2 xl:px-2.5 2xl:px-3 py-2 text-[11px] xl:text-[11.5px] font-sans font-semibold uppercase tracking-[0.08em] xl:tracking-[0.1em] 2xl:tracking-[0.12em] transition-colors rounded-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-alabaster)] active:opacity-80 shrink-0 ${
                       isActive
                         ? "text-[var(--text-ink)] font-bold"
                         : "text-[var(--text-soft-editorial)] hover:text-[var(--text-ink)]"
                     }`}
                   >
-                    <span>{item.label}</span>
+                    <span className="whitespace-nowrap">{item.label}</span>
                     <span
                       className={`absolute bottom-1.5 left-0 w-full h-[1.5px] bg-[var(--accent-gold-ink)] origin-left transition-transform duration-200 ${
                         isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
@@ -376,10 +358,10 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
             </nav>
 
             {/* Right Tools: Language Switcher & Consultation CTA */}
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
               {/* Language Switcher (UZ/RU/EN) */}
               <div
-                className="hidden sm:inline-flex items-center bg-[var(--bg-surface)] border border-[var(--border-hairline)] rounded-[4px] p-0.5 shadow-sm"
+                className="hidden sm:inline-flex items-center bg-[var(--bg-surface)] border border-[var(--border-hairline)] rounded-[4px] p-0.5 shadow-sm shrink-0"
                 role="group"
                 aria-label={
                   locale === "ru"
@@ -394,7 +376,7 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
                     key={lang}
                     type="button"
                     onClick={() => handleLanguageChange(lang)}
-                    className={`min-h-[44px] min-w-[44px] px-3 py-2 text-[11px] font-mono font-semibold uppercase rounded-[2px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] active:scale-[0.98] ${
+                    className={`min-h-[40px] min-w-[38px] xl:min-w-[40px] px-2.5 xl:px-3 py-1.5 text-[11px] font-mono font-semibold uppercase rounded-[2px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] active:scale-[0.98] ${
                       locale === lang
                         ? "bg-[var(--bg-dark)] text-[var(--bg-surface)] font-bold"
                         : "text-[var(--text-soft-editorial)] hover:text-[var(--text-ink)]"
@@ -412,9 +394,9 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
               {/* Consultation Booking CTA */}
               <BookingActionLink
                 locale={locale}
-                className="hidden md:inline-flex items-center justify-center min-h-[44px] px-4 2xl:px-5 max-w-[195px] text-center leading-[1.2] bg-[var(--bg-dark)] text-[var(--bg-surface)] text-[11px] font-sans font-semibold uppercase tracking-[0.12em] rounded-[2px] border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] active:scale-[0.98] transition-[background-color,border-color,color,transform] duration-200 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-alabaster)]"
+                className="hidden md:inline-flex items-center justify-center min-h-[40px] xl:min-h-[44px] px-3.5 xl:px-4 2xl:px-5 whitespace-nowrap text-center leading-none bg-[var(--bg-dark)] text-[var(--bg-surface)] text-[10.5px] xl:text-[11px] font-sans font-semibold uppercase tracking-[0.08em] xl:tracking-[0.12em] rounded-[2px] border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] active:scale-[0.98] transition-[background-color,border-color,color,transform] duration-200 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-alabaster)] shrink-0"
               >
-                <span>{content.navigation.ctaButton || "Uchrashuv bo‘yicha yozish"}</span>
+                <span className="whitespace-nowrap">{ctaLabel}</span>
               </BookingActionLink>
 
               {/* Mobile / Tablet Menu Toggle Button (Min 44px touch target) */}
@@ -422,7 +404,7 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
                 ref={toggleButtonRef}
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="xl:hidden min-h-[44px] min-w-[44px] w-11 h-11 p-2.5 flex items-center justify-center bg-[var(--bg-surface)] border border-[var(--border-hairline)] rounded-[4px] text-[var(--text-ink)] hover:bg-[var(--bg-stone)] active:scale-[0.96] transition-[background-color,transform] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                className="xl:hidden min-h-[44px] min-w-[44px] w-11 h-11 p-2.5 flex items-center justify-center bg-[var(--bg-surface)] border border-[var(--border-hairline)] rounded-[4px] text-[var(--text-ink)] hover:bg-[var(--bg-stone)] active:scale-[0.96] transition-[background-color,transform] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] shrink-0"
                 aria-expanded={mobileMenuOpen}
                 aria-controls="mobile-drawer-panel"
                 aria-label={
@@ -497,10 +479,10 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
         {/* Drawer Header */}
         <div className="flex items-center justify-between pb-4 border-b border-[var(--border-hairline-subtle)] mb-4 gap-3">
           <div className="min-w-0 flex-1">
-            <span className="font-serif font-bold text-sm tracking-[0.08em] text-[var(--text-ink)] truncate block uppercase">
+            <span className="font-serif font-bold text-sm tracking-[0.08em] text-[var(--text-ink)] whitespace-nowrap truncate block uppercase">
               ANVAR ABDUQAYUM
             </span>
-            <span className="text-[11px] font-sans text-[var(--text-muted-aa)] block mt-0.5">
+            <span className="text-[11px] font-sans text-[var(--text-muted-aa)] whitespace-nowrap block mt-0.5">
               {locale === "ru" ? "Навигация" : locale === "en" ? "Navigation" : "Navigatsiya"}
             </span>
           </div>
@@ -588,11 +570,11 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
           <BookingActionLink
             locale={locale}
             onClick={() => setMobileMenuOpen(false)}
-            className="min-h-[48px] w-full px-4 text-center flex items-center justify-center bg-[var(--bg-dark)] text-[var(--bg-surface)] text-[11px] font-sans font-semibold uppercase tracking-[0.14em] rounded-[2px] hover:bg-[var(--accent-gold-ink)] active:scale-[0.98] transition-[background-color,transform] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+            className="min-h-[48px] w-full px-4 text-center flex items-center justify-center whitespace-nowrap bg-[var(--bg-dark)] text-[var(--bg-surface)] text-[11px] font-sans font-semibold uppercase tracking-[0.12em] rounded-[2px] hover:bg-[var(--accent-gold-ink)] active:scale-[0.98] transition-[background-color,transform] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
           >
-            <span>{content.navigation.ctaButton || "Uchrashuv bo‘yicha yozish"}</span>
+            <span className="whitespace-nowrap">{ctaLabel}</span>
           </BookingActionLink>
-          <p className="font-sans text-[11px] text-[var(--text-muted-aa)] mt-3 text-center">
+          <p className="font-sans text-[11px] text-[var(--text-muted-aa)] mt-3 text-center whitespace-nowrap">
             {cityLabel}
           </p>
         </div>

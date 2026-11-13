@@ -7,10 +7,8 @@ export type BookingMode = "telegram" | "calcom";
 
 const resolveDemoMode = (): boolean => {
   const envVal = process.env.NEXT_PUBLIC_DEMO_MODE?.trim().toLowerCase();
-  if (envVal === "false") return false;
   if (envVal === "true") return true;
-  // Private Demo Safety Mode enabled by default until authorized production deployment
-  return true;
+  return false;
 };
 
 const resolvePartnershipIntake = (): boolean => {

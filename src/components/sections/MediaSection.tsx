@@ -312,10 +312,10 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
       <div className="bg-[var(--bg-stone)] border-b border-[var(--border-hairline-editorial)] py-8 lg:py-10">
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
           {/* Editorial Split Header */}
-          <header className="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-10 lg:items-end pb-4 border-b border-[var(--border-hairline-editorial)] mb-6">
+          <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 pb-4 border-b border-[var(--border-hairline-editorial)] mb-6">
             <h2
               id="media-heading"
-              className="lg:col-span-7 font-serif text-[clamp(28px,3.8vw,46px)] font-semibold leading-[1.08] tracking-[-0.02em] text-[var(--text-ink)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
+              className="font-sans text-[28px] sm:text-[36px] md:text-[45px] font-bold leading-tight tracking-tight text-[var(--text-ink)] min-w-0"
             >
               <StaggeredTextReveal
                 text={`${media.title}${
@@ -324,20 +324,15 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
               />
             </h2>
 
-            <ScrollReveal delay={0.1} y={24} className="lg:col-span-5">
-              <p className="text-[15px] lg:text-[15.5px] leading-[1.55] text-[var(--text-soft-editorial)] max-w-[58ch] [text-wrap:pretty]">
-                {media.subtitle}
-              </p>
-              {featuresConfig.mediaLibrary && (
-                <Link
-                  href={`/${safeLocale}/kutubxona`}
-                  className="mt-3 inline-flex min-h-[40px] items-center gap-2 font-mono text-[11.5px] font-semibold uppercase tracking-[0.12em] text-[var(--accent-gold-ink)] underline underline-offset-4 hover:text-[var(--text-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
-                >
-                  <span>{getMediaLibraryUiCopy(safeLocale).homepageLinkLabel}</span>
-                  <span aria-hidden="true">→</span>
-                </Link>
-              )}
-            </ScrollReveal>
+            {featuresConfig.mediaLibrary && (
+              <Link
+                href={`/${safeLocale}/kutubxona`}
+                className="inline-flex min-h-[40px] items-center gap-2 font-mono text-[11.5px] font-semibold uppercase tracking-[0.12em] text-[var(--accent-gold-ink)] underline underline-offset-4 hover:text-[var(--text-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] shrink-0"
+              >
+                <span>{getMediaLibraryUiCopy(safeLocale).homepageLinkLabel}</span>
+                <span aria-hidden="true">→</span>
+              </Link>
+            )}
           </header>
 
           {/* Featured Editorial Interview (7:5 Split Showcase) */}
@@ -407,10 +402,6 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
 
                 {/* 5-Col Publication Ledger & Actions */}
                 <div className="lg:col-span-5 flex flex-col gap-4 min-w-0">
-                  <span className="inline-flex items-center self-start min-h-[28px] px-3 py-1 rounded-[2px] text-[12.5px] font-semibold bg-[var(--accent-gold-soft)] text-[var(--accent-gold-ink)] border border-[var(--accent-gold-border)]">
-                    {featured.statusLabel}
-                  </span>
-
                   <h3
                     id="featured-interview-title"
                     className="font-serif text-[clamp(24px,2.5vw,32px)] font-semibold leading-[1.2] text-[var(--text-ink)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
@@ -507,9 +498,6 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
                 <h3 className="font-serif text-[clamp(20px,2.2vw,26px)] font-semibold leading-[1.2] text-[var(--text-ink)]">
                   {knowledgeMedia?.heading || media.youtubeHeading}
                 </h3>
-                <span className="text-[12.5px] font-medium text-[var(--text-muted-aa)]">
-                  {knowledgeMedia?.submeta || media.videosSubmeta}
-                </span>
               </div>
 
               <div className="flex items-center gap-2">
@@ -766,11 +754,6 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
             <h3 className="font-serif text-[clamp(22px,2.4vw,28px)] font-semibold leading-[1.2] text-[var(--text-ink)]">
               {media.pressHeading}
             </h3>
-            {media.pressSubmeta && (
-              <span className="text-[13.5px] font-medium text-[var(--text-muted-aa)]">
-                {media.pressSubmeta}
-              </span>
-            )}
           </div>
 
           {media.pressFilters && (
@@ -867,43 +850,6 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
               </article>
             ))}
           </div>
-
-          {ui?.disclosureHeading && (
-            <aside
-              id="media-source-disclosure"
-              aria-label={ui.disclosureHeading}
-              className="mt-10 p-6 bg-[var(--bg-stone-soft)] border-t border-[var(--border-hairline-editorial-strong)] border-b border-[var(--border-hairline-editorial)] grid grid-cols-1 lg:grid-cols-12 gap-4 items-center"
-            >
-              <div className="lg:col-span-8">
-                <h4 className="text-[14px] font-bold text-[var(--text-ink)] mb-1">
-                  {ui.disclosureHeading}
-                </h4>
-                <p className="text-[14px] leading-[1.6] text-[var(--text-soft-editorial)] max-w-[68ch]">
-                  {ui.disclosureCopy}
-                </p>
-              </div>
-              <div className="lg:col-span-4 flex justify-start lg:justify-end">
-                <a
-                  id="media-official-yt-link"
-                  href={ui.officialChannelUrl || "https://www.youtube.com/@AnvarAbduqayum"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="min-h-[46px] px-4 bg-transparent text-[var(--text-ink)] border border-[var(--border-hairline-editorial-strong)] hover:border-[var(--accent-gold-ink)] hover:bg-[var(--accent-gold-soft)] rounded-[2px] text-[14px] font-medium inline-flex items-center gap-2 whitespace-nowrap transition-[background-color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
-                >
-                  <span>{ui.officialChannelHandleLabel}</span>
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                    <path
-                      d="M4 12L12 4M6 4h6v6"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </a>
-              </div>
-            </aside>
-          )}
         </div>
       </div>
 

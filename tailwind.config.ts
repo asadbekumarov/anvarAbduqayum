@@ -42,8 +42,8 @@ const config: Config = {
         lg: conceptTheme.geometry.radiusLg,
       },
       fontFamily: {
-        display: ["var(--font-display)", "Georgia", "serif"],
-        serif: ["var(--font-display)", "Georgia", "serif"],
+        display: ["var(--font-sans)", "-apple-system", "sans-serif"],
+        serif: ["var(--font-sans)", "-apple-system", "sans-serif"],
         sans: ["var(--font-sans)", "-apple-system", "sans-serif"],
         mono: ["var(--font-mono)", "JetBrains Mono", "monospace"],
       },

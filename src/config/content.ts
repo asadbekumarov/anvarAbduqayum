@@ -570,9 +570,9 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
       mistakes: "Mening xatolarim",
       media: "Media",
       contact: "Aloqa",
-      ctaButton: "Hamkorlik tartibi (Demo)",
+      ctaButton: "Hamkorlik tartibi",
       consulting: "Xizmatlar",
-      bookingCta: "Hamkorlik tartibi (Demo)",
+      bookingCta: "Hamkorlik tartibi",
     },
     hero: {
       moduleLabel: "QOLIP №00 // BOSH MATRITSA",
@@ -583,7 +583,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
       headlineSuffix: " tizimlar va sanoat darajasidagi boshqaruv.",
       summary:
         "Anvar Abduqayum — Toybola Toys (VISAGE ELECTRIC MChJ ishlab chiqarish korxonasi) asoschisi va hammuassisi, Samtech Masterbatches sanoat loyihasi hammuassisi, HoReCa tarmoqlari hamkori hamda mustaqil UZBIC jamoat platformasi raisi. Ushbu tahririy konsepsiya sanoat amaliyoti, ommaviy chiqishlar va biznes ekotizimi sharhini jamlaydi.",
-      ctaPrimary: "Hamkorlik tartibi (Demo)",
+      ctaPrimary: "Hamkorlik tartibi",
       ctaSecondary: "Biznes ekotizimi",
       portraitCaption: "Anvar Abduqayum",
       blueprintDimensions: {
@@ -620,20 +620,19 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
     },
         dossier: {
       sectionNum: "07",
-      tablistAriaLabel: "B2B hamkorlik yo‘nalishlari (Demo)",
-      eyebrow: "B2B HAMKORLIK KONSEPSIYASI // DEMO FORMAT",
-      title: "Hamkorlik va muloqot uchun 4 ta namunaviy B2B yo‘nalish",
+      tablistAriaLabel: "B2B hamkorlik yo‘nalishlari",
+      eyebrow: "B2B HAMKORLIK YO‘NALISHLARI",
+      title: "Hamkorlik va muloqot uchun 4 ta asosiy B2B yo‘nalish",
       subtitle:
-        "Sanoat kooperatsiyasi, eksport hamkorligi, biznes ta’limi va media chiqishlari bo‘yicha mumkin bo‘lgan hamkorlik shakllarini ko‘rsatuvchi tahririy demo-konsepsiya.",
-      disclaimer:
-        "Ushbu mustaqil konsepsiya rasmiy tijorat xizmati taklifini anglatmaydi.",
+        "Sanoat kooperatsiyasi, eksport hamkorligi, biznes ta’limi va media chiqishlari bo‘yicha hamkorlik shakllari.",
+      disclaimer: "",
       labels: {
-        programSpec: "YO‘NALISH TAVSIFI (DEMO)",
+        programSpec: "YO‘NALISH TAVSIFI",
         format: "Muloqot formati",
         audience: "Kimlar uchun",
         overview: "Umumiy tavsif",
         focusAreas: "Muhokama mavzulari",
-        ctaText: "Hamkorlik tartibi (Demo)",
+        ctaText: "Hamkorlik tartibi",
       },
       services: [
         {
@@ -645,14 +644,14 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           audience:
             "Mahalliy ishlab chiqaruvchilar, sanoat majmualari va ta’minot hamkorlari",
           overview:
-            "Ushbu namunaviy yo‘nalish polimer va iste’mol tovarlari ishlab chiqarishidagi amaliy tajriba asosida korxonalararo sanoat kooperatsiyasi imkoniyatlarini ko‘rib chiqadi.",
+            "Ushbu yo‘nalish polimer va iste’mol tovarlari ishlab chiqarishidagi amaliy tajriba asosida korxonalararo sanoat kooperatsiyasi imkoniyatlarini ko‘rib chiqadi.",
           focusAreas: [
             "Mahalliylashtirish va sanoat ishlab chiqarish zanjirlarida B2B hamkorlik",
             "Standart ish reglamentlari (SOP) va sifat nazorati bo‘yicha tajriba almashish",
             "Operatsion barqarorlik va boshqaruv tizimlashtirish masalalari",
           ],
-          format: "Demo-konsepsiya // Rasmiy shartnoma yoki oferta emas",
-          ctaText: "Hamkorlik tartibi (Demo)",
+          format: "Sanoat kooperatsiyasi formati",
+          ctaText: "Hamkorlik tartibi",
         },
         {
           id: "export-partnerships",
@@ -663,14 +662,14 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           audience:
             "Eksport geografiyasini kengaytirishga qiziqqan ishlab chiqarish korxonalari",
           overview:
-            "2010–2012-yillardagi eksport amaliyoti va O‘zbekiston Biznes va Sanoat Kengashi (UZBIC) jamoat platformasi tajribasiga tayangan namunaviy eksport yo‘nalishi.",
+            "2010–2012-yillardagi eksport amaliyoti va O‘zbekiston Biznes va Sanoat Kengashi (UZBIC) jamoat platformasi tajribasiga tayangan eksport yo‘nalishi.",
           focusAreas: [
             "Tashqi bozorlar sifat talablari va sertifikatlashtirish yo‘nalishlari",
             "MDH va qo‘shni mamlakatlar bilan B2B savdo delegatsiyalari",
             "UZBIC doirasidagi tarmoqlararo eksport kooperatsiyasi",
           ],
-          format: "Demo-konsepsiya // Jamoat platformasi konteksti",
-          ctaText: "Hamkorlik tartibi (Demo)",
+          format: "Jamoat platformasi konteksti",
+          ctaText: "Hamkorlik tartibi",
         },
         {
           id: "knowledge-education",
@@ -687,8 +686,8 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
             "Biznesni shaxsdan tizimga o‘tkazish (Qolip) tamoyillarini muhokama qilish",
             "Eslatma: pullik kurs yoki tijorat akademiyasi taklifi mavjud emas",
           ],
-          format: "Ommaviy ma’rifiy format (Demo)",
-          ctaText: "Hamkorlik tartibi (Demo)",
+          format: "Ommaviy ma’rifiy format",
+          ctaText: "Hamkorlik tartibi",
         },
         {
           id: "media-speaking",
@@ -699,14 +698,14 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           audience:
             "Tahririyatlar, biznes forum tashkilotchilari va tarmoq media loyihalari",
           overview:
-            "Ochiq intervyular (SUBYEKTIV, Inter Nation, Spot.uz, Kun.uz) va biznes forumlardagi chiqishlar amaliyotiga moslashtirilgan demo media murojaat tartibi.",
+            "Ochiq intervyular (SUBYEKTIV, Inter Nation, Spot.uz, Kun.uz) va biznes forumlardagi chiqishlar amaliyotiga moslashtirilgan media murojaat tartibi.",
           focusAreas: [
             "Sanoat, ishlab chiqarish va eksport mavzularidagi intervyu so‘rovlari",
             "Tadbirkorlik konferensiyalari va panel sessiyalarda ishtirok etish",
             "Rasmiy tasdiqdan so‘ng faollashtiriladigan aloqa tartibi",
           ],
-          format: "Demo media murojaat formati",
-          ctaText: "Hamkorlik tartibi (Demo)",
+          format: "Media murojaat formati",
+          ctaText: "Hamkorlik tartibi",
         },
       ],
     },
@@ -1503,18 +1502,18 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
     contact: {
       booking: {
         ordinal: "07.A",
-        title: "Uchrashuv va hamkorlik tartibi (Demo)",
-        lead: "Ushbu mustaqil dizayn konsepsiyasida to‘g‘ridan-to‘g‘ri qabul va administrator kontaktlari muallif jamoasi tasdig‘idan so‘ng ulanadi.",
+        title: "Uchrashuv va hamkorlik tartibi",
+        lead: "Tijoriy takliflar, strategik sheriklik va hamkorlik bo'yicha rasmiy murojaat qilish tartibi.",
         specs: [
-          { label: "Qabul holati", value: "Demo namoyish · Jonli qabul yopiq" },
+          { label: "Qabul holati", value: "Rasmiy qabul va hamkorlik" },
           { label: "Muhokama mavzulari", value: "Tizimlashtirish va strategik sheriklik" },
           { label: "Aloqa manzillari", value: "Tasdiqlangan ommaviy kanallar orqali" },
         ],
-        cardTitle: "Demo rejim · Ma’lumot sahifasi",
-        cardDescription: "Tasdiqlanmagan telefon yoki administrator akkauntlariga yo‘naltirish oldini olish uchun uchrashuv tugmasi demo ma’lumot sahifasiga olib boradi.",
-        routeLabel: "Demo sahifa:",
-        primaryCta: "Hamkorlik tartibi (Demo)",
-        telegramCta: "Hamkorlik tartibi (Demo)",
+        cardTitle: "Uchrashuv va hamkorlik",
+        cardDescription: "Uchrashuv va hamkorlik bo'yicha rasmiy ma'lumotlar sahifasi.",
+        routeLabel: "Sahifa:",
+        primaryCta: "Hamkorlik tartibi",
+        telegramCta: "Hamkorlik tartibi",
       },
       directory: {
         ordinal: "07.B",
@@ -1585,18 +1584,18 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
       },
     },
     mobileStickyBar: {
-      telegramLabel: "Aloqa va demo tartibi",
+      telegramLabel: "Aloqa va hamkorlik",
       callLabel: "Qo'ng'iroq",
     },
     footer: {
       founderName: "Anvar Abduqayum",
       tagline: "Tizimli tadbirkorlik, sanoat ishlab chiqarishi va boshqaruv amaliyoti.",
-      bookingCta: "Hamkorlik tartibi (Demo)",
+      bookingCta: "Hamkorlik tartibi",
       navHeading: "Sayt bo‘limlari",
       contactHeading: "Rasmiy aloqa",
       platformsHeading: "Ommaviy kanallar",
-      bookingLinkLabel: "Hamkorlik tartibi (Demo)",
-      colophonNote: "Anvar Abduqayum, 2026. Toshkent, O‘zbekiston. Boshqaruv va sanoat loyihalari nashri.",
+      bookingLinkLabel: "Hamkorlik tartibi",
+      colophonNote: "© 2026 Anvar Abduqayum. Sanoat va boshqaruv ekotizimi.",
       backToTop: "Sahifa boshiga qaytish",
       indexLinks: [
         { code: "01", anchor: "#hero", label: "Asosiy sahifa" },
@@ -1605,7 +1604,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
         { code: "04", anchor: "#tashabbuslar", label: "Joriy tashabbuslar" },
         { code: "05", anchor: "#tamoyil", label: "Qolip tamoyili" },
         { code: "06", anchor: "#media", label: "Bilimlar va media" },
-        { code: "07", anchor: "#xizmatlar", label: "B2B hamkorlik (Demo)" },
+        { code: "07", anchor: "#xizmatlar", label: "B2B hamkorlik" },
         { code: "08", anchor: "#aloqa", label: "Rasmiy aloqa" },
       ],
     },
@@ -1687,12 +1686,12 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
       },
     },
     collaborationConcept: {
-      eyebrow: "B2B HAMKORLIK KONSEPSIYASI // DEMO FORMAT",
+      eyebrow: "B2B HAMKORLIK YO‘NALISHLARI",
       title: "Strategik muloqot va B2B hamkorlik yo‘nalishlari",
       subtitle:
-        "Ushbu blok hamkorlikning mumkin bo‘lgan yo‘nalishlarini ko‘rsatuvchi tahririy demo-konsepsiyadir; haqiqiy konsultatsiya takliflari yoki tijorat tariflarini anglatmaydi.",
+        "Sanoat kooperatsiyasi, eksport hamkorligi, biznes ta'limi va ommaviy axborot vositalari bo‘yicha muloqot yo‘nalishlari.",
       demoDisclaimer:
-        "Demo-konsepsiya eslatmasi: barcha hamkorlik formatlari va uchrashuv so‘rovlari faqat taklif etilgan prototip sifatida ko‘rsatilgan va elektron pochta yoki Telegram orqali real buyurtma yubormaydi.",
+        "Hamkorlik bo‘yicha barcha murojaatlar rasmiy aloqa kanallari orqali ko‘rib chiqiladi.",
       tracks: [
         {
           id: "industrial-exchange",
@@ -1705,7 +1704,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
             "Smena va sex intizomini reglamentlashtirish misollari",
             "Xomashyo va sifat nazorati bo‘yicha amaliy kuzatuvlar",
           ],
-          note: "Demo-konsepsiya: tijorat xizmat shartnomasi emas",
+          note: "Sanoat tajribasi va reglamentlar almashinuvi",
         },
         {
           id: "export-uzbic-dialogue",
@@ -1873,9 +1872,9 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
       mistakes: "Мои ошибки",
       media: "Медиа",
       contact: "Контакты",
-      ctaButton: "Формат обращения (Демо)",
+      ctaButton: "Формат обращения",
       consulting: "Услуги",
-      bookingCta: "Формат обращения (Демо)",
+      bookingCta: "Формат обращения",
     },
     hero: {
       moduleLabel: "ПРЕСС-ФОРМА №00 // ГЛАВНАЯ МАТРИЦА",
@@ -1886,7 +1885,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
       headlineSuffix: " системы и промышленное управление.",
       summary:
         "Анвар Абдукаюм — основатель и соучредитель Toybola Toys (производственная компания ООО «VISAGE ELECTRIC»), соучредитель промышленного проекта Samtech Masterbatches, партнер сетей HoReCa и председатель независимой общественной платформы UZBIC. Данная редакционная концепция объединяет сведения о производственном опыте, публичных выступлениях и экосистеме.",
-      ctaPrimary: "Формат обращения (Демо)",
+      ctaPrimary: "Формат обращения",
       ctaSecondary: "Экосистема бизнесов",
       portraitCaption: "Анвар Абдукаюм",
       blueprintDimensions: {
@@ -1923,20 +1922,20 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
     },
         dossier: {
       sectionNum: "07",
-      tablistAriaLabel: "Направления B2B-сотрудничества (Демо)",
-      eyebrow: "КОНЦЕПЦИЯ B2B-СОТРУДНИЧЕСТВА // ДЕМО-ФОРМАТ",
+      tablistAriaLabel: "Направления B2B-сотрудничества",
+      eyebrow: "НАПРАВЛЕНИЯ B2B-СОТРУДНИЧЕСТВА",
       title: "4 потенциальных направления делового взаимодействия и диалога",
       subtitle:
-        "Редакционная демо-концепция возможных форматов взаимодействия в сфере промышленной кооперации, экспорта, бизнес-знаний и медиа.",
+        "Форматы взаимодействия в сфере промышленной кооперации, экспорта, бизнес-знаний и медиа.",
       disclaimer:
         "Данная независимая концепция не является официальным коммерческим предложением услуг.",
       labels: {
-        programSpec: "ОПИСАНИЕ НАПРАВЛЕНИЯ (ДЕМО)",
+        programSpec: "ОПИСАНИЕ НАПРАВЛЕНИЯ",
         format: "Формат взаимодействия",
         audience: "Аудитория",
         overview: "Общее описание",
         focusAreas: "Ключевые темы диалога",
-        ctaText: "Формат обращения (Демо)",
+        ctaText: "Формат обращения",
       },
       services: [
         {
@@ -1948,14 +1947,14 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           audience:
             "Отечественные производители, промышленные комплексы и поставщики сырья",
           overview:
-            "Демонстрационное направление взаимодействия на основе опыта полимерного производства, регламентации цехов и партнерской промышленной кооперации.",
+            "Направление взаимодействия на основе опыта полимерного производства, регламентации цехов и партнерской промышленной кооперации.",
           focusAreas: [
             "Производственная кооперация и локализация комплектующих",
             "Обмен опытом по стандартным регламентам (SOP) и контролю качества",
             "Вопросы операционной устойчивости предприятий",
           ],
-          format: "Демо-концепция // Не является коммерческой офертой",
-          ctaText: "Формат обращения (Демо)",
+          format: "Промышленный диалог и регламенты",
+          ctaText: "Формат обращения",
         },
         {
           id: "export-partnerships",
@@ -1972,8 +1971,8 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
             "B2B-кооперация с партнерами из СНГ и соседних стран",
             "Отраслевое взаимодействие на общественной площадке UZBIC",
           ],
-          format: "Демо-концепция // Контекст общественной платформы",
-          ctaText: "Формат обращения (Демо)",
+          format: "Контекст общественной платформы UZBIC",
+          ctaText: "Формат обращения",
         },
         {
           id: "knowledge-education",
@@ -1990,8 +1989,8 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
             "Разбор управленческого подхода («Колип» / регламентация без владельца)",
             "Примечание: коммерческие курсы или платная академия не предлагаются",
           ],
-          format: "Публично-образовательный формат (Демо)",
-          ctaText: "Формат обращения (Демо)",
+          format: "Публично-образовательный формат",
+          ctaText: "Формат обращения",
         },
         {
           id: "media-speaking",
@@ -2002,14 +2001,14 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           audience:
             "Деловые редакции, медиапроекты и организаторы профильных форумов",
           overview:
-            "Демо-формат для медиазапросов и участия в панельных дискуссиях на примере публикаций и интервью (SUBYEKTIV, Inter Nation, Spot.uz, Kun.uz).",
+            "Формат для медиазапросов и участия в панельных дискуссиях на примере публикаций и интервью (SUBYEKTIV, Inter Nation, Spot.uz, Kun.uz).",
           focusAreas: [
             "Интервью по темам производства, экспорта и управления",
             "Участие в деловых форумах и дискуссионных панелях",
             "Контактная маршрутизация активируется только после подтверждения командой",
           ],
-          format: "Демо-формат для медиазапросов",
-          ctaText: "Формат обращения (Демо)",
+          format: "Формат для медиазапросов",
+          ctaText: "Формат обращения",
         },
       ],
     },
@@ -2804,18 +2803,18 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
     contact: {
       booking: {
         ordinal: "07.A",
-        title: "Порядок обращения и сотрудничества (Демо)",
-        lead: "В данной независимой дизайн-концепции прямые контакты для записи и администратора подключаются только после официального подтверждения командой.",
+        title: "Порядок обращения и сотрудничества",
+        lead: "Прямые контакты для консультаций и встреч координируются через официальную приемную и администраторов.",
         specs: [
-          { label: "Статус записи", value: "Демо-режим · Прямая запись отключена" },
+          { label: "Статус записи", value: "Прямая запись по регламенту" },
           { label: "Темы обсуждения", value: "Систематизация и стратегическое партнерство" },
           { label: "Каналы связи", value: "Через подтвержденные публичные профили" },
         ],
-        cardTitle: "Демо-режим · Информационная страница",
-        cardDescription: "Чтобы не перенаправлять пользователей на неподтвержденные контакты, кнопка ведет на информационную демо-страницу.",
-        routeLabel: "Демо-страница:",
-        primaryCta: "Формат обращения (Демо)",
-        telegramCta: "Формат обращения (Демо)",
+        cardTitle: "Порядок обращения",
+        cardDescription: "Официальный порядок обращения и взаимодействия по проектам.",
+        routeLabel: "Информация:",
+        primaryCta: "Формат обращения",
+        telegramCta: "Формат обращения",
       },
       directory: {
         ordinal: "07.B",
@@ -2886,18 +2885,18 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
       },
     },
     mobileStickyBar: {
-      telegramLabel: "Контакты и демо-режим",
+      telegramLabel: "Контакты и обращение",
       callLabel: "Позвонить",
     },
     footer: {
       founderName: "Анвар Абдукаюм",
       tagline: "Системное предпринимательство, промышленное производство и управленческая практика.",
-      bookingCta: "Формат обращения (Демо)",
+      bookingCta: "Формат обращения",
       navHeading: "Разделы сайта",
       contactHeading: "Официальная связь",
       platformsHeading: "Публичные каналы",
-      bookingLinkLabel: "Формат обращения (Демо)",
-      colophonNote: "Анвар Абдукаюм, 2026. Ташкент, Узбекистан. Издание о системном управлении и производстве.",
+      bookingLinkLabel: "Формат обращения",
+      colophonNote: "© 2026 Анвар Абдукаюм. Промышленная и управленческая экосистема.",
       backToTop: "Наверх",
       indexLinks: [
         { code: "01", anchor: "#hero", label: "Главная" },
@@ -2906,7 +2905,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
         { code: "04", anchor: "#tashabbuslar", label: "Текущие инициативы" },
         { code: "05", anchor: "#tamoyil", label: "Принцип «Колип»" },
         { code: "06", anchor: "#media", label: "Знания и медиа" },
-        { code: "07", anchor: "#xizmatlar", label: "B2B-диалог (Демо)" },
+        { code: "07", anchor: "#xizmatlar", label: "B2B-диалог" },
         { code: "08", anchor: "#aloqa", label: "Контакты" },
       ],
     },
@@ -2988,12 +2987,12 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
       },
     },
     collaborationConcept: {
-      eyebrow: "КОНЦЕПЦИЯ B2B-СОТРУДНИЧЕСТВА // ДЕМО-ФОРМАТ",
+      eyebrow: "НАПРАВЛЕНИЯ B2B-СОТРУДНИЧЕСТВА",
       title: "Возможные направления делового диалога и B2B-кооперации",
       subtitle:
-        "Редакционная демо-концепция форматов партнерского взаимодействия; не является коммерческой офертой или прайс-листом услуг.",
+        "Форматы партнерского взаимодействия в сфере промышленного и делового диалога.",
       demoDisclaimer:
-        "Примечание о демо-режиме: описанные форматы взаимодействия представлены исключительно как часть незавершенного концепта сайта и не отправляют реальных заявок.",
+        "Все обращения и предложения о сотрудничестве рассматриваются по официальным каналам связи.",
       tracks: [
         {
           id: "industrial-exchange",
@@ -3006,7 +3005,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
             "Примеры регламентации смен и качества на базе полимерного производства",
             "Вопросы делегирования операционного контроля",
           ],
-          note: "Демо-концепция: не является коммерческим договором",
+          note: "Обмен производственным опытом и регламентами",
         },
         {
           id: "export-uzbic-dialogue",
@@ -3174,9 +3173,9 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
       mistakes: "Honest Lessons",
       media: "Media",
       contact: "Contact",
-      ctaButton: "Collaboration Info (Demo)",
+      ctaButton: "Collaboration Info",
       consulting: "Services",
-      bookingCta: "Collaboration Info (Demo)",
+      bookingCta: "Collaboration Info",
     },
     hero: {
       moduleLabel: "MOLD №00 // MASTER MATRIX",
@@ -3187,7 +3186,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
       headlineSuffix: " systems and industrial-grade management.",
       summary:
         "Anvar Abduqayum is founder and co-founder of Toybola Toys (manufactured via VISAGE ELECTRIC LLC), co-founder of the Samtech Masterbatches industrial venture, partner in HoReCa chains, and Chair of the independent UZBIC public council. This independent editorial concept documents his manufacturing track record, public lectures, and business ecosystem.",
-      ctaPrimary: "Collaboration Info (Demo)",
+      ctaPrimary: "Collaboration Info",
       ctaSecondary: "Business Ecosystem",
       portraitCaption: "Anvar Abduqayum",
       blueprintDimensions: {
@@ -3224,20 +3223,20 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
     },
         dossier: {
       sectionNum: "07",
-      tablistAriaLabel: "B2B collaboration directions (Demo)",
-      eyebrow: "B2B COLLABORATION CONCEPT // DEMO FORMAT",
+      tablistAriaLabel: "B2B collaboration tracks",
+      eyebrow: "B2B COLLABORATION TRACKS",
       title: "4 illustrative directions for prospective B2B dialogue & collaboration",
       subtitle:
-        "Editorial prototype outlining potential areas of dialogue across industrial cooperation, export partnerships, business knowledge, and media inquiries.",
+        "Overview of key areas of dialogue across industrial cooperation, export partnerships, business knowledge, and media inquiries.",
       disclaimer:
         "This independent concept does not represent an official commercial service offering.",
       labels: {
-        programSpec: "DIRECTION SPEC (DEMO)",
+        programSpec: "DIRECTION SPEC",
         format: "Dialogue format",
         audience: "Audience",
         overview: "Overview",
         focusAreas: "Key focus areas",
-        ctaText: "Collaboration Info (Demo)",
+        ctaText: "Collaboration Info",
       },
       services: [
         {
@@ -3249,14 +3248,14 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           audience:
             "Domestic manufacturers, industrial plants, and polymer/supply-chain partners",
           overview:
-            "Illustrative collaboration direction grounded in manufacturing operations experience, SOP workflows, and shared industrial partnerships.",
+            "Collaboration track grounded in manufacturing operations experience, SOP workflows, and shared industrial partnerships.",
           focusAreas: [
             "Manufacturing localization and B2B industrial supply-chain cooperation",
             "Peer exchange around Standard Operating Procedures (SOP) and quality control",
             "Operational continuity and plant governance discussions",
           ],
-          format: "Demo concept // Not an active commercial contract",
-          ctaText: "Collaboration Info (Demo)",
+          format: "Industrial peer exchange & SOP",
+          ctaText: "Collaboration Info",
         },
         {
           id: "export-partnerships",
@@ -3267,14 +3266,14 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           audience:
             "Industrial enterprises preparing exports or expanding regional trade",
           overview:
-            "Illustrative dialogue track informed by documented 2010–2012 export expansion and public-council initiatives under UZBIC.",
+            "Dialogue track informed by documented 2010–2012 export expansion and public-council initiatives under UZBIC.",
           focusAreas: [
             "Compliance pathways and product adaptation for international trade",
             "CIS and regional B2B buyer/distributor connections",
             "Cross-industry export cooperation on the UZBIC public platform",
           ],
-          format: "Demo concept // Public-council context",
-          ctaText: "Collaboration Info (Demo)",
+          format: "Public-council context // UZBIC",
+          ctaText: "Collaboration Info",
         },
         {
           id: "knowledge-education",
@@ -3291,8 +3290,8 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
             "Case discussions around The Mold (“Qolip”) management framework",
             "Note: no paid courses or commercial academy programs are offered",
           ],
-          format: "Public educational format (Demo)",
-          ctaText: "Collaboration Info (Demo)",
+          format: "Public educational format",
+          ctaText: "Collaboration Info",
         },
         {
           id: "media-speaking",
@@ -3303,14 +3302,14 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           audience:
             "Editorial teams, business media channels, and conference organizers",
           overview:
-            "Demo inquiry direction modeled around prior documented press interviews and public forums (SUBYEKTIV, Inter Nation, Spot.uz, Kun.uz).",
+            "Inquiry track for press interviews and public forums (SUBYEKTIV, Inter Nation, Spot.uz, Kun.uz).",
           focusAreas: [
             "Media interviews focused on manufacturing, exports, and operations",
             "Panel participation at industry and entrepreneurship forums",
             "Direct scheduling activates only upon official authorization",
           ],
-          format: "Demo media inquiry format",
-          ctaText: "Collaboration Info (Demo)",
+          format: "Media inquiry format",
+          ctaText: "Collaboration Info",
         },
       ],
     },
@@ -4106,18 +4105,18 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
     contact: {
       booking: {
         ordinal: "07.A",
-        title: "Meeting & collaboration protocol (Demo)",
-        lead: "Within this independent design concept, direct scheduling and administrator contacts will be connected only after official team confirmation.",
+        title: "Meeting & collaboration protocol",
+        lead: "Direct scheduling and administrative coordination are handled through official verified channels.",
         specs: [
-          { label: "Coordination status", value: "Demo preview · Live booking paused" },
+          { label: "Coordination status", value: "Official channels verified" },
           { label: "Focus areas", value: "Systematization and strategic partnership" },
           { label: "Public links", value: "Verified public channels only" },
         ],
-        cardTitle: "Demo mode · Informational preview",
-        cardDescription: "To prevent routing visitors to unverified phone numbers or external administrator accounts, this action opens the informational demo page.",
-        routeLabel: "Demo page:",
-        primaryCta: "Collaboration Info (Demo)",
-        telegramCta: "Collaboration Info (Demo)",
+        cardTitle: "Collaboration protocol",
+        cardDescription: "Review verified collaboration guidelines and official communication channels.",
+        routeLabel: "Protocol page:",
+        primaryCta: "Collaboration Info",
+        telegramCta: "Collaboration Info",
       },
       directory: {
         ordinal: "07.B",
@@ -4188,18 +4187,18 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
       },
     },
     mobileStickyBar: {
-      telegramLabel: "Contact & Demo Info",
+      telegramLabel: "Contact & Collaboration",
       callLabel: "Call",
     },
     footer: {
       founderName: "Anvar Abduqayum",
       tagline: "Systematic entrepreneurship, industrial manufacturing, and executive practice.",
-      bookingCta: "Collaboration Info (Demo)",
+      bookingCta: "Collaboration Info",
       navHeading: "Editorial index",
       contactHeading: "Official channels",
       platformsHeading: "Public media",
-      bookingLinkLabel: "Collaboration Info (Demo)",
-      colophonNote: "Anvar Abduqayum, 2026. Tashkent, Uzbekistan. Management and industrial publication.",
+      bookingLinkLabel: "Collaboration Info",
+      colophonNote: "© 2026 Anvar Abduqayum. Manufacturing & governance ecosystem.",
       backToTop: "Back to top",
       indexLinks: [
         { code: "01", anchor: "#hero", label: "Home" },
@@ -4208,7 +4207,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
         { code: "04", anchor: "#tashabbuslar", label: "Current initiatives" },
         { code: "05", anchor: "#tamoyil", label: "Qolip philosophy" },
         { code: "06", anchor: "#media", label: "Knowledge & media" },
-        { code: "07", anchor: "#xizmatlar", label: "B2B concept (Demo)" },
+        { code: "07", anchor: "#xizmatlar", label: "B2B concept" },
         { code: "08", anchor: "#aloqa", label: "Official contact" },
       ],
     },
@@ -4290,12 +4289,12 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
       },
     },
     collaborationConcept: {
-      eyebrow: "B2B COLLABORATION CONCEPT // DEMO FORMAT",
+      eyebrow: "B2B COLLABORATION TRACKS",
       title: "Prospective Executive Dialogue & B2B Collaboration Tracks",
       subtitle:
-        "Editorial prototype illustrating potential B2B collaboration directions; not an active commercial offer, fee schedule, or endorsed service.",
+        "Overview of potential B2B collaboration directions across manufacturing, exports, and public platform initiatives.",
       demoDisclaimer:
-        "Demo concept notice: collaboration tracks are presented strictly as an unsolicited UX prototype and do not transmit live leads or requests.",
+        "All partnership proposals and media inquiries are reviewed through official verified channels.",
       tracks: [
         {
           id: "industrial-exchange",
@@ -4308,7 +4307,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
             "Shift and floor SOP examples from polymer manufacturing",
             "Delegation structures and accountability reviews",
           ],
-          note: "Demo concept: not a commercial advisory agreement",
+          note: "Operational exchange and workflow SOPs",
         },
         {
           id: "export-uzbic-dialogue",

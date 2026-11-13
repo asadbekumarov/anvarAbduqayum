@@ -5,7 +5,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { getContent } from "@/config/content";
 import { featuresConfig } from "@/config/features";
-import { siteMedia } from "@/config/siteMedia";
 import { BookingActionLink } from "@/components/ui/BookingActionLink";
 import {
   MagneticPull,
@@ -21,9 +20,6 @@ interface HeroProps {
 
 export const Hero: React.FC<HeroProps> = ({ locale = "uz" }) => {
   const content = getContent(locale);
-
-  const kickerBadge =
-    content.hero.kickerBadge || "MONOGRAF // SANOAT VA TIZIMLI BOSHQARUV";
 
   const metrics = content.hero.verifiedMetrics || [
     {
@@ -75,19 +71,6 @@ export const Hero: React.FC<HeroProps> = ({ locale = "uz" }) => {
           
           {/* Left Column: Monograph Editorial Content */}
           <div className="flex flex-col min-w-0">
-            {/* Kicker Bar */}
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: SWISS_EASE }}
-              className="inline-flex items-center gap-3 text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-[var(--accent-gold-ink)] mb-3.5 sm:mb-6"
-            >
-              <span
-                className="w-6 h-[1.5px] bg-[var(--accent-gold)] shrink-0"
-                aria-hidden="true"
-              />
-              <span>{kickerBadge}</span>
-            </motion.div>
 
             {/* Main Editorial Headline */}
             <h1
@@ -201,7 +184,7 @@ export const Hero: React.FC<HeroProps> = ({ locale = "uz" }) => {
               <div className="portrait-archival-mat overflow-hidden">
                 <div className="portrait-image-wrapper transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/portrait:scale-[1.035]">
                   <Image
-                    src={siteMedia.hero.portrait.src}
+                    src="/images/anvar.jpg"
                     alt={`${content.hero.portraitCaption} — ${
                       content.hero.portraitRole || "Sanoatchi, Muhandis-Tadbirkor"
                     }`}
@@ -211,10 +194,7 @@ export const Hero: React.FC<HeroProps> = ({ locale = "uz" }) => {
                     className="portrait-img-editorial"
                     style={{
                       objectFit: "cover",
-                      objectPosition: "center 12%",
-                      transformOrigin: "center top",
-                      transform: "scale(1.24) translateY(-12px)",
-                      filter: "contrast(1.04) brightness(0.97)",
+                      objectPosition: "center top",
                     }}
                   />
                 </div>

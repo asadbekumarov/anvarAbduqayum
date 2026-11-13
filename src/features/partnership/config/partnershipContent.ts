@@ -76,7 +76,7 @@ export interface PartnershipLocaleContent {
 const PARTNERSHIP_CONTENT: Record<PartnershipLocale, PartnershipLocaleContent> = {
   uz: {
     meta: {
-      title: "B2B Hamkorlik Murojaati (Demo) | Anvar Abduqayum",
+      title: "B2B Hamkorlik Murojaati | Anvar Abduqayum",
       description:
         "Eksport, distribyutsiya, shartnomaviy ishlab chiqarish va biznes takliflari uchun ixtisoslashtirilgan B2B murojaat prototipi.",
     },
@@ -97,7 +97,7 @@ const PARTNERSHIP_CONTENT: Record<PartnershipLocale, PartnershipLocaleContent> =
       step2Label: "02 / Aloqa va tasdiqlash",
       nextButton: "Aloqa bosqichiga o‘tish",
       prevButton: "Orqaga",
-      submitDemoButton: "Shaklni tekshirish (Demo)",
+      submitDemoButton: "Arizani yuborish",
       submitProdButton: "Murojaatni yuborish",
     },
     tracksLabel: "Hamkorlik turini tanlang",
@@ -262,7 +262,7 @@ const PARTNERSHIP_CONTENT: Record<PartnershipLocale, PartnershipLocaleContent> =
       step2Label: "02 / Контакты и проверка",
       nextButton: "Перейти к контактам",
       prevButton: "Назад",
-      submitDemoButton: "Проверить форму (Демо)",
+      submitDemoButton: "Отправить заявку",
       submitProdButton: "Отправить заявку",
     },
     tracksLabel: "Выберите тип партнёрства",
@@ -406,7 +406,7 @@ const PARTNERSHIP_CONTENT: Record<PartnershipLocale, PartnershipLocaleContent> =
   },
   en: {
     meta: {
-      title: "B2B Partnership Intake (Demo) | Anvar Abduqayum",
+      title: "B2B Partnership Intake | Anvar Abduqayum",
       description:
         "Isolated prototype for segmented B2B partnership inquiries across Export, Distribution, Manufacturing, and Other Proposals.",
     },
@@ -427,7 +427,7 @@ const PARTNERSHIP_CONTENT: Record<PartnershipLocale, PartnershipLocaleContent> =
       step2Label: "02 / Contact & validation",
       nextButton: "Continue to contact details",
       prevButton: "Back",
-      submitDemoButton: "Validate intake (Demo)",
+      submitDemoButton: "Submit intake",
       submitProdButton: "Submit proposal",
     },
     tracksLabel: "Choose partnership track",

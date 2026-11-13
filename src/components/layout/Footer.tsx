@@ -6,8 +6,6 @@ import { useLocale } from "next-intl";
 import { usePathname } from "next/navigation";
 import { getContent } from "@/config/content";
 import { contactConfig } from "@/config/contact";
-import { featuresConfig } from "@/config/features";
-import { getDemoCopy } from "@/config/demoCopy";
 import { BookingActionLink } from "@/components/ui/BookingActionLink";
 
 interface FooterProps {
@@ -19,9 +17,7 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
   const pathname = usePathname() || "/";
   const rawLocale = locale || routeLocale || "uz";
   const safeLocale = rawLocale === "ru" || rawLocale === "en" ? rawLocale : "uz";
-  const isDemoMode = featuresConfig.demoMode;
   const content = getContent(safeLocale);
-  const demoCopy = getDemoCopy(safeLocale);
   const { footer } = content;
 
   const isHomePage =
@@ -29,62 +25,142 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
     pathname === `/${safeLocale}/` ||
     pathname === "/";
 
+  // Clean, prioritized navigation links
+  const navLinks = [
+    {
+      href: "#hero",
+      label:
+        footer.indexLinks.find((l) => l.anchor === "#hero")?.label ||
+        (safeLocale === "ru"
+          ? "Главная"
+          : safeLocale === "en"
+          ? "Home"
+          : "Asosiy sahifa"),
+    },
+    {
+      href: "#portfel",
+      label:
+        footer.indexLinks.find((l) => l.anchor === "#portfel")?.label ||
+        (safeLocale === "ru"
+          ? "Экосистема бизнесов"
+          : safeLocale === "en"
+          ? "Business Portfolio"
+          : "Biznes ekotizimi"),
+    },
+    {
+      href: "#yol",
+      label:
+        footer.indexLinks.find((l) => l.anchor === "#yol")?.label ||
+        (safeLocale === "ru"
+          ? "Путь предпринимателя"
+          : safeLocale === "en"
+          ? "Journey"
+          : "Faoliyat yo‘li"),
+    },
+    {
+      href: "#tamoyil",
+      label:
+        footer.indexLinks.find((l) => l.anchor === "#tamoyil")?.label ||
+        (safeLocale === "ru"
+          ? "Принцип «Колип»"
+          : safeLocale === "en"
+          ? "Qolip Philosophy"
+          : "Qolip tamoyili"),
+    },
+    {
+      href: "#media",
+      label:
+        footer.indexLinks.find((l) => l.anchor === "#media")?.label ||
+        (safeLocale === "ru"
+          ? "Знания и медиа"
+          : safeLocale === "en"
+          ? "Knowledge & Media"
+          : "Media"),
+    },
+    {
+      href: "#aloqa",
+      label:
+        footer.indexLinks.find((l) => l.anchor === "#aloqa")?.label ||
+        (safeLocale === "ru"
+          ? "Контакты"
+          : safeLocale === "en"
+          ? "Contact"
+          : "Aloqa"),
+    },
+  ];
+
+  const address =
+    contactConfig.office[
+      safeLocale === "ru"
+        ? "addressRu"
+        : safeLocale === "en"
+        ? "addressEn"
+        : "addressUz"
+    ];
+
+  const partnershipHeading =
+    safeLocale === "ru"
+      ? "ПАРТНЕРСТВО И ПРИЕМ"
+      : safeLocale === "en"
+      ? "PARTNERSHIP & INTAKE"
+      : "HAMKORLIK VA QABUL";
+
+  const partnershipNote =
+    safeLocale === "ru"
+      ? "Официальные обращения и рассмотрение предложений по регламенту."
+      : safeLocale === "en"
+      ? "Official inquiries and proposal review according to standards."
+      : "Rasmiy murojaatlar va takliflar reglament asosida ko‘rib chiqiladi.";
+
   return (
     <footer
       id="sayt-yakuni"
-      className="bg-[var(--bg-dark)] text-[var(--text-on-dark)] border-t border-[var(--border-on-dark)] pt-20 pb-28 sm:pb-14"
+      className="bg-[#090909] text-[#FFFFFF] border-t border-[rgba(212,175,55,0.2)] py-16 sm:py-20 selection:bg-[#D4AF37] selection:text-[#090909]"
     >
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
-        {/* Top Masthead Row */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-end pb-12 border-b border-[var(--border-on-dark)]">
-          <div className="md:col-span-8 min-w-0">
-            <p className="font-serif text-[clamp(28px,3.8vw,44px)] font-semibold leading-[1.08] tracking-[-0.02em] text-[var(--text-on-dark)] [text-wrap:balance]">
+        {/* Top Section: Brand + CTA */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-12 sm:pb-16 border-b border-white/[0.08]">
+          <div className="min-w-0">
+            <h2 className="font-sans text-[26px] sm:text-[34px] font-bold tracking-tight text-[#FFFFFF] uppercase">
               {footer.founderName}
-              <span className="text-[var(--accent-gold)]">.</span>
-            </p>
-            <p className="mt-3 text-[16px] leading-[1.6] text-[var(--text-muted-on-dark)] max-w-[48ch]">
+              <span className="text-[#D4AF37]">.</span>
+            </h2>
+            <p className="mt-2.5 text-[14px] sm:text-[15px] leading-relaxed text-[#9A9A9A] max-w-[560px]">
               {footer.tagline}
             </p>
           </div>
 
-          <div className="md:col-span-4 flex flex-wrap md:justify-end">
+          <div className="shrink-0">
             <BookingActionLink
               locale={safeLocale}
-              className="min-h-[46px] px-6 bg-transparent text-[var(--text-on-dark)] border border-[var(--border-on-dark)] hover:border-[var(--accent-gold-light)] hover:text-[var(--accent-gold-light)] hover:bg-[var(--bg-dark-elevated)] active:opacity-90 rounded-[2px] text-[14.5px] font-semibold inline-flex items-center justify-center whitespace-nowrap transition-[color,border-color,background-color,opacity] duration-150 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+              className="group min-h-[48px] px-7 bg-transparent text-[#D4AF37] border border-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#090909] rounded-[2px] text-[13px] font-bold uppercase tracking-[0.08em] inline-flex items-center justify-center whitespace-nowrap transition-all duration-300 shadow-[0_0_15px_rgba(212,175,55,0.08)] hover:shadow-[0_0_20px_rgba(212,175,55,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
             >
-              {footer.bookingCta}
+              <span>{footer.bookingCta}</span>
             </BookingActionLink>
           </div>
         </div>
 
-        {/* Middle 3-Zone Editorial Ledger */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 py-12 border-b border-[var(--border-on-dark-subtle)]">
-          {/* Zone 1: Editorial Section Index */}
-          <div className="md:col-span-5 min-w-0">
-            <h2 className="text-[15px] font-semibold text-[var(--accent-gold-light)] mb-4">
+        {/* Middle Links Grid: Responsive grid-cols-1 md:grid-cols-3 lg:grid-cols-4 */}
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10 lg:gap-12 py-12 sm:py-16 border-b border-white/[0.08]">
+          {/* Column 1: Sayt bo'limlari */}
+          <div className="min-w-0">
+            <h3 className="font-mono text-[11.5px] font-bold uppercase tracking-[0.16em] text-[#D4AF37] mb-5">
               {footer.navHeading}
-            </h2>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
-              {footer.indexLinks
-                .filter((item) =>
-                  ["#hero", "#portfel", "#tamoyil", "#media", "#aloqa"].includes(
-                    item.anchor
-                  )
-                )
-                .map((item) => {
+            </h3>
+            <ul className="flex flex-col space-y-3">
+              {navLinks.map((item) => {
                 const targetHref = isHomePage
-                  ? item.anchor
-                  : `/${safeLocale}${item.anchor}`;
+                  ? item.href
+                  : `/${safeLocale}${item.href}`;
                 return (
-                  <li key={item.code}>
+                  <li key={item.href}>
                     <Link
                       href={targetHref}
-                      className="inline-flex items-center gap-2 min-h-[44px] text-[15px] text-[var(--text-muted-on-dark)] hover:text-[var(--text-on-dark)] border-b border-transparent hover:border-[var(--accent-gold-light)] [overflow-wrap:anywhere] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+                      className="group inline-flex items-center text-[14px] text-[#FFFFFF] hover:text-[#D4AF37] transition-all duration-300 hover:translate-x-1"
                     >
-                      <span className="font-mono text-[13px] text-[var(--accent-gold-light)] tabular-nums shrink-0">
-                        {item.code}
+                      <span className="transition-colors duration-300">
+                        {item.label}
                       </span>
-                      <span>{item.label}</span>
                     </Link>
                   </li>
                 );
@@ -92,136 +168,156 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
             </ul>
           </div>
 
-          {/* Zone 2: Official Contact Channels */}
-          <div className="md:col-span-4 min-w-0">
-            <h2 className="text-[15px] font-semibold text-[var(--accent-gold-light)] mb-2">
-              {footer.contactHeading}
-            </h2>
-            {isDemoMode && (
-              <p className="text-[12.5px] leading-[1.45] text-[var(--text-muted-on-dark)] mb-3">
-                {demoCopy.footer.externalChannelsNote}
-              </p>
-            )}
-            <ul className="flex flex-col">
-              {contactConfig.phone.isVerified && contactConfig.phone.href && (
-                <li>
-                  <a
-                    href={contactConfig.phone.href}
-                    className="inline-flex items-center min-h-[44px] text-[15px] text-[var(--text-muted-on-dark)] hover:text-[var(--text-on-dark)] border-b border-transparent hover:border-[var(--accent-gold-light)] tabular-nums [overflow-wrap:anywhere] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
-                  >
-                    {contactConfig.phone.display}
-                  </a>
-                </li>
-              )}
-              {contactConfig.email.isVerified && contactConfig.email.href && (
-                <li>
-                  <a
-                    href={contactConfig.email.href}
-                    className="inline-flex items-center min-h-[44px] text-[15px] text-[var(--text-muted-on-dark)] hover:text-[var(--text-on-dark)] border-b border-transparent hover:border-[var(--accent-gold-light)] [overflow-wrap:anywhere] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
-                  >
-                    {contactConfig.email.address}
-                  </a>
-                </li>
-              )}
-              {contactConfig.telegramDirect.isVerified &&
-                contactConfig.telegramDirect.url && (
-                  <li>
-                    <a
-                      href={contactConfig.telegramDirect.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center min-h-[44px] text-[15px] text-[var(--text-muted-on-dark)] hover:text-[var(--text-on-dark)] border-b border-transparent hover:border-[var(--accent-gold-light)] [overflow-wrap:anywhere] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
-                    >
-                      Telegram admin: {contactConfig.telegramDirect.display}
-                    </a>
-                  </li>
-                )}
-              {contactConfig.telegramChannel.isVerified &&
-                contactConfig.telegramChannel.url && (
-                  <li>
-                    <a
-                      href={contactConfig.telegramChannel.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center min-h-[44px] text-[15px] text-[var(--text-muted-on-dark)] hover:text-[var(--text-on-dark)] border-b border-transparent hover:border-[var(--accent-gold-light)] [overflow-wrap:anywhere] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
-                    >
-                      Telegram: {contactConfig.telegramChannel.display}
-                    </a>
-                  </li>
-                )}
-              {!contactConfig.phone.isVerified &&
-                !contactConfig.email.isVerified &&
-                !contactConfig.telegramDirect.isVerified &&
-                !contactConfig.telegramChannel.isVerified && (
-                  <li className="text-[14px] leading-[1.55] text-[var(--text-muted-on-dark)] py-2">
-                    {demoCopy.footer.pendingContactsNote}
-                  </li>
-                )}
-            </ul>
-          </div>
-
-          {/* Zone 3: Public Media & Booking */}
-          <div className="md:col-span-3 min-w-0">
-            <h2 className="text-[15px] font-semibold text-[var(--accent-gold-light)] mb-4">
+          {/* Column 2: Ommaviy kanallar */}
+          <div className="min-w-0">
+            <h3 className="font-mono text-[11.5px] font-bold uppercase tracking-[0.16em] text-[#D4AF37] mb-5">
               {footer.platformsHeading}
-            </h2>
-            <ul className="flex flex-col">
-              {contactConfig.instagram.isVerified &&
-                contactConfig.instagram.url && (
-                  <li>
-                    <a
-                      href={contactConfig.instagram.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center min-h-[44px] text-[15px] text-[var(--text-muted-on-dark)] hover:text-[var(--text-on-dark)] border-b border-transparent hover:border-[var(--accent-gold-light)] [overflow-wrap:anywhere] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
-                    >
-                      Instagram: {contactConfig.instagram.display}
-                    </a>
-                  </li>
-                )}
-              {contactConfig.youtube.isVerified && contactConfig.youtube.url && (
+            </h3>
+            <ul className="flex flex-col space-y-3">
+              {contactConfig.instagram.url && (
+                <li>
+                  <a
+                    href={contactConfig.instagram.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-2 text-[14px] text-[#FFFFFF] hover:text-[#D4AF37] transition-all duration-300 hover:translate-x-1"
+                  >
+                    <span>Instagram</span>
+                    <span className="text-[#9A9A9A] text-[13px] group-hover:text-[#D4AF37]/80 transition-colors">
+                      ({contactConfig.instagram.display})
+                    </span>
+                    <span className="text-[12px] opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300">
+                      ↗
+                    </span>
+                  </a>
+                </li>
+              )}
+              {contactConfig.youtube.url && (
                 <li>
                   <a
                     href={contactConfig.youtube.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center min-h-[44px] text-[15px] text-[var(--text-muted-on-dark)] hover:text-[var(--text-on-dark)] border-b border-transparent hover:border-[var(--accent-gold-light)] [overflow-wrap:anywhere] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+                    className="group inline-flex items-center gap-2 text-[14px] text-[#FFFFFF] hover:text-[#D4AF37] transition-all duration-300 hover:translate-x-1"
                   >
-                    YouTube: {contactConfig.youtube.display}
+                    <span>YouTube</span>
+                    <span className="text-[#9A9A9A] text-[13px] group-hover:text-[#D4AF37]/80 transition-colors">
+                      ({contactConfig.youtube.display})
+                    </span>
+                    <span className="text-[12px] opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300">
+                      ↗
+                    </span>
                   </a>
                 </li>
               )}
-              <li>
+              {contactConfig.telegramChannel.url && (
+                <li>
+                  <a
+                    href={contactConfig.telegramChannel.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-2 text-[14px] text-[#FFFFFF] hover:text-[#D4AF37] transition-all duration-300 hover:translate-x-1"
+                  >
+                    <span>Telegram</span>
+                    <span className="text-[#9A9A9A] text-[13px] group-hover:text-[#D4AF37]/80 transition-colors">
+                      ({contactConfig.telegramChannel.display})
+                    </span>
+                    <span className="text-[12px] opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300">
+                      ↗
+                    </span>
+                  </a>
+                </li>
+              )}
+            </ul>
+          </div>
+
+          {/* Column 3: Rasmiy aloqa */}
+          <div className="min-w-0">
+            <h3 className="font-mono text-[11.5px] font-bold uppercase tracking-[0.16em] text-[#D4AF37] mb-5">
+              {footer.contactHeading}
+            </h3>
+            <div className="flex flex-col space-y-3 text-[14px]">
+              <p className="text-[#9A9A9A] leading-relaxed">
+                {address}
+              </p>
+              {contactConfig.email.address && (
+                <div>
+                  <a
+                    href={`mailto:${contactConfig.email.address}`}
+                    className="group inline-flex items-center gap-1.5 text-[#FFFFFF] hover:text-[#D4AF37] transition-all duration-300 hover:translate-x-1"
+                  >
+                    <span>{contactConfig.email.address}</span>
+                    <span className="text-[12px] opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300">
+                      ↗
+                    </span>
+                  </a>
+                </div>
+              )}
+              {contactConfig.phone.isVerified && contactConfig.phone.display && (
+                <div>
+                  <a
+                    href={contactConfig.phone.href}
+                    className="group inline-flex items-center gap-1.5 text-[#FFFFFF] hover:text-[#D4AF37] transition-all duration-300 hover:translate-x-1 font-mono text-[13.5px]"
+                  >
+                    <span>{contactConfig.phone.display}</span>
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Column 4: Hamkorlik va qabul */}
+          <div className="min-w-0">
+            <h3 className="font-mono text-[11.5px] font-bold uppercase tracking-[0.16em] text-[#D4AF37] mb-5">
+              {partnershipHeading}
+            </h3>
+            <div className="flex flex-col space-y-3.5 text-[14px]">
+              <p className="text-[#9A9A9A] text-[13.5px] leading-relaxed">
+                {partnershipNote}
+              </p>
+              <div>
                 <BookingActionLink
                   locale={safeLocale}
-                  className="inline-flex items-center min-h-[44px] text-[15px] text-[var(--text-muted-on-dark)] hover:text-[var(--text-on-dark)] border-b border-transparent hover:border-[var(--accent-gold-light)] [overflow-wrap:anywhere] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+                  className="group inline-flex items-center gap-2 text-[13.5px] font-bold text-[#D4AF37] hover:text-[#FFFFFF] transition-all duration-300 hover:translate-x-1"
                 >
-                  {footer.bookingLinkLabel}
+                  <span className="border-b border-[#D4AF37]/50 pb-0.5 group-hover:border-[#FFFFFF]">
+                    {footer.bookingLinkLabel}
+                  </span>
+                  <span className="transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
                 </BookingActionLink>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Bottom Colophon Strip */}
-        <div className="pt-7 flex flex-wrap items-center justify-between gap-4">
-          <p className="text-[14px] leading-[1.5] text-[var(--text-muted-on-dark)] max-w-[68ch]">
-            {isDemoMode ? demoCopy.footer.colophonNote : footer.colophonNote}
+        {/* Bottom Bar: Copyright left, Back-to-top right */}
+        <div className="pt-8 sm:pt-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <p className="text-[13px] sm:text-[13.5px] text-[#9A9A9A] text-left">
+            {footer.colophonNote}
           </p>
+
           {isHomePage ? (
             <a
               href="#hero"
-              className="inline-flex items-center min-h-[44px] px-1 text-[14px] font-semibold text-[var(--text-on-dark)] hover:text-[var(--accent-gold-light)] border-b border-[var(--border-on-dark)] hover:border-[var(--accent-gold-light)] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+              className="group text-[13px] sm:text-[13.5px] font-semibold text-[#9A9A9A] hover:text-[#D4AF37] transition-all duration-300 inline-flex items-center gap-2 shrink-0 self-start sm:self-auto hover:-translate-y-0.5"
             >
-              {footer.backToTop}
+              <span>{footer.backToTop}</span>
+              <span className="transition-transform duration-300 group-hover:-translate-y-1">
+                ↑
+              </span>
             </a>
           ) : (
             <button
               type="button"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="inline-flex items-center min-h-[44px] px-1 bg-transparent border-0 border-b border-[var(--border-on-dark)] hover:border-[var(--accent-gold-light)] text-[14px] font-semibold text-[var(--text-on-dark)] hover:text-[var(--accent-gold-light)] transition-[color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)] cursor-pointer"
+              className="group text-[13px] sm:text-[13.5px] font-semibold text-[#9A9A9A] hover:text-[#D4AF37] transition-all duration-300 inline-flex items-center gap-2 bg-transparent border-0 cursor-pointer p-0 shrink-0 self-start sm:self-auto hover:-translate-y-0.5"
             >
-              {footer.backToTop}
+              <span>{footer.backToTop}</span>
+              <span className="transition-transform duration-300 group-hover:-translate-y-1">
+                ↑
+              </span>
             </button>
           )}
         </div>

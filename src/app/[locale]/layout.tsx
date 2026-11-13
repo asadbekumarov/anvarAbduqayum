@@ -8,7 +8,6 @@ import { getContent } from "@/config/content";
 import { contactConfig } from "@/config/contact";
 import { featuresConfig } from "@/config/features";
 import { getDemoCopy } from "@/config/demoCopy";
-import { ConceptDisclosureBanner } from "@/components/ui/ConceptDisclosureBanner";
 import { SITE_URL } from "@/config/siteConfig";
 import { buildLocalizedMetadata } from "@/lib/seo";
 import "../globals.css";
@@ -140,7 +139,7 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <body
-        className="min-h-screen flex flex-col bg-[var(--bg-alabaster)] text-[var(--text-ink)] selection:bg-[var(--accent-gold)] selection:text-[var(--bg-surface)] antialiased"
+        className="min-h-screen flex flex-col bg-[var(--bg-alabaster)] text-[var(--text-ink)] selection:bg-[var(--accent-gold)] selection:text-[var(--bg-surface)] antialiased font-sans font-bold"
         suppressHydrationWarning
       >
         {!featuresConfig.demoMode && (
@@ -152,7 +151,6 @@ export default async function LocaleLayout({
           />
         )}
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {featuresConfig.demoMode && <ConceptDisclosureBanner locale={locale} />}
           {children}
         </NextIntlClientProvider>
       </body>

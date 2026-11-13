@@ -11,6 +11,7 @@ import {
   type RadioSize,
   type RadioVariant,
 } from "@/components/ui/radio"
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { div } from "framer-motion/client"
 
 const radioGroupVariants = cva("", {

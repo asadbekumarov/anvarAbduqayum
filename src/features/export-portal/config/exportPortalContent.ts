@@ -79,8 +79,8 @@ const EXPORT_PORTAL_CONTENT: Record<ExportPortalLocale, ExportPortalContent> = {
     subtitle:
       "Ushbu sahifa faqat ochiq manbalarda tasdiqlangan ishlab chiqarish, eksport va jamoat platformasi ma’lumotlarini jamlaydi.",
     demoDisclaimer: {
-      badge: "Mustaqil Demo Konsepsiya · Shaxsiy kafolat berilmaydi",
-      body: "Anvar Abduqayum ushbu mustaqil demo konsepsiyani tasdiqlamagan, shaxsan ta’minot kafolati bermaydi, investitsiya qabul qilmaydi va konsalting xizmati ko‘rsatmaydi. Barcha ma’lumotlar faqat ochiq manbalar chegarasida taqdim etiladi.",
+      badge: "Mustaqil Tahririy Axborot · Shaxsiy kafolat berilmaydi",
+      body: "Anvar Abduqayum shaxsan ta’minot kafolati bermaydi, investitsiya qabul qilmaydi va konsalting xizmati ko‘rsatmaydi. Barcha ma’lumotlar faqat ochiq manbalar chegarasida taqdim etiladi.",
     },
     capabilitiesSection: {
       heading: "01 / Tasdiqlangan ishlab chiqarish va eksport tajribasi",
@@ -343,8 +343,8 @@ const EXPORT_PORTAL_CONTENT: Record<ExportPortalLocale, ExportPortalContent> = {
     subtitle:
       "This editorial portal consolidates only publicly verifiable manufacturing, export, and public-council records.",
     demoDisclaimer: {
-      badge: "Independent Demo Concept · No Personal Supply Guarantees",
-      body: "Anvar Abduqayum has not endorsed this independent concept, does not personally guarantee supply, does not accept investment, and does not provide advisory services through this demo.",
+      badge: "Editorial Reference · No Personal Supply Guarantees",
+      body: "Anvar Abduqayum does not personally guarantee supply, does not accept investment, and does not provide personal advisory services. All information is provided within open public source records.",
     },
     capabilitiesSection: {
       heading: "01 / Verified Manufacturing & Export Background",
