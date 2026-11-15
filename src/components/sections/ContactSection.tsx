@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { activeBookingMode, hasVerifiedBookingChannel } from "@/config/booking";
 import { getContent } from "@/config/content";
 import { contactConfig } from "@/config/contact";
@@ -99,6 +99,27 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   const messageInputRef = useRef<HTMLTextAreaElement | null>(null);
 
   const isSubmitting = status === "submitting";
+
+  // Listen to pre-fill B2B inquiries from OEM Configurator & Export Corridor Map
+  useEffect(() => {
+    const handlePrefill = (
+      e: Event
+    ) => {
+      const customEvt = e as CustomEvent<{ message?: string; topic?: string }>;
+      if (customEvt.detail) {
+        setFormData((prev) => ({
+          ...prev,
+          ...(customEvt.detail.message ? { message: customEvt.detail.message } : {}),
+          ...(customEvt.detail.topic ? { topic: customEvt.detail.topic } : {}),
+        }));
+        setTimeout(() => {
+          messageInputRef.current?.focus();
+        }, 150);
+      }
+    };
+    window.addEventListener("prefill-b2b-inquiry", handlePrefill);
+    return () => window.removeEventListener("prefill-b2b-inquiry", handlePrefill);
+  }, []);
 
   const handleCountryCodeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const nextCode = e.target.value;
@@ -394,19 +415,28 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     <section
       id="aloqa"
       aria-labelledby="contact-heading"
-      className="relative"
+      className="relative scroll-mt-0 sm:scroll-mt-[-12px]"
     >
+      {/* Top Hairline Transition Divider from Section 06 */}
+      <div className="w-full h-px bg-gradient-to-r from-transparent via-[#DDB52E]/35 to-transparent" />
+
       {/* BAND 1: CONSULTATION BOOKING COMMITMENT (OBSIDIAN EDITORIAL) */}
       <div
         id="konsultatsiya-band"
-        className="bg-[var(--bg-dark)] text-[var(--text-on-dark)] border-b border-[var(--border-on-dark)] py-8 lg:py-11"
+        className="bg-[#090A0D] text-[var(--text-on-dark)] border-b border-white/[0.08] py-12 lg:py-16"
       >
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
             <div className="lg:col-span-7 min-w-0">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#DDB52E]" />
+                <span className="font-mono text-[11px] sm:text-[12px] tracking-[0.18em] text-[#DDB52E] uppercase font-semibold">
+                  07.A // RASMIY HAMKORLIK VA UCHRASHUV TARTIBI
+                </span>
+              </div>
               <h2
                 id="booking-heading"
-                className="font-serif text-[clamp(30px,4vw,48px)] font-semibold leading-[1.09] tracking-[-0.02em] text-[var(--text-on-dark)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
+                className="font-serif text-[clamp(30px,4vw,48px)] font-bold leading-[1.09] tracking-[-0.02em] text-white [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
               >
                 <StaggeredTextReveal text={booking.title} />
               </h2>
@@ -415,20 +445,20 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                 {booking.lead}
               </p>
 
-              <dl className="mt-10 border-t border-[var(--border-on-dark)] grid grid-cols-1 sm:grid-cols-3">
+              <dl className="mt-8 pt-6 border-t border-white/[0.08] grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {booking.specs.map((spec, idx) => (
                   <div
                     key={spec.label}
-                    className={`py-4 border-b border-[var(--border-on-dark-subtle)] sm:border-b-0 ${
+                    className={`py-3 ${
                       idx > 0
-                        ? "sm:pl-4 sm:border-l sm:border-[var(--border-on-dark-subtle)]"
+                        ? "sm:pl-5 sm:border-l sm:border-white/[0.08]"
                         : ""
-                    } ${idx < booking.specs.length - 1 ? "sm:pr-4" : ""}`}
+                    }`}
                   >
-                    <dt className="text-[13.5px] font-semibold text-[var(--accent-gold-light)]">
+                    <dt className="font-mono text-[11px] uppercase tracking-wider font-semibold text-[#DDB52E]">
                       {spec.label}
                     </dt>
-                    <dd className="mt-1 text-[15.5px] font-medium text-[var(--text-on-dark)] leading-[1.45]">
+                    <dd className="mt-1.5 text-[14.5px] font-medium text-white leading-[1.45]">
                       {spec.value}
                     </dd>
                   </div>
@@ -439,26 +469,31 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
             <ScrollReveal delay={0.12} y={32} className="lg:col-span-5">
             <aside
               aria-labelledby="booking-card-title"
-              className="bg-[var(--bg-dark-elevated)] text-[var(--text-on-dark)] border border-[var(--border-on-dark)] border-t-2 border-t-[var(--accent-gold-light)] rounded-[2px] p-6 sm:p-8 flex flex-col gap-4"
+              className="bg-[#111215] text-[var(--text-on-dark)] border border-white/[0.08] border-t-2 border-t-[#DDB52E] rounded-[2px] p-6 sm:p-8 flex flex-col gap-5 shadow-[0_8px_30px_rgba(0,0,0,0.4)]"
             >
-              <h3
-                id="booking-card-title"
-                className="font-serif text-[24px] font-medium leading-[1.25] text-[var(--text-on-dark)] [text-wrap:balance]"
-              >
-                {booking.cardTitle}
-              </h3>
+              <div>
+                <span className="font-mono text-[11px] uppercase tracking-wider text-[#DDB52E] font-semibold">
+                  STRATEGIK SHERIKLIK PROTOKOLI
+                </span>
+                <h3
+                  id="booking-card-title"
+                  className="font-serif text-[22px] sm:text-[24px] font-bold leading-[1.25] text-white mt-1 [text-wrap:balance]"
+                >
+                  {booking.cardTitle}
+                </h3>
+              </div>
 
-              <p className="text-[15.5px] leading-[1.62] text-[var(--text-muted-on-dark)]">
+              <p className="text-[14.5px] leading-[1.62] text-[#9EA6B5]">
                 {booking.cardDescription}
               </p>
 
               <div
-                className="flex items-center justify-between gap-3 px-4 py-3 bg-[var(--bg-dark)] border border-[var(--border-on-dark)] text-[13.5px] [overflow-wrap:anywhere]"
+                className="flex items-center justify-between gap-3 px-4 py-3 bg-[#090A0D] border border-white/[0.08] text-[13px] rounded-[2px] [overflow-wrap:anywhere]"
               >
-                <span className="font-sans font-medium text-[var(--text-muted-on-dark)]">
+                <span className="font-mono text-[11.5px] uppercase tracking-wider text-[#8E95A5]">
                   {booking.routeLabel}
                 </span>
-                <span className="font-mono text-[var(--accent-gold-light)]">
+                <span className="font-mono text-[12.5px] text-[#DDB52E] font-semibold">
                   {displayedBookingRoute}
                 </span>
               </div>
@@ -467,7 +502,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                 <MagneticPull>
                   <BookingActionLink
                     locale={safeLocale}
-                    className="min-h-[48px] px-6 bg-[var(--bg-surface)] text-[var(--text-ink)] border border-[var(--bg-surface)] hover:bg-[var(--accent-gold-light)] hover:border-[var(--accent-gold-light)] active:opacity-90 rounded-[2px] text-[15px] font-semibold inline-flex items-center justify-center whitespace-nowrap transition-[background-color,border-color,color,opacity] duration-150 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
+                    className="min-h-[46px] px-6 bg-[#DDB52E] text-black border border-[#DDB52E] hover:bg-white hover:border-white hover:text-black active:opacity-90 rounded-[2px] text-[14px] font-bold inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DDB52E]"
                   >
                     {booking.primaryCta}
                   </BookingActionLink>
@@ -510,21 +545,29 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
       {/* BAND 2: CONTACT DIRECTORY & ACCESSIBLE INQUIRY FORM (WARM STONE) */}
       <div
         id="aloqa-kanallar"
-        className="bg-[var(--bg-stone)] text-[var(--text-ink)] border-b border-[var(--border-hairline-editorial)] py-20 lg:py-28 scroll-mt-20"
+        className="bg-[var(--bg-stone)] text-[var(--text-ink)] border-b border-[var(--border-hairline-editorial)] py-14 lg:py-20 scroll-mt-20"
       >
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
           {/* Header Row */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-10 items-end pb-6 border-b border-[var(--border-hairline-editorial)] mb-12 lg:mb-16">
-            <h2
-              id="contact-heading"
-              className="lg:col-span-7 font-serif text-[clamp(30px,4vw,48px)] font-semibold leading-[1.08] tracking-[-0.02em] text-[var(--text-ink)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
-            >
-              {directory.title}
-            </h2>
-            <p className="lg:col-span-5 text-[16px] leading-[1.65] text-[var(--text-soft-editorial)] max-w-[54ch] [text-wrap:pretty]">
+          <header className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 pb-6 sm:pb-8 border-b border-[var(--border-hairline-editorial)] mb-10 lg:mb-14">
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-gold-ink)]" />
+                <span className="font-mono text-[11px] sm:text-[12px] tracking-[0.18em] text-[var(--accent-gold-ink)] uppercase font-semibold">
+                  07.B // RASMIY ALOQA VA KANALLAR DIREKTORIYASI
+                </span>
+              </div>
+              <h2
+                id="contact-heading"
+                className="font-serif text-[clamp(30px,4vw,48px)] font-bold leading-[1.08] tracking-[-0.02em] text-[var(--text-ink)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
+              >
+                {directory.title}
+              </h2>
+            </div>
+            <p className="max-w-[520px] text-[15px] sm:text-[16px] leading-[1.65] text-[var(--text-soft-editorial)] font-sans sm:text-right [text-wrap:pretty]">
               {directory.lead}
             </p>
-          </div>
+          </header>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
             {/* Left Column: Ruled Official Contact Ledger */}
@@ -563,15 +606,16 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                       className="group grid grid-cols-[minmax(0,1fr)_auto] gap-2 items-center py-4 px-2 min-h-[60px] hover:bg-[var(--accent-gold-soft)] active:bg-[var(--accent-gold-soft)] transition-colors duration-150 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
                     >
                       <span className="min-w-0">
-                        <span className="block text-[14px] font-medium text-[var(--text-muted-aa)]">
+                        <span className="block font-mono text-[11px] uppercase tracking-wider font-semibold text-[var(--text-muted-aa)]">
                           {channel.label}
                         </span>
-                        <span className="block text-[clamp(14.5px,4.2vw,17px)] font-semibold text-[var(--text-ink)] mt-0.5 tabular-nums [overflow-wrap:break-word] transition-transform duration-150 motion-safe:group-hover:translate-x-0.5 motion-reduce:transition-none">
+                        <span className="block text-[clamp(14.5px,4.2vw,16.5px)] font-semibold text-[var(--text-ink)] mt-0.5 tabular-nums [overflow-wrap:break-word] transition-transform duration-150 motion-safe:group-hover:translate-x-0.5 motion-reduce:transition-none">
                           {channel.value}
                         </span>
                       </span>
-                      <span className="text-[13.5px] font-semibold text-[var(--accent-gold-ink)] transition-transform duration-150 motion-safe:group-hover:translate-x-0.5 motion-reduce:transition-none">
-                        {channel.cue}
+                      <span className="inline-flex items-center gap-1 font-mono text-[11.5px] uppercase tracking-wider font-semibold text-[var(--accent-gold-ink)] transition-transform duration-150 motion-safe:group-hover:translate-x-1 motion-reduce:transition-none">
+                        <span>{channel.cue}</span>
+                        <span aria-hidden="true">→</span>
                       </span>
                     </a>
                   </li>
@@ -742,7 +786,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                         placeholder={formCopy.namePlaceholder}
                         aria-invalid={fieldErrors.name ? "true" : undefined}
                         aria-describedby={fieldErrors.name ? "contact-name-error" : undefined}
-                        className={`w-full min-h-[48px] px-4 py-2.5 border rounded-[2px] text-[16px] leading-[1.4] text-[var(--text-ink)] placeholder:text-[var(--text-muted-aa)] transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] ${
+                        className={`w-full min-h-[44px] px-3.5 py-2 border rounded-[2px] text-[14px] sm:text-[14.5px] leading-[1.4] text-[var(--text-ink)] placeholder:text-[13px] placeholder:text-[var(--text-muted-aa)] transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] ${
                           fieldErrors.name
                             ? "bg-[var(--status-error-wash)] border-[var(--status-error-border)]"
                             : "bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] focus:bg-[var(--bg-surface)]"
@@ -766,12 +810,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                       >
                         {formCopy.phoneLabel} *
                       </label>
-                      <div className="grid grid-cols-1 sm:grid-cols-[135px_1fr] gap-2">
+                      <div className="flex items-center gap-2">
                         <select
                           aria-label="Davlat kodi"
                           value={countryCode}
                           onChange={handleCountryCodeChange}
-                          className="min-h-[48px] px-3 border rounded-[2px] text-[15px] font-mono text-[var(--text-ink)] bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--accent-gold)]"
+                          className="w-[96px] sm:w-[100px] shrink-0 min-h-[44px] px-2 border rounded-[2px] text-[12px] font-mono text-[var(--text-ink)] bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--accent-gold)]"
                         >
                           {COUNTRY_CODE_PRESETS.map((preset) => (
                             <option key={preset.code} value={preset.code}>
@@ -789,10 +833,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                           autoComplete="tel"
                           value={displayPhone}
                           onChange={handlePhoneChange}
-                          placeholder={countryCode === "+998" ? "(90) 123-45-67" : "123 45 67"}
+                          placeholder={countryCode === "+998" ? "90 123 45 67" : "123 45 67"}
                           aria-invalid={fieldErrors.phone ? "true" : undefined}
                           aria-describedby={fieldErrors.phone ? "contact-phone-error" : undefined}
-                          className={`w-full min-h-[48px] px-4 py-2.5 border rounded-[2px] text-[16px] leading-[1.4] tabular-nums font-mono text-[var(--text-ink)] placeholder:text-[var(--text-muted-aa)] transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] ${
+                          className={`flex-1 min-w-0 min-h-[44px] px-3 py-2 border rounded-[2px] text-[13.5px] sm:text-[14px] leading-[1.4] tabular-nums font-mono text-[var(--text-ink)] placeholder:text-[12px] placeholder:font-sans placeholder:text-[var(--text-muted-aa)] transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] ${
                             fieldErrors.phone
                               ? "bg-[var(--status-error-wash)] border-[var(--status-error-border)]"
                               : "bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] focus:bg-[var(--bg-surface)]"
@@ -837,7 +881,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                         aria-describedby={
                           fieldErrors.business ? "contact-business-error" : undefined
                         }
-                        className={`w-full min-h-[48px] px-4 py-2.5 border rounded-[2px] text-[16px] leading-[1.4] text-[var(--text-ink)] placeholder:text-[var(--text-muted-aa)] transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] ${
+                        className={`w-full min-h-[44px] px-3.5 py-2 border rounded-[2px] text-[14px] sm:text-[14.5px] leading-[1.4] text-[var(--text-ink)] placeholder:text-[13px] placeholder:text-[var(--text-muted-aa)] transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] ${
                           fieldErrors.business
                             ? "bg-[var(--status-error-wash)] border-[var(--status-error-border)]"
                             : "bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] focus:bg-[var(--bg-surface)]"
@@ -866,7 +910,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                         name="topic"
                         value={formData.topic}
                         onChange={(e) => handleFieldChange("topic", e.target.value)}
-                        className="w-full min-h-[48px] px-4 py-2.5 bg-[var(--bg-alabaster)] border border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] focus:bg-[var(--bg-surface)] rounded-[2px] text-[16px] leading-[1.4] text-[var(--text-ink)] cursor-pointer transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)]"
+                        className="w-full min-h-[44px] px-3.5 py-2 bg-[var(--bg-alabaster)] border border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] focus:bg-[var(--bg-surface)] rounded-[2px] text-[14px] sm:text-[14.5px] leading-[1.4] text-[var(--text-ink)] cursor-pointer transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)]"
                       >
                         {formCopy.topicOptions.map((opt) => (
                           <option key={opt.id} value={opt.id}>
@@ -900,7 +944,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                       aria-describedby={
                         fieldErrors.message ? "contact-message-error" : undefined
                       }
-                      className={`w-full min-h-[112px] px-4 py-3 border rounded-[2px] text-[16px] leading-[1.55] text-[var(--text-ink)] placeholder:text-[var(--text-muted-aa)] resize-y transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] ${
+                      className={`w-full min-h-[112px] px-4 py-3 border rounded-[2px] text-[14px] sm:text-[14.5px] leading-[1.55] text-[var(--text-ink)] placeholder:text-[13px] placeholder:text-[var(--text-muted-aa)] resize-y transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] ${
                         fieldErrors.message
                           ? "bg-[var(--status-error-wash)] border-[var(--status-error-border)]"
                           : "bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] focus:bg-[var(--bg-surface)]"
@@ -959,7 +1003,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                       type="submit"
                       disabled={isSubmitting}
                       aria-busy={isSubmitting}
-                      className="min-h-[48px] px-8 bg-[var(--bg-dark)] text-[var(--bg-surface-warm)] border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] active:bg-[var(--bg-dark)] disabled:opacity-60 disabled:cursor-not-allowed rounded-[2px] text-[15px] font-semibold inline-flex items-center justify-center whitespace-nowrap transition-[background-color,border-color] duration-150 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                      className="min-h-[48px] px-8 bg-[#0E1013] text-white border border-[#0E1013] hover:bg-[#DDB52E] hover:border-[#DDB52E] hover:text-black active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed rounded-[2px] text-[14px] font-bold tracking-[0.04em] inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DDB52E]"
                     >
                       {isSubmitting
                         ? formCopy.submitting

@@ -305,34 +305,50 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
       : "";
 
   return (
-    <section id="media" aria-labelledby="media-heading" className="scroll-mt-24">
+    <section id="media" aria-labelledby="media-heading" className="scroll-mt-0 sm:scroll-mt-[-12px] relative">
+      {/* Top Hairline Divider from Section 05 */}
+      <div className="w-full h-px bg-gradient-to-r from-transparent via-[#DDB52E]/35 to-transparent" />
+
       {/* =================================================================
           BAND 1: FEATURED DOCUMENTARY & CURATED VIDEO COLLECTION (WARM STONE)
           ================================================================= */}
-      <div className="bg-[var(--bg-stone)] border-b border-[var(--border-hairline-editorial)] py-8 lg:py-10">
+      <div className="bg-[var(--bg-stone)] border-b border-[var(--border-hairline-editorial)] py-10 lg:py-14">
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
-          {/* Editorial Split Header */}
-          <header className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 pb-4 border-b border-[var(--border-hairline-editorial)] mb-6">
-            <h2
-              id="media-heading"
-              className="font-sans text-[28px] sm:text-[36px] md:text-[45px] font-bold leading-tight tracking-tight text-[var(--text-ink)] min-w-0"
-            >
-              <StaggeredTextReveal
-                text={`${media.title}${
-                  media.titleEmphasis ? ` ${media.titleEmphasis}` : ""
-                }`}
-              />
-            </h2>
-
-            {featuresConfig.mediaLibrary && (
-              <Link
-                href={`/${safeLocale}/kutubxona`}
-                className="inline-flex min-h-[40px] items-center gap-2 font-mono text-[11.5px] font-semibold uppercase tracking-[0.12em] text-[var(--accent-gold-ink)] underline underline-offset-4 hover:text-[var(--text-ink)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] shrink-0"
+          {/* Editorial Split Header matching sections 01-05 */}
+          <header className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 pb-6 sm:pb-8 border-b border-[var(--border-hairline-editorial)] mb-8 sm:mb-10">
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-gold-ink)]" />
+                <span className="font-mono text-[11px] sm:text-[12px] tracking-[0.18em] text-[var(--accent-gold-ink)] uppercase font-semibold">
+                  {`${media.sectionNum || "06"} // MEDIA, VIDEO SUHBATLAR VA MATBUOT ARXIVI`}
+                </span>
+              </div>
+              <h2
+                id="media-heading"
+                className="font-serif text-[clamp(2rem,3.5vw,3.25rem)] font-bold tracking-tight text-[var(--text-ink)] leading-[1.08]"
               >
-                <span>{getMediaLibraryUiCopy(safeLocale).homepageLinkLabel}</span>
-                <span aria-hidden="true">→</span>
-              </Link>
-            )}
+                <StaggeredTextReveal
+                  text={`${media.title}${
+                    media.titleEmphasis ? ` ${media.titleEmphasis}` : ""
+                  }`}
+                />
+              </h2>
+            </div>
+
+            <div className="flex flex-col sm:items-end gap-3 max-w-[540px]">
+              <p className="text-[15px] sm:text-[16px] leading-relaxed text-[var(--text-soft-editorial)] font-sans sm:text-right">
+                {media.subtitle}
+              </p>
+              {featuresConfig.mediaLibrary && (
+                <Link
+                  href={`/${safeLocale}/kutubxona`}
+                  className="inline-flex min-h-[36px] items-center gap-2 font-mono text-[11.5px] font-semibold uppercase tracking-[0.14em] text-[var(--accent-gold-ink)] hover:text-[var(--text-ink)] group transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                >
+                  <span>{getMediaLibraryUiCopy(safeLocale).homepageLinkLabel}</span>
+                  <span className="inline-block transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">→</span>
+                </Link>
+              )}
+            </div>
           </header>
 
           {/* Featured Editorial Interview (7:5 Split Showcase) */}
@@ -372,7 +388,11 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
                       }}
                     />
 
-                    <div className="absolute left-3 right-3 bottom-3 sm:left-6 sm:right-6 sm:bottom-6 z-10 flex items-center justify-start">
+                    <div className="absolute left-3 right-3 bottom-3 sm:left-5 sm:bottom-5 z-10 flex items-center justify-between">
+                      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-[2px] bg-black/80 backdrop-blur-sm border border-white/10 font-mono text-[11px] uppercase tracking-wider text-white/90">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#DDB52E] animate-pulse" />
+                        <span>SUBYEKTIV // 2021</span>
+                      </div>
                       <button
                         id="featured-poster-btn"
                         type="button"
@@ -389,9 +409,9 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
                             e.currentTarget
                           );
                         }}
-                        className="min-h-[44px] sm:min-h-[48px] px-4 sm:px-6 bg-[var(--bg-surface-warm)] text-[var(--text-ink)] border border-[var(--bg-surface-warm)] group-hover:bg-[var(--accent-gold-ink)] group-hover:border-[var(--accent-gold-ink)] group-hover:text-[var(--bg-surface-warm)] group-hover:-translate-y-0.5 hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] hover:text-[var(--bg-surface-warm)] active:translate-y-0 rounded-[2px] text-[13.5px] sm:text-[14px] font-semibold inline-flex items-center gap-2 whitespace-nowrap transition-[background-color,border-color,color,transform] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                        className="min-h-[40px] px-4 bg-[#0E1013]/90 text-white border border-[#DDB52E]/50 group-hover:bg-[#DDB52E] group-hover:border-[#DDB52E] group-hover:text-black rounded-[2px] text-[13px] font-semibold inline-flex items-center gap-2 whitespace-nowrap transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DDB52E]"
                       >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                           <path d="M8 5v14l11-7z" />
                         </svg>
                         <span>{featured.playLabel}</span>
@@ -402,6 +422,12 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
 
                 {/* 5-Col Publication Ledger & Actions */}
                 <div className="lg:col-span-5 flex flex-col gap-4 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-[2px] font-mono text-[11px] font-semibold uppercase tracking-[0.12em] bg-[var(--accent-gold-soft)] text-[var(--accent-gold-ink)] border border-[var(--accent-gold-border)]">
+                      {featured.statusLabel || "Tasdiqlangan hujjatli intervyu"}
+                    </span>
+                  </div>
+
                   <h3
                     id="featured-interview-title"
                     className="font-serif text-[clamp(24px,2.5vw,32px)] font-semibold leading-[1.2] text-[var(--text-ink)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
@@ -540,7 +566,6 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
                       : VERIFIED_YOUTUBE_MANIFEST.filter(
                           (v) => v.topicCategory === key
                         ).length;
-                  const label = `${knowledgeMedia.filters[key]} (${count})`;
                   return (
                     <button
                       key={key}
@@ -562,13 +587,20 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
                           videoTabListRef
                         )
                       }
-                      className={`min-h-[38px] px-3.5 py-1.5 rounded-[2px] border text-[12.5px] font-medium whitespace-nowrap transition-[background-color,color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] ${
+                      className={`min-h-[36px] px-3.5 py-1.5 rounded-[2px] border text-[12px] font-medium whitespace-nowrap transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] ${
                         isSelected
-                          ? "bg-[var(--bg-dark)] text-[var(--bg-surface-warm)] border-[var(--bg-dark)]"
-                          : "bg-[var(--bg-surface-warm)] text-[var(--text-soft-editorial)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] hover:text-[var(--text-ink)]"
+                          ? "bg-[var(--bg-dark)] text-white border-[var(--bg-dark)] shadow-sm font-semibold"
+                          : "bg-[var(--bg-surface-warm)] text-[var(--text-soft-editorial)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--accent-gold-ink)] hover:text-[var(--text-ink)]"
                       }`}
                     >
-                      {label}
+                      {knowledgeMedia.filters[key]}
+                      <span
+                        className={`ml-1.5 font-mono text-[11px] tabular-nums ${
+                          isSelected ? "text-[#DDB52E]" : "text-[var(--text-muted-aa)]"
+                        }`}
+                      >
+                        ({count})
+                      </span>
                     </button>
                   );
                 })}
@@ -747,13 +779,26 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
           ================================================================= */}
       <div
         id="media-press"
-        className="bg-[var(--bg-alabaster)] border-b border-[var(--border-hairline-editorial)] py-8 lg:py-10"
+        className="bg-[var(--bg-alabaster)] border-b border-[var(--border-hairline-editorial)] py-10 lg:py-14"
       >
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
-          <div className="flex flex-wrap items-baseline justify-between gap-4 pb-3 border-b border-[var(--border-hairline-editorial-strong)] mb-6">
-            <h3 className="font-serif text-[clamp(22px,2.4vw,28px)] font-semibold leading-[1.2] text-[var(--text-ink)]">
-              {media.pressHeading}
-            </h3>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[var(--border-hairline-editorial-strong)] mb-6">
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-gold-ink)]" />
+                <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-[var(--accent-gold-ink)] font-semibold">
+                  RASMIY MATBUOT REESTRI // 2021 — 2026
+                </span>
+              </div>
+              <h3 className="font-serif text-[clamp(22px,2.4vw,28px)] font-bold leading-[1.2] text-[var(--text-ink)]">
+                {media.pressHeading}
+              </h3>
+            </div>
+            {media.pressSubmeta && (
+              <span className="font-mono text-[12px] text-[var(--text-muted-aa)]">
+                {media.pressSubmeta}
+              </span>
+            )}
           </div>
 
           {media.pressFilters && (
@@ -778,10 +823,10 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
                     onKeyDown={(e) =>
                       handleTabKeyDown(e, idx, pressFilterKeys, setPressFilter, pressTabListRef)
                     }
-                    className={`min-h-[44px] px-4 py-2 rounded-[2px] border text-[14px] font-medium transition-[background-color,color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] ${
+                    className={`min-h-[38px] px-4 py-1.5 rounded-[2px] border text-[13px] font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] ${
                       isActive
-                        ? "bg-[var(--bg-dark)] text-[var(--bg-surface-warm)] border-[var(--bg-dark)]"
-                        : "bg-[var(--bg-surface-warm)] text-[var(--text-soft-editorial)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] hover:text-[var(--text-ink)]"
+                        ? "bg-[var(--bg-dark)] text-white border-[var(--bg-dark)] shadow-sm font-semibold"
+                        : "bg-[var(--bg-surface-warm)] text-[var(--text-soft-editorial)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--accent-gold-ink)] hover:text-[var(--text-ink)]"
                     }`}
                   >
                     {label}
@@ -798,13 +843,13 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
             {filteredPress.map((press) => (
               <article
                 key={press.id}
-                className="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-6 py-4 lg:px-2 border-b border-[var(--border-hairline-editorial)] items-center hover:bg-[var(--bg-stone-soft)] transition-colors duration-150"
+                className="group grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-6 py-4 lg:px-3 border-b border-[var(--border-hairline-editorial)] items-center hover:bg-[var(--bg-stone-soft)] transition-all duration-200"
               >
                 <div className="lg:col-span-2 flex flex-col gap-0.5">
-                  <span className="text-[15.5px] font-bold text-[var(--text-ink)]">
+                  <span className="text-[15.5px] font-bold text-[var(--text-ink)] group-hover:text-[var(--accent-gold-ink)] transition-colors">
                     {press.outlet}
                   </span>
-                  <span className="font-mono text-[12.5px] tabular-nums text-[var(--text-muted-aa)]">
+                  <span className="font-mono text-[12px] tabular-nums text-[var(--text-muted-aa)]">
                     {press.dateIso ? (
                       <time dateTime={press.dateIso}>{press.datePlaceholder}</time>
                     ) : (
@@ -813,16 +858,18 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
                   </span>
                 </div>
 
-                <div className="lg:col-span-2 text-[13.5px] font-medium text-[var(--accent-gold-ink)]">
-                  {press.publicationType}
+                <div className="lg:col-span-2">
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-[2px] font-mono text-[11px] font-medium bg-[var(--accent-gold-soft)] text-[var(--accent-gold-ink)] border border-[var(--accent-gold-border)]">
+                    {press.publicationType}
+                  </span>
                 </div>
 
                 <div className="lg:col-span-6 min-w-0">
-                  <h4 className="font-serif text-[clamp(18px,1.8vw,22px)] font-semibold leading-[1.3] text-[var(--text-ink)] [overflow-wrap:break-word] min-w-0">
+                  <h4 className="font-serif text-[clamp(17.5px,1.8vw,21px)] font-semibold leading-[1.3] text-[var(--text-ink)] [overflow-wrap:break-word] min-w-0 group-hover:text-[var(--accent-gold-ink)] transition-colors">
                     {press.articleTitle}
                   </h4>
                   {press.contextNote && (
-                    <p className="text-[14px] leading-[1.5] text-[var(--text-soft-editorial)] mt-1 max-w-[60ch]">
+                    <p className="text-[13.5px] leading-[1.5] text-[var(--text-soft-editorial)] mt-1 max-w-[60ch]">
                       {press.contextNote}
                     </p>
                   )}
@@ -833,10 +880,10 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
                     href={press.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="min-h-[44px] px-4 bg-[var(--bg-surface-warm)] text-[var(--text-ink)] border border-[var(--border-hairline-editorial-strong)] hover:bg-[var(--bg-dark)] hover:border-[var(--bg-dark)] hover:text-[var(--bg-surface-warm)] rounded-[2px] text-[13.5px] font-semibold inline-flex items-center gap-2 whitespace-nowrap transition-[background-color,border-color,color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                    className="min-h-[40px] px-4 bg-[var(--bg-surface-warm)] text-[var(--text-ink)] border border-[var(--border-hairline-editorial-strong)] group-hover:border-[var(--accent-gold-ink)] group-hover:bg-[var(--accent-gold-soft)] hover:!bg-[var(--bg-dark)] hover:!text-[var(--bg-surface-warm)] hover:!border-[var(--bg-dark)] rounded-[2px] text-[13px] font-semibold inline-flex items-center gap-2 whitespace-nowrap transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
                   >
                     <span>{ui?.readPress}</span>
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                       <path
                         d="M4 12L12 4M6 4h6v6"
                         stroke="currentColor"

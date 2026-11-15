@@ -77,13 +77,13 @@ export const featuresConfig: FeatureFlags = {
   mediaLibrary: resolveMediaLibrary(),
   exportPortal: resolveExportPortal(),
 
-  // Active Concept 3 homepage sections (compact 5-section landing page)
+  // Active Concept 3 homepage sections
   sections: {
     hero: true,
     dossier: false,
     portfolio: true,
-    timeline: false,
-    initiatives: false,
+    timeline: true,
+    initiatives: true,
     principles: true,
     numbers: false,
     exportUzbic: false,

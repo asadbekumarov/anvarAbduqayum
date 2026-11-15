@@ -1,0 +1,90 @@
+/**
+ * Anvar Abduqayum B2B Industrial Platform (The Authority Experience)
+ * Auto-generated design tokens as CSS Custom Properties.
+ * Governed by WCAG 2.2 AA accessibility ratios.
+ */
+
+:root {
+  /* Dark Obsidian Palette (Default Canvas) */
+  --color-bg-dark: #090A0D;
+  --color-surface-dark: #12141A;
+  --color-surface-elevated: #17181D;
+  --color-surface-card: #181B24;
+  --color-border-dark: #272A34;
+  --color-border-dark-subtle: rgba(255, 255, 255, 0.08);
+  --color-border-input: #586173;
+  --color-text-dark: #F5F4F0;
+  --color-text-muted-dark: #8E95A5;
+  --color-text-dim: #666D7D;
+
+  /* Light Cream Palette (Editorial / Dossier Canvas) */
+  --color-bg-light: #F6F3EC;
+  --color-surface-light: #FFFFFF;
+  --color-surface-light-subtle: #EFEBE1;
+  --color-border-light: #DCD7CC;
+  --color-border-light-input: #7A8291;
+  --color-text-light: #14161A;
+  --color-text-muted-light: #585F6E;
+
+  /* Signature Luxury Accents */
+  --color-accent-gold: #D4AF37;
+  --color-on-accent-gold: #090A0D;
+  --color-accent-gold-hover: #E5BE42;
+  --color-accent-amber: #D97736;
+  --color-accent-cobalt: #2563EB;
+  --color-on-accent-cobalt: #FFFFFF;
+
+  /* Semantic Feedback Roles */
+  --color-danger: #E05252;
+  --color-success: #2E9E66;
+  --color-warning: #EAB308;
+
+  /* Typography Scales */
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --type-2xs: 10px;
+  --type-xs: 12px;
+  --type-sm: 13px;
+  --type-base: 15px;
+  --type-md: 17px;
+  --type-lg: 21px;
+  --type-xl: 28px;
+  --type-2xl: 38px;
+  --type-display: 52px;
+
+  /* Line Heights */
+  --leading-2xs: 14px;
+  --leading-xs: 16px;
+  --leading-sm: 19px;
+  --leading-base: 23px;
+  --leading-md: 25px;
+  --leading-lg: 28px;
+  --leading-xl: 34px;
+  --leading-2xl: 44px;
+  --leading-display: 58px;
+
+  /* Geometry & Radius */
+  --radius-none: 0px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-full: 999px;
+
+  /* Shadows */
+  --shadow-subtle: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --shadow-elevated: 0 12px 36px rgba(0, 0, 0, 0.45);
+  --shadow-glass: 0 24px 64px rgba(0, 0, 0, 0.65);
+  --shadow-gold-glow: 0 0 20px rgba(212, 175, 55, 0.22);
+
+  /* Motion & Transitions */
+  --ease-industrial: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-monograph: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 400ms;
+  --duration-monograph: 600ms;
+}
+

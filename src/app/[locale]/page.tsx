@@ -6,6 +6,8 @@ import { Footer } from "@/components/layout/Footer";
 import { MobileStickyBar } from "@/components/layout/MobileStickyBar";
 import { Hero } from "@/components/sections/Hero";
 import { Portfolio } from "@/components/sections/Portfolio";
+import { Timeline } from "@/components/sections/Timeline";
+import { CurrentInitiatives } from "@/components/sections/CurrentInitiatives";
 import { Principles } from "@/components/sections/Principles";
 import { MediaSection } from "@/components/sections/MediaSection";
 import { ContactSection } from "@/components/sections/ContactSection";
@@ -66,13 +68,19 @@ export default async function HomePage({
         {/* 02 — Business Portfolio */}
         {featuresConfig.sections.portfolio && <Portfolio locale={locale} />}
 
-        {/* 03 — Management Philosophy (The Mold / Qolip Principle) */}
+        {/* 03 — Timeline / Faoliyat yo'li */}
+        {featuresConfig.sections.timeline && <Timeline locale={locale} />}
+
+        {/* 04 — Current Initiatives / Tashabbuslar */}
+        {featuresConfig.sections.initiatives && <CurrentInitiatives locale={locale} />}
+
+        {/* 05 — Management Philosophy (The Mold / Qolip Principle) */}
         {featuresConfig.sections.principles && <Principles locale={locale} />}
 
-        {/* 04 — Business Knowledge & Media */}
+        {/* 06 — Business Knowledge & Media */}
         {featuresConfig.sections.media && <MediaSection locale={locale} />}
 
-        {/* 05 — Official Contact */}
+        {/* 07 — Official Contact */}
         {featuresConfig.sections.contact && <ContactSection locale={locale} />}
       </main>
 

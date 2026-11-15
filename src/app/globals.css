@@ -221,3 +221,33 @@ html.modal-locked {
     scroll-behavior: auto !important;
   }
 }
+
+/* Executive Architectural Blueprint Mode */
+html.blueprint-mode {
+  --blueprint-grid: rgba(184, 134, 11, 0.07);
+  --blueprint-subgrid: rgba(184, 134, 11, 0.035);
+  background-image: 
+    linear-gradient(to right, var(--blueprint-grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--blueprint-grid) 1px, transparent 1px),
+    linear-gradient(to right, var(--blueprint-subgrid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--blueprint-subgrid) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+}
+
+html.blueprint-mode header,
+html.blueprint-mode section,
+html.blueprint-mode footer {
+  position: relative;
+}
+
+html.blueprint-mode section::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.35), transparent);
+  pointer-events: none;
+}
+

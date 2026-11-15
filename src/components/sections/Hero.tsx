@@ -52,30 +52,46 @@ export const Hero: React.FC<HeroProps> = ({ locale = "uz" }) => {
         featuresConfig.demoMode
           ? "pt-5 sm:pt-8 lg:pt-11"
           : "pt-[76px] sm:pt-24 lg:pt-28"
-      } pb-12 sm:pb-14 lg:pb-16 overflow-hidden`}
+      } pb-14 sm:pb-16 lg:pb-20 overflow-hidden`}
     >
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Subtle Architectural Blueprint Grid */}
+        <div
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(rgba(184,134,11,0.12)_1px,transparent_1px)] [background-size:28px_28px] opacity-40 [mask-image:radial-gradient(ellipse_70%_60%_at_50%_35%,#000_50%,transparent_100%)]"
+          aria-hidden="true"
+        />
+
         {/* Subtle Architectural Parallax Accents */}
         <ParallaxLayer
           aria-hidden={true}
           offset={28}
-          className="pointer-events-none absolute -top-10 right-8 w-64 h-64 border border-[var(--accent-gold-border)] opacity-25 hidden lg:block"
+          className="pointer-events-none absolute -top-10 right-8 w-64 h-64 border border-[var(--accent-gold-border)] opacity-20 hidden lg:block"
         />
         <ParallaxLayer
           aria-hidden={true}
           offset={-20}
-          className="pointer-events-none absolute bottom-6 left-4 w-32 h-32 border-l border-b border-[var(--border-hairline-editorial)] opacity-40 hidden lg:block"
+          className="pointer-events-none absolute bottom-6 left-4 w-32 h-32 border-l border-b border-[var(--border-hairline-editorial)] opacity-35 hidden lg:block"
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] xl:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] gap-9 sm:gap-12 lg:gap-16 xl:gap-20 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] xl:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] gap-10 sm:gap-14 lg:gap-16 xl:gap-20 items-center">
           
           {/* Left Column: Monograph Editorial Content */}
           <div className="flex flex-col min-w-0">
 
+            {/* Editorial Kicker (Quiet, Authentic & Restrained) */}
+            {content.hero.kickerBadge && (
+              <div className="inline-flex items-center gap-2.5 mb-4 sm:mb-6">
+                <span className="w-5 h-[1.5px] bg-[var(--accent-gold-ink)] shrink-0" aria-hidden="true" />
+                <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--accent-gold-ink)]">
+                  {content.hero.kickerBadge}
+                </span>
+              </div>
+            )}
+
             {/* Main Editorial Headline */}
             <h1
               id="hero-heading"
-              className="font-serif text-3xl sm:text-5xl lg:text-[54px] xl:text-[62px] font-semibold leading-[1.08] text-[var(--text-ink)] tracking-tight mb-3.5 sm:mb-7 [overflow-wrap:break-word] min-w-0"
+              className="font-serif text-3xl sm:text-5xl lg:text-[54px] xl:text-[62px] font-semibold leading-[1.08] text-[var(--text-ink)] tracking-tight mb-4 sm:mb-7 [overflow-wrap:break-word] min-w-0"
             >
               <em className="font-editorial-italic font-normal text-[var(--accent-gold-ink)] not-italic pr-2">
                 <StaggeredTextReveal
@@ -93,27 +109,27 @@ export const Hero: React.FC<HeroProps> = ({ locale = "uz" }) => {
 
             {/* Manifesto / Executive Summary */}
             <motion.p
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: SWISS_EASE, delay: 0.28 }}
-              className="text-sm sm:text-base lg:text-lg leading-[1.68] sm:leading-[1.7] text-[var(--text-soft)] max-w-[620px] mb-5 sm:mb-9"
+              className="text-sm sm:text-base lg:text-lg leading-[1.7] text-[var(--text-soft-editorial)] max-w-[620px] mb-6 sm:mb-10"
             >
               {content.hero.summary}
             </motion.p>
 
-            {/* CTAs */}
+            {/* Action Buttons */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: SWISS_EASE, delay: 0.36 }}
-              className="flex flex-wrap items-center gap-2.5 sm:gap-4 mb-6 sm:mb-12"
+              className="flex flex-wrap items-center gap-3 sm:gap-4 mb-8 sm:mb-12"
             >
               <MagneticPull>
                 <BookingActionLink
                   locale={locale}
                   className="min-h-[48px] sm:min-h-[52px] px-7 sm:px-8 bg-[var(--bg-dark)] text-[var(--bg-surface)] text-xs font-sans font-semibold uppercase tracking-[0.14em] inline-flex items-center justify-center gap-2.5 border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] hover:-translate-y-0.5 hover:shadow-[var(--shadow-editorial-gold)] active:translate-y-0 transition-[background-color,border-color,color,transform,box-shadow] duration-200 rounded-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-alabaster)]"
                 >
-                  <span>{content.hero.ctaPrimary || "Uchrashuv bo‘yicha yozish"}</span>
+                  <span>{content.hero.ctaPrimary || "Hamkorlik tartibi"}</span>
                   <svg
                     className="w-3.5 h-3.5 shrink-0"
                     viewBox="0 0 16 16"
@@ -138,10 +154,10 @@ export const Hero: React.FC<HeroProps> = ({ locale = "uz" }) => {
               </a>
             </motion.div>
 
-            {/* 3 Verified Metric Columns (Strict Factual Accuracy & Clear Mobile Clearance) */}
+            {/* 3 Pure Editorial Factual Metrics (Clean, Non-gimmicky, Confident) */}
             <div
-              className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-6 pt-4 sm:pt-8 border-t border-[var(--border-hairline)]"
-              aria-label="Tasdiqlangan Sanoat Ko'rsatkichlari"
+              className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 pt-8 sm:pt-10 border-t border-[var(--border-hairline)]"
+              aria-label="Faktual sanoat ko‘rsatkichlari"
             >
               {metrics.map((metric, idx) => {
                 const match = metric.value.match(/^([^\s/—-]+)([\s/—-].+)?$/);
@@ -149,19 +165,25 @@ export const Hero: React.FC<HeroProps> = ({ locale = "uz" }) => {
                 const subVal = match && match[2] ? match[2] : "";
 
                 return (
-                  <div key={idx} className="flex flex-col min-w-0">
-                    <span className="font-serif text-2xl sm:text-3xl xl:text-[32px] font-semibold text-[var(--text-ink)] leading-none mb-1.5 block">
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.42 + idx * 0.08, ease: SWISS_EASE }}
+                    className="flex flex-col min-w-0"
+                  >
+                    <span className="font-serif text-3xl sm:text-4xl xl:text-[40px] font-semibold text-[var(--text-ink)] leading-none mb-2.5 block tracking-tight">
                       {mainVal}
                       {subVal && (
-                        <span className="text-[var(--accent-gold-ink)] text-[0.82em] font-normal">
+                        <span className="text-[var(--accent-gold-ink)] text-[0.8em] font-normal font-sans ml-1">
                           {subVal}
                         </span>
                       )}
                     </span>
-                    <span className="text-[11.5px] leading-snug text-[var(--text-muted-aa)] font-sans block">
+                    <p className="text-[12.5px] leading-relaxed text-[var(--text-soft-editorial)] font-sans">
                       {metric.label}
-                    </span>
-                  </div>
+                    </p>
+                  </motion.div>
                 );
               })}
             </div>
@@ -173,16 +195,9 @@ export const Hero: React.FC<HeroProps> = ({ locale = "uz" }) => {
             y={36}
             className="w-full max-w-[480px] mx-auto lg:max-w-none min-w-0"
           >
-            <div className="group/portrait bg-[var(--bg-surface)] border border-[var(--border-hairline)] p-3.5 sm:p-4 shadow-[var(--shadow-editorial-card)]">
-              {/*
-                INTERNAL ASSET DOCUMENTATION:
-                Temporary archival portrait (/images/hero/portrait.webp) is framed via .portrait-img-editorial
-                to exclude peripheral video title overlays using CSS layout/scaling only, preserving 100% of
-                Anvar Abduqayum's authentic facial identity without AI manipulation. Replace with official
-                studio photography asset once available.
-              */}
+            <div className="group/portrait bg-[var(--bg-surface)] border border-[var(--border-hairline)] p-3.5 sm:p-4 shadow-[var(--shadow-editorial-card)] rounded-[2px]">
               <div className="portrait-archival-mat overflow-hidden">
-                <div className="portrait-image-wrapper transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/portrait:scale-[1.035]">
+                <div className="portrait-image-wrapper transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/portrait:scale-[1.03]">
                   <Image
                     src="/images/anvar.jpg"
                     alt={`${content.hero.portraitCaption} — ${

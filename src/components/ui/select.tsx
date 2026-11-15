@@ -1,687 +1,209 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { RiArrowDownSLine } from "@create-ui/assets/icons"
-import { cva, type VariantProps } from "class-variance-authority"
-import {
-  Autocomplete as AriaAutocomplete,
-  Button as AriaButton,
-  Header as AriaHeader,
-  ListBox as AriaListBox,
-  ListBoxItem as AriaListBoxItem,
-  ListBoxSection as AriaListBoxSection,
-  Popover as AriaPopover,
-  Select as AriaSelect,
-  SelectValue as AriaSelectValue,
-  Separator as AriaSeparator,
-  composeRenderProps,
-  SelectStateContext,
-  useFilter,
-  type ListBoxItemProps as AriaListBoxItemProps,
-  type PopoverProps as AriaPopoverProps,
-  type SelectProps as AriaSelectProps,
-  type SelectValueProps as AriaSelectValueProps,
-  type Key,
-  type ListBoxItemRenderProps,
-} from "react-aria-components"
+import * as React from "react";
+import * as SelectPrimitive from "@radix-ui/react-select";
+import { cn } from "@/lib/utils";
 
-import { cn } from "@/lib/utils"
-import {
-  DropdownContext,
-  DropdownFooter,
-  dropdownHeaderClasses,
-  dropdownHeaderLabelClasses,
-  DropdownItemBody,
-  DropdownItemContainer,
-  DropdownItemContent,
-  DropdownItemDescription,
-  DropdownItemIndicator,
-  DropdownItemLabel,
-  dropdownItemRowClasses,
-  dropdownItemWrapperClasses,
-  dropdownListClasses,
-  DropdownMisc,
-  dropdownPanelClasses,
-  DropdownSearch,
-  dropdownSectionClasses,
-  dropdownSeparatorClasses,
-} from "@/components/ui/dropdown-menu"
-import { useOptionalFieldContext } from "@/components/ui/field"
-import { useInputContext } from "@/components/ui/input"
-import { Spinner } from "@/components/ui/spinner"
+const Select = SelectPrimitive.Root;
+const SelectGroup = SelectPrimitive.Group;
+const SelectValue = SelectPrimitive.Value;
 
-type SelectSize = "xs" | "sm" | "md"
-type SelectVariant = "default" | "compact"
-
-type SelectContextValue = {
-  size: SelectSize
-  variant: SelectVariant
-  invalid: boolean
-  disabled: boolean
-  loading: boolean
-  hasShell?: boolean
-}
-
-const SelectContext = React.createContext<SelectContextValue | null>(null)
-
-function useSelectContext() {
-  return React.useContext(SelectContext)
-}
-
-function SelectProvider({
-  size,
-  variant,
-  invalid,
-  disabled,
-  loading,
-  children,
-}: {
-  size?: SelectSize
-  variant?: SelectVariant
-  invalid?: boolean
-  disabled?: boolean
-  loading?: boolean
-  children: React.ReactNode
-}) {
-  const fieldCtx = useOptionalFieldContext()
-  const inputCtx = useInputContext()
-  const resolvedSize: SelectSize =
-    size ??
-    (inputCtx?.size as SelectSize) ??
-    (fieldCtx?.size as SelectSize) ??
-    "sm"
-  const resolvedVariant: SelectVariant = variant ?? "default"
-  const resolvedInvalid = invalid ?? fieldCtx?.invalid ?? false
-  const resolvedDisabled = disabled ?? fieldCtx?.disabled ?? false
-  const resolvedLoading = loading ?? false
-
-  const value = React.useMemo<SelectContextValue>(
-    () => ({
-      size: resolvedSize,
-      variant: resolvedVariant,
-      invalid: resolvedInvalid,
-      disabled: resolvedDisabled,
-      loading: resolvedLoading,
-    }),
-    [
-      resolvedSize,
-      resolvedVariant,
-      resolvedInvalid,
-      resolvedDisabled,
-      resolvedLoading,
-    ]
-  )
-
-  return (
-    <SelectContext.Provider value={value}>{children}</SelectContext.Provider>
-  )
-}
-
-const selectShellVariants = cva(
-  [
-    // base
-    "flex items-center border bg-static shadow-neutral-xs outline-4 outline-transparent",
-    // transition (mirrors InputShell)
-    "transition-[color,background-color,border-color,outline-color,box-shadow] duration-150 ease-out",
-    // focus-visible
-    "focus-visible:border-heavy focus-visible:outline-light",
-    // data-disabled
-    "data-disabled:cursor-not-allowed",
-    // has-[trigger:open]
-    "has-[>[data-state=open]:not([data-invalid=true]):not([data-loading=true])]:border-heavy has-[>[data-state=open]:not([data-invalid=true]):not([data-loading=true])]:outline-light",
-    // has-[invalid]
-    "has-[>[data-invalid=true]]:border-error-base has-[>[data-invalid=true]]:outline-error-weak",
-    // has-[loading]
-    "has-[>[data-loading=true]]:pointer-events-none has-[>[data-loading=true]]:border-info-base has-[>[data-loading=true]]:outline-info-weak",
-  ],
-  {
-    variants: {
-      size: {
-        xs: "rounded-lg h-8",
-        sm: "rounded-xl h-10",
-        md: "rounded-2xl h-12",
-      },
-      variant: {
-        default: "w-full",
-        compact: "w-fit",
-      },
-      invalid: {
-        true: "",
-        false: [
-          // base
-          "border-weak",
-          // hover
-          "hover:border-light hover:bg-weakest",
-          // has-[loading]
-          "has-[>[data-loading=true]]:bg-weakest",
-          // has-[invalid]:hover
-          "has-[>[data-invalid=true]]:hover:bg-static",
-        ],
-      },
-      disabled: {
-        true: "bg-weakest",
-        false: "",
-      },
-    },
-    defaultVariants: {
-      size: "sm",
-      variant: "default",
-      invalid: false,
-      disabled: false,
-    },
-  }
-)
-
-function SelectShell({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<"div">) {
-  const parentCtx = useSelectContext()
-  const ctx = React.useMemo<SelectContextValue>(
-    () =>
-      parentCtx ?? {
-        size: "sm",
-        variant: "default",
-        invalid: false,
-        disabled: false,
-        loading: false,
-      },
-    [parentCtx]
-  )
-
-  const shellCtx = React.useMemo<SelectContextValue>(
-    () => ({ ...ctx, hasShell: true }),
-    [ctx]
-  )
-
-  return (
-    <SelectContext.Provider value={shellCtx}>
-      <div
-        data-slot="select-shell"
-        data-size={ctx.size}
-        data-variant={ctx.variant}
-        data-invalid={ctx.invalid || undefined}
-        data-disabled={ctx.disabled || undefined}
-        data-loading={ctx.loading || undefined}
-        role="group"
-        className={cn(
-          selectShellVariants({
-            size: ctx.size,
-            variant: ctx.variant,
-            invalid: ctx.invalid,
-            disabled: ctx.disabled,
-          }),
-          className
-        )}
-        {...props}
+const SelectTrigger = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
+>(({ className, children, ...props }, ref) => (
+  <SelectPrimitive.Trigger
+    ref={ref}
+    className={cn(
+      "flex h-9 xl:h-10 w-full items-center justify-between gap-2 rounded-[3px] border border-[var(--border-hairline-editorial)] bg-[var(--bg-surface)] px-3 py-1.5 text-xs font-sans font-medium text-[var(--text-ink)] shadow-sm transition-all duration-150 placeholder:text-[var(--text-muted)] hover:border-[var(--accent-gold)] focus:outline-none focus:ring-1 focus:ring-[var(--accent-gold)] disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1 cursor-pointer",
+      className
+    )}
+    {...props}
+  >
+    {children}
+    <SelectPrimitive.Icon asChild>
+      <svg
+        className="h-3.5 w-3.5 shrink-0 opacity-70 transition-transform duration-200 text-[var(--accent-gold-ink)]"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden="true"
       >
-        {children}
-      </div>
-    </SelectContext.Provider>
-  )
-}
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    </SelectPrimitive.Icon>
+  </SelectPrimitive.Trigger>
+));
+SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
 
-const selectTriggerVariants = cva(
-  [
-    // base
-    "flex flex-1 items-center bg-transparent font-medium text-body cursor-pointer",
-    // transition (mirrors the Input control)
-    "transition-[color,background-color,border-color,outline-color] duration-150 ease-out",
-    // focus
-    "focus:outline-none",
-    // focus-visible
-    "focus-visible:outline-none",
-    // data-disabled
-    "data-[disabled]:text-disabled data-[disabled]:data-[placeholder]:text-disabled data-[disabled]:[&_svg]:text-disabled",
-    // data-invalid
-    "data-[invalid=true]:text-error-base data-[invalid=true]:data-[placeholder]:text-error-base data-[invalid=true]:[&_svg]:text-error-base",
-    // placeholder
-    "data-[placeholder]:text-placeholder",
-    // data-[loading=true]
-    "data-[loading=true]:[&_svg]:text-disabled",
-    // svg
-    "[&_svg]:pointer-events-none [&_svg]:shrink-0",
-    // chevron
-    "[&>svg:last-child]:rotate-0 [&>svg:last-child]:transition [&>svg:last-child]:duration-200 [&[data-state=open]>svg:last-child]:-rotate-180",
-    // select-value
-    "[&>[data-slot=select-value]]:line-clamp-1 [&>[data-slot=select-value]]:min-w-0 [&>[data-slot=select-value]]:flex-1 [&>[data-slot=select-value]]:truncate [&>[data-slot=select-value]]:text-left",
-    // select-value (cloned item row): strip row chrome so the selected label centers and left-aligns like the placeholder
-    "[&>[data-slot=select-value]>*]:min-h-0 [&>[data-slot=select-value]>*]:p-0",
-  ],
-  {
-    variants: {
-      size: {
-        xs: "px-2 py-1.5 text-ui-control-md [&_svg]:size-5 gap-2 h-8",
-        sm: "px-2.5 py-2 text-ui-control-lg [&_svg]:size-5 gap-2 h-10",
-        md: "px-3 py-2.5 text-ui-control-xl [&_svg]:size-6 gap-3 h-12",
-      },
-      variant: {
-        default: "w-full justify-between",
-        compact: "w-auto flex-none justify-start gap-1",
-      },
-    },
-    defaultVariants: {
-      size: "sm",
-      variant: "default",
-    },
-  }
-)
-
-const CHEVRON_SIZE: Record<SelectSize, string> = {
-  xs: "size-5!",
-  sm: "size-5.5!",
-  md: "size-6!",
-}
-
-function Select<T extends object, M extends "single" | "multiple" = "single">({
-  size,
-  variant = "default",
-  loading,
-  isDisabled,
-  isInvalid,
-  children,
-  ...props
-}: Omit<AriaSelectProps<T, M>, "children"> & {
-  size?: SelectSize
-  variant?: SelectVariant
-  loading?: boolean
-  children?: React.ReactNode
-}) {
-  const fieldCtx = useOptionalFieldContext()
-  const resolvedDisabled = isDisabled ?? fieldCtx?.disabled ?? false
-  const resolvedLoading = loading ?? fieldCtx?.loading ?? false
-  const resolvedInvalid = isInvalid ?? fieldCtx?.invalid ?? false
-
-  return (
-    <SelectProvider
-      size={size}
-      variant={variant}
-      invalid={resolvedInvalid}
-      disabled={resolvedDisabled}
-      loading={resolvedLoading}
+const SelectScrollUpButton = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
+>(({ className, ...props }, ref) => (
+  <SelectPrimitive.ScrollUpButton
+    ref={ref}
+    className={cn(
+      "flex cursor-default items-center justify-center py-1 text-[var(--text-muted)]",
+      className
+    )}
+    {...props}
+  >
+    <svg
+      className="h-3.5 w-3.5"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
     >
-      <AriaSelect
-        data-slot="select"
-        isDisabled={resolvedDisabled || resolvedLoading}
-        isInvalid={resolvedInvalid}
-        {...(props as AriaSelectProps<T, M>)}
-      >
-        {children}
-      </AriaSelect>
-    </SelectProvider>
-  )
-}
+      <path d="m18 15-6-6-6 6" />
+    </svg>
+  </SelectPrimitive.ScrollUpButton>
+));
+SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
 
-function SelectGroup({
-  className,
-  ...props
-}: React.ComponentProps<typeof AriaListBoxSection>) {
-  const ctx = useSelectContext()
-  const size: SelectSize = ctx?.size ?? "sm"
-
-  return (
-    <AriaListBoxSection
-      data-slot="select-group"
-      className={dropdownSectionClasses(size, className)}
-      {...props}
-    />
-  )
-}
-
-function SelectValue<T extends object>({
-  className,
-  placeholder,
-  children,
-  ...props
-}: Omit<AriaSelectValueProps<T>, "children" | "className"> & {
-  className?: string
-  placeholder?: React.ReactNode
-  children?: React.ReactNode
-}) {
-  return (
-    <AriaSelectValue
-      data-slot="select-value"
-      className={cn(className)}
-      {...props}
+const SelectScrollDownButton = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
+>(({ className, ...props }, ref) => (
+  <SelectPrimitive.ScrollDownButton
+    ref={ref}
+    className={cn(
+      "flex cursor-default items-center justify-center py-1 text-[var(--text-muted)]",
+      className
+    )}
+    {...props}
+  >
+    <svg
+      className="h-3.5 w-3.5"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
     >
-      {(renderProps) =>
-        renderProps.isPlaceholder
-          ? (placeholder ?? renderProps.defaultChildren)
-          : (children ?? renderProps.defaultChildren)
-      }
-    </AriaSelectValue>
-  )
-}
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  </SelectPrimitive.ScrollDownButton>
+));
+SelectScrollDownButton.displayName =
+  SelectPrimitive.ScrollDownButton.displayName;
 
-function SelectTrigger({
-  className,
-  size: sizeProp,
-  variant: variantProp,
-  children,
-  ...props
-}: Omit<React.ComponentProps<typeof AriaButton>, "className" | "children"> & {
-  className?: string
-  children?: React.ReactNode
-} & VariantProps<typeof selectTriggerVariants>) {
-  const ctx = useSelectContext()
-  const inputCtx = useInputContext()
-  const fieldCtx = useOptionalFieldContext()
-  const state = React.useContext(SelectStateContext)
-  const isOpen = state?.isOpen ?? false
-  const isPlaceholder = (state?.selectedItems?.length ?? 0) === 0
-
-  const { "aria-invalid": ariaInvalidProp, ...restProps } =
-    props as typeof props & {
-      "aria-invalid"?: boolean | "true" | "false"
-    }
-  const propInvalid = ariaInvalidProp === true || ariaInvalidProp === "true"
-
-  const resolvedSize: SelectSize =
-    (sizeProp as SelectSize | undefined) ??
-    ctx?.size ??
-    (fieldCtx?.size as SelectSize) ??
-    "sm"
-
-  const resolvedVariant: SelectVariant =
-    (variantProp as SelectVariant | undefined) ?? ctx?.variant ?? "default"
-
-  const loading = ctx?.loading ?? fieldCtx?.loading ?? false
-  const invalid = ctx?.invalid ?? fieldCtx?.invalid ?? false
-  const disabled = ctx?.disabled ?? fieldCtx?.disabled ?? false
-  const resolvedInvalid = invalid || propInvalid
-
-  const triggerEl = (
-    <AriaButton
-      data-slot="select-trigger"
-      data-size={resolvedSize}
-      data-variant={resolvedVariant}
-      data-state={isOpen ? "open" : "closed"}
-      data-loading={loading || undefined}
-      data-invalid={resolvedInvalid || undefined}
-      data-placeholder={isPlaceholder || undefined}
-      aria-busy={loading || undefined}
-      aria-invalid={resolvedInvalid || undefined}
+const SelectContent = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
+>(({ className, children, position = "popper", ...props }, ref) => (
+  <SelectPrimitive.Portal>
+    <SelectPrimitive.Content
+      ref={ref}
       className={cn(
-        selectTriggerVariants({
-          size: resolvedSize,
-          variant: resolvedVariant,
-        }),
+        "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-[4px] border border-[var(--border-hairline-editorial-strong)] bg-[var(--bg-surface)] text-[var(--text-ink)] shadow-[var(--shadow-editorial-card)] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2",
+        position === "popper" &&
+          "data-[side=bottom]:translate-y-1.5 data-[side=top]:-translate-y-1.5",
         className
       )}
-      {...restProps}
+      position={position}
+      {...props}
     >
-      {children}
-      {loading ? (
-        <Spinner variant="info" size={resolvedSize} />
-      ) : (
-        <RiArrowDownSLine className={CHEVRON_SIZE[resolvedSize]} />
-      )}
-    </AriaButton>
-  )
-
-  if (ctx?.hasShell || inputCtx?.hasShell) {
-    return triggerEl
-  }
-
-  return (
-    <SelectProvider
-      size={resolvedSize}
-      variant={resolvedVariant}
-      invalid={invalid}
-      disabled={disabled}
-      loading={loading}
-    >
-      <SelectShell>{triggerEl}</SelectShell>
-    </SelectProvider>
-  )
-}
-
-function SelectSearch(
-  props: Omit<React.ComponentProps<typeof DropdownSearch>, "data-slot">
-) {
-  return <DropdownSearch data-slot="select-search" {...props} />
-}
-
-function SelectContent({
-  className,
-  children,
-  footer,
-  header,
-  filter,
-  renderEmptyState,
-  placement = "bottom start",
-  offset = 8,
-  ...props
-}: Omit<AriaPopoverProps, "children"> & {
-  className?: string
-  children?: React.ReactNode
-  footer?: React.ReactNode
-  header?: React.ReactNode
-  filter?: (textValue: string, inputValue: string) => boolean
-  renderEmptyState?: React.ComponentProps<
-    typeof AriaListBox
-  >["renderEmptyState"]
-}) {
-  const ctx = useSelectContext()
-  const fieldCtx = useOptionalFieldContext()
-
-  const size: SelectSize = ctx?.size ?? (fieldCtx?.size as SelectSize) ?? "sm"
-  const { contains } = useFilter({ sensitivity: "base" })
-
-  const panel = (
-    <>
-      {header}
-      <AriaListBox
-        data-slot="select-listbox"
-        renderEmptyState={renderEmptyState}
-        className={dropdownListClasses(size)}
+      <SelectScrollUpButton />
+      <SelectPrimitive.Viewport
+        className={cn(
+          "p-1.5",
+          position === "popper" &&
+            "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]"
+        )}
       >
         {children}
-      </AriaListBox>
-      {footer ? <DropdownFooter>{footer}</DropdownFooter> : null}
-    </>
-  )
+      </SelectPrimitive.Viewport>
+      <SelectScrollDownButton />
+    </SelectPrimitive.Content>
+  </SelectPrimitive.Portal>
+));
+SelectContent.displayName = SelectPrimitive.Content.displayName;
 
-  return (
-    <AriaPopover
-      data-slot="select-content"
-      data-size={size}
-      placement={placement}
-      offset={offset}
-      className={composeRenderProps(className, (className) =>
-        dropdownPanelClasses(size, { animation: "slide", className })
-      )}
-      {...props}
-    >
-      <DropdownContext.Provider value={{ size }}>
-        {header != null ? (
-          <AriaAutocomplete filter={filter ?? contains}>
-            {panel}
-          </AriaAutocomplete>
-        ) : (
-          panel
-        )}
-      </DropdownContext.Provider>
-    </AriaPopover>
-  )
-}
+const SelectLabel = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Label>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
+>(({ className, ...props }, ref) => (
+  <SelectPrimitive.Label
+    ref={ref}
+    className={cn(
+      "px-2.5 py-1 text-[10px] font-mono uppercase tracking-[0.12em] text-[var(--text-muted-aa)]",
+      className
+    )}
+    {...props}
+  />
+));
+SelectLabel.displayName = SelectPrimitive.Label.displayName;
 
-function SelectLabel({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<typeof AriaHeader>) {
-  const ctx = useSelectContext()
-  const size: SelectSize = ctx?.size ?? "sm"
+const SelectItem = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Item>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
+>(({ className, children, ...props }, ref) => (
+  <SelectPrimitive.Item
+    ref={ref}
+    className={cn(
+      "relative flex w-full cursor-pointer select-none items-center rounded-[2px] py-2 pl-8 pr-3 text-xs font-sans text-[var(--text-ink)] outline-none transition-colors hover:bg-[var(--bg-stone)] hover:text-[var(--text-ink)] focus:bg-[var(--bg-stone)] focus:text-[var(--text-ink)] data-[disabled]:pointer-events-none data-[disabled]:opacity-40 data-[highlighted]:bg-[var(--bg-stone)] data-[state=checked]:font-semibold data-[state=checked]:text-[var(--accent-gold-ink)]",
+      className
+    )}
+    {...props}
+  >
+    <span className="absolute left-2.5 flex h-3.5 w-3.5 items-center justify-center">
+      <SelectPrimitive.ItemIndicator>
+        <svg
+          className="h-3.5 w-3.5 text-[var(--accent-gold)]"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M20 6 9 17l-5-5" />
+        </svg>
+      </SelectPrimitive.ItemIndicator>
+    </span>
+    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+  </SelectPrimitive.Item>
+));
+SelectItem.displayName = SelectPrimitive.Item.displayName;
 
-  return (
-    <AriaHeader
-      data-slot="select-label"
-      data-size={size}
-      className={dropdownHeaderClasses(size, className)}
-      {...props}
-    >
-      <span className={dropdownHeaderLabelClasses(size)}>{children}</span>
-    </AriaHeader>
-  )
-}
-
-type SelectItemProps = Omit<
-  AriaListBoxItemProps<object>,
-  "value" | "id" | "children" | "className"
-> & {
-  className?: string
-  value?: Key
-  id?: Key
-  leading?: React.ReactNode
-  description?: React.ReactNode
-  trailing?: React.ReactNode
-  indicator?: React.ReactNode
-  children?:
-    | React.ReactNode
-    | ((values: ListBoxItemRenderProps) => React.ReactNode)
-}
-
-function SelectItem({
-  className,
-  children,
-  value,
-  id,
-  leading,
-  description,
-  trailing,
-  indicator,
-  textValue,
-  ...props
-}: SelectItemProps) {
-  const ctx = useSelectContext()
-  const size: SelectSize = ctx?.size ?? "sm"
-
-  const rowClassName = dropdownItemRowClasses(size)
-  const wrapperClassName = dropdownItemWrapperClasses(size, { className })
-
-  if (typeof children === "function") {
-    const renderChildren = children
-    return (
-      <AriaListBoxItem
-        data-slot="select-item"
-        id={id ?? value}
-        textValue={textValue}
-        className={rowClassName}
-        {...props}
-      >
-        {(renderProps) => (
-          <div className={wrapperClassName}>{renderChildren(renderProps)}</div>
-        )}
-      </AriaListBoxItem>
-    )
-  }
-
-  const childArray = React.Children.toArray(children)
-  const legacyLeading =
-    leading === undefined &&
-    childArray.length > 1 &&
-    React.isValidElement(childArray[0])
-      ? childArray[0]
-      : undefined
-  const resolvedLeading = leading ?? legacyLeading
-  const label = legacyLeading ? childArray.slice(1) : children
-
-  const labelNodes = React.Children.toArray(label)
-  const resolvedTextValue =
-    textValue ??
-    (labelNodes.length > 0 &&
-    labelNodes.every(
-      (node) => typeof node === "string" || typeof node === "number"
-    )
-      ? labelNodes.join("")
-      : undefined)
-
-  return (
-    <AriaListBoxItem
-      data-slot="select-item"
-      id={id ?? value}
-      textValue={resolvedTextValue}
-      className={rowClassName}
-      {...props}
-    >
-      {() => (
-        <div className={wrapperClassName}>
-          <DropdownItemBody
-            slot="select"
-            leading={resolvedLeading}
-            description={description}
-            trailing={trailing}
-            indicator={indicator}
-          >
-            {label}
-          </DropdownItemBody>
-        </div>
-      )}
-    </AriaListBoxItem>
-  )
-}
-
-function SelectSeparator({
-  className,
-  ...props
-}: React.ComponentProps<typeof AriaSeparator>) {
-  const ctx = useSelectContext()
-  const size: SelectSize = ctx?.size ?? "sm"
-
-  return (
-    <AriaSeparator
-      data-slot="select-separator"
-      data-size={size}
-      className={dropdownSeparatorClasses(size, className as string)}
-      {...props}
-    />
-  )
-}
-
-const SelectNamespace = Object.assign(Select, {
-  Provider: SelectProvider,
-  Shell: SelectShell,
-  Trigger: SelectTrigger,
-  Value: SelectValue,
-  Content: SelectContent,
-  Popover: SelectContent,
-  Search: SelectSearch,
-  Misc: DropdownMisc,
-  Item: SelectItem,
-  Section: SelectGroup,
-  Group: SelectGroup,
-  Label: SelectLabel,
-  Separator: SelectSeparator,
-  ItemContainer: DropdownItemContainer,
-  ItemContent: DropdownItemContent,
-  ItemLabel: DropdownItemLabel,
-  ItemDescription: DropdownItemDescription,
-  ItemIndicator: DropdownItemIndicator,
-})
+const SelectSeparator = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Separator>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
+>(({ className, ...props }, ref) => (
+  <SelectPrimitive.Separator
+    ref={ref}
+    className={cn(
+      "-mx-1 my-1 h-px bg-[var(--border-hairline)]",
+      className
+    )}
+    {...props}
+  />
+));
+SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
 export {
-  SelectNamespace as Select,
-  SelectProvider,
-  SelectShell,
-  SelectContent,
+  Select,
   SelectGroup,
-  SelectGroup as SelectSection,
-  SelectItem,
-  SelectLabel,
-  SelectSearch,
-  SelectSeparator,
-  SelectTrigger,
   SelectValue,
-  DropdownMisc as SelectMisc,
-  DropdownItemContainer as SelectItemContainer,
-  DropdownItemContent as SelectItemContent,
-  DropdownItemLabel as SelectItemLabel,
-  DropdownItemDescription as SelectItemDescription,
-  DropdownItemIndicator as SelectItemIndicator,
-  selectShellVariants,
-  selectTriggerVariants,
-  useSelectContext,
-}
-export type { SelectSize, SelectVariant, SelectContextValue, SelectItemProps }
+  SelectTrigger,
+  SelectContent,
+  SelectLabel,
+  SelectItem,
+  SelectSeparator,
+  SelectScrollUpButton,
+  SelectScrollDownButton,
+};

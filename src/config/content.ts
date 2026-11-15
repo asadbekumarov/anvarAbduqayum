@@ -257,6 +257,11 @@ export interface LocaleContent {
       beforeText?: string;
       afterText?: string;
       iconType: "sop" | "governance" | "metrics" | "culture";
+      audioSrc?: string;
+      audioDuration?: string;
+      sourceUrl?: string;
+      sourceLabel?: string;
+      speechText?: string;
     }>;
   };
   numbers: {
@@ -579,7 +584,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
       statusBadge: "SANOAT VA EKSPORT EKOTIZIMI",
       dimensionSpec: "STANDART: ISO / O'zDSt 2026 // SERIYA: 01-AA",
       headlinePrefix: "",
-      headlineEmphasis: "Egasisiz ishlaydigan",
+      headlineEmphasis: "Egasiz ishlaydigan",
       headlineSuffix: " tizimlar va sanoat darajasidagi boshqaruv.",
       summary:
         "Anvar Abduqayum — Toybola Toys (VISAGE ELECTRIC MChJ ishlab chiqarish korxonasi) asoschisi va hammuassisi, Samtech Masterbatches sanoat loyihasi hammuassisi, HoReCa tarmoqlari hamkori hamda mustaqil UZBIC jamoat platformasi raisi. Ushbu tahririy konsepsiya sanoat amaliyoti, ommaviy chiqishlar va biznes ekotizimi sharhini jamlaydi.",
@@ -1106,6 +1111,11 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           afterText:
             "Takrorlanadigan reglamentlar va yangi xodimlarni standart asosida moslashtirish.",
           iconType: "sop",
+          audioSrc: "/audio/thesis-sop.wav",
+          audioDuration: "0:15",
+          sourceUrl: "https://www.youtube.com/watch?v=yi6UAsstdw4",
+          sourceLabel: "SUBYEKTIV // Kun.uz",
+          speechText: "Texnologik reglamentlar: Xodimga emas, hujjatlashtirilgan jarayon protokoliga tayanish.",
         },
         {
           id: "governance",
@@ -1122,6 +1132,11 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           afterText:
             "Lavozim vakolatlari, moliya chegaralari va muntazam hisobot intizomi.",
           iconType: "governance",
+          audioSrc: "/audio/thesis-delegation.wav",
+          audioDuration: "0:15",
+          sourceUrl: "https://www.youtube.com/watch?v=ZiWr2ND4LSo",
+          sourceLabel: "Avtopilot 8 bosqichi // YouTube",
+          speechText: "Delegatsiyalash va vakolat chegaralari: Aniq vakolatlar taqsimoti va rahbarlar hisobdorligi.",
         },
         {
           id: "metrics",
@@ -1139,6 +1154,11 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           afterText:
             "Tizimlashtirilgan ombor hisobi, dinamik tannarx nazorati va shaffof hisobotlar.",
           iconType: "metrics",
+          audioSrc: "/audio/thesis-erp.wav",
+          audioDuration: "0:15",
+          sourceUrl: "https://www.youtube.com/watch?v=qHAo5gJmjaE",
+          sourceLabel: "Samo ekotizimi tahlili // YouTube",
+          speechText: "Ichki ERP va raqamli hisobot: Taxminlarga emas, hujjatlashtirilgan hisobot ko‘rsatkichlariga tayanish.",
         },
         {
           id: "culture",
@@ -1155,6 +1175,11 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           afterText:
             "Sabablarni tahlil qilish, reglamentni yangilash va jamoaviy mas’uliyat.",
           iconType: "culture",
+          audioSrc: "/audio/thesis-culture.wav",
+          audioDuration: "0:15",
+          sourceUrl: "https://www.youtube.com/watch?v=73WXbwiMBzI",
+          sourceLabel: "intervyuTV Hujjatli film",
+          speechText: "Mas’uliyat madaniyati va tizimni tuzatish: Jarayondagi bo‘shliqni inson aybi bilan adashtirmaslik.",
         },
       ],
     },
@@ -2409,6 +2434,11 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           afterText:
             "Повторяемые регламенты (SOP) и ввод сотрудников в работу по единому стандарту.",
           iconType: "sop",
+          audioSrc: "/audio/thesis-sop.wav",
+          audioDuration: "0:15",
+          sourceUrl: "https://www.youtube.com/watch?v=yi6UAsstdw4",
+          sourceLabel: "SUBYEKTIV // Kun.uz",
+          speechText: "Технологические регламенты: Опора на протокол процесса, а не на привычки отдельных лиц.",
         },
         {
           id: "governance",
@@ -2425,6 +2455,11 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           afterText:
             "Закрепленные должностные полномочия, финансовые лимиты и отчетная дисциплина.",
           iconType: "governance",
+          audioSrc: "/audio/thesis-delegation.wav",
+          audioDuration: "0:15",
+          sourceUrl: "https://www.youtube.com/watch?v=ZiWr2ND4LSo",
+          sourceLabel: "8 этапов Автопилота // YouTube",
+          speechText: "Делегирование и границы полномочий: Поэтапное делегирование полномочий и подотчетность.",
         },
         {
           id: "metrics",
@@ -2441,6 +2476,11 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           afterText:
             "Регулярный складской учет, контроль себестоимости и прозрачные дашборды.",
           iconType: "metrics",
+          audioSrc: "/audio/thesis-erp.wav",
+          audioDuration: "0:15",
+          sourceUrl: "https://www.youtube.com/watch?v=qHAo5gJmjaE",
+          sourceLabel: "Разбор экосистемы Samo // YouTube",
+          speechText: "Внутренний ERP и цифровой учет: Опора на фактический учет, а не на субъективные оценки.",
         },
         {
           id: "culture",
@@ -2456,6 +2496,11 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           afterText:
             "Разбор первопричин, обновление регламентов и ответственное отношение к стандарту.",
           iconType: "culture",
+          audioSrc: "/audio/thesis-culture.wav",
+          audioDuration: "0:15",
+          sourceUrl: "https://www.youtube.com/watch?v=73WXbwiMBzI",
+          sourceLabel: "intervyuTV Документальный фильм",
+          speechText: "Культура ответственности и улучшение системы: Отделять пробелы регламента от личной ошибки.",
         },
       ],
     },
@@ -3710,6 +3755,11 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           afterText:
             "Repeatable SOP checklists enabling structured onboarding and consistent daily execution.",
           iconType: "sop",
+          audioSrc: "/audio/thesis-sop.wav",
+          audioDuration: "0:15",
+          sourceUrl: "https://www.youtube.com/watch?v=yi6UAsstdw4",
+          sourceLabel: "SUBYEKTIV // Kun.uz",
+          speechText: "Standard Operating Procedures: Depend on documented workflows rather than individual habits.",
         },
         {
           id: "governance",
@@ -3726,6 +3776,11 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           afterText:
             "Defined managerial mandates, clear spending thresholds, and structured weekly accountability.",
           iconType: "governance",
+          audioSrc: "/audio/thesis-delegation.wav",
+          audioDuration: "0:15",
+          sourceUrl: "https://www.youtube.com/watch?v=ZiWr2ND4LSo",
+          sourceLabel: "Autopilot 8 Steps // YouTube",
+          speechText: "Delegation & Accountability Matrix: Structured authority limits backed by executive reporting.",
         },
         {
           id: "metrics",
@@ -3742,6 +3797,11 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           afterText:
             "Synchronized inventory records, structured unit-cost tracking, and transparent reporting.",
           iconType: "metrics",
+          audioSrc: "/audio/thesis-erp.wav",
+          audioDuration: "0:15",
+          sourceUrl: "https://www.youtube.com/watch?v=qHAo5gJmjaE",
+          sourceLabel: "Samo System Audit // YouTube",
+          speechText: "Internal ERP & Operational Telemetry: Base operational reviews on verified ledger telemetry.",
         },
         {
           id: "culture",
@@ -3758,6 +3818,11 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           afterText:
             "Root-cause calibration, living checklists, and shared team stewardship.",
           iconType: "culture",
+          audioSrc: "/audio/thesis-culture.wav",
+          audioDuration: "0:15",
+          sourceUrl: "https://www.youtube.com/watch?v=73WXbwiMBzI",
+          sourceLabel: "intervyuTV Documentary",
+          speechText: "Stewardship & Continuous Calibration: Diagnose broken workflows alongside personnel coaching.",
         },
       ],
     },
