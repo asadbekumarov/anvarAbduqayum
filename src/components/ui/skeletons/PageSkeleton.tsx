@@ -19,11 +19,11 @@ export function PageSkeleton() {
       <NavbarSkeleton />
 
       {/* Main Content Sections Skeleton */}
-      <main className="flex-1 pt-20">
+      <div className="flex-1 pt-20">
         <HeroSkeleton />
         <ServicesSkeleton />
         <StagesSkeleton />
-      </main>
+      </div>
 
       {/* Footer Skeleton */}
       <FooterSkeleton />

@@ -1,0 +1,22 @@
+{
+  "avoid": [
+    "Calendly",
+    "Calendly LLC",
+    "Ilhom Begimqulov",
+    "IlhomBegimqulov",
+    "Begimqulov"
+  ],
+  "app_store": {
+    "name": "Qolip: Sanoat & Eksport",
+    "subtitle": "Ishlab chiqarish va B2B aloqa",
+    "promotional_text": "Anvar Abduqayum platformasi: 20 yillik sanoat zavodlari, tasdiqlangan ishlab chiqarish ko'rsatkichlari va Telegram orqali to'g'ridan-to'g'ri strategik muloqot.",
+    "description": "Qolip — sanoat tadbirkorlari, muhandislar va xalqaro B2B eksport hamkorlari uchun yagona raqamli ekotizim.\n\n20 yillik real ishlab chiqarish tajribasi (Toybola Toys, VISAGE ELECTRIC, Samtech Masterbatches, UZBIC kengashi) asosida yaratilgan platforma orqali korxona quvvatlarini o'rganing va to'g'ridan-to'g'ri strategik aloqa o'rnating.\n\nAsosiy imkoniyatlar:\n- Ekotizim korxonalari va sertifikatlangan zavod parametrlari\n- Inyeksion qolip, polimer va ishlab chiqarish quvvati kalkulyatori\n- MDH va xalqaro eksport logistika koridorlari xaritasi\n- To'g'ridan-to'g'ri Telegram assistent orqali uchrashuv belgilash\n- Sanoat boshqaruvi va tizimlashtirish bo'yicha audio va tahliliy materiallar\n\nOrtiqcha byurokratiyasiz, real ishlab chiqarish intizomi va ishonchli B2B hamkorlik.",
+    "keywords": "zavod,fabrika,korxona,hamkorlik,logistika,investitsiya,boshqaruv,tizim",
+    "whats_new": "Yangi reliz: Interaktiv eksport xaritasi va Telegram orqali tezkor aloqa oqimi joriy etildi."
+  },
+  "google_play": {
+    "title": "Qolip: Sanoat & Eksport",
+    "short_description": "20 yillik sanoat korxonalari, zavod quvvatlari va to'g'ridan-to'g'ri B2B aloqa.",
+    "full_description": "Qolip — sanoat tadbirkorlari, muhandislar va xalqaro B2B eksport hamkorlari uchun yagona raqamli ekotizim.\n\n20 yillik real ishlab chiqarish tajribasi (Toybola Toys, VISAGE ELECTRIC, Samtech Masterbatches, UZBIC kengashi) asosida yaratilgan platforma orqali korxona quvvatlarini o'rganing va to'g'ridan-to'g'ri strategik aloqa o'rnating.\n\nAsosiy imkoniyatlar:\n- Ekotizim korxonalari va sertifikatlangan zavod parametrlari\n- Inyeksion qolip, polimer va ishlab chiqarish quvvati kalkulyatori\n- MDH va xalqaro eksport logistika koridorlari xaritasi\n- To'g'ridan-to'g'ri Telegram assistent orqali uchrashuv belgilash\n- Sanoat boshqaruvi va tizimlashtirish bo'yicha audio va tahliliy materiallar\n\nOrtiqcha byurokratiyasiz, real ishlab chiqarish intizomi va ishonchli B2B hamkorlik."
+  }
+}

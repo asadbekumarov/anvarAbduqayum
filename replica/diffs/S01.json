@@ -1,0 +1,10 @@
+{
+  "files": {
+    "original": "replica/screens/S01-hero.png",
+    "clone": "replica/clone-screens/S01-hero.png"
+  },
+  "score": 3.5,
+  "mode": "layout",
+  "height_diff": 40,
+  "screen": "Hero Section"
+}

@@ -8,14 +8,6 @@ import { getContent } from "@/config/content";
 import { featuresConfig } from "@/config/features";
 import { BookingActionLink } from "@/components/ui/BookingActionLink";
 import { CommandPalette } from "@/components/ui/CommandPalette";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 export interface NavbarProps {
   locale?: string;

@@ -12,7 +12,7 @@ This is a multilingual (**Uzbek**, **Russian**, **English**) Next.js App Router 
 The current active release (**Concept 3 / "Qolip" Industrial Editorial**) is a compact 5-section landing experience paired with a localized meeting booking route (`/[locale]/bron`), a feature-flagged diagnostic quiz route (`/[locale]/test`), and hardened Node.js API routes that dispatch leads and Cal.com booking events to Telegram.
 
 > **Important Note on Legacy Artifacts:**
-> - `package.json` still carries `"name": "ilhom-begimqulov"` from an earlier project template.
+> - `package.json` is updated to `"name": "anvar-abduqayum"`.
 > - `docs/DESIGN.md` and `docs/CONTENT.md` are earlier planning/specification documents and do **not** reflect the active 5-section Concept 3 layout or `featuresConfig` toggles. **Always treat `src/config/*` as the single source of truth.**
 
 ---

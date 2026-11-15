@@ -1,4 +1,4 @@
-# DESIGN SPECIFICATION: ILHOM BEGIMQULOV WEBSITE
+# DESIGN SPECIFICATION: ANVAR ABDUQAYUM WEBSITE
 
 ## 1. Design Direction
 - **Style**: Swiss Minimalism, Dark Editorial (Black / Champagne Gold / Architectural White).

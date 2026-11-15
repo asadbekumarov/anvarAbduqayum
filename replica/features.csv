@@ -1,0 +1,25 @@
+feature,area,priority,original,clone,notes
+Hero Section with Authoritative Statement and Portrait,hero,must,yes,yes,
+Executive Navigation with Dynamic Blur and Section Spying,navigation,must,yes,yes,
+Multilingual Content (Uzbek Russian English),localization,must,yes,yes,
+Industrial Portfolio & Ventures Ecosystem Showcase,portfolio,must,yes,yes,Replaced generic consulting with real production ventures
+20-Year Industrial Trajectory & Milestones Timeline,timeline,must,yes,yes,Expanded historical milestones
+Institutional Initiatives & UZBIC Platform Hub,initiatives,must,yes,yes,Institutional industry representation
+Qolip Editorial Principles & Systems Governance,principles,must,yes,yes,5 foundational manufacturing and management tenets
+Media & Press Video Archive with Accessible Lightbox,media,must,yes,yes,YouTube and podcast repository
+High-Conversion B2B Intake Form with Phone Country Normalization,contact,must,yes,yes,Multi-track partnership intake
+Spam Bot Honeypot Protection,security,must,yes,yes,Silent blackhole bot trap
+Bounded JSON Body Parsing & DDoS Circuit-Breaker,security,must,yes,yes,Strict 16KB payload limit
+IP and Phone Rate-Limiting Throttles,security,must,yes,yes,Sliding window memory rate limiter
+Strategic Consultation & Booking Route (/bron),booking,must,yes,yes,Telegram handoff & Cal.com dual-mode
+Responsive Mobile Drawer Navigation with Motion Physics,navigation,must,yes,yes,Accessible focus-trapped drawer
+Dynamic SEO (robots.txt sitemap.xml JSON-LD Schema.org),seo,must,yes,yes,Structured authority schema
+Audio Monograph Snippets & Podcast Player,media,should,yes,yes,Integrated real audio narration
+Book & Diagnostic Lead Capture,services,should,yes,partial,Book section available in config; prioritized B2B intake in v1
+Client Diagnostic Business Quiz (/test),quiz,could,yes,skip,Deferred to v2 release per client feature flag
+Interactive OEM & B2B Capacity Configurator,portfolio,must,no,yes,Exclusive clone addition
+Geographic Export Corridor Logistics Map,portfolio,must,no,yes,Exclusive clone addition
+Executive Command Palette (Cmd+K Global Search),navigation,should,no,yes,Exclusive clone addition
+Lenis Smooth Scrolling Architecture,ui,should,no,yes,Exclusive clone addition
+Direct Telegram and WhatsApp Handoff in Booking Flow,booking,must,no,yes,Eliminates calendar drop-off for CIS and B2B deals
+Real Industrial Facility Proof Metrics (Tonnage and Production Capacity),portfolio,must,no,yes,Replaces generic coach stock photos with certified production data

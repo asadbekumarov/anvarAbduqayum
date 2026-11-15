@@ -1,0 +1,10 @@
+{
+  "files": {
+    "original": "replica/screens/S03-timeline.png",
+    "clone": "replica/clone-screens/S03-timeline.png"
+  },
+  "score": 49.3,
+  "mode": "layout",
+  "height_diff": 0,
+  "screen": "Timeline Journey"
+}

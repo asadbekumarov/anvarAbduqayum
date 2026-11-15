@@ -1,0 +1,10 @@
+{
+  "files": {
+    "original": "replica/screens/S02-portfolio.png",
+    "clone": "replica/clone-screens/S02-portfolio.png"
+  },
+  "score": 27.8,
+  "mode": "layout",
+  "height_diff": 0,
+  "screen": "Portfolio Ecosystem"
+}

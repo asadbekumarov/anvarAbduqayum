@@ -1,0 +1,10 @@
+{
+  "files": {
+    "original": "replica/screens/S04-contact.png",
+    "clone": "replica/clone-screens/S04-contact.png"
+  },
+  "score": 100,
+  "mode": "layout",
+  "height_diff": 0,
+  "screen": "B2B Contact Form"
+}

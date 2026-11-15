@@ -1,0 +1,10 @@
+{
+  "files": {
+    "original": "replica/screens/S05-bron.png",
+    "clone": "replica/clone-screens/S05-bron.png"
+  },
+  "score": 100,
+  "mode": "layout",
+  "height_diff": 0,
+  "screen": "Booking Route"
+}
