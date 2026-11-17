@@ -123,6 +123,29 @@ export default async function LocaleLayout({
           name: "O‘zbekiston Biznes va Sanoat Kengashi (UZBIC)",
           url: "https://uzbic.uz",
         },
+        knowsAbout: [
+          "Sanoat ishlab chiqarish",
+          "Biznesni tizimlashtirish",
+          "«Qolip» tamoyili",
+          "Xalqaro eksport va import",
+          "Operatsion boshqaruv",
+          "Masterbatch va polimer sanoati",
+          "Bolalar o‘yinchoqlari ishlab chiqarish"
+        ],
+        worksFor: [
+          {
+            "@type": "Organization",
+            name: "Toybola Toys (VISAGE ELECTRIC MChJ)"
+          },
+          {
+            "@type": "Organization",
+            name: "Samtech Masterbatches"
+          },
+          {
+            "@type": "Organization",
+            name: "O‘zbekiston Biznes va Sanoat Kengashi (UZBIC)"
+          }
+        ],
         sameAs: [
           contactConfig.telegramChannel.isVerified ? contactConfig.telegramChannel.url : "",
           contactConfig.instagram.isVerified ? contactConfig.instagram.url : "",

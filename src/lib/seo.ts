@@ -48,6 +48,54 @@ export function getDefaultOgImageAlt(locale: string): string {
   return "Anvar Abduqayum — Sanoat, Tizimli boshqaruv, Eksport";
 }
 
+export function getDefaultKeywords(locale: string): string[] {
+  const safeLocale = normalizeLocale(locale);
+  if (safeLocale === "ru") {
+    return [
+      "Анвар Абдукаюм",
+      "промышленник Узбекистан",
+      "производство в Узбекистане",
+      "систематизация бизнеса",
+      "принцип Колип",
+      "Toybola",
+      "Samtech Masterbatches",
+      "UZBIC",
+      "бизнес ментор",
+      "экспорт и импорт",
+      "стратегический консалтинг",
+    ];
+  }
+  if (safeLocale === "en") {
+    return [
+      "Anvar Abduqayum",
+      "industrialist Uzbekistan",
+      "manufacturing entrepreneur",
+      "business systemization",
+      "Qolip framework",
+      "Toybola Toys",
+      "Samtech",
+      "UZBIC council",
+      "business mentor",
+      "export ecosystem",
+    ];
+  }
+  return [
+    "Anvar Abduqayum",
+    "sanoat tadbirkori",
+    "ishlab chiqarish",
+    "biznesni tizimlashtirish",
+    "qolip tamoyili",
+    "Toybola Toys",
+    "Samtech Masterbatches",
+    "UZBIC kengashi",
+    "biznes mentor",
+    "eksport ekotizimi",
+    "strategik boshqaruv",
+    "O'zbekiston tadbirkorlari",
+    "korxona boshqaruvi",
+  ];
+}
+
 export interface BuildLocalizedMetadataInput {
   locale: string;
   routeSegment?:
@@ -61,6 +109,7 @@ export interface BuildLocalizedMetadataInput {
   description: string;
   siteName: string;
   ogImageAlt?: string;
+  keywords?: string[];
 }
 
 export function getRobotsMetadata(): Metadata["robots"] {
@@ -81,6 +130,7 @@ export function buildLocalizedMetadata({
   description,
   siteName,
   ogImageAlt,
+  keywords,
 }: BuildLocalizedMetadataInput): Metadata {
   const safeLocale = normalizeLocale(locale);
   const suffix = routeSegment ? `/${routeSegment}` : "";
@@ -90,10 +140,15 @@ export function buildLocalizedMetadata({
     .filter((l) => l !== safeLocale)
     .map((l) => OG_LOCALE_BY_LANG[l]);
   const resolvedAlt = ogImageAlt || getDefaultOgImageAlt(safeLocale);
+  const resolvedKeywords = keywords || getDefaultKeywords(safeLocale);
 
   return {
     title,
     description,
+    keywords: resolvedKeywords,
+    authors: [{ name: "Anvar Abduqayum", url: SITE_URL }],
+    creator: "Anvar Abduqayum",
+    publisher: "Anvar Abduqayum",
     metadataBase: new URL(SITE_URL),
     robots: getRobotsMetadata(),
     alternates: {
