@@ -550,9 +550,10 @@ export const MapLibreExportMap: React.FC<MapLibreExportMapProps> = ({
         </div>
       )}
 
-      {/* Coordinate & Telemetry Overlay (Bottom-Left) */}
-      <div className="absolute bottom-3 left-3 pointer-events-none z-20 font-mono text-[9px] text-[#8E95A5] bg-[#090A0D]/90 px-2.5 py-1 border border-white/[0.08] rounded-[2px]">
-        LAT 41.2995° N // LON 69.2401° E · EURASIAN B2B CORRIDORS
+      {/* Map Legend (Bottom-Left) */}
+      <div className="absolute bottom-3 left-3 pointer-events-none z-20 flex items-center gap-2 font-mono text-[10px] text-[#C2C7D1] bg-[#090A0D]/90 backdrop-blur-sm px-3 py-1.5 border border-white/[0.1] rounded-[3px]">
+        <span className="w-2 h-2 rounded-full bg-[#D4AF37] shadow-[0_0_8px_#D4AF37]" aria-hidden="true" />
+        <span>Toshkent Boshqaruv Markazi (HQ)</span>
       </div>
     </div>
   );

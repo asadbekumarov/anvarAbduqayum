@@ -54,18 +54,24 @@ interface CorridorNode {
   };
 }
 
-const BUTTON_REGIONS = ["kz", "ru", "kg", "tj", "mena"];
+const REGION_TABS = [
+  { id: "kz", label: { uz: "Qozog‘iston", ru: "Казахстан", en: "Kazakhstan" } },
+  { id: "ru", label: { uz: "Rossiya & MDH", ru: "Россия & СНГ", en: "Russia & CIS" } },
+  { id: "kg", label: { uz: "Qirg‘iziston", ru: "Кыргызстан", en: "Kyrgyzstan" } },
+  { id: "tj", label: { uz: "Tojikiston", ru: "Таджикистан", en: "Tajikistan" } },
+  { id: "mena", label: { uz: "Turkiya & MENA", ru: "Турция & MENA", en: "Turkey & MENA" } },
+];
 
 const CORRIDORS: CorridorNode[] = [
   {
     id: "kz",
     name: "Qozog‘iston (Almati / Ostona)",
     country: "Kazakhstan",
-    code: "KZ // CENTRAL HUB",
+    code: "Markaziy Osiyo mintaqaviy xabi",
     status: {
-      uz: "FAOL EKSPORT MARSHRUTI · YILLIK SHARTNOMA",
-      ru: "ДЕЙСТВУЮЩИЙ ЭКСПОРТНЫЙ МАРШРУТ · ГОДОВОЙ КОНТРАКТ",
-      en: "ACTIVE EXPORT CORRIDOR · ANNUAL CONTRACTS",
+      uz: "Faol eksport yo‘nalishi · Yillik shartnoma",
+      ru: "Действующий маршрут · Годовой контракт",
+      en: "Active export corridor · Annual contracts",
     },
     transitTime: {
       uz: "2–4 kun (FTL avtotransport)",
@@ -92,11 +98,11 @@ const CORRIDORS: CorridorNode[] = [
     id: "ru",
     name: "Rossiya & MDH (Moskva / Ural)",
     country: "Russia / CIS",
-    code: "RU / CIS // SCALE CORRIDOR",
+    code: "Rossiya va MDH federal tarmoqlari",
     status: {
-      uz: "STRATEGIK OEM VA PRIVAT-LEYBL MARSHRUTI",
-      ru: "СТРАТЕГИЧЕСКИЙ МАРШРУТ OEM И PRIVAT-LABEL",
-      en: "STRATEGIC OEM & PRIVATE-LABEL ROUTE",
+      uz: "Strategik OEM va Privat-leybl yo‘lagi",
+      ru: "Стратегический маршрут OEM и Privat-Label",
+      en: "Strategic OEM & private-label route",
     },
     transitTime: {
       uz: "6–9 kun (Avto / Temir yo‘l konteyner)",
@@ -123,11 +129,11 @@ const CORRIDORS: CorridorNode[] = [
     id: "kg",
     name: "Qirg‘iziston (Bishkek / O‘sh)",
     country: "Kyrgyzstan",
-    code: "KG // NEIGHBOR MARKET",
+    code: "Mintaqaviy chegaraoldi yo‘lagi",
     status: {
-      uz: "MUNTZAM CHEGARAORQALI TA’MINOT",
-      ru: "РЕГУЛЯРНЫЕ ТРАНСГРАНИЧНЫЕ ПОСТАВКИ",
-      en: "REGULAR CROSS-BORDER DELIVERIES",
+      uz: "Muntazam tranzit ta’minoti",
+      ru: "Регулярные трансграничные поставки",
+      en: "Regular cross-border deliveries",
     },
     transitTime: {
       uz: "24–48 soat (Ekspress logistika)",
@@ -154,11 +160,11 @@ const CORRIDORS: CorridorNode[] = [
     id: "tj",
     name: "Tojikiston (Dushanbe / Xo‘jand)",
     country: "Tajikistan",
-    code: "TJ // DIRECT HIGHWAY",
+    code: "To‘g‘ridan-to‘g‘ri avtomagistral",
     status: {
-      uz: "TO‘G‘RIDAN-TO‘G‘RI SHARTNOMAVIY TA’MINOT",
-      ru: "ПРЯМЫЕ КОНТРАКТНЫЕ ПОСТАВКИ",
-      en: "DIRECT CONTRACT REPLENISHMENT",
+      uz: "To‘g‘ridan-to‘g‘ri shartnomaviy ta’minot",
+      ru: "Прямые контрактные поставки",
+      en: "Direct contract replenishment",
     },
     transitTime: {
       uz: "1–3 kun (Avtomagistral orqali)",
@@ -185,11 +191,11 @@ const CORRIDORS: CorridorNode[] = [
     id: "mena",
     name: "Yaqin Sharq & Turkiya (Istanbul / Dubay)",
     country: "MENA & Turkey",
-    code: "EU/MENA // STRATEGIC ALLIANCE",
+    code: "Xalqaro multimodal yo‘nalish",
     status: {
-      uz: "B2B KOOPERATSIYA VA QOLIP LOYIHALARI (UZBIC)",
-      ru: "B2B КООПЕРАЦИЯ И СОВМЕСТНЫЕ ПРОЕКТЫ (UZBIC)",
-      en: "B2B ALLIANCES & TOOLING SOURCING (UZBIC)",
+      uz: "B2B kooperatsiya va qoliplar alyansi (UZBIC)",
+      ru: "B2B кооперация и альянс пресс-форм (UZBIC)",
+      en: "B2B alliances & tooling sourcing (UZBIC)",
     },
     transitTime: {
       uz: "8–14 kun (Multimodal dengiz/avto)",
@@ -217,124 +223,124 @@ const CORRIDORS: CorridorNode[] = [
     id: "tm",
     name: "Turkmaniston (Ashxobod / Kaspiy)",
     country: "Turkmenistan",
-    code: "TM // TRANSIT CORRIDOR",
+    code: "Mintaqaviy tranzit yo‘lagi",
     status: {
-      uz: "[REJA / PLACEHOLDER] MINTAQAVIY LOGISTIKA YO‘NALISHI",
-      ru: "[ПЛАН / PLACEHOLDER] РЕГИОНАЛЬНЫЙ ЛОГИСТИЧЕСКИЙ МАРШРУТ",
-      en: "[PLANNED / PLACEHOLDER] REGIONAL TRANSIT CORRIDOR",
+      uz: "Mintaqaviy logistika yo‘nalishi",
+      ru: "Региональный логистический маршрут",
+      en: "Regional transit corridor",
     },
     transitTime: {
-      uz: "[Placeholder] 2–4 kun (Avto FTL)",
-      ru: "[Placeholder] 2–4 дня (Авто FTL)",
-      en: "[Placeholder] 2–4 days (Road FTL)",
+      uz: "2–4 kun (Avto FTL)",
+      ru: "2–4 дня (Авто FTL)",
+      en: "2–4 days (Road FTL)",
     },
     logisticsMode: {
-      uz: "[Placeholder] Avto FTL / Tranzit yo‘lagi",
-      ru: "[Placeholder] Авто FTL / Транзитный коридор",
-      en: "[Placeholder] Road FTL / Direct Transit Corridor",
+      uz: "Avto FTL / Tranzit yo‘lagi",
+      ru: "Авто FTL / Транзитный коридор",
+      en: "Road FTL / Direct Transit Corridor",
     },
     primarySectors: {
-      uz: ["[Placeholder] Polimer buyumlar", "[Placeholder] Sanoat mahsulotlari"],
-      ru: ["[Placeholder] Полимерные изделия", "[Placeholder] Промышленная продукция"],
-      en: ["[Placeholder] Molded Polymers", "[Placeholder] Industrial Goods"],
+      uz: ["Polimer buyumlar", "Sanoat mahsulotlari"],
+      ru: ["Полимерные изделия", "Промышленная продукция"],
+      en: ["Molded Polymers", "Industrial Goods"],
     },
     capacitySummary: {
-      uz: "[Placeholder] Mintaqaviy savdo kelishuvlari va logistika imkoniyatlari o‘rganilmoqda.",
-      ru: "[Placeholder] Оценка региональных соглашений и пропускной способности маршрута.",
-      en: "[Placeholder] Regional trade agreements and route capacity evaluation under development.",
+      uz: "Mintaqaviy savdo kelishuvlari va logistika imkoniyatlari o‘rganilmoqda.",
+      ru: "Оценка региональных соглашений и пропускной способности маршрута.",
+      en: "Regional trade agreements and route capacity evaluation under development.",
     },
   },
   {
     id: "cn",
     name: "Xitoy (Urumchi / Shinjon)",
     country: "China",
-    code: "CN // SOURCING & BILATERAL ROUTE",
+    code: "Texnologik import va stanoklar yo‘lagi",
     status: {
-      uz: "[REJA / PLACEHOLDER] XOMASHYO VA TEXNOLOGIK KOOPERATSIYA",
-      ru: "[ПЛАН / PLACEHOLDER] СЫРЬЕВОЙ И ТЕХНОЛОГИЧЕСКИЙ ОБМЕН",
-      en: "[PLANNED / PLACEHOLDER] SOURCING & TOOLING CORRIDOR",
+      uz: "Xomashyo va texnologik kooperatsiya",
+      ru: "Сырьевой и технологический обмен",
+      en: "Sourcing & tooling corridor",
     },
     transitTime: {
-      uz: "[Placeholder] 6–10 kun (Multimodal temir yo‘l/avto)",
-      ru: "[Placeholder] 6–10 дней (Мультимодал ж/д и авто)",
-      en: "[Placeholder] 6–10 days (Multimodal rail/road)",
+      uz: "6–10 kun (Multimodal temir yo‘l/avto)",
+      ru: "6–10 дней (Мультимодал ж/д и авто)",
+      en: "6–10 days (Multimodal rail/road)",
     },
     logisticsMode: {
-      uz: "[Placeholder] Blok-poyezdlar / TIR Karnet konteyner",
-      ru: "[Placeholder] Блок-поезда / Контейнеры TIR Carnet",
-      en: "[Placeholder] Block Trains / TIR Carnet Containers",
+      uz: "Blok-poyezdlar / TIR Karnet konteyner",
+      ru: "Блок-поезда / Контейнеры TIR Carnet",
+      en: "Block Trains / TIR Carnet Containers",
     },
     primarySectors: {
-      uz: ["[Placeholder] Qoliplar va stanoklar importi", "[Placeholder] Polimer granulalar"],
-      ru: ["[Placeholder] Пресс-формы и станки", "[Placeholder] Полимерное сырье"],
-      en: ["[Placeholder] Precision Molds & Tooling", "[Placeholder] Raw Polymer Granules"],
+      uz: ["Qoliplar va stanoklar importi", "Polimer granulalar"],
+      ru: ["Пресс-формы и станки", "Полимерное сырье"],
+      en: ["Precision Molds & Tooling", "Raw Polymer Granules"],
     },
     capacitySummary: {
-      uz: "[Placeholder] Sanoat uskunalari importi va ikki tomonlama logistika zanjiri loyihalari.",
-      ru: "[Placeholder] Импорт оборудования и проекты двусторонней промышленной логистики.",
-      en: "[Placeholder] Direct manufacturing equipment sourcing and bilateral logistics projects.",
+      uz: "Sanoat uskunalari importi va ikki tomonlama logistika zanjiri loyihalari.",
+      ru: "Импорт оборудования и проекты двусторонней промышленной логистики.",
+      en: "Direct manufacturing equipment sourcing and bilateral logistics projects.",
     },
   },
   {
     id: "az",
     name: "Ozarbayjon (Boku / Kaspiy porti)",
     country: "Azerbaijan",
-    code: "AZ // CASPIAN GATEWAY",
+    code: "Transkaspiy savdo darvozasi",
     status: {
-      uz: "[REJA / PLACEHOLDER] TRANSKASPIY SAVDO YO‘LAGI",
-      ru: "[ПЛАН / PLACEHOLDER] ТРАНСКАСПИЙСКИЙ ТОРГОВЫЙ КОРИДОР",
-      en: "[PLANNED / PLACEHOLDER] TRANSCASPIAN TRADE GATEWAY",
+      uz: "Transkaspiy savdo yo‘lagi",
+      ru: "Транскаспийский торговый коридор",
+      en: "Transcaspian trade gateway",
     },
     transitTime: {
-      uz: "[Placeholder] 4–7 kun (Parom / Avtotransport)",
-      ru: "[Placeholder] 4–7 дней (Паром / Автотранспорт)",
-      en: "[Placeholder] 4–7 days (Ro-Ro Ferry / Road FTL)",
+      uz: "4–7 kun (Parom / Avtotransport)",
+      ru: "4–7 дней (Паром / Автотранспорт)",
+      en: "4–7 days (Ro-Ro Ferry / Road FTL)",
     },
     logisticsMode: {
-      uz: "[Placeholder] Kaspiy paromi / FTL avto",
-      ru: "[Placeholder] Каспийский паром / FTL авто",
-      en: "[Placeholder] Caspian Ro-Ro Ferry / Road FTL",
+      uz: "Kaspiy paromi / FTL avto",
+      ru: "Каспийский паром / FTL авто",
+      en: "Caspian Ro-Ro Ferry / Road FTL",
     },
     primarySectors: {
-      uz: ["[Placeholder] Toybola o‘yinchoqlari", "[Placeholder] Maishiy polimerlar"],
-      ru: ["[Placeholder] Игрушки Toybola", "[Placeholder] Бытовой пластик"],
-      en: ["[Placeholder] Toybola Toys", "[Placeholder] Household Polymers"],
+      uz: ["Toybola o‘yinchoqlari", "Maishiy polimerlar"],
+      ru: ["Игрушки Toybola", "Бытовой пластик"],
+      en: ["Toybola Toys", "Household Polymers"],
     },
     capacitySummary: {
-      uz: "[Placeholder] Kavkaz mintaqasiga Kaspiy orqali yetkazib berish salohiyati.",
-      ru: "[Placeholder] Потенциал поставок в страны Закавказья через Каспийский коридор.",
-      en: "[Placeholder] Supply channel development towards South Caucasus markets via Caspian route.",
+      uz: "Kavkaz mintaqasiga Kaspiy orqali yetkazib berish salohiyati.",
+      ru: "Потенциал поставок в страны Закавказья через Каспийский коридор.",
+      en: "Supply channel development towards South Caucasus markets via Caspian route.",
     },
   },
   {
     id: "eu",
     name: "Yevropa Ittifoqi (EU 27 Mamlakat)",
     country: "European Union",
-    code: "EU // CE-CERTIFIED CORRIDOR",
+    code: "Yevropa Ittifoqi va xalqaro bozor",
     status: {
-      uz: "[REJA / PLACEHOLDER] CE VA XALQARO STANDARTLAR YO‘NALISHI",
-      ru: "[ПЛАН / PLACEHOLDER] НАПРАВЛЕНИЕ СЕРТИФИКАЦИИ CE И СТАНДАРТОВ ЕС",
-      en: "[PLANNED / PLACEHOLDER] CE-CERTIFIED EXPORT CORRIDOR",
+      uz: "CE va EN-71 standartlari yo‘nalishi",
+      ru: "Направление сертификации CE и стандартов ЕС",
+      en: "CE-certified export corridor",
     },
     transitTime: {
-      uz: "[Placeholder] 12–18 kun (Multimodal temir yo‘l/avto)",
-      ru: "[Placeholder] 12–18 дней (Мультимодал ж/д и авто)",
-      en: "[Placeholder] 12–18 days (Multimodal rail/road)",
+      uz: "12–18 kun (Multimodal temir yo‘l/avto)",
+      ru: "12–18 дней (Мультимодал ж/д и авто)",
+      en: "12–18 days (Multimodal rail/road)",
     },
     logisticsMode: {
-      uz: "[Placeholder] 40ft High-Cube konteynerlar / Xalqaro intermodal",
-      ru: "[Placeholder] 40-футовые контейнеры / Интермодальный транзит",
-      en: "[Placeholder] 40ft ISO High-Cube Containers / Intermodal",
+      uz: "40ft High-Cube konteynerlar / Xalqaro intermodal",
+      ru: "40-футовые контейнеры / Интермодальный транзит",
+      en: "40ft ISO High-Cube Containers / Intermodal",
     },
     primarySectors: {
-      uz: ["[Placeholder] EN-71 sertifikatlangan o‘yinchoqlar", "[Placeholder] Buyurtma polimerlar"],
-      ru: ["[Placeholder] Игрушки стандарта EN-71", "[Placeholder] Контрактные полимеры"],
-      en: ["[Placeholder] EN-71 Compliant Toys", "[Placeholder] Custom Polymers"],
+      uz: ["EN-71 sertifikatlangan o‘yinchoqlar", "Buyurtma polimerlar"],
+      ru: ["Игрушки стандарта EN-71", "Контрактные полимеры"],
+      en: ["EN-71 Compliant Toys", "Custom Polymers"],
     },
     capacitySummary: {
-      uz: "[Placeholder] Yevropa Ittifoqi standartlari (EN-71, REACH) bo‘yicha eksport sinovlari va shartnomaviy muzokaralar.",
-      ru: "[Placeholder] Подготовка поставок по стандартам ЕС (EN-71, REACH) и экспортный аудит.",
-      en: "[Placeholder] Compliance audit, EN-71/REACH certification alignment and B2B distributor outreach.",
+      uz: "Yevropa Ittifoqi standartlari (EN-71, REACH) bo‘yicha eksport sinovlari va shartnomaviy muzokaralar.",
+      ru: "Подготовка поставок по стандартам ЕС (EN-71, REACH) и экспортный аудит.",
+      en: "Compliance audit, EN-71/REACH certification alignment and B2B distributor outreach.",
     },
   },
 ];
@@ -351,31 +357,37 @@ export const ExportCorridorMap: React.FC<ExportCorridorMapProps> = ({
 
   const i18n = {
     uz: {
-      badge: "EKSPORT GEOGRAFIYASI // 2026 LOGISTIKA XARITASI",
+      badge: "Xalqaro Logistika & Savdo Geografiyasi",
       hubName: "Toshkent Boshqaruv & Ishlab Chiqarish Markazi",
       hubDesc: "Toybola polimer zavodi, press-qoliplar ombori va eksport logistika terminali",
-      sectorsHeading: "Asosiy eksport nomenklaturasi",
-      logisticsHeading: "Logistika va tranzit vaqti",
-      capacityHeading: "Kafolatlangan yetkazib berish quvvati",
-      ctaButton: "Ushbu yo‘nalish bo‘yicha eksport arizasi",
+      sectorsHeading: "Asosiy eksport mahsulotlari",
+      logisticsHeading: "Tranzit muddati",
+      logisticsModeHeading: "Logistika shakli",
+      capacityHeading: "Yetkazib berish quvvati va kafolati",
+      ctaButton: "Ushbu yo‘nalish bo‘yicha arizani shakllantirish",
+      note: "* Tanlangan eksport yo‘nalishi aloqa formasiga kiritiladi",
     },
     ru: {
-      badge: "ГЕОГРАФИЯ ЭКСПОРТА // ЛОГИСТИЧЕСКАЯ КАРТА 2026",
+      badge: "Международная Логистика & География Экспорта",
       hubName: "Ташкент: Центр Управления и Производства",
       hubDesc: "Завод полимеров Toybola, парк пресс-форм и экспортный терминал",
-      sectorsHeading: "Ключевая экспортная номенклатура",
-      logisticsHeading: "Логистика и время в пути",
+      sectorsHeading: "Экспортная номенклатура",
+      logisticsHeading: "Сроки транзита",
+      logisticsModeHeading: "Режим доставки",
       capacityHeading: "Гарантированные объемы поставок",
       ctaButton: "Подать заявку на экспорт в данный регион",
+      note: "* Выбранное экспортное направление будет передано в форму запроса",
     },
     en: {
-      badge: "EXPORT CORRIDORS // 2026 LOGISTICS TELEMETRY",
-      hubName: "Tashkent: Central Manufacturing & Operations Hub",
-      hubDesc: "Toybola polymer plant, precision injection tooling facility, and export rail/road terminal",
-      sectorsHeading: "Primary Export Sectors & SKU Lines",
-      logisticsHeading: "Logistics & Freight Transit Time",
+      badge: "International Logistics & Trade Geography",
+      hubName: "Tashkent: Manufacturing & Operations Hub",
+      hubDesc: "Toybola polymer plant, precision tooling facility and export terminal",
+      sectorsHeading: "Export Product Nomenclature",
+      logisticsHeading: "Transit Duration",
+      logisticsModeHeading: "Logistics Framework",
       capacityHeading: "Contracted Supply Capacity",
-      ctaButton: "Initiate B2B Export Inquiry for This Corridor",
+      ctaButton: "Initiate B2B Export Inquiry for This Region",
+      note: "* Selected corridor specs will populate the inquiry form below",
     },
   }[safeLocale];
 
@@ -402,141 +414,143 @@ export const ExportCorridorMap: React.FC<ExportCorridorMapProps> = ({
   };
 
   return (
-    <div className="w-full bg-[#0D0E12] border border-[rgba(212,175,55,0.22)] rounded-[2px] p-4 sm:p-6 lg:p-8 flex flex-col gap-6 shadow-[0_16px_48px_rgba(0,0,0,0.5)]">
+    <div className="w-full bg-[#0E1015] border border-white/[0.08] rounded-[6px] p-6 sm:p-8 lg:p-10 flex flex-col gap-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[rgba(255,255,255,0.08)]">
+      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-white/[0.08]">
         <div>
-          <span className="font-mono text-[10.5px] font-bold uppercase tracking-[0.12em] text-[#D4AF37] block mb-1">
-            {i18n.badge}
-          </span>
-          <h3 className="text-[18px] sm:text-[22px] font-bold text-[#F5F4F0] leading-snug">
+          <div className="inline-flex items-center gap-2 mb-2">
+            <span className="w-5 h-[1.5px] bg-[#D4AF37]" aria-hidden="true" />
+            <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-[#D4AF37]">
+              {i18n.badge}
+            </span>
+          </div>
+          <h3 className="font-serif text-[22px] sm:text-[26px] font-semibold text-[#FAF9F5] tracking-tight leading-snug">
             {i18n.hubName}
           </h3>
-          <p className="text-[12.5px] text-[#8E95A5] mt-0.5">
+          <p className="text-[13.5px] sm:text-[14px] text-[#9EA6B5] mt-1 max-w-[65ch]">
             {i18n.hubDesc}
           </p>
         </div>
 
-        {/* Region Selector Pills (Fixed row: KZ, RU, KG, TJ, MENA) */}
-        <div className="flex flex-wrap items-center gap-1.5 self-start sm:self-auto">
-          {BUTTON_REGIONS.map((btnId) => {
-            const isSelected = btnId === activeCorridorId;
+        {/* Region Selector Pills */}
+        <div className="flex flex-wrap items-center gap-2">
+          {REGION_TABS.map((tab) => {
+            const isSelected = tab.id === activeCorridorId;
             return (
               <button
-                key={btnId}
+                key={tab.id}
                 type="button"
-                onClick={() => setActiveCorridorId(btnId)}
-                className={`relative px-3.5 py-1.5 text-[11px] font-mono font-semibold uppercase tracking-[0.06em] rounded-[3px] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] cursor-pointer ${
+                onClick={() => setActiveCorridorId(tab.id)}
+                className={`px-3.5 py-1.5 rounded-[4px] text-[12px] font-medium transition-all duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#D4AF37] ${
                   isSelected
-                    ? "text-[#090A0D]"
-                    : "text-[#8E95A5] hover:text-[#F5F4F0]"
+                    ? "bg-[#D4AF37] text-[#090A0D] font-bold shadow-[0_2px_12px_rgba(212,175,55,0.25)]"
+                    : "bg-[#14161F] text-[#9EA6B5] hover:text-[#FAF9F5] hover:bg-white/[0.06] border border-white/[0.06]"
                 }`}
               >
-                {isSelected ? (
-                  <motion.div
-                    layoutId="activeCorridorPill"
-                    className="absolute inset-0 bg-[#D4AF37] rounded-[3px] shadow-[0_0_14px_rgba(212,175,55,0.35)]"
-                    transition={{ type: "spring", stiffness: 420, damping: 30 }}
-                  />
-                ) : (
-                  <div className="absolute inset-0 bg-[#12141A] border border-white/[0.1] rounded-[3px]" />
-                )}
-                <span className="relative z-10">{btnId.toUpperCase()}</span>
+                {tab.label[safeLocale]}
               </button>
             );
           })}
         </div>
       </div>
 
-      {/* Main Grid: MapLibre Geographic Map on Left, Detailed Telemetry Spec Card on Right */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-        {/* Left: MapLibre Interactive Geographic Map */}
-        <div className="lg:col-span-7 relative w-full h-[380px] sm:h-[430px] lg:h-[490px] bg-[#08090B] border border-[rgba(255,255,255,0.08)] rounded-[2px] overflow-hidden">
+      {/* Main Grid: Map on Left, Detailed Dossier on Right */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 items-stretch">
+        {/* Left: Map */}
+        <div className="lg:col-span-7 relative w-full h-[380px] sm:h-[430px] lg:h-[490px] bg-[#090A0D] border border-white/[0.1] rounded-[6px] overflow-hidden shadow-inner">
           <MapLibreExportMap
             activeRegionId={activeCorridorId}
             onSelectRegion={setActiveCorridorId}
           />
         </div>
 
-        {/* Right: Structured Spec Card for Active Corridor */}
-        <div className="lg:col-span-5 flex flex-col justify-between h-full min-h-[380px] sm:min-h-[430px] lg:min-h-[490px] bg-[#111215] border border-[rgba(255,255,255,0.1)] rounded-[2px] p-5 sm:p-6 shadow-[0_8px_24px_rgba(0,0,0,0.4)]">
+        {/* Right: Structured Spec Card */}
+        <div className="lg:col-span-5 flex flex-col justify-between h-full min-h-[380px] sm:min-h-[430px] lg:min-h-[490px] bg-[#12141A] border border-white/[0.1] rounded-[6px] p-6 sm:p-7 shadow-[0_12px_32px_rgba(0,0,0,0.4)]">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeCorridor.id}
-              initial={{ opacity: 0, x: 12 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -12 }}
-              transition={{ duration: 0.25 }}
-              className="flex flex-col gap-4"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2 }}
+              className="flex flex-col gap-5 h-full justify-between"
             >
               {/* Corridor Badge & Title */}
               <div>
-                <span className="inline-block font-mono text-[10px] font-bold text-[#D4AF37] uppercase tracking-[0.1em] px-2 py-0.5 bg-[#D4AF37]/10 border border-[#D4AF37]/25 rounded-[2px] mb-2">
-                  {activeCorridor.status[safeLocale]}
-                </span>
-                <h4 className="text-[17px] sm:text-[19px] font-bold text-[#F5F4F0] leading-snug">
+                <div className="flex items-center gap-2 mb-2.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                  <span className="font-mono text-[10.5px] font-semibold text-[#D4AF37] uppercase tracking-wider">
+                    {activeCorridor.status[safeLocale]}
+                  </span>
+                </div>
+                <h4 className="font-serif text-[20px] sm:text-[22px] font-semibold text-[#FAF9F5] leading-snug">
                   {activeCorridor.name}
                 </h4>
-                <p className="font-mono text-[11px] text-[#8E95A5] mt-0.5">
+                <p className="font-mono text-[11px] text-[#7A8290] mt-1">
                   {activeCorridor.code}
                 </p>
               </div>
 
+              {/* Logistics & Transit Specs */}
+              <div className="grid grid-cols-2 gap-4 py-3.5 border-y border-white/[0.08]">
+                <div>
+                  <span className="font-mono text-[10px] uppercase tracking-wider text-[#7A8290] block mb-1">
+                    {i18n.logisticsHeading}
+                  </span>
+                  <span className="font-sans text-[13px] font-semibold text-[#FAF9F5] block">
+                    {activeCorridor.transitTime[safeLocale]}
+                  </span>
+                </div>
+                <div>
+                  <span className="font-mono text-[10px] uppercase tracking-wider text-[#7A8290] block mb-1">
+                    {i18n.logisticsModeHeading}
+                  </span>
+                  <span className="font-sans text-[12.5px] text-[#CBD5E1] block">
+                    {activeCorridor.logisticsMode[safeLocale]}
+                  </span>
+                </div>
+              </div>
+
               {/* Primary Sectors */}
-              <div className="pt-3 border-t border-[rgba(255,255,255,0.08)]">
-                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.08em] text-[#8E95A5] block mb-1.5">
+              <div>
+                <span className="font-mono text-[10.5px] font-semibold uppercase tracking-wider text-[#D4AF37] block mb-2">
                   {i18n.sectorsHeading}
                 </span>
-                <ul className="space-y-1">
+                <ul className="space-y-1.5">
                   {activeCorridor.primarySectors[safeLocale].map((sector, sIdx) => (
-                    <li key={sIdx} className="flex items-center gap-2 text-[12.5px] text-[#C2C7D1]">
-                      <span className="w-1.5 h-1.5 bg-[#D4AF37] rounded-full shrink-0" />
+                    <li key={sIdx} className="flex items-center gap-2.5 text-[13px] text-[#C2C7D1]">
+                      <span className="w-1 h-1 bg-[#D4AF37] rounded-full shrink-0" />
                       <span>{sector}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* Logistics & Transit Specs */}
-              <div className="pt-3 border-t border-[rgba(255,255,255,0.08)] grid grid-cols-2 gap-3">
-                <div>
-                  <span className="font-mono text-[9.5px] font-bold uppercase tracking-[0.08em] text-[#8E95A5] block">
-                    {i18n.logisticsHeading}
-                  </span>
-                  <span className="text-[12.5px] font-semibold text-[#F5F4F0] block mt-0.5">
-                    {activeCorridor.transitTime[safeLocale]}
-                  </span>
-                </div>
-                <div>
-                  <span className="font-mono text-[9.5px] font-bold uppercase tracking-[0.08em] text-[#8E95A5] block">
-                    Rejim
-                  </span>
-                  <span className="text-[12px] text-[#C2C7D1] block mt-0.5">
-                    {activeCorridor.logisticsMode[safeLocale]}
-                  </span>
-                </div>
-              </div>
-
-              {/* Supply Capacity */}
-              <div className="pt-3 border-t border-[rgba(255,255,255,0.08)]">
-                <span className="font-mono text-[9.5px] font-bold uppercase tracking-[0.08em] text-[#8E95A5] block mb-1">
+              {/* Supply Capacity Guarantee */}
+              <div className="bg-white/[0.03] border-l-2 border-[#D4AF37] p-3 rounded-r-[3px]">
+                <span className="font-mono text-[9.5px] uppercase tracking-wider text-[#7A8290] block mb-1">
                   {i18n.capacityHeading}
                 </span>
-                <p className="text-[12px] text-[#A1A7B3] leading-relaxed">
+                <p className="text-[12px] text-[#A8B0BE] leading-relaxed">
                   {activeCorridor.capacitySummary[safeLocale]}
                 </p>
               </div>
 
               {/* CTA Button */}
-              <div className="pt-4 border-t border-[rgba(255,255,255,0.08)]">
+              <div className="pt-2 flex flex-col gap-2">
                 <button
                   type="button"
                   onClick={() => handleInquiryClick(activeCorridor)}
-                  className="w-full py-2.5 px-4 rounded-[2px] bg-[#D4AF37] hover:bg-[#E5BE42] active:scale-[0.99] text-[#090A0D] font-mono text-[11.5px] font-bold uppercase tracking-[0.08em] transition-all flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(212,175,55,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] cursor-pointer"
+                  className="group py-3.5 px-5 rounded-[3px] bg-[#D4AF37] hover:bg-[#E5BE42] active:scale-[0.99] text-[#090A0D] font-mono text-[11.5px] font-bold uppercase tracking-[0.08em] transition-all flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(212,175,55,0.2)] hover:shadow-[0_6px_24px_rgba(212,175,55,0.35)] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
                 >
                   <span>{i18n.ctaButton}</span>
-                  <span aria-hidden="true">→</span>
+                  <span className="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">
+                    →
+                  </span>
                 </button>
+                <span className="text-[10px] font-mono text-[#7A8290] text-center">
+                  {i18n.note}
+                </span>
               </div>
             </motion.div>
           </AnimatePresence>

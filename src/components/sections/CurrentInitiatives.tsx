@@ -76,22 +76,6 @@ export const CurrentInitiatives: React.FC<CurrentInitiativesProps> = ({
           </p>
         </header>
 
-        {/* Factual Scope / Legal Disclosure Bar */}
-        <aside
-          aria-label={initiatives.eyebrow}
-          className="bg-[var(--bg-surface-warm)]/75 border-y border-[var(--border-hairline-editorial)] py-4 px-5 sm:px-6 mb-10 flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-3 rounded-[2px]"
-        >
-          <span className="font-mono text-[10.5px] font-bold text-[var(--accent-gold-ink)] uppercase tracking-[0.14em] shrink-0">
-            {locale === "ru"
-              ? "[ПРИМЕЧАНИЕ]"
-              : locale === "en"
-              ? "[DISCLOSURE]"
-              : "[ARXIVAL IZOH]"}
-          </span>
-          <p className="font-serif italic text-[14px] sm:text-[14.5px] leading-[1.6] text-[var(--text-soft-editorial)]">
-            {initiatives.disclaimer}
-          </p>
-        </aside>
 
         {/* 3 Restrained Editorial Cards with Subtle Hover Elevation */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
