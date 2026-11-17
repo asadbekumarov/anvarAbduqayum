@@ -25,7 +25,6 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
     pathname === `/${safeLocale}/` ||
     pathname === "/";
 
-  // Clean, prioritized navigation links
   const navLinks = [
     {
       href: "#hero",
@@ -98,56 +97,43 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
         : "addressUz"
     ];
 
-  const partnershipHeading =
-    safeLocale === "ru"
-      ? "ПАРТНЕРСТВО И ПРИЕМ"
-      : safeLocale === "en"
-      ? "PARTNERSHIP & INTAKE"
-      : "HAMKORLIK VA QABUL";
-
-  const partnershipNote =
-    safeLocale === "ru"
-      ? "Официальные обращения и рассмотрение предложений по регламенту."
-      : safeLocale === "en"
-      ? "Official inquiries and proposal review according to standards."
-      : "Rasmiy murojaatlar va takliflar reglament asosida ko‘rib chiqiladi.";
-
   return (
     <footer
       id="sayt-yakuni"
-      className="bg-[#090909] text-[#FFFFFF] border-t border-[rgba(212,175,55,0.2)] py-16 sm:py-20 selection:bg-[#D4AF37] selection:text-[#090909]"
+      className="bg-[#090A0D] text-[#FFFFFF] border-t border-[rgba(212,175,55,0.2)] py-14 sm:py-20 selection:bg-[#D4AF37] selection:text-[#090A0D]"
     >
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
-        {/* Top Section: Brand + CTA */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-12 sm:pb-16 border-b border-white/[0.08]">
+        {/* Top Tier: Monograph Brand Signature + Editorial Action */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-10 sm:pb-14 border-b border-white/[0.08]">
           <div className="min-w-0">
-            <h2 className="font-sans text-[26px] sm:text-[34px] font-bold tracking-tight text-[#FFFFFF] uppercase">
+            <h2 className="font-serif text-[28px] sm:text-[36px] font-bold tracking-tight text-[#FFFFFF]">
               {footer.founderName}
               <span className="text-[#D4AF37]">.</span>
             </h2>
-            <p className="mt-2.5 text-[14px] sm:text-[15px] leading-relaxed text-[#9A9A9A] max-w-[560px]">
-              {footer.tagline}
+            <p className="mt-2 text-[14.5px] sm:text-[15.5px] font-serif italic text-[#A6ACBA] max-w-[580px] leading-relaxed">
+              «{footer.tagline}»
             </p>
           </div>
 
           <div className="shrink-0">
             <BookingActionLink
               locale={safeLocale}
-              className="group min-h-[48px] px-7 bg-transparent text-[#D4AF37] border border-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#090909] rounded-[2px] text-[13px] font-bold uppercase tracking-[0.08em] inline-flex items-center justify-center whitespace-nowrap transition-all duration-300 shadow-[0_0_15px_rgba(212,175,55,0.08)] hover:shadow-[0_0_20px_rgba(212,175,55,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
+              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-[3px] border border-[#D4AF37]/50 text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#090A0D] font-mono text-[12px] uppercase font-bold tracking-[0.12em] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] cursor-pointer"
             >
               <span>{footer.bookingCta}</span>
+              <span aria-hidden="true">→</span>
             </BookingActionLink>
           </div>
         </div>
 
-        {/* Middle Links Grid: Responsive grid-cols-1 md:grid-cols-3 lg:grid-cols-4 */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10 lg:gap-12 py-12 sm:py-16 border-b border-white/[0.08]">
-          {/* Column 1: Sayt bo'limlari */}
-          <div className="min-w-0">
-            <h3 className="font-mono text-[11.5px] font-bold uppercase tracking-[0.16em] text-[#D4AF37] mb-5">
-              {footer.navHeading}
+        {/* Middle Tier: 3-Column Architectural Ledger */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-14 py-12 sm:py-16 border-b border-white/[0.08]">
+          {/* Column 1 (md:col-span-5): Index Navigation */}
+          <div className="md:col-span-5 min-w-0">
+            <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-[#D4AF37] mb-5">
+              {footer.navHeading || "Sayt mundarijasi"}
             </h3>
-            <ul className="flex flex-col space-y-3">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
               {navLinks.map((item) => {
                 const targetHref = isHomePage
                   ? item.href
@@ -156,11 +142,9 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
                   <li key={item.href}>
                     <Link
                       href={targetHref}
-                      className="group inline-flex items-center text-[14px] text-[#FFFFFF] hover:text-[#D4AF37] transition-all duration-300 hover:translate-x-1"
+                      className="text-[13.5px] text-[#C2C7D1] hover:text-[#D4AF37] transition-colors"
                     >
-                      <span className="transition-colors duration-300">
-                        {item.label}
-                      </span>
+                      {item.label}
                     </Link>
                   </li>
                 );
@@ -168,25 +152,27 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
             </ul>
           </div>
 
-          {/* Column 2: Ommaviy kanallar */}
-          <div className="min-w-0">
-            <h3 className="font-mono text-[11.5px] font-bold uppercase tracking-[0.16em] text-[#D4AF37] mb-5">
-              {footer.platformsHeading}
+          {/* Column 2 (md:col-span-4): Verified Public Channels */}
+          <div className="md:col-span-4 min-w-0">
+            <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-[#D4AF37] mb-5">
+              {footer.platformsHeading || "Rasmiy kanallar"}
             </h3>
-            <ul className="flex flex-col space-y-3">
+            <ul className="flex flex-col gap-3">
               {contactConfig.instagram.url && (
                 <li>
                   <a
                     href={contactConfig.instagram.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-2 text-[14px] text-[#FFFFFF] hover:text-[#D4AF37] transition-all duration-300 hover:translate-x-1"
+                    className="group inline-flex items-center gap-2 py-1 text-[13.5px] text-[#C2C7D1] hover:text-[#FFFFFF] transition-colors"
                   >
-                    <span>Instagram</span>
-                    <span className="text-[#9A9A9A] text-[13px] group-hover:text-[#D4AF37]/80 transition-colors">
-                      ({contactConfig.instagram.display})
+                    <span className="font-medium text-[#FFFFFF] group-hover:text-[#D4AF37] transition-colors">
+                      Instagram
                     </span>
-                    <span className="text-[12px] opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300">
+                    <span className="font-mono text-[11.5px] text-[#7A8290]">
+                      {contactConfig.instagram.display}
+                    </span>
+                    <span className="font-mono text-[12px] text-[#7A8290] group-hover:text-[#D4AF37] transition-colors">
                       ↗
                     </span>
                   </a>
@@ -198,126 +184,77 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
                     href={contactConfig.youtube.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-2 text-[14px] text-[#FFFFFF] hover:text-[#D4AF37] transition-all duration-300 hover:translate-x-1"
+                    className="group inline-flex items-center gap-2 py-1 text-[13.5px] text-[#C2C7D1] hover:text-[#FFFFFF] transition-colors"
                   >
-                    <span>YouTube</span>
-                    <span className="text-[#9A9A9A] text-[13px] group-hover:text-[#D4AF37]/80 transition-colors">
-                      ({contactConfig.youtube.display})
+                    <span className="font-medium text-[#FFFFFF] group-hover:text-[#D4AF37] transition-colors">
+                      YouTube
                     </span>
-                    <span className="text-[12px] opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300">
+                    <span className="font-mono text-[11.5px] text-[#7A8290]">
+                      {contactConfig.youtube.display}
+                    </span>
+                    <span className="font-mono text-[12px] text-[#7A8290] group-hover:text-[#D4AF37] transition-colors">
                       ↗
                     </span>
                   </a>
                 </li>
               )}
-              {contactConfig.telegramChannel.url && (
-                <li>
-                  <a
-                    href={contactConfig.telegramChannel.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-2 text-[14px] text-[#FFFFFF] hover:text-[#D4AF37] transition-all duration-300 hover:translate-x-1"
-                  >
-                    <span>Telegram</span>
-                    <span className="text-[#9A9A9A] text-[13px] group-hover:text-[#D4AF37]/80 transition-colors">
-                      ({contactConfig.telegramChannel.display})
-                    </span>
-                    <span className="text-[12px] opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300">
-                      ↗
-                    </span>
-                  </a>
-                </li>
-              )}
+              <li>
+                <div className="inline-flex items-center gap-2.5 py-1 text-[13.5px] text-[#C2C7D1]">
+                  <span className="font-medium text-[#FFFFFF]">Telegram</span>
+                  <span className="font-mono text-[11.5px] text-[#7A8290]">
+                    Rasmiy qabulxona
+                  </span>
+                  <span className="font-mono text-[10px] text-[#D4AF37] uppercase px-1.5 py-0.5 rounded-[2px] bg-[#D4AF37]/10 border border-[#D4AF37]/25">
+                    Onlayn
+                  </span>
+                </div>
+              </li>
             </ul>
           </div>
 
-          {/* Column 3: Rasmiy aloqa */}
-          <div className="min-w-0">
-            <h3 className="font-mono text-[11.5px] font-bold uppercase tracking-[0.16em] text-[#D4AF37] mb-5">
-              {footer.contactHeading}
+          {/* Column 3 (md:col-span-3): Industrial Headquarters & Protocol */}
+          <div className="md:col-span-3 min-w-0">
+            <h3 className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-[#D4AF37] mb-5">
+              {footer.contactHeading || "Qarorgoh va qabul"}
             </h3>
-            <div className="flex flex-col space-y-3 text-[14px]">
-              <p className="text-[#9A9A9A] leading-relaxed">
-                {address}
+            <div className="flex flex-col gap-3 text-[13.5px] text-[#9EA6B5] leading-relaxed">
+              <p className="text-[#FFFFFF] font-medium">
+                {address || "Toshkent shahri, O‘zbekiston"}
               </p>
-              {contactConfig.email.address && (
-                <div>
-                  <a
-                    href={`mailto:${contactConfig.email.address}`}
-                    className="group inline-flex items-center gap-1.5 text-[#FFFFFF] hover:text-[#D4AF37] transition-all duration-300 hover:translate-x-1"
-                  >
-                    <span>{contactConfig.email.address}</span>
-                    <span className="text-[12px] opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300">
-                      ↗
-                    </span>
-                  </a>
-                </div>
-              )}
-              {contactConfig.phone.isVerified && contactConfig.phone.display && (
-                <div>
-                  <a
-                    href={contactConfig.phone.href}
-                    className="group inline-flex items-center gap-1.5 text-[#FFFFFF] hover:text-[#D4AF37] transition-all duration-300 hover:translate-x-1 font-mono text-[13.5px]"
-                  >
-                    <span>{contactConfig.phone.display}</span>
-                  </a>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Column 4: Hamkorlik va qabul */}
-          <div className="min-w-0">
-            <h3 className="font-mono text-[11.5px] font-bold uppercase tracking-[0.16em] text-[#D4AF37] mb-5">
-              {partnershipHeading}
-            </h3>
-            <div className="flex flex-col space-y-3.5 text-[14px]">
-              <p className="text-[#9A9A9A] text-[13.5px] leading-relaxed">
-                {partnershipNote}
+              <p className="text-[12.5px] text-[#8E95A5]">
+                «VISAGE ELECTRIC» MChJ, Toybola zavodi va UZBIC Kengashi.
               </p>
-              <div>
-                <BookingActionLink
-                  locale={safeLocale}
-                  className="group inline-flex items-center gap-2 text-[13.5px] font-bold text-[#D4AF37] hover:text-[#FFFFFF] transition-all duration-300 hover:translate-x-1"
-                >
-                  <span className="border-b border-[#D4AF37]/50 pb-0.5 group-hover:border-[#FFFFFF]">
-                    {footer.bookingLinkLabel}
-                  </span>
-                  <span className="transition-transform duration-300 group-hover:translate-x-1">
-                    →
-                  </span>
-                </BookingActionLink>
+              <div className="pt-2 border-t border-white/[0.06]">
+                <p className="text-[12px] text-[#7A8290] leading-relaxed">
+                  Barcha rasmiy murojaatlar sayt qabulxonasi va kotibiyat reglamenti asosida ko‘rib chiqiladi.
+                </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar: Copyright left, Back-to-top right */}
-        <div className="pt-8 sm:pt-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <p className="text-[13px] sm:text-[13.5px] text-[#9A9A9A] text-left">
+        {/* Bottom Tier: Colophon & Return to Top */}
+        <div className="pt-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <p className="font-mono text-[11.5px] text-[#7A8290] text-left">
             {footer.colophonNote}
           </p>
 
           {isHomePage ? (
             <a
               href="#hero"
-              className="group text-[13px] sm:text-[13.5px] font-semibold text-[#9A9A9A] hover:text-[#D4AF37] transition-all duration-300 inline-flex items-center gap-2 shrink-0 self-start sm:self-auto hover:-translate-y-0.5"
+              className="font-mono text-[11.5px] uppercase tracking-[0.12em] font-semibold text-[#8E95A5] hover:text-[#D4AF37] transition-colors inline-flex items-center gap-1.5 shrink-0 self-start sm:self-auto cursor-pointer"
             >
               <span>{footer.backToTop}</span>
-              <span className="transition-transform duration-300 group-hover:-translate-y-1">
-                ↑
-              </span>
+              <span aria-hidden="true">↑</span>
             </a>
           ) : (
             <button
               type="button"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="group text-[13px] sm:text-[13.5px] font-semibold text-[#9A9A9A] hover:text-[#D4AF37] transition-all duration-300 inline-flex items-center gap-2 bg-transparent border-0 cursor-pointer p-0 shrink-0 self-start sm:self-auto hover:-translate-y-0.5"
+              className="font-mono text-[11.5px] uppercase tracking-[0.12em] font-semibold text-[#8E95A5] hover:text-[#D4AF37] transition-colors inline-flex items-center gap-1.5 bg-transparent border-0 cursor-pointer p-0 shrink-0 self-start sm:self-auto"
             >
               <span>{footer.backToTop}</span>
-              <span className="transition-transform duration-300 group-hover:-translate-y-1">
-                ↑
-              </span>
+              <span aria-hidden="true">↑</span>
             </button>
           )}
         </div>

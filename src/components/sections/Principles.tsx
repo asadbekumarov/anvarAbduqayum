@@ -4,8 +4,6 @@ import React, { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Tabs as TabsPrimitive } from "radix-ui";
 import { getContent } from "@/config/content";
-import { MONOGRAPH_EASE } from "@/components/ui/RevealMask";
-import { AudioThesisPlayer } from "@/components/ui/AudioThesisPlayer";
 
 interface PrinciplesProps {
   locale?: string;
@@ -31,23 +29,20 @@ export const Principles: React.FC<PrinciplesProps> = ({ locale = "uz" }) => {
     <section
       id="tamoyil"
       aria-labelledby="principles-heading"
-      className="relative bg-[#090A0D] text-[#F5F4F0] py-14 lg:py-20 scroll-mt-[76px] border-b border-[rgba(212,175,55,0.2)]"
+      className="relative bg-[#090A0D] text-[#F5F4F0] py-16 sm:py-20 lg:py-24 scroll-mt-[76px] border-b border-[rgba(212,175,55,0.2)]"
     >
-      {/* Top subtle hairline gradient transition from Stone to Obsidian */}
+      {/* Top subtle hairline gradient transition */}
       <div
         className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[rgba(212,175,55,0.35)] to-transparent"
         aria-hidden="true"
       />
 
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
-        {/* Editorial Split Header */}
-        <header className="grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-10 lg:items-end pb-8 border-b border-white/[0.08] mb-8">
+        {/* Editorial Split Header (Balanced Headline + Explanatory Narrative) */}
+        <header className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 lg:items-end pb-10 border-b border-white/[0.08] mb-12">
           <div className="lg:col-span-7 min-w-0">
-            <p className="font-mono text-[11px] sm:text-[12px] uppercase tracking-[0.22em] text-[#D4AF37] font-semibold mb-3 flex items-center gap-2">
-              <span
-                className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"
-                aria-hidden="true"
-              />
+            <div className="inline-flex items-center gap-2.5 text-[11px] sm:text-[12px] font-mono font-bold uppercase tracking-[0.2em] text-[#D4AF37] mb-3 sm:mb-4">
+              <span className="w-6 h-[1.5px] bg-[#D4AF37] shrink-0" aria-hidden="true" />
               <span>
                 {locale === "ru"
                   ? "05 // МЕТОДОЛОГИЯ «ПРЕСС-ФОРМЫ»"
@@ -55,84 +50,103 @@ export const Principles: React.FC<PrinciplesProps> = ({ locale = "uz" }) => {
                   ? "05 // THE «MOLD» MANAGEMENT PRINCIPLE"
                   : "05 // BOSHQARUVNING «QOLIP» TAMOYILI"}
               </span>
-            </p>
+            </div>
             <h2
               id="principles-heading"
-              className="font-serif text-[clamp(32px,4vw,50px)] font-bold leading-[1.08] tracking-[-0.02em] text-[#FFFFFF] [overflow-wrap:break-word] [text-wrap:balance]"
+              className="font-serif text-[clamp(34px,4.5vw,58px)] font-bold leading-[1.08] tracking-[-0.025em] text-[#FFFFFF] [text-wrap:balance]"
             >
               {principles.title || "Qolip tamoyili"}
               {principles.titleEmphasis ? ` ${principles.titleEmphasis}` : ""}
             </h2>
+            <p className="font-serif italic text-[18px] sm:text-[21px] text-[#D4AF37] font-normal mt-2.5">
+              {locale === "ru"
+                ? "Инженерные стандарты и методология автономного управления"
+                : locale === "en"
+                ? "Engineering Standards & Autonomous Governance Methodology"
+                : "Muhandislik standartlari va avtonom boshqaruv metodologiyasi"}
+            </p>
           </div>
 
-          <p className="lg:col-span-5 text-[15px] sm:text-[16px] leading-[1.65] text-[#9EA6B5] max-w-[58ch] [text-wrap:pretty]">
-            {principles.subtitle}
-          </p>
+          <div className="lg:col-span-5 min-w-0">
+            <p className="text-[15px] sm:text-[16px] leading-[1.7] text-[#A6ACBA] max-w-[54ch] [text-wrap:pretty]">
+              {principles.subtitle}
+            </p>
+          </div>
         </header>
 
-        {/* Radix UI Tabs: 2-Column Desktop | Horizontal Scrollable Tabs on Mobile */}
+        {/* 2-Column Architectural System: Left Philosophy & Rail, Right Executive Dossier */}
         <TabsPrimitive.Root
           value={activeValue}
           onValueChange={(val) => {
             const idx = modules.findIndex((m, i) => getTabKey(m, i) === val);
             if (idx !== -1) setActiveIndex(idx);
           }}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start"
         >
-          {/* LEFT COLUMN: Philosophy Quote + Tab Triggers */}
-          <div className="lg:col-span-5 flex flex-col gap-4 min-w-0">
-            {/* Compact Philosophy Quote */}
-            <div className="bg-[#111215] border border-white/[0.08] border-l-2 border-l-[#D4AF37] rounded-[2px] p-5 shadow-[0_4px_16px_rgba(0,0,0,0.3)]">
-              <div className="flex items-center justify-between gap-2 mb-2">
-                <h3 className="font-mono text-[10.5px] font-bold uppercase tracking-[0.14em] text-[#D4AF37]">
+          {/* LEFT COLUMN: Philosophy Plaque + Module Selectors */}
+          <div className="lg:col-span-5 flex flex-col gap-6 min-w-0">
+            {/* Executive Philosophy Plaque */}
+            <div className="bg-[#111319] border border-white/[0.08] border-l-2 border-l-[#D4AF37] rounded-[4px] p-6 shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
+              <div className="flex items-center justify-between gap-2 pb-3 mb-3 border-b border-white/[0.06]">
+                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-[#D4AF37]">
                   {principles.statementHeading || "Boshqaruv falsafasi"}
-                </h3>
+                </span>
                 <span className="font-mono text-[11px] text-[#8E95A5] tabular-nums">
                   {String(activeIndex + 1).padStart(2, "0")} /{" "}
                   {String(modules.length).padStart(2, "0")}
                 </span>
               </div>
-              <p className="font-serif italic text-[14.5px] sm:text-[15.5px] leading-[1.55] text-[#F5F4F0]">
+              <p className="font-serif italic text-[15px] sm:text-[16px] leading-[1.65] text-[#F5F4F0] mb-3">
                 «{principles.manifesto}»
               </p>
+              <span className="block font-mono text-[11px] text-[#8E95A5] uppercase tracking-wider">
+                — Anvar Abduqayum
+              </span>
             </div>
 
-            {/* Tab List: Horizontal Scroll on Mobile, Vertical Stack on Desktop */}
+            {/* Architectural Module Selectors List */}
             <TabsPrimitive.List
               aria-label={principles.tablistAriaLabel || principles.title}
-              className="flex lg:flex-col overflow-x-auto lg:overflow-visible snap-x snap-mandatory lg:snap-none gap-2 pb-2 lg:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0"
+              className="flex flex-col gap-2.5"
             >
               {modules.map((mod, idx) => {
                 const tabKey = getTabKey(mod, idx);
                 const isSelected = idx === activeIndex;
+                const romanNum =
+                  idx === 0 ? "01" : idx === 1 ? "02" : idx === 2 ? "03" : "04";
 
                 return (
                   <TabsPrimitive.Trigger
                     key={tabKey}
                     id={`mold-tab-${tabKey}`}
                     value={tabKey}
-                    className={`relative shrink-0 lg:shrink snap-start min-h-[46px] px-4 py-3 text-left rounded-[2px] border flex items-center gap-3 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] cursor-pointer ${
+                    className={`relative min-h-[54px] px-5 py-3.5 text-left rounded-[4px] border flex items-center justify-between gap-4 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] cursor-pointer ${
                       isSelected
-                        ? "border-[#D4AF37]/50 text-[#FFFFFF]"
-                        : "bg-transparent border-white/[0.08] text-[#8E95A5] hover:text-[#FFFFFF] hover:border-white/[0.2]"
+                        ? "bg-[#141722] border-[#D4AF37]/50 text-[#FFFFFF] shadow-[0_4px_16px_rgba(0,0,0,0.3)]"
+                        : "bg-[#0E1015]/60 border-white/[0.06] text-[#8E95A5] hover:text-[#FFFFFF] hover:bg-[#12141A] hover:border-white/[0.15]"
                     }`}
                   >
-                    {isSelected && (
-                      <motion.div
-                        layoutId="activePrincipleTabIndicator"
-                        className="absolute inset-0 bg-[#161820] border-l-2 border-l-[#D4AF37] rounded-[2px] -z-0"
-                        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                      />
-                    )}
+                    <div className="flex items-center gap-3.5 min-w-0">
+                      <span
+                        className={`font-mono text-[12px] font-bold shrink-0 transition-colors ${
+                          isSelected ? "text-[#D4AF37]" : "text-[#8E95A5]"
+                        }`}
+                      >
+                        {romanNum} {"//"}
+                      </span>
+                      <span className="text-[14px] font-semibold leading-snug truncate">
+                        {mod.title}
+                      </span>
+                    </div>
                     <span
-                      className={`relative z-10 font-mono text-[11.5px] font-bold shrink-0 ${
-                        isSelected ? "text-[#D4AF37]" : "text-[#8E95A5]"
+                      className={`text-[13px] transition-transform duration-200 shrink-0 ${
+                        isSelected
+                          ? "text-[#D4AF37] translate-x-1"
+                          : "text-[#555C69]"
                       }`}
+                      aria-hidden="true"
                     >
-                      {mod.index}
-                    </span>
-                    <span className="relative z-10 text-[13.5px] font-semibold leading-snug whitespace-nowrap lg:whitespace-normal">
-                      {mod.title}
+                      →
                     </span>
                   </TabsPrimitive.Trigger>
                 );
@@ -140,7 +154,7 @@ export const Principles: React.FC<PrinciplesProps> = ({ locale = "uz" }) => {
             </TabsPrimitive.List>
           </div>
 
-          {/* RIGHT COLUMN: Active Tab Content with Deliberate 0.6s Architectural Reveal */}
+          {/* RIGHT COLUMN: Active Module Executive Dossier */}
           <div className="lg:col-span-7 min-w-0">
             {modules.map((mod, idx) => {
               const tabKey = getTabKey(mod, idx);
@@ -149,102 +163,128 @@ export const Principles: React.FC<PrinciplesProps> = ({ locale = "uz" }) => {
                   key={tabKey}
                   value={tabKey}
                   id={`mold-panel-${tabKey}`}
-                  className="bg-[#111215] border border-white/[0.1] rounded-[2px] p-6 sm:p-7 shadow-[0_8px_32px_rgba(0,0,0,0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
+                  className="bg-[#111319] border border-white/[0.09] rounded-[4px] p-6 sm:p-8 lg:p-10 shadow-[0_16px_40px_rgba(0,0,0,0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
                 >
                   <motion.div
                     initial={
-                      shouldReduceMotion ? false : { opacity: 0, y: 10 }
+                      shouldReduceMotion ? false : { opacity: 0, y: 12 }
                     }
                     animate={{ opacity: 1, y: 0 }}
                     transition={{
-                      duration: shouldReduceMotion ? 0 : 0.6,
-                      ease: MONOGRAPH_EASE,
+                      duration: shouldReduceMotion ? 0 : 0.35,
+                      ease: [0.22, 1, 0.36, 1],
                     }}
                   >
-                    <div className="pb-3 border-b border-white/[0.08] mb-4 flex flex-wrap items-center justify-between gap-3">
-                      <span className="font-mono text-[11px] font-bold tracking-[0.06em] text-[#D4AF37]">
-                        {mod.index}
-                        {" // "}
-                        {mod.technicalRule}
-                      </span>
-                      <AudioThesisPlayer
-                        audioSrc={mod.audioSrc}
-                        speechText={mod.speechText}
-                        sourceUrl={mod.sourceUrl}
-                        sourceLabel={mod.sourceLabel}
-                        title={mod.title}
-                        durationLabel={mod.audioDuration || "0:15"}
-                        totalDurationSeconds={15}
-                        locale={locale}
-                      />
+                    {/* Header: Rule & Primary Video Lecture Citation */}
+                    <div className="pb-4 mb-6 border-b border-white/[0.08] flex flex-wrap items-center justify-between gap-3">
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"
+                          aria-hidden="true"
+                        />
+                        <span className="font-mono text-[11px] font-bold uppercase tracking-[0.14em] text-[#D4AF37]">
+                          {mod.technicalRule || "Tizimli reglament qoidasi"}
+                        </span>
+                      </div>
+
+                      {mod.sourceUrl && (
+                        <a
+                          href={mod.sourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 font-mono text-[11.5px] font-semibold uppercase tracking-wider text-[#A6ACBA] hover:text-[#D4AF37] transition-colors"
+                        >
+                          <span>{mod.sourceLabel || "Video ma’ruza"}</span>
+                          <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            aria-hidden="true"
+                          >
+                            <path
+                              d="M4 12L12 4M6 4h6v6"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </a>
+                      )}
                     </div>
 
-                    <h3 className="font-serif text-[22px] lg:text-[25px] font-bold leading-[1.22] text-[#FFFFFF] mb-3">
+                    {/* Headline */}
+                    <h3 className="font-serif text-[26px] sm:text-[32px] font-bold leading-[1.2] text-[#FFFFFF] mb-4">
                       {mod.title}
                     </h3>
 
-                    <p className="text-[14.5px] leading-[1.65] text-[#C2C7D1] [text-wrap:pretty] mb-4">
+                    {/* Narrative Description */}
+                    <p className="text-[16px] sm:text-[17px] leading-[1.74] text-[#C2C7D1] [text-wrap:pretty] mb-6">
                       {mod.description}
                     </p>
 
+                    {/* Operational Ecosystem Context */}
                     {mod.appContext && (
-                      <dl className="border-t border-white/[0.08] pt-3 mb-4">
-                        <dt className="font-mono text-[10.5px] font-semibold uppercase tracking-[0.1em] text-[#8E95A5] mb-1">
-                          {principles.labels?.appContext || "Context"}
-                        </dt>
-                        <dd className="text-[13.5px] font-medium leading-[1.5] text-[#F5F4F0]">
+                      <div className="p-4 bg-[#0A0C10] border border-white/[0.06] rounded-[3px] mb-8">
+                        <div className="font-mono text-[10.5px] uppercase tracking-[0.16em] font-semibold text-[#8E95A5] mb-1.5">
+                          {principles.labels?.appContext ||
+                            "Ekotizimdagi amaliy qo‘llanilishi"}
+                          :
+                        </div>
+                        <p className="text-[14px] leading-relaxed text-[#F5F4F0] font-medium">
                           {mod.appContext}
-                        </dd>
-                      </dl>
+                        </p>
+                      </div>
                     )}
 
-                    {/* Operational Contrast Well: Manual vs Mold Method */}
-                    <aside
-                      aria-label={
-                        principles.contrastAriaLabel || "Operational contrast"
-                      }
-                      className="bg-[#090A0D] p-4 sm:p-5 rounded-[2px] grid grid-cols-1 sm:grid-cols-2 gap-4 border border-white/[0.08] shadow-inner"
-                    >
+                    {/* Comparative Analysis: Traditional vs The Mold Model */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                       {mod.beforeText && (
-                        <div className="sm:pr-4 sm:border-r border-white/[0.08] flex flex-col gap-1.5">
-                          <div className="flex items-center gap-2">
-                            <span
-                              className="w-1.5 h-1.5 rounded-full bg-[#EF4444]/80"
-                              aria-hidden="true"
-                            />
-                            <span className="font-mono text-[10.5px] font-bold uppercase tracking-[0.1em] text-[#EF4444]">
-                              {principles.labels?.before || "Shaxsga bog‘liq boshqaruv"}
-                            </span>
+                        <div className="bg-[#0D0F14] border border-white/[0.06] rounded-[4px] p-5 flex flex-col justify-between">
+                          <div>
+                            <div className="flex items-center gap-2 mb-2.5">
+                              <span
+                                className="w-1.5 h-1.5 rounded-full bg-[#EF4444]"
+                                aria-hidden="true"
+                              />
+                              <span className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-[#EF4444]">
+                                {principles.labels?.before ||
+                                  "Shaxsga bog‘liq boshqaruv"}
+                              </span>
+                            </div>
+                            <p className="text-[13.5px] text-[#9EA6B5] leading-[1.6]">
+                              {mod.beforeText}
+                            </p>
                           </div>
-                          <p className="text-[12.5px] text-[#A1A7B3] leading-[1.5]">
-                            {mod.beforeText}
-                          </p>
+                          <span className="font-mono text-[10px] uppercase tracking-wider text-[#555C69] mt-3 block">
+                            Eski amaliyot
+                          </span>
                         </div>
                       )}
 
                       {mod.afterText && (
-                        <div className="flex flex-col gap-1.5">
-                          <div className="flex items-center gap-2">
-                            <span
-                              className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"
-                              aria-hidden="true"
-                            />
-                            <span className="font-mono text-[10.5px] font-bold uppercase tracking-[0.1em] text-[#D4AF37]">
-                              {principles.labels?.after || "Qolip yondashuvi"}
-                            </span>
+                        <div className="bg-[#141722] border border-[#D4AF37]/30 rounded-[4px] p-5 flex flex-col justify-between shadow-[0_4px_20px_rgba(0,0,0,0.3)]">
+                          <div>
+                            <div className="flex items-center gap-2 mb-2.5">
+                              <span
+                                className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]"
+                                aria-hidden="true"
+                              />
+                              <span className="font-mono text-[11px] font-bold uppercase tracking-[0.12em] text-[#D4AF37]">
+                                {principles.labels?.after || "«Qolip» yondashuvi"}
+                              </span>
+                            </div>
+                            <p className="font-serif text-[14.5px] font-semibold text-[#FFFFFF] leading-[1.5]">
+                              {mod.afterText}
+                            </p>
                           </div>
-                          <p className="font-serif text-[14px] font-bold leading-[1.38] text-[#FFFFFF]">
-                            {mod.afterText}
-                          </p>
+                          <span className="font-mono text-[10px] uppercase tracking-wider text-[#D4AF37]/80 mt-3 block">
+                            Tizimli yechim
+                          </span>
                         </div>
                       )}
-                    </aside>
-
-                    {principles.labels?.disclaimer && (
-                      <p className="text-[11px] leading-[1.45] text-[#8E95A5] pt-3 border-t border-white/[0.06] mt-3">
-                        {principles.labels.disclaimer}
-                      </p>
-                    )}
+                    </div>
                   </motion.div>
                 </TabsPrimitive.Content>
               );

@@ -405,12 +405,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
       : null,
   ].filter((item): item is NonNullable<typeof item> => item !== null);
 
-  const hasAnyDirectVerifiedChannel =
-    (contactConfig.phone.isVerified && Boolean(contactConfig.phone.href)) ||
-    (contactConfig.telegramDirect.isVerified && Boolean(contactConfig.telegramDirect.url)) ||
-    (contactConfig.telegramChannel.isVerified && Boolean(contactConfig.telegramChannel.url)) ||
-    (contactConfig.email.isVerified && Boolean(contactConfig.email.href));
-
   return (
     <section
       id="aloqa"
@@ -569,80 +563,120 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
             </p>
           </header>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
             {/* Left Column: Ruled Official Contact Ledger */}
-            <div className="lg:col-span-5 min-w-0">
-              <h3 className="font-serif text-[24px] font-semibold leading-[1.25] text-[var(--text-ink)] mb-1 [text-wrap:balance]">
-                {directory.heading}
-              </h3>
-              <p className="text-[15.5px] leading-[1.6] text-[var(--text-soft-editorial)] mb-5">
-                {directory.subheading}
-              </p>
+            <div className="lg:col-span-5 min-w-0 h-full">
+              <div className="bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial-strong)] rounded-[4px] p-6 sm:p-8 lg:p-10 shadow-[var(--shadow-editorial-subtle)] h-full flex flex-col justify-between">
+                <div>
+                  <div className="pb-4 border-b border-[var(--border-hairline-editorial)] mb-6">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-gold)]" aria-hidden="true" />
+                      <span className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--accent-gold-ink)]">
+                        07.B // RASMIY KANALLAR
+                      </span>
+                    </div>
+                    <h3 className="font-serif text-[26px] font-semibold leading-[1.22] text-[var(--text-ink)] [text-wrap:balance]">
+                      {directory.heading}
+                    </h3>
+                    <p className="mt-1.5 text-[14.5px] leading-[1.55] text-[var(--text-soft-editorial)]">
+                      {directory.subheading}
+                    </p>
+                  </div>
 
-              {isDemoMode && (
-                <div
-                  id="contact-external-channels-notice"
-                  className="mb-5 p-3.5 bg-[var(--bg-alabaster)] border border-[var(--border-gold)] rounded-[2px]"
-                >
-                  <p className="text-[13px] font-semibold text-[var(--accent-gold-ink)] mb-1">
-                    {demoCopy.externalChannels.channelsBadge}
-                  </p>
-                  <p className="text-[13.5px] leading-[1.55] text-[var(--text-soft-editorial)]">
-                    {demoCopy.externalChannels.channelsNote}
-                  </p>
-                </div>
-              )}
-
-              <ul className="border-t border-[var(--border-hairline-editorial-strong)]">
-                {officialChannels.map((channel) => (
-                  <li
-                    key={channel.id}
-                    className="border-b border-[var(--border-hairline-editorial)]"
-                  >
-                    <a
-                      href={channel.href}
-                      target={channel.external ? "_blank" : undefined}
-                      rel={channel.external ? "noopener noreferrer" : undefined}
-                      className="group grid grid-cols-[minmax(0,1fr)_auto] gap-2 items-center py-4 px-2 min-h-[60px] hover:bg-[var(--accent-gold-soft)] active:bg-[var(--accent-gold-soft)] transition-colors duration-150 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                  {isDemoMode && (
+                    <div
+                      id="contact-external-channels-notice"
+                      className="mb-5 p-3.5 bg-[var(--bg-alabaster)] border border-[var(--border-gold)] rounded-[2px]"
                     >
-                      <span className="min-w-0">
-                        <span className="block font-mono text-[11px] uppercase tracking-wider font-semibold text-[var(--text-muted-aa)]">
-                          {channel.label}
-                        </span>
-                        <span className="block text-[clamp(14.5px,4.2vw,16.5px)] font-semibold text-[var(--text-ink)] mt-0.5 tabular-nums [overflow-wrap:break-word] transition-transform duration-150 motion-safe:group-hover:translate-x-0.5 motion-reduce:transition-none">
-                          {channel.value}
-                        </span>
-                      </span>
-                      <span className="inline-flex items-center gap-1 font-mono text-[11.5px] uppercase tracking-wider font-semibold text-[var(--accent-gold-ink)] transition-transform duration-150 motion-safe:group-hover:translate-x-1 motion-reduce:transition-none">
-                        <span>{channel.cue}</span>
-                        <span aria-hidden="true">→</span>
-                      </span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
+                      <p className="text-[13px] font-semibold text-[var(--accent-gold-ink)] mb-1">
+                        {demoCopy.externalChannels.channelsBadge}
+                      </p>
+                      <p className="text-[13.5px] leading-[1.55] text-[var(--text-soft-editorial)]">
+                        {demoCopy.externalChannels.channelsNote}
+                      </p>
+                    </div>
+                  )}
 
-              <div className="mt-6 p-4 bg-[var(--bg-alabaster)] border border-[var(--border-hairline-editorial-strong)] rounded-[2px]">
-                <p className="text-[14.5px] font-semibold text-[var(--text-ink)]">
-                  {directory.officeTitle}
-                </p>
-                <p className="mt-1 text-[14.5px] leading-[1.55] text-[var(--text-soft-editorial)]">
-                  {directory.officeCopy}
-                </p>
-                {!hasAnyDirectVerifiedChannel && (
-                  <p className="mt-2 pt-2 border-t border-[var(--border-hairline-subtle)] text-[13px] leading-[1.5] text-[var(--text-muted-aa)]">
-                    {demoCopy.externalChannels.pendingContactsNote}
-                  </p>
-                )}
+                  <ul className="border-t border-[var(--border-hairline-editorial-strong)] divide-y divide-[var(--border-hairline-editorial)] mb-6">
+                    {officialChannels.map((channel) => (
+                      <li key={channel.id}>
+                        <a
+                          href={channel.href}
+                          target={channel.external ? "_blank" : undefined}
+                          rel={channel.external ? "noopener noreferrer" : undefined}
+                          className="group grid grid-cols-[minmax(0,1fr)_auto] gap-2 items-center py-3.5 px-2 hover:bg-[var(--accent-gold-soft)] rounded-[2px] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                        >
+                          <span className="min-w-0">
+                            <span className="block font-mono text-[10.5px] uppercase tracking-wider font-semibold text-[var(--text-muted-aa)]">
+                              {channel.label}
+                            </span>
+                            <span className="block text-[15px] font-bold text-[var(--text-ink)] mt-0.5 tabular-nums [overflow-wrap:break-word] group-hover:text-[var(--accent-gold-ink)] transition-colors">
+                              {channel.value}
+                            </span>
+                          </span>
+                          <span className="inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-wider font-semibold text-[var(--accent-gold-ink)] group-hover:translate-x-1 transition-transform">
+                            <span>{channel.cue}</span>
+                            <span aria-hidden="true">→</span>
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Bottom Headquarters & Response Protocol */}
+                <div className="space-y-3 pt-6 border-t border-[var(--border-hairline-editorial)]">
+                  <div className="p-4 bg-[var(--bg-alabaster)] border border-[var(--border-hairline-editorial)] rounded-[3px]">
+                    <span className="block font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--accent-gold-ink)] mb-1">
+                      Boshqaruv qarorgohi
+                    </span>
+                    <p className="text-[13.5px] font-semibold text-[var(--text-ink)]">
+                      {directory.officeTitle || "Toshkent shahri, O‘zbekiston"}
+                    </p>
+                    <p className="mt-1 text-[13px] leading-[1.5] text-[var(--text-soft-editorial)]">
+                      {directory.officeCopy}
+                    </p>
+                  </div>
+
+                  <div className="p-4 bg-[var(--bg-alabaster)] border border-[var(--border-hairline-editorial)] rounded-[3px]">
+                    <span className="block font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--accent-gold-ink)] mb-1">
+                      Murojaat reglamenti
+                    </span>
+                    <p className="text-[13px] leading-[1.5] text-[var(--text-soft-editorial)]">
+                      Dushanba – Juma, 09:00 – 18:00 (Toshkent vaqti). Barcha arizalar mas’ul kotibiyat tomonidan 24–48 soat ichida ko‘rib chiqiladi.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Right Column: Accessible Inquiry Form */}
-            <div className="lg:col-span-7 bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial-strong)] rounded-[2px] p-6 sm:p-10 shadow-[var(--shadow-editorial-subtle)] min-w-0">
-              <div className="pb-4 border-b border-[var(--border-hairline-editorial)] mb-6">
-                <h3 className="font-serif text-[26px] font-semibold leading-[1.22] text-[var(--text-ink)] [text-wrap:balance]">
-                  {formCopy.title}
-                </h3>
+            <div className="lg:col-span-7 bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial-strong)] rounded-[4px] p-6 sm:p-8 lg:p-10 shadow-[var(--shadow-editorial-subtle)] min-w-0 h-full flex flex-col justify-between">
+              <div>
+                <div className="pb-4 border-b border-[var(--border-hairline-editorial)] mb-6">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-gold)]" aria-hidden="true" />
+                    <span className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--accent-gold-ink)]">
+                      ONLAYN QABULXONA
+                    </span>
+                  </div>
+                  <h3 className="font-serif text-[26px] font-semibold leading-[1.22] text-[var(--text-ink)] [text-wrap:balance]">
+                    {formCopy.title}
+                  </h3>
+                  {isDemoMode && (
+                    <p
+                      id="contact-demo-badge"
+                      className="mt-2 text-[13px] font-semibold text-[var(--accent-gold-ink)]"
+                    >
+                      {demoCopy.contactForm.badge}
+                    </p>
+                  )}
+                  <p className="mt-1.5 text-[14.5px] leading-[1.55] text-[var(--text-soft-editorial)]">
+                    {isDemoMode
+                      ? demoCopy.contactForm.subtitle
+                      : formCopy.subtitle}
+                  </p>
+                </div>
                 {isDemoMode && (
                   <p
                     id="contact-demo-badge"
