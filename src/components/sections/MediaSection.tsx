@@ -1054,7 +1054,13 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
                             {ag.event}
                           </div>
                           <div className="flex items-center gap-2 mt-1 text-[12px] text-[#8E94A5]">
-                            <span>📍 {ag.city}</span>
+                            <span className="inline-flex items-center gap-1">
+                              <svg className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                                <circle cx="12" cy="10" r="3" />
+                              </svg>
+                              <span>{ag.city}</span>
+                            </span>
                             <span>•</span>
                             <span className="text-[#D4AF37]/90">{ag.role}</span>
                           </div>
@@ -1085,7 +1091,10 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
                     {speaking.ctaDesc}
                   </p>
                   <p className="text-[12px] font-mono text-[#D4AF37]/80 flex items-center gap-1.5">
-                    <span>⏱</span>
+                    <svg className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <circle cx="12" cy="12" r="9" />
+                      <polyline points="12 7 12 12 15 15" />
+                    </svg>
                     <span>{speaking.notice}</span>
                   </p>
                 </div>

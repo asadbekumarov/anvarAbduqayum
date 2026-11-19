@@ -329,17 +329,24 @@ export const Principles: React.FC<PrinciplesProps> = ({ locale = "uz" }) => {
 
               {/* Feature pills */}
               <div className="flex flex-wrap items-center gap-2.5 pt-2 text-[12px] text-[#C2C7D1] font-mono">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.08]">
-                  <span aria-hidden="true">⏱</span>
-                  {locale === "ru" ? "10 практических вопросов" : locale === "en" ? "10 practical questions" : "10 ta amaliy savol"}
+                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.05] border border-white/10 hover:border-[#D4AF37]/30 transition-colors">
+                  <svg className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="9" />
+                    <polyline points="12 7 12 12 15 15" />
+                  </svg>
+                  <span>{locale === "ru" ? "10 практических вопросов" : locale === "en" ? "10 practical questions" : "10 ta amaliy savol"}</span>
                 </span>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.08]">
-                  <span aria-hidden="true">📊</span>
-                  {locale === "ru" ? "3 уровня зрелости системы" : locale === "en" ? "3 system maturity tiers" : "3 xil tahliliy xulosa"}
+                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.05] border border-white/10 hover:border-[#D4AF37]/30 transition-colors">
+                  <svg className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M18 20V10M12 20V4M6 20v-6" />
+                  </svg>
+                  <span>{locale === "ru" ? "3 уровня зрелости системы" : locale === "en" ? "3 system maturity tiers" : "3 xil tahliliy xulosa"}</span>
                 </span>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.08]">
-                  <span aria-hidden="true">⚡</span>
-                  {locale === "ru" ? "Мгновенный результат" : locale === "en" ? "Instant results" : "Darhol bepul natija"}
+                <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/[0.05] border border-white/10 hover:border-[#D4AF37]/30 transition-colors">
+                  <svg className="w-3.5 h-3.5 text-[#D4AF37] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                  </svg>
+                  <span>{locale === "ru" ? "Мгновенный результат" : locale === "en" ? "Instant results" : "Darhol bepul natija"}</span>
                 </span>
               </div>
             </div>
