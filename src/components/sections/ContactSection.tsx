@@ -527,6 +527,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                   id="contact-inquiry-form"
                   onSubmit={handleSubmit}
                   noValidate
+                  suppressHydrationWarning
                   className="flex flex-col gap-5"
                 >
                   {/* Anti-spam honeypot */}
@@ -541,6 +542,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                       type="text"
                       tabIndex={-1}
                       autoComplete="off"
+                      suppressHydrationWarning
                       value={formData.honeypot}
                       onChange={(e) => handleFieldChange("honeypot", e.target.value)}
                     />
@@ -564,6 +566,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                         required
                         maxLength={60}
                         autoComplete="name"
+                        suppressHydrationWarning
                         value={formData.name}
                         onChange={(e) => handleFieldChange("name", e.target.value)}
                         placeholder={formCopy.namePlaceholder}
@@ -599,6 +602,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                           aria-label="Davlat kodi"
                           value={countryCode}
                           onChange={handleCountryCodeChange}
+                          suppressHydrationWarning
                           className="w-[100px] shrink-0 min-h-[46px] px-2.5 rounded-xl border font-mono text-[13px] text-[var(--text-ink)] bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] cursor-pointer"
                         >
                           {COUNTRY_CODE_PRESETS.map((preset) => (
@@ -615,6 +619,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                           required
                           inputMode="tel"
                           autoComplete="tel"
+                          suppressHydrationWarning
                           value={displayPhone}
                           onChange={handlePhoneChange}
                           placeholder={countryCode === "+998" ? "(90) 123-45-67" : "123 45 67"}
@@ -657,6 +662,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                         required
                         maxLength={120}
                         autoComplete="organization"
+                        suppressHydrationWarning
                         value={formData.business}
                         onChange={(e) => handleFieldChange("business", e.target.value)}
                         placeholder={formCopy.businessPlaceholder}
@@ -693,6 +699,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                           name="topic"
                           value={formData.topic}
                           onChange={(e) => handleFieldChange("topic", e.target.value)}
+                          suppressHydrationWarning
                           className="w-full min-h-[46px] px-4 py-2.5 pr-10 rounded-xl appearance-none bg-[var(--bg-alabaster)] border border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] text-[14px] text-[var(--text-ink)] cursor-pointer transition-all duration-150"
                         >
                           {formCopy.topicOptions.map((opt) => (
@@ -724,6 +731,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                       name="message"
                       rows={3}
                       maxLength={1000}
+                      suppressHydrationWarning
                       value={formData.message}
                       onChange={(e) => handleFieldChange("message", e.target.value)}
                       placeholder={formCopy.messagePlaceholder}

@@ -8,23 +8,34 @@ export interface OemConfiguratorProps {
   onPassSpecs?: (specsText: string) => void;
 }
 
-type SectorKey = "plastic" | "toys" | "equipment" | "horeca";
-type ModelKey = "distribution" | "oem" | "jv";
-type ScaleKey = "wholesale" | "ftl" | "contract";
+type SectorKey = "toys" | "plastic" | "equipment" | "horeca";
+type ModelKey = "existing_mold" | "custom_tooling" | "wholesale";
+type ScaleKey = "trial" | "ftl" | "annual";
 
-interface StepOption<T extends string> {
-  id: T;
-  label: {
-    uz: string;
-    ru: string;
-    en: string;
-  };
-  desc: {
-    uz: string;
-    ru: string;
-    en: string;
-  };
-  badge?: string;
+interface SectorData {
+  id: SectorKey;
+  title: { uz: string; ru: string; en: string };
+  subtitle: { uz: string; ru: string; en: string };
+  plant: { uz: string; ru: string; en: string };
+  materials: { uz: string; ru: string; en: string };
+  capabilities: { uz: string; ru: string; en: string };
+}
+
+interface ModelData {
+  id: ModelKey;
+  title: { uz: string; ru: string; en: string };
+  desc: { uz: string; ru: string; en: string };
+  timeModifier: { uz: string; ru: string; en: string };
+  toolingNote: { uz: string; ru: string; en: string };
+}
+
+interface ScaleData {
+  id: ScaleKey;
+  title: { uz: string; ru: string; en: string };
+  volumeLabel: { uz: string; ru: string; en: string };
+  moq: { uz: string; ru: string; en: string };
+  logistics: { uz: string; ru: string; en: string };
+  priceBenefit: { uz: string; ru: string; en: string };
 }
 
 export const OemConfigurator: React.FC<OemConfiguratorProps> = ({
@@ -39,245 +50,386 @@ export const OemConfigurator: React.FC<OemConfiguratorProps> = ({
   );
 
   const [selectedSector, setSelectedSector] = useState<SectorKey>("toys");
-  const [selectedModel, setSelectedModel] = useState<ModelKey>("oem");
+  const [selectedModel, setSelectedModel] = useState<ModelKey>("existing_mold");
   const [selectedScale, setSelectedScale] = useState<ScaleKey>("ftl");
+  const [isCopied, setIsCopied] = useState(false);
 
-  // Step 1: Sectors
-  const SECTOR_OPTIONS: StepOption<SectorKey>[] = [
+  // 1. Sanoat yo'nalishlari
+  const SECTORS: SectorData[] = [
     {
       id: "toys",
-      label: {
-        uz: "Bolalar o‘yinchoqlari (Toybola zavodi)",
-        ru: "Детские игрушки (Завод Toybola)",
-        en: "Toy Manufacturing (Toybola Plant)",
+      title: {
+        uz: "Bolalar o‘yinchoqlari va buyumlari",
+        ru: "Детские игрушки и развивающие товары",
+        en: "Children's Toys & Developmental Sets",
       },
-      desc: {
-        uz: "Rivojlantiruvchi to‘plamlar, transport vositalari va bolalar o‘yinchoqlari",
-        ru: "Развивающие наборы, транспорт и детские игровые серии",
-        en: "Certified educational playsets, ride-ons & creative series",
+      subtitle: {
+        uz: "Ekologik toza plastik o‘yinchoqlar, konstruktorlar va transport seriyalari",
+        ru: "Экологичный пластик, конструкторы и транспортные серии",
+        en: "Certified non-toxic plastic playsets, ride-ons and constructions",
       },
-      badge: "Toybola",
+      plant: {
+        uz: "Toybola Toys zavodi (Visage Electric MCHJ)",
+        ru: "Завод Toybola Toys (ООО Visage Electric)",
+        en: "Toybola Toys Plant (Visage Electric LLC)",
+      },
+      materials: {
+        uz: "Oziq-ovqat toifasidagi PP, PE, ABS (BPA-free)",
+        ru: "Пищевой пластик PP, PE, ABS (без BPA)",
+        en: "Food-grade PP, PE, ABS (BPA-free)",
+      },
+      capabilities: {
+        uz: "Oylik 100 000+ dona tayyor mahsulot quvvati",
+        ru: "Мощность 100 000+ единиц готовой продукции в месяц",
+        en: "Monthly capacity 100,000+ finished units",
+      },
     },
     {
       id: "plastic",
-      label: {
-        uz: "Polimer quyish va Press-qoliplar",
-        ru: "Литье пластика и пресс-формы",
-        en: "Plastic Injection & Mold Tooling",
+      title: {
+        uz: "Muhandislik polimerlari va Press-qoliplar",
+        ru: "Инженерные полимеры и пресс-формы",
+        en: "Industrial Plastics & Mold Tooling",
       },
-      desc: {
-        uz: "Yuqori aniqlikdagi muhandislik polimerlari va maxsus qoliplar ishlab chiqarish",
-        ru: "Высокоточное литье под давлением и изготовление пресс-форм",
-        en: "Precision injection molding & proprietary tooling engineering",
+      subtitle: {
+        uz: "Sanoat qismlari, maishiy texnika korpuslari va maxsus press-qoliplar",
+        ru: "Промышленные детали, корпуса техники и прецизионные пресс-формы",
+        en: "Industrial components, appliance casings & precision injection molds",
       },
-      badge: "Sanoat",
+      plant: {
+        uz: "SamTech & Polimer sanoat majmuasi",
+        ru: "Промышленный комплекс SamTech & Полимеры",
+        en: "SamTech Industrial Polymer Facility",
+      },
+      materials: {
+        uz: "Muhandislik poliamidlari (PA6, PA66), PC, ABS, POM",
+        ru: "Инженерные полиамиды (PA6, PA66), PC, ABS, POM",
+        en: "Engineering polyamides (PA6, PA66), PC, ABS, POM",
+      },
+      capabilities: {
+        uz: "Termoplastavtomatlar parki: 80t dan 850t gacha siqish kuchi",
+        ru: "Парк ТПА: усилие смыкания от 80т до 850т",
+        en: "Injection press machinery: 80t to 850t clamp force",
+      },
     },
     {
       id: "equipment",
-      label: {
-        uz: "Sanoat uskunalari va Stanoklar",
-        ru: "Промышленное оборудование",
-        en: "Industrial Equipment & Tooling",
+      title: {
+        uz: "Sanoat uskunalari va Zavod liniyalari",
+        ru: "Промышленное оборудование и станки",
+        en: "Industrial Machinery & Production Lines",
       },
-      desc: {
-        uz: "Termoplastavtomatlar, qoliplar parki va zavod avtomatizatsiyasi",
-        ru: "Станочный парк, термопластавтоматы и автоматизация",
-        en: "Machinery, injection press machines & factory automation",
+      subtitle: {
+        uz: "Xitoy va Turkiyadan sanoat stanoklarini yetkazish, o‘rnatish va servis",
+        ru: "Поставка, пусконаладка и сервис промышленного оборудования",
+        en: "Machinery supply, turnkey commissioning & technical servicing",
       },
-      badge: "UZBIC",
+      plant: {
+        uz: "UZBIC xalqaro biznes & uskunalar markazi",
+        ru: "Международный центр оборудования UZBIC",
+        en: "UZBIC Industrial Machinery & Tech Hub",
+      },
+      materials: {
+        uz: "Sanoat CNC stanoklari, TPA, qadoqlash avtomatlari",
+        ru: "Промышленные ЧПУ станки, ТПА, упаковочные линии",
+        en: "Industrial CNC machines, injection molding machines, packaging",
+      },
+      capabilities: {
+        uz: "To‘liq texnologik xarita, muhandislar tayyorlash va kafolat",
+        ru: "Полная технологическая карта, обучение персонала и гарантия",
+        en: "Full technical documentation, staff training & OEM warranty",
+      },
     },
     {
       id: "horeca",
-      label: {
-        uz: "HoReCa va Oziq-ovqat ta’minoti",
-        ru: "HoReCa и B2B Поставки",
-        en: "HoReCa & Hospitality Supply",
+      title: {
+        uz: "HoReCa va Oziq-ovqat ishlab chiqarish",
+        ru: "HoReCa и пищевое производство",
+        en: "Food Production & HoReCa Supply",
       },
-      desc: {
-        uz: "AFIYET va PURO tarmoqlari standartidagi texnologik xaritalar va xizmat",
-        ru: "Стандарты сетей AFIYET и PURO, кулинарные техкарты и поставки",
-        en: "Standardized food-tech supply, SOP recipes & kitchen hardware",
+      subtitle: {
+        uz: "Yarim tayyor mahsulotlar, qandolatchilik va tarmoqli ta’minot",
+        ru: "Полуфабрикаты, кондитерские изделия и сетевые поставки",
+        en: "Semi-finished food products, confectionery & hospitality supply",
       },
-      badge: "HoReCa",
+      plant: {
+        uz: "AFIYET & PURO oziq-ovqat ishlab chiqarish klasteri",
+        ru: "Пищевой производственный кластер AFIYET & PURO",
+        en: "AFIYET & PURO Food Manufacturing Cluster",
+      },
+      materials: {
+        uz: "100% Halol sertifikatlangan tabiiy xomashyo",
+        ru: "100% Халяль сертифицированное натуральное сырье",
+        en: "100% Halal certified organic raw ingredients",
+      },
+      capabilities: {
+        uz: "Kunlik 10+ tonna qayta ishlash va shokli muzlatish quvvati",
+        ru: "Переработка 10+ тонн в сутки, шоковая заморозка",
+        en: "10+ metric tons daily processing & IQF freezing capability",
+      },
     },
   ];
 
-  // Step 2: Partnership Models
-  const MODEL_OPTIONS: StepOption<ModelKey>[] = [
+  // 2. Ishlab chiqarish modellari
+  const MODELS: ModelData[] = [
     {
-      id: "oem",
-      label: {
-        uz: "OEM & Privat-Leybl (O‘z brendingizda)",
-        ru: "OEM & Privat-Label (Под вашим брендом)",
-        en: "OEM & Private Label Manufacturing",
+      id: "existing_mold",
+      title: {
+        uz: "Mavjud press-qoliplar bazasidan quyish (OEM)",
+        ru: "Серийное литье на готовых пресс-формах (OEM)",
+        en: "Production on Existing Tooling (OEM)",
       },
       desc: {
-        uz: "Mavjud press-qoliplarimiz yoki yangi qolip ishlab chiqish asosida tayyor mahsulot",
-        ru: "Выпуск продукции под брендом заказчика на нашей производственной базе",
-        en: "Contract manufacturing using existing tooling or custom mold fabrication",
+        uz: "Qolip xarajatisiz tezkor ishga tushirish. O‘z brendingiz logotipi va individual qadoqda chiqariladi.",
+        ru: "Быстрый старт без затрат на пресс-форму. Выпуск под вашим брендом и в вашей упаковке.",
+        en: "Zero tooling investment. Fast market launch under your brand logo and customized packaging.",
       },
-      badge: "Eng ommabop",
+      timeModifier: {
+        uz: "10–20 ish kuni",
+        ru: "10–20 рабочих дней",
+        en: "10–20 business days",
+      },
+      toolingNote: {
+        uz: "Qolip to‘lovi talab qilinmaydi (baza ichida mavjud)",
+        ru: "Затраты на пресс-форму 0$ (готовые формы)",
+        en: "$0 Tooling fee (utilizes factory library)",
+      },
     },
     {
-      id: "distribution",
-      label: {
-        uz: "Eksport Distribyutsiyasi",
-        ru: "Экспортная дистрибьюция",
-        en: "Export Wholesale Distribution",
+      id: "custom_tooling",
+      title: {
+        uz: "Noldan yangi qolip loyihalash (Eksklyuziv OEM)",
+        ru: "Разработка новой пресс-формы с нуля (Custom)",
+        en: "Custom Mold Tooling Fabrication (Exclusive)",
       },
       desc: {
-        uz: "Belgilangan xorijiy hududda rasmiy distribyutorlik maqomini olish",
-        ru: "Статус официального торгового представителя в вашем регионе",
-        en: "Exclusive or regional distribution rights with certified factory margins",
+        uz: "Mahsulot 3D chizmasi, muhandislik hisobi va xalqaro po‘latdan eksklyuziv press-qolip tayyorlash.",
+        ru: "3D моделирование изделия, расчет усадки и фрезеровка формы из инструментальной стали.",
+        en: "3D CAD modeling, moldflow simulation & precision hardened steel mold fabrication.",
       },
-      badge: "Distribyutsiya",
+      timeModifier: {
+        uz: "35–45 ish kuni (qolip + ilk sinov partiyasi)",
+        ru: "35–45 рабочих дней (форма + тестовая партия)",
+        en: "35–45 business days (tooling + sample run)",
+      },
+      toolingNote: {
+        uz: "Eksklyuziv mulkdorlik: qolip faqat sizning buyurtmangiz uchun ishlaydi",
+        ru: "Эксклюзивное право: форма закрепляется только за заказчиком",
+        en: "Exclusive ownership: tooling strictly reserved for your orders",
+      },
     },
-    {
-      id: "jv",
-      label: {
-        uz: "Qo‘shma korxona (Joint Venture)",
-        ru: "Совместное предприятие (JV)",
-        en: "Joint Venture & Localization",
-      },
-      desc: {
-        uz: "Ishlab chiqarish quvvatlarini birgalikda kengaytirish va lokalizatsiya",
-        ru: "Совместные инвестиции, запуск локализованных производственных линий",
-        en: "Shared facility investment & technology transfer via UZBIC framework",
-      },
-      badge: "Strategik",
-    },
-  ];
-
-  // Step 3: Order Scale
-  const SCALE_OPTIONS: StepOption<ScaleKey>[] = [
     {
       id: "wholesale",
-      label: {
-        uz: "Mintaqaviy Ulgurji (1–5 Palleta)",
-        ru: "Региональный опт (1–5 Паллет)",
-        en: "Regional Wholesale (1–5 Pallets)",
+      title: {
+        uz: "Mavjud assortiment ulgurji distribyutsiyasi",
+        ru: "Оптовая дистрибьюция готовой продукции",
+        en: "Wholesale Distribution of Catalog Products",
       },
       desc: {
-        uz: "Sinov partiyalari va savdo tarmoqlari uchun tezkor ta’minot",
-        ru: "Тестовые партии и сборные поставки для торговых сетей",
-        en: "Trial volume batches & consolidated pallet replenishment",
+        uz: "Fabrika brendidagi tayyor mahsulotlarni hududingizda rasmiy narx va marja bilan tarqatish.",
+        ru: "Прямые оптовые поставки готовых линеек с гарантированной дистрибьюторской маржой.",
+        en: "Direct supply of ready catalog lines with certified regional distributor margins.",
       },
-      badge: "LTL Partiya",
+      timeModifier: {
+        uz: "3–7 ish kuni (ombordan yuklash)",
+        ru: "3–7 рабочих дней (отгрузка со склада)",
+        en: "3–7 business days (warehouse dispatch)",
+      },
+      toolingNote: {
+        uz: "Tayyor ombor zaxirasidan zudlik bilan yetkaziladi",
+        ru: "Поставка готовой продукции со склада",
+        en: "Immediate shipment from factory stock",
+      },
+    },
+  ];
+
+  // 3. Hajm va miqyos
+  const SCALES: ScaleData[] = [
+    {
+      id: "trial",
+      title: {
+        uz: "Sinov partiyasi (LTL)",
+        ru: "Тестовая партия (LTL)",
+        en: "Trial Volume (LTL)",
+      },
+      volumeLabel: {
+        uz: "5 000 – 10 000 dona",
+        ru: "5 000 – 10 000 шт",
+        en: "5,000 – 10,000 units",
+      },
+      moq: {
+        uz: "5 000 dona (Minimal start)",
+        ru: "5 000 шт (Минимальный старт)",
+        en: "5,000 units (Minimum start)",
+      },
+      logistics: {
+        uz: "Palletali yuk (1–4 palleta, yig‘ma yuk)",
+        ru: "Паллетная сборная доставка (1–4 паллеты)",
+        en: "Palletized consolidated shipment (1–4 pallets)",
+      },
+      priceBenefit: {
+        uz: "Bozorga tezkor kirish va talabni sinash",
+        ru: "Быстрый тест рынка и минимизация рисков",
+        en: "Low-risk market entry and demand validation",
+      },
     },
     {
       id: "ftl",
-      label: {
-        uz: "Konteyner & Fura (40ft / FTL)",
-        ru: "Контейнерные партии (FTL / 40ft)",
-        en: "Container & Full Truckload (FTL)",
+      title: {
+        uz: "Konteyner / Yevrofura (FTL Eksport)",
+        ru: "Контейнер / Еврофура (FTL Экспорт)",
+        en: "Full Container / Truckload (FTL)",
       },
-      desc: {
-        uz: "Yirik ulgurji eksport partiyalari (20ft / 40ft konteyner yoki Yevrofura)",
-        ru: "Крупнооптовые партии еврофурами и 40-футовыми контейнерами",
-        en: "Full truckload and high-cube 40ft containerized freight",
+      volumeLabel: {
+        uz: "20 000 – 40 000 dona (1 Fura / 40ft HQ)",
+        ru: "20 000 – 40 000 шт (1 Фура / 40ft HQ)",
+        en: "20,000 – 40,000 units (1 Truck / 40ft HQ)",
       },
-      badge: "FTL Eksport",
+      moq: {
+        uz: "20 000 dona (Optimal tannarx)",
+        ru: "20 000 шт (Оптимальная себестоимость)",
+        en: "20,000 units (Optimal unit cost)",
+      },
+      logistics: {
+        uz: "To‘liq 82-96 m³ fura yoki 40-futlik dengiz/temiryo‘l konteyneri",
+        ru: "Полная еврофура 82–96 м³ или 40-футовый контейнер",
+        en: "Dedicated 82–96 m³ truckload or 40ft high-cube container",
+      },
+      priceBenefit: {
+        uz: "Logistika xarajati 30-35% arzonroq tushadi, eng maqbul tannarx",
+        ru: "Экономия на логистике до 35%, минимальная себестоимость единицы",
+        en: "Up to 35% freight cost reduction, lowest cost per unit",
+      },
     },
     {
-      id: "contract",
-      label: {
-        uz: "Yillik kafolatlangan kontrakt",
-        ru: "Долгосрочный годовой контракт",
-        en: "Long-Term Annual Supply Contract",
+      id: "annual",
+      title: {
+        uz: "Yillik kafolatlangan shartnoma",
+        ru: "Годовой производственный контракт",
+        en: "Annual Guaranteed Manufacturing Contract",
       },
-      desc: {
-        uz: "Zavod ishlab chiqarish quvvatini oldindan band qilish va kafolatlangan taqvim",
-        ru: "Бронирование производственных смен и календарный график поставок",
-        en: "Dedicated factory line allocation with guaranteed production slots",
+      volumeLabel: {
+        uz: "100 000+ dona / yiliga (oylik reja)",
+        ru: "100 000+ шт в год (ежемесячный график)",
+        en: "100,000+ units / year (monthly schedule)",
       },
-      badge: "Yillik reja",
+      moq: {
+        uz: "Oylik 10 000+ dona kafolatlangan quvvat",
+        ru: "Гарантированная бронь линии: 10 000+ шт/мес",
+        en: "Reserved production line: 10,000+ units/mo",
+      },
+      logistics: {
+        uz: "Kafolatlangan ishlab chiqarish taqvimi va ustuvor ombor ta’minoti",
+        ru: "Фиксированный производственный график и буферный склад",
+        en: "Fixed priority calendar & bonded buffer stock management",
+      },
+      priceBenefit: {
+        uz: "Maxsus eksklyuziv fabrika narxi va xomashyo narx tebranishlaridan himoya",
+        ru: "Эксклюзивная цена завода и фиксация стоимости сырья",
+        en: "Exclusive tier-1 pricing with raw material price stabilization",
+      },
     },
   ];
 
-  // Matched Company from Verified Portfolio
+  const currentSector = SECTORS.find((s) => s.id === selectedSector)!;
+  const currentModel = MODELS.find((m) => m.id === selectedModel)!;
+  const currentScale = SCALES.find((s) => s.id === selectedScale)!;
+
   const matchedCompany = useMemo(() => {
     if (selectedSector === "toys") {
-      return companies.find((c) => c.id === "toy-bola") || companies[0];
+      return companies.find((c) => c.id === "toy-bola") || { name: "Toybola Toys" };
     }
     if (selectedSector === "plastic") {
-      return (
-        companies.find((c) => c.id === "toy-bola" || c.id === "samtech") ||
-        companies[0]
-      );
+      return companies.find((c) => c.id === "samtech") || { name: "SamTech Polimer" };
     }
-    if (selectedSector === "horeca") {
-      return companies.find((c) => c.id === "afiyet" || c.id === "puro") || companies[0];
+    if (selectedSector === "equipment") {
+      return companies.find((c) => c.id === "uzbic") || { name: "UZBIC Industrial Hub" };
     }
-    return companies.find((c) => c.id === "uzbic") || companies[0];
+    return companies.find((c) => c.id === "afiyet" || c.id === "puro") || { name: "AFIYET / PURO" };
   }, [selectedSector, companies]);
-
-  // Selected Option Objects
-  const currentSectorObj = SECTOR_OPTIONS.find((s) => s.id === selectedSector)!;
-  const currentModelObj = MODEL_OPTIONS.find((m) => m.id === selectedModel)!;
-  const currentScaleObj = SCALE_OPTIONS.find((sc) => sc.id === selectedScale)!;
 
   const i18n = {
     uz: {
-      badge: "B2B & OEM Sanoat Hamkorligi",
-      title: "Sanoat Quvvati va Buyurtma Spetsifikatsiyasi",
-      subtitle: "Kerakli sanoat tarmog‘i, hamkorlik shakli va rejalashtirilgan hajm parametrlarini belgilang.",
-      step1: "01 // Sanoat tarmog‘i",
-      step2: "02 // Hamkorlik shakli",
-      step3: "03 // Buyurtma ko‘lami",
-      specSummaryTitle: "B2B Sanoat Spetsifikatsiyasi",
-      facilityLabel: "Ijrochi korxona:",
-      moqLabel: "Minimal hajm (MOQ):",
-      leadTimeLabel: "Ishlab chiqarish muddati:",
-      leadTimeVal: "10–25 ish kuni (mavjud qolip) / 45 kun (yangi qolip)",
-      moqVal: selectedScale === "wholesale" ? "5 000 birlik" : selectedScale === "ftl" ? "20 000+ birlik" : "50 000+ yillik",
-      passButton: "Spetsifikatsiyani arizaga yuklash",
-      passedNotification: "Xususiyatlar aloqa formasi bilan bog‘landi",
-      note: "* Parametrlar sahifaning pastidagi rasmiy aloqa formasiga avtomatik biriktiriladi",
+      badge: "Sanoat Quvvati Kalkulyatori",
+      title: "Buyurtma Parametrlari va Ishlab Chiqarish Smetasi",
+      subtitle:
+        "Sohani, hamkorlik shaklini va hajm ko‘lamini tanlang. Tizim zavod quvvatini, muddatlarni va shartlarni real vaqtda hisoblab beradi.",
+      step1Title: "1. Sanoat yo‘nalishini tanlang",
+      step2Title: "2. Ishlab chiqarish formatini tanlang",
+      step3Title: "3. Rejalashtirilgan buyurtma hajmi",
+      quoteTitle: "Hisoblangan Sanoat Pasporti",
+      quoteSubtitle: "Tanlangan parametrlar asosidagi dastlabki texnik spetsifikatsiya:",
+      metricPlant: "Ijrochi zavod majmuasi",
+      metricCapacity: "Ishlab chiqarish quvvati & Xomashyo",
+      metricMoq: "Minimal partiya (MOQ)",
+      metricTime: "Ishlab chiqarish va yuklash muddati",
+      metricTooling: "Press-qolip shartlari",
+      metricLogistics: "Logistika va qadoqlash",
+      ctaButton: "Tijorat taklifini shakllantirish",
+      ctaSubtext: "Spetsifikatsiya quyidagi rasmiy aloqa formasiga avtomatik biriktiriladi",
+      copiedNotice: "Spetsifikatsiya formaga biriktirildi!",
+      verifiedBadge: "20 yillik zavod kafolati",
     },
     ru: {
-      badge: "B2B & OEM Сотрудничество",
-      title: "Производственные мощности и спецификация заказа",
-      subtitle: "Выберите отрасль производства, формат контрактного партнерства и планируемый объем поставки.",
-      step1: "01 // Отрасль производства",
-      step2: "02 // Модель партнерства",
-      step3: "03 // Объем и масштаб",
-      specSummaryTitle: "B2B Производственная спецификация",
-      facilityLabel: "Производственный актив:",
-      moqLabel: "Минимальный объем (MOQ):",
-      leadTimeLabel: "Сроки производства:",
-      leadTimeVal: "10–25 рабочих дней (готовая пресс-форма) / 45 дней (новая)",
-      moqVal: selectedScale === "wholesale" ? "5 000 шт" : selectedScale === "ftl" ? "20 000+ шт" : "50 000+ годовой",
-      passButton: "Передать спецификацию в заявку",
-      passedNotification: "Спецификация передана в форму",
-      note: "* Спецификация автоматически заполнит форму запроса внизу страницы",
+      badge: "Калькулятор производственных мощностей",
+      title: "Параметры заказа и производственная смета",
+      subtitle:
+        "Выберите отрасль, формат сотрудничества и планируемый объем. Система в реальном времени рассчитает мощности, сроки и условия поставки.",
+      step1Title: "1. Выберите производственную отрасль",
+      step2Title: "2. Выберите формат сотрудничества",
+      step3Title: "3. Планируемый объем партии",
+      quoteTitle: "Производственный паспорт заказа",
+      quoteSubtitle: "Предварительная спецификация на основе выбранных параметров:",
+      metricPlant: "Производственный комплекс",
+      metricCapacity: "Мощности и сырье",
+      metricMoq: "Минимальный объем (MOQ)",
+      metricTime: "Срок изготовления и отгрузки",
+      metricTooling: "Условия по пресс-формам",
+      metricLogistics: "Логистика и комплектация",
+      ctaButton: "Сформировать коммерческое предложение",
+      ctaSubtext: "Спецификация автоматически заполнит форму обратной связи внизу",
+      copiedNotice: "Спецификация прикреплена к форме!",
+      verifiedBadge: "20 лет опыта завода",
     },
     en: {
-      badge: "B2B & OEM Manufacturing",
-      title: "Industrial Capacity & Order Specification",
-      subtitle: "Select your target industrial sector, partnership model, and estimated delivery volume.",
-      step1: "01 // Industrial Sector",
-      step2: "02 // Partnership Model",
-      step3: "03 // Order Volume Scale",
-      specSummaryTitle: "B2B Manufacturing Specification",
-      facilityLabel: "Operating Enterprise:",
-      moqLabel: "Minimum Order Quantity (MOQ):",
-      leadTimeLabel: "Production Lead Time:",
-      leadTimeVal: "10–25 business days (existing mold) / 45 days (new tooling fabrication)",
-      moqVal: selectedScale === "wholesale" ? "5,000 units" : selectedScale === "ftl" ? "20,000+ units" : "50,000+ annual reserve",
-      passButton: "Transfer Specs to Application",
-      passedNotification: "Specs populated into contact form",
-      note: "* Parameters will automatically prefill the inquiry form below",
+      badge: "Industrial Capacity Calculator",
+      title: "Order Specifications & Manufacturing Estimate",
+      subtitle:
+        "Select your industrial sector, partnership model, and planned volume. The system calculates capacity, lead time, and supply terms in real time.",
+      step1Title: "1. Select Industrial Sector",
+      step2Title: "2. Select Manufacturing Model",
+      step3Title: "3. Planned Order Volume",
+      quoteTitle: "Manufacturing Order Passport",
+      quoteSubtitle: "Preliminary technical specification based on chosen parameters:",
+      metricPlant: "Manufacturing Enterprise",
+      metricCapacity: "Capacity & Raw Material",
+      metricMoq: "Minimum Order Quantity (MOQ)",
+      metricTime: "Production & Delivery Lead Time",
+      metricTooling: "Tooling & Mold Policy",
+      metricLogistics: "Logistics & Packaging",
+      ctaButton: "Generate Commercial Quotation",
+      ctaSubtext: "Specification will automatically pre-fill the inquiry form below",
+      copiedNotice: "Specification populated into form!",
+      verifiedBadge: "20-Year Factory Guarantee",
     },
   }[safeLocale];
 
-  const handlePassSpecs = () => {
-    const specsString = `[OEM/B2B CAPACITY SPECS]
-• Sector: ${currentSectorObj.label[safeLocale]}
-• Model: ${currentModelObj.label[safeLocale]}
-• Scale: ${currentScaleObj.label[safeLocale]}
-• Primary Facility: ${matchedCompany?.name || "Toybola / Visage Electric"}
-• Estimated MOQ: ${i18n.moqVal}
-• Expected Lead Time: ${i18n.leadTimeVal}`;
+  const handleGenerateQuote = () => {
+    const specsString = `[B2B SANOAT BUYURTMA SPETSIFIKATSIYASI]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Sanoat tarmog‘i: ${currentSector.title[safeLocale]}
+• Bajaruvchi korxona: ${matchedCompany.name || currentSector.plant[safeLocale]}
+• Xomashyo / Standart: ${currentSector.materials[safeLocale]}
+• Ishlab chiqarish formati: ${currentModel.title[safeLocale]}
+• Qolip holati: ${currentModel.toolingNote[safeLocale]}
+• Buyurtma ko‘lami: ${currentScale.title[safeLocale]} (${currentScale.volumeLabel[safeLocale]})
+• Minimal partiya (MOQ): ${currentScale.moq[safeLocale]}
+• Taxminiy muddat: ${currentModel.timeModifier[safeLocale]}
+• Logistika formati: ${currentScale.logistics[safeLocale]}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 4000);
 
     if (onPassSpecs) {
       onPassSpecs(specsString);
@@ -300,237 +452,269 @@ export const OemConfigurator: React.FC<OemConfiguratorProps> = ({
   };
 
   return (
-    <div className="w-full bg-[#0E1015] border border-white/[0.08] rounded-[6px] p-6 sm:p-8 lg:p-10 flex flex-col gap-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-      {/* Editorial Header */}
-      <div className="pb-6 border-b border-white/[0.08]">
-        <div className="inline-flex items-center gap-2 mb-2">
-          <span className="w-5 h-[1.5px] bg-[#D4AF37]" aria-hidden="true" />
-          <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.18em] text-[#D4AF37]">
-            {i18n.badge}
-          </span>
+    <div className="w-full bg-[#0D0F14] border border-white/[0.1] rounded-xl p-5 sm:p-7 lg:p-9 text-[#FAF9F5] shadow-[0_24px_64px_rgba(0,0,0,0.6)]">
+      {/* Sarlavha qismi - toza va professional */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-white/[0.08]">
+        <div>
+          <h3 className="font-serif text-[22px] sm:text-[28px] font-bold text-white tracking-tight leading-snug">
+            {i18n.title}
+          </h3>
+          <p className="text-[13.5px] sm:text-[14.5px] text-[#A0A7B5] mt-1.5 max-w-[68ch] leading-relaxed">
+            {i18n.subtitle}
+          </p>
         </div>
-        <h3 className="font-serif text-[22px] sm:text-[26px] font-semibold text-[#FAF9F5] tracking-tight leading-snug">
-          {i18n.title}
-        </h3>
-        <p className="text-[13.5px] sm:text-[14px] text-[#9EA6B5] mt-1 max-w-[65ch]">
-          {i18n.subtitle}
-        </p>
-      </div>
-
-      {/* 3-Step Selection Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-7">
-        {/* Step 1: Sector */}
-        <div className="flex flex-col gap-3">
-          <div className="pb-2 border-b border-white/[0.08]">
-            <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[#D4AF37]">
-              {i18n.step1}
-            </span>
-          </div>
-          <div className="flex flex-col gap-2">
-            {SECTOR_OPTIONS.map((opt) => {
-              const isSelected = selectedSector === opt.id;
-              return (
-                <button
-                  key={opt.id}
-                  type="button"
-                  onClick={() => setSelectedSector(opt.id)}
-                  className={`w-full text-left p-4 rounded-[4px] border transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#D4AF37] ${
-                    isSelected
-                      ? "bg-[#161822] border-[#D4AF37] shadow-[0_4px_16px_rgba(212,175,55,0.12)]"
-                      : "bg-[#101217] border-white/[0.07] hover:border-white/20 hover:bg-[#13151D]"
-                  }`}
-                >
-                  <div className="flex items-center justify-between gap-2.5">
-                    <div className="flex items-center gap-2.5 min-w-0">
-                      <span
-                        className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 ${
-                          isSelected ? "border-[#D4AF37] bg-[#D4AF37]/20" : "border-white/25 bg-transparent"
-                        }`}
-                        aria-hidden="true"
-                      >
-                        {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />}
-                      </span>
-                      <span className={`text-[13.5px] font-medium leading-snug ${isSelected ? "text-[#FAF9F5]" : "text-[#C2C7D1]"}`}>
-                        {opt.label[safeLocale]}
-                      </span>
-                    </div>
-                    {opt.badge && (
-                      <span className="font-mono text-[9.5px] uppercase tracking-[0.06em] px-1.5 py-0.5 rounded-[2px] bg-white/[0.04] text-[#8E95A5] border border-white/[0.06] shrink-0">
-                        {opt.badge}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-[12px] text-[#8E95A5] mt-2 pl-6 leading-relaxed line-clamp-2">
-                    {opt.desc[safeLocale]}
-                  </p>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Step 2: Partnership Model */}
-        <div className="flex flex-col gap-3">
-          <div className="pb-2 border-b border-white/[0.08]">
-            <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[#D4AF37]">
-              {i18n.step2}
-            </span>
-          </div>
-          <div className="flex flex-col gap-2">
-            {MODEL_OPTIONS.map((opt) => {
-              const isSelected = selectedModel === opt.id;
-              return (
-                <button
-                  key={opt.id}
-                  type="button"
-                  onClick={() => setSelectedModel(opt.id)}
-                  className={`w-full text-left p-4 rounded-[4px] border transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#D4AF37] ${
-                    isSelected
-                      ? "bg-[#161822] border-[#D4AF37] shadow-[0_4px_16px_rgba(212,175,55,0.12)]"
-                      : "bg-[#101217] border-white/[0.07] hover:border-white/20 hover:bg-[#13151D]"
-                  }`}
-                >
-                  <div className="flex items-center justify-between gap-2.5">
-                    <div className="flex items-center gap-2.5 min-w-0">
-                      <span
-                        className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 ${
-                          isSelected ? "border-[#D4AF37] bg-[#D4AF37]/20" : "border-white/25 bg-transparent"
-                        }`}
-                        aria-hidden="true"
-                      >
-                        {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />}
-                      </span>
-                      <span className={`text-[13.5px] font-medium leading-snug ${isSelected ? "text-[#FAF9F5]" : "text-[#C2C7D1]"}`}>
-                        {opt.label[safeLocale]}
-                      </span>
-                    </div>
-                    {opt.badge && (
-                      <span className="font-mono text-[9.5px] uppercase tracking-[0.06em] px-1.5 py-0.5 rounded-[2px] bg-white/[0.04] text-[#D4AF37] border border-[#D4AF37]/30 shrink-0">
-                        {opt.badge}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-[12px] text-[#8E95A5] mt-2 pl-6 leading-relaxed line-clamp-2">
-                    {opt.desc[safeLocale]}
-                  </p>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Step 3: Order Scale */}
-        <div className="flex flex-col gap-3">
-          <div className="pb-2 border-b border-white/[0.08]">
-            <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[#D4AF37]">
-              {i18n.step3}
-            </span>
-          </div>
-          <div className="flex flex-col gap-2">
-            {SCALE_OPTIONS.map((opt) => {
-              const isSelected = selectedScale === opt.id;
-              return (
-                <button
-                  key={opt.id}
-                  type="button"
-                  onClick={() => setSelectedScale(opt.id)}
-                  className={`w-full text-left p-4 rounded-[4px] border transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#D4AF37] ${
-                    isSelected
-                      ? "bg-[#161822] border-[#D4AF37] shadow-[0_4px_16px_rgba(212,175,55,0.12)]"
-                      : "bg-[#101217] border-white/[0.07] hover:border-white/20 hover:bg-[#13151D]"
-                  }`}
-                >
-                  <div className="flex items-center justify-between gap-2.5">
-                    <div className="flex items-center gap-2.5 min-w-0">
-                      <span
-                        className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center shrink-0 ${
-                          isSelected ? "border-[#D4AF37] bg-[#D4AF37]/20" : "border-white/25 bg-transparent"
-                        }`}
-                        aria-hidden="true"
-                      >
-                        {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />}
-                      </span>
-                      <span className={`text-[13.5px] font-medium leading-snug ${isSelected ? "text-[#FAF9F5]" : "text-[#C2C7D1]"}`}>
-                        {opt.label[safeLocale]}
-                      </span>
-                    </div>
-                    {opt.badge && (
-                      <span className="font-mono text-[9.5px] uppercase tracking-[0.06em] px-1.5 py-0.5 rounded-[2px] bg-white/[0.04] text-[#8E95A5] border border-white/[0.06] shrink-0">
-                        {opt.badge}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-[12px] text-[#8E95A5] mt-2 pl-6 leading-relaxed line-clamp-2">
-                    {opt.desc[safeLocale]}
-                  </p>
-                </button>
-              );
-            })}
-          </div>
+        <div className="hidden lg:flex items-center gap-2 text-[12px] font-mono text-[#D4AF37] bg-[#161922] px-3.5 py-2 rounded-lg border border-white/[0.08] shrink-0">
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>{i18n.verifiedBadge}</span>
         </div>
       </div>
 
-      {/* Dynamic Summary Specification Card: Executive Passport Format */}
-      <div className="bg-[#12141A] border border-white/[0.1] rounded-[6px] p-6 lg:p-7 flex flex-col lg:flex-row lg:items-center justify-between gap-6 shadow-[0_12px_32px_rgba(0,0,0,0.4)]">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 flex-1 border-b lg:border-b-0 lg:border-r border-white/[0.08] pb-6 lg:pb-0 lg:pr-7">
-          {/* Block 1 */}
+      {/* Asosiy 2 Ustunli Interaktiv Maydon: Chapda Tanlovlar (7 ustun), O'ngda Hisob-kitob (5 ustun) */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-6 items-start">
+        {/* CHAP TOMON: 3 ta qulay, tushunarli qadam */}
+        <div className="lg:col-span-7 flex flex-col gap-7">
+          {/* 1-QADAM: Sanoat tarmog'i */}
           <div>
-            <span className="font-mono text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#D4AF37] block mb-1">
-              {i18n.facilityLabel}
-            </span>
-            <h4 className="font-serif text-[17px] font-semibold text-[#FAF9F5] leading-snug">
-              {matchedCompany?.name || "Toybola zavodi"}
-            </h4>
-            <p className="text-[12px] text-[#8E95A5] mt-1">
-              {currentSectorObj.label[safeLocale]}
-            </p>
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[13px] font-mono font-semibold text-[#D4AF37] uppercase tracking-wider">
+                {i18n.step1Title}
+              </span>
+              <span className="text-[12px] text-[#717988]">
+                {currentSector.title[safeLocale].split(" ")[0]}
+              </span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              {SECTORS.map((sector) => {
+                const isSelected = selectedSector === sector.id;
+                return (
+                  <button
+                    key={sector.id}
+                    type="button"
+                    onClick={() => setSelectedSector(sector.id)}
+                    className={`text-left p-3.5 rounded-lg border transition-all duration-200 cursor-pointer flex flex-col justify-between ${
+                      isSelected
+                        ? "bg-[#1C202C] border-[#D4AF37] shadow-[0_4px_20px_rgba(212,175,55,0.15)] ring-1 ring-[#D4AF37]"
+                        : "bg-[#12141C] border-white/[0.08] hover:border-white/25 hover:bg-[#161822]"
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <span className={`text-[14px] font-semibold leading-snug ${isSelected ? "text-white" : "text-[#D1D5DB]"}`}>
+                        {sector.title[safeLocale]}
+                      </span>
+                      <span
+                        className={`w-4 h-4 mt-0.5 rounded-full border flex items-center justify-center shrink-0 ${
+                          isSelected ? "border-[#D4AF37] bg-[#D4AF37]" : "border-white/30"
+                        }`}
+                      >
+                        {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-[#0D0F14]" />}
+                      </span>
+                    </div>
+                    <span className="text-[11.5px] text-[#8C94A4] mt-2 line-clamp-2 leading-relaxed">
+                      {sector.subtitle[safeLocale]}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
-          {/* Block 2 */}
+          {/* 2-QADAM: Ishlab chiqarish formati */}
           <div>
-            <span className="font-mono text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#D4AF37] block mb-1">
-              {i18n.moqLabel}
-            </span>
-            <h4 className="font-sans text-[16px] font-semibold text-[#FAF9F5] leading-snug">
-              {i18n.moqVal}
-            </h4>
-            <p className="text-[12px] text-[#8E95A5] mt-1">
-              {currentModelObj.label[safeLocale].split("(")[0].trim()}
-            </p>
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[13px] font-mono font-semibold text-[#D4AF37] uppercase tracking-wider">
+                {i18n.step2Title}
+              </span>
+            </div>
+            <div className="flex flex-col gap-2.5">
+              {MODELS.map((model) => {
+                const isSelected = selectedModel === model.id;
+                return (
+                  <button
+                    key={model.id}
+                    type="button"
+                    onClick={() => setSelectedModel(model.id)}
+                    className={`w-full text-left p-3.5 rounded-lg border transition-all duration-200 cursor-pointer ${
+                      isSelected
+                        ? "bg-[#1C202C] border-[#D4AF37] shadow-[0_4px_20px_rgba(212,175,55,0.15)] ring-1 ring-[#D4AF37]"
+                        : "bg-[#12141C] border-white/[0.08] hover:border-white/25 hover:bg-[#161822]"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <span
+                          className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${
+                            isSelected ? "border-[#D4AF37] bg-[#D4AF37]" : "border-white/30"
+                          }`}
+                        >
+                          {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-[#0D0F14]" />}
+                        </span>
+                        <span className={`text-[13.5px] font-semibold ${isSelected ? "text-white" : "text-[#D1D5DB]"}`}>
+                          {model.title[safeLocale]}
+                        </span>
+                      </div>
+                      <span className="text-[11px] font-mono text-[#D4AF37] px-2 py-0.5 rounded bg-[#D4AF37]/10 whitespace-nowrap shrink-0">
+                        {model.timeModifier[safeLocale]}
+                      </span>
+                    </div>
+                    <p className="text-[12px] text-[#8C94A4] mt-1.5 pl-6 leading-relaxed">
+                      {model.desc[safeLocale]}
+                    </p>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
-          {/* Block 3 */}
+          {/* 3-QADAM: Buyurtma ko'lami */}
           <div>
-            <span className="font-mono text-[10.5px] font-semibold uppercase tracking-[0.14em] text-[#D4AF37] block mb-1">
-              {i18n.leadTimeLabel}
-            </span>
-            <h4 className="font-sans text-[14px] font-medium text-[#FAF9F5] leading-snug">
-              {i18n.leadTimeVal}
-            </h4>
-            <p className="text-[12px] text-[#8E95A5] mt-1">
-              {currentScaleObj.label[safeLocale].split("(")[0].trim()}
-            </p>
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[13px] font-mono font-semibold text-[#D4AF37] uppercase tracking-wider">
+                {i18n.step3Title}
+              </span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              {SCALES.map((scale) => {
+                const isSelected = selectedScale === scale.id;
+                return (
+                  <button
+                    key={scale.id}
+                    type="button"
+                    onClick={() => setSelectedScale(scale.id)}
+                    className={`text-left p-3.5 rounded-lg border transition-all duration-200 cursor-pointer flex flex-col justify-between ${
+                      isSelected
+                        ? "bg-[#1C202C] border-[#D4AF37] shadow-[0_4px_20px_rgba(212,175,55,0.15)] ring-1 ring-[#D4AF37]"
+                        : "bg-[#12141C] border-white/[0.08] hover:border-white/25 hover:bg-[#161822]"
+                    }`}
+                  >
+                    <div>
+                      <div className="flex items-center justify-between gap-1 mb-1">
+                        <span className={`text-[13px] font-bold ${isSelected ? "text-[#D4AF37]" : "text-[#D1D5DB]"}`}>
+                          {scale.title[safeLocale]}
+                        </span>
+                        {isSelected && (
+                          <span className="w-2 h-2 rounded-full bg-[#D4AF37]" />
+                        )}
+                      </div>
+                      <span className="text-[12px] font-mono font-medium text-white block mt-0.5">
+                        {scale.volumeLabel[safeLocale]}
+                      </span>
+                    </div>
+                    <span className="text-[11px] text-[#8C94A4] mt-2.5 pt-2 border-t border-white/[0.06] line-clamp-2">
+                      {scale.priceBenefit[safeLocale]}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        {/* CTA: Pass Specs to Contact Form */}
-        <div className="shrink-0 flex flex-col gap-2">
-          <button
-            type="button"
-            onClick={handlePassSpecs}
-            className="group py-3.5 px-6 rounded-[3px] bg-[#D4AF37] hover:bg-[#E5BE42] active:scale-[0.99] text-[#090A0D] font-mono text-[11.5px] font-bold uppercase tracking-[0.08em] transition-all flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(212,175,55,0.2)] hover:shadow-[0_6px_24px_rgba(212,175,55,0.35)] cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
-          >
-            <span>{i18n.passButton}</span>
-            <span className="transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">
-              →
-            </span>
-          </button>
-          <span className="text-[10.5px] font-mono text-[#7A8290] text-center lg:text-left">
-            {i18n.note}
-          </span>
+        {/* O'NG TOMON: Jonli Tijorat Pasporti / Smeta Kartasi (Sticky) */}
+        <div className="lg:col-span-5 lg:sticky lg:top-24">
+          <div className="bg-[#141722] border border-[#D4AF37]/30 rounded-xl p-5 sm:p-6 shadow-[0_16px_40px_rgba(0,0,0,0.5)] flex flex-col gap-5 relative overflow-hidden">
+            {/* Yuqori naqsh / oltin chiziq */}
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent" />
+
+            {/* Sarlavha */}
+            <div className="pb-4 border-b border-white/[0.08]">
+              <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[#D4AF37] block">
+                {i18n.quoteTitle}
+              </span>
+              <p className="text-[12px] text-[#8C94A4] mt-0.5">
+                {i18n.quoteSubtitle}
+              </p>
+            </div>
+
+            {/* Asosiy ko'rsatkichlar ro'yxati */}
+            <div className="flex flex-col gap-4 text-[13px]">
+              {/* Zavod */}
+              <div className="flex flex-col gap-0.5">
+                <span className="text-[11px] font-mono text-[#8C94A4] uppercase tracking-wider">
+                  {i18n.metricPlant}
+                </span>
+                <span className="text-[15px] font-serif font-bold text-white">
+                  {matchedCompany.name || currentSector.plant[safeLocale]}
+                </span>
+                <span className="text-[11.5px] text-[#A0A7B5]">
+                  {currentSector.capabilities[safeLocale]}
+                </span>
+              </div>
+
+              {/* Minimal hajm (MOQ) */}
+              <div className="grid grid-cols-2 gap-3 pt-3 border-t border-white/[0.06]">
+                <div>
+                  <span className="text-[11px] font-mono text-[#8C94A4] uppercase tracking-wider block">
+                    {i18n.metricMoq}
+                  </span>
+                  <span className="text-[15px] font-bold text-[#D4AF37] mt-0.5 block">
+                    {currentScale.moq[safeLocale].split("(")[0].trim()}
+                  </span>
+                  <span className="text-[11px] text-[#717988]">
+                    {currentScale.volumeLabel[safeLocale]}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-[11px] font-mono text-[#8C94A4] uppercase tracking-wider block">
+                    {i18n.metricTime}
+                  </span>
+                  <span className="text-[14px] font-semibold text-white mt-0.5 block">
+                    {currentModel.timeModifier[safeLocale]}
+                  </span>
+                </div>
+              </div>
+
+              {/* Qolip va shartlar */}
+              <div className="pt-3 border-t border-white/[0.06] flex flex-col gap-1">
+                <span className="text-[11px] font-mono text-[#8C94A4] uppercase tracking-wider">
+                  {i18n.metricTooling}
+                </span>
+                <span className="text-[12.5px] text-[#E2E8F0] leading-snug">
+                  {currentModel.toolingNote[safeLocale]}
+                </span>
+              </div>
+
+              {/* Xomashyo & Standart */}
+              <div className="pt-3 border-t border-white/[0.06] flex flex-col gap-1">
+                <span className="text-[11px] font-mono text-[#8C94A4] uppercase tracking-wider">
+                  {i18n.metricCapacity}
+                </span>
+                <span className="text-[12.5px] text-[#D1D5DB] leading-snug">
+                  {currentSector.materials[safeLocale]}
+                </span>
+              </div>
+
+              {/* Logistika */}
+              <div className="pt-3 border-t border-white/[0.06] flex flex-col gap-1">
+                <span className="text-[11px] font-mono text-[#8C94A4] uppercase tracking-wider">
+                  {i18n.metricLogistics}
+                </span>
+                <span className="text-[12px] text-[#8C94A4] leading-snug">
+                  {currentScale.logistics[safeLocale]}
+                </span>
+              </div>
+            </div>
+
+            {/* Bosh Harakat Tugmasi (CTA) */}
+            <div className="pt-2 flex flex-col gap-2">
+              <button
+                type="button"
+                onClick={handleGenerateQuote}
+                className="w-full py-3.5 px-5 rounded-lg bg-[#D4AF37] hover:bg-[#E5BE42] active:scale-[0.99] text-[#090A0D] font-mono text-[12px] font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(212,175,55,0.25)] hover:shadow-[0_6px_28px_rgba(212,175,55,0.4)] cursor-pointer"
+              >
+                <span>{isCopied ? i18n.copiedNotice : i18n.ctaButton}</span>
+                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+              <p className="text-[11px] text-[#717988] text-center leading-normal">
+                {i18n.ctaSubtext}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 };
-
