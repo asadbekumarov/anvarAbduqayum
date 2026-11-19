@@ -4,7 +4,6 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { getContent } from "@/config/content";
-import { featuresConfig } from "@/config/features";
 import { BookingActionLink } from "@/components/ui/BookingActionLink";
 import {
   MagneticPull,
@@ -48,11 +47,7 @@ export const Hero: React.FC<HeroProps> = ({ locale = "uz" }) => {
     <section
       id="hero"
       aria-labelledby="hero-heading"
-      className={`relative bg-[var(--bg-alabaster)] border-b border-[var(--border-hairline)] ${
-        featuresConfig.demoMode
-          ? "pt-5 sm:pt-8 lg:pt-11"
-          : "pt-[76px] sm:pt-24 lg:pt-28"
-      } pb-14 sm:pb-16 lg:pb-20 overflow-hidden`}
+      className="relative bg-[var(--bg-alabaster)] border-b border-[var(--border-hairline)] pt-10 sm:pt-14 lg:pt-18 pb-14 sm:pb-16 lg:pb-20 overflow-hidden"
     >
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Subtle Architectural Blueprint Grid */}
