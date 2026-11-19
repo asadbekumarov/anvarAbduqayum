@@ -2,7 +2,7 @@
 
 import React, { useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/Tabs";
+import { Tabs as TabsPrimitive } from "radix-ui";
 import { featuresConfig } from "@/config/features";
 import {
   getPartnershipContent,
@@ -246,9 +246,9 @@ export function PartnershipIntakeView({ locale }: PartnershipIntakeViewProps) {
 
   const activeTrackMeta = content.tracks[activeTrack];
 
-  // Dark "Swiss Luxury" styling tokens
+  // Dark Luxury Industrial styling tokens
   const inputBaseClasses =
-    "w-full min-h-[46px] rounded-[2px] border border-white/10 bg-[#0B0C0E] px-4 py-2.5 text-[15px] text-[#F5F5F7] placeholder:text-zinc-500 transition-colors focus:border-[#C5A059] focus:outline-none focus:ring-1 focus:ring-[#C5A059]";
+    "w-full min-h-[48px] rounded-xl border border-white/10 bg-[#12141A] px-4 py-3 text-[15px] text-[#F5F5F7] placeholder:text-zinc-500 transition-all duration-150 focus:border-[#D4AF37] focus:bg-[#161822] focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/20";
 
   const inputErrorClasses =
     "border-red-500/80 bg-red-950/20 text-red-200 placeholder:text-red-400/50 focus:border-red-400 focus:ring-red-500/50";
@@ -265,9 +265,7 @@ export function PartnershipIntakeView({ locale }: PartnershipIntakeViewProps) {
             <span aria-hidden="true">←</span>
             <span>{content.hero.backHome}</span>
           </Link>
-          <span className="font-mono text-[11px] tracking-[0.14em] uppercase text-zinc-400">
-            {content.hero.industrialKicker}
-          </span>
+
         </div>
 
         <div className="mt-6">
@@ -449,70 +447,78 @@ export function PartnershipIntakeView({ locale }: PartnershipIntakeViewProps) {
           )}
 
           {/* Radix UI Tabs for 4 B2B Tracks */}
-          <Tabs
+          <TabsPrimitive.Root
             value={activeTrack}
             onValueChange={(val) => handleTrackSelect(val as PartnershipTrack)}
             className="w-full"
           >
-            <div className="mb-6">
-              <span className="block font-mono text-xs uppercase tracking-[0.16em] text-[#C5A059]">
-                01 // {content.tabs.ariaLabel}
-              </span>
+            <div className="mb-8">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                <span className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-[#D4AF37]">
+                  01 // {content.tabs.ariaLabel}
+                </span>
+              </div>
 
-              <TabsList className="mt-3 grid grid-cols-1 gap-2.5 border-b-0 sm:grid-cols-2 lg:grid-cols-4">
+              <TabsPrimitive.List className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
                 {PARTNERSHIP_TRACKS.map((trackKey) => {
                   const trackMeta = content.tracks[trackKey];
                   const isSelected = activeTrack === trackKey;
                   return (
-                    <TabsTrigger
+                    <TabsPrimitive.Trigger
                       key={trackKey}
                       value={trackKey}
-                      className={`flex flex-col items-start justify-between rounded-[2px] border p-3.5 text-left transition-all ${
+                      className={`group relative flex flex-col justify-between rounded-xl border p-4 sm:p-5 text-left transition-all duration-200 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] ${
                         isSelected
-                          ? "border-[#C5A059] bg-[#1A1C24] text-[#FBF9F5] shadow-[0_0_15px_rgba(197,160,89,0.12)]"
-                          : "border-white/10 bg-[#0B0C0E] text-zinc-400 hover:border-white/20 hover:text-zinc-200"
+                          ? "border-[#D4AF37] bg-[#181B26] text-[#FBF9F5] shadow-[0_4px_24px_rgba(212,175,55,0.18)] ring-1 ring-[#D4AF37]/40"
+                          : "border-white/10 bg-[#0E1015] text-zinc-400 hover:border-white/20 hover:bg-[#12141A] hover:text-zinc-200"
                       }`}
                     >
-                      <div className="flex w-full items-center justify-between">
-                        <span className="font-mono text-[10.5px] font-semibold tracking-[0.16em] text-[#C5A059]">
+                      <div className="flex w-full items-center justify-between pb-2.5 border-b border-white/[0.06]">
+                        <span className="font-mono text-[11px] font-bold tracking-widest text-[#D4AF37]">
                           {trackMeta.code}
                         </span>
                         <span
-                          className={`h-2.5 w-2.5 rounded-full border ${
+                          className={`h-3 w-3 rounded-full border transition-all ${
                             isSelected
-                              ? "border-[#C5A059] bg-[#C5A059]"
-                              : "border-zinc-600 bg-transparent"
+                              ? "border-[#D4AF37] bg-[#D4AF37] shadow-[0_0_8px_rgba(212,175,55,0.6)]"
+                              : "border-zinc-700 bg-transparent group-hover:border-zinc-500"
                           }`}
                         />
                       </div>
-                      <div className="mt-2">
-                        <div className="text-[14px] font-semibold text-[#F5F5F7]">
+                      <div className="mt-3">
+                        <div className="text-[14.5px] font-bold text-[#F5F5F7] leading-snug group-hover:text-white">
                           {trackMeta.title}
                         </div>
-                        <div className="mt-1 line-clamp-2 text-[11.5px] leading-relaxed text-zinc-400">
+                        <div className="mt-1.5 text-[12px] leading-relaxed text-zinc-400 line-clamp-2">
                           {trackMeta.summary}
                         </div>
                       </div>
-                    </TabsTrigger>
+                    </TabsPrimitive.Trigger>
                   );
                 })}
-              </TabsList>
+              </TabsPrimitive.List>
             </div>
 
             {/* Track Highlights Card */}
-            <div className="mb-8 rounded-[2px] border border-[#C5A059]/20 bg-[#0E1015] p-4 sm:p-5">
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/5 pb-2.5">
-                <span className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[#C5A059]">
-                  {activeTrackMeta.badge}
-                </span>
-                <span className="text-xs text-zinc-400">
+            <div className="mb-8 rounded-xl border border-[#D4AF37]/30 bg-gradient-to-r from-[#12141A] via-[#161822] to-[#12141A] p-5 shadow-lg">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.08] pb-3">
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                  <span className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[#D4AF37]">
+                    {activeTrackMeta.badge}
+                  </span>
+                </div>
+                <span className="text-[13px] font-medium text-zinc-300">
                   {activeTrackMeta.title}
                 </span>
               </div>
-              <ul className="mt-3 grid grid-cols-1 gap-2 text-xs text-zinc-300 sm:grid-cols-3">
+              <ul className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
                 {activeTrackMeta.highlights.map((item, idx) => (
-                  <li key={idx} className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#C5A059]" />
+                  <li key={idx} className="flex items-start gap-2.5 text-[12.5px] text-zinc-300 leading-snug">
+                    <span className="w-4 h-4 rounded-full bg-[#D4AF37]/15 text-[#D4AF37] flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-bold">
+                      ✓
+                    </span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -540,7 +546,7 @@ export function PartnershipIntakeView({ locale }: PartnershipIntakeViewProps) {
                 </span>
 
                 {/* Track a: Export (Target country & HS-category/volume) */}
-                <TabsContent value="export" className="mt-4 space-y-5 outline-none">
+                <TabsPrimitive.Content value="export" className="mt-4 space-y-5 outline-none">
                   <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                     <div>
                       <label
@@ -645,10 +651,10 @@ export function PartnershipIntakeView({ locale }: PartnershipIntakeViewProps) {
                       </p>
                     )}
                   </div>
-                </TabsContent>
+                </TabsPrimitive.Content>
 
                 {/* Track b: Distribution (Region & retail coverage) */}
-                <TabsContent
+                <TabsPrimitive.Content
                   value="distribution"
                   className="mt-4 space-y-5 outline-none"
                 >
@@ -747,10 +753,10 @@ export function PartnershipIntakeView({ locale }: PartnershipIntakeViewProps) {
                       {content.fields.outlets.hint}
                     </p>
                   </div>
-                </TabsContent>
+                </TabsPrimitive.Content>
 
                 {/* Track c: Manufacturing / OEM (Specs & capacity) */}
-                <TabsContent
+                <TabsPrimitive.Content
                   value="manufacturing"
                   className="mt-4 space-y-5 outline-none"
                 >
@@ -849,10 +855,10 @@ export function PartnershipIntakeView({ locale }: PartnershipIntakeViewProps) {
                       </p>
                     )}
                   </div>
-                </TabsContent>
+                </TabsPrimitive.Content>
 
                 {/* Track d: General Inquiry */}
-                <TabsContent value="general" className="mt-4 space-y-5 outline-none">
+                <TabsPrimitive.Content value="general" className="mt-4 space-y-5 outline-none">
                   <div>
                     <label
                       htmlFor="inquiryTopic"
@@ -925,7 +931,7 @@ export function PartnershipIntakeView({ locale }: PartnershipIntakeViewProps) {
                       </p>
                     )}
                   </div>
-                </TabsContent>
+                </TabsPrimitive.Content>
               </div>
 
               {/* Universal Corporate Contact Details */}
@@ -1093,27 +1099,45 @@ export function PartnershipIntakeView({ locale }: PartnershipIntakeViewProps) {
               </div>
 
               {/* Submit CTA */}
-              <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-6">
-                <p className="text-xs text-zinc-400">
-                  {featuresConfig.demoMode
-                    ? "🛡️ Demo rejim: ma'lumotlar brauzerda tekshiriladi, serverga jo'natilmaydi."
-                    : "🔒 Ma'lumotlarning to'liq konfidensialligi kafolatlanadi."}
-                </p>
+              <div className="mt-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-t border-white/10 pt-8">
+                <span className="inline-flex items-center gap-2 text-[12.5px] text-zinc-400">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-[#D4AF37]">
+                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                  </svg>
+                  <span>
+                    {safeLocale === "ru"
+                      ? "Данные защищены протоколом коммерческой тайны"
+                      : safeLocale === "en"
+                      ? "Protected by commercial confidentiality protocol"
+                      : "Ma’lumotlar tijoriy sir protokoli bilan himoyalangan"}
+                  </span>
+                </span>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="inline-flex min-h-[48px] items-center justify-center rounded-[2px] border border-[#C5A059] bg-[#C5A059] px-8 py-2.5 text-sm font-semibold text-[#0B0C0E] transition-all hover:bg-[#E5C378] hover:shadow-[0_0_20px_rgba(197,160,89,0.3)] disabled:opacity-50"
+                  className="inline-flex w-full sm:w-auto min-h-[50px] items-center justify-center rounded-xl bg-[#D4AF37] hover:bg-[#F3E5AB] px-9 py-3 text-[14px] font-semibold text-black transition-all duration-200 shadow-[0_4px_24px_rgba(212,175,55,0.25)] hover:shadow-[0_4px_30px_rgba(212,175,55,0.4)] disabled:opacity-50 cursor-pointer"
                 >
-                  {isSubmitting
-                    ? content.buttons.submitting
-                    : featuresConfig.demoMode
-                    ? content.buttons.demoSubmit
-                    : content.buttons.submit}
+                  {isSubmitting ? (
+                    <>
+                      <span className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin mr-2" />
+                      <span>{content.buttons.submitting}</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>
+                        {featuresConfig.demoMode
+                          ? content.buttons.demoSubmit
+                          : content.buttons.submit}
+                      </span>
+                      <span aria-hidden="true" className="ml-2 font-bold">→</span>
+                    </>
+                  )}
                 </button>
               </div>
             </form>
-          </Tabs>
+          </TabsPrimitive.Root>
         </div>
       )}
     </div>

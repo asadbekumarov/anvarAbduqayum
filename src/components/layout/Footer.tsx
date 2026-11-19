@@ -118,7 +118,7 @@ export const Footer: React.FC<FooterProps> = ({ locale }) => {
           <div className="shrink-0">
             <BookingActionLink
               locale={safeLocale}
-              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-[3px] border border-[#D4AF37]/50 text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#090A0D] font-mono text-[12px] uppercase font-bold tracking-[0.12em] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-[3px] border border-[#D4AF37]/50 text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#090A0D] font-mono text-[12px] uppercase font-bold tracking-[0.12em] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] cursor-pointer"
             >
               <span>{footer.bookingCta}</span>
               <span aria-hidden="true">→</span>

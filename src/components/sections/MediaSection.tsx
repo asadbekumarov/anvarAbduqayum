@@ -42,14 +42,39 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
   const featured = media.featured;
   const ui = media.ui;
   const knowledgeMedia = content.knowledgeMedia;
+  const speaking = media.speaking;
 
   const [topicFilter, setTopicFilter] = useState<TopicFilterKey>("all");
   const [pressFilter, setPressFilter] = useState<PressFilterKey>("all");
   const [activeVideo, setActiveVideo] = useState<ActiveModalVideo | null>(null);
+  const [pressKitOpen, setPressKitOpen] = useState<boolean>(false);
   const [playerState, setPlayerState] = useState<ModalPlayerState>("idle");
   const [failedPosters, setFailedPosters] = useState<Record<string, boolean>>({});
   const [dragX, setDragX] = useState<number>(0);
   const [maxDrag, setMaxDrag] = useState<number>(0);
+
+  const handleInviteSpeaker = () => {
+    const defaultTemplate =
+      safeLocale === "ru"
+        ? "Название мероприятия, дата, город и предполагаемый формат выступления..."
+        : safeLocale === "en"
+        ? "Event name, date, host city, and requested speaking format..."
+        : "Tadbir nomi, sanasi, o'tkazilish joyi va rejalashtirilgan format haqida qisqacha...";
+
+    window.dispatchEvent(
+      new CustomEvent("prefill-b2b-inquiry", {
+        detail: {
+          topic: "speaking",
+          message: defaultTemplate,
+        },
+      })
+    );
+
+    const contactEl = document.getElementById("aloqa");
+    if (contactEl) {
+      contactEl.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const videoTabListRef = useRef<HTMLDivElement>(null);
   const carouselOuterRef = useRef<HTMLDivElement>(null);
@@ -901,6 +926,200 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
       </div>
 
       {/* =================================================================
+          BAND 3: KEYNOTE SPEAKING, FORUMS & MEDIA INVITATIONS (DARK OBSIDIAN)
+          ================================================================= */}
+      {speaking && (
+        <div
+          id="spikerlik"
+          className="relative bg-[#090A0E] text-[#EDE8DF] border-b border-white/10 py-12 lg:py-16 overflow-hidden"
+        >
+          {/* Subtle ambient lighting */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-40 right-0 w-[500px] h-[500px] rounded-full bg-[#D4AF37]/5 blur-[120px]"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-40 left-0 w-[450px] h-[450px] rounded-full bg-blue-500/5 blur-[120px]"
+          />
+
+          <div className="relative max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
+            {/* Header */}
+            <header className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 pb-6 sm:pb-8 border-b border-white/10 mb-10">
+              <div className="max-w-[720px]">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
+                  <span className="font-mono text-[11px] sm:text-[12px] tracking-[0.18em] text-[#D4AF37] uppercase font-semibold">
+                    {speaking.moduleTag}
+                  </span>
+                </div>
+                <h3 className="font-serif text-[clamp(1.85rem,3vw,2.75rem)] font-bold tracking-tight text-white leading-[1.12]">
+                  {speaking.heading}{" "}
+                  <span className="text-[#D4AF37]">{speaking.headingEmphasis}</span>
+                </h3>
+              </div>
+              <p className="text-[14.5px] sm:text-[15.5px] leading-relaxed text-[#A0A5B5] max-w-[500px]">
+                {speaking.subheading}
+              </p>
+            </header>
+
+            {/* Part A: 3 Key Speaking Topics */}
+            <div className="mb-12">
+              <div className="flex items-center justify-between mb-5">
+                <span className="font-mono text-[11.5px] tracking-[0.14em] uppercase text-[#D4AF37] font-semibold flex items-center gap-2">
+                  <span className="inline-block w-2 h-0.5 bg-[#D4AF37]" />
+                  {speaking.topicsHeading}
+                </span>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
+                {speaking.topics.map((topic, idx) => (
+                  <div
+                    key={idx}
+                    className="group relative flex flex-col justify-between p-5 sm:p-6 rounded-xl bg-[#12141C] border border-white/10 hover:border-[#D4AF37]/50 transition-all duration-300 hover:shadow-[0_8px_30px_rgba(212,175,55,0.06)]"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between gap-2 mb-3">
+                        <span className="font-mono text-[10.5px] uppercase tracking-wider text-[#D4AF37] bg-[#D4AF37]/10 px-2.5 py-1 rounded-full border border-[#D4AF37]/20 font-semibold">
+                          {topic.tag}
+                        </span>
+                        <span className="font-mono text-[11px] text-white/30">0{idx + 1}</span>
+                      </div>
+                      <h4 className="font-serif text-[17px] sm:text-[18px] font-semibold text-white group-hover:text-[#D4AF37] transition-colors leading-[1.3] mb-2.5">
+                        {topic.title}
+                      </h4>
+                      <p className="text-[13.5px] text-[#9AA0B2] leading-relaxed">
+                        {topic.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Part B: Split Grid - Formats (Left) & Upcoming Agenda (Right) */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
+              {/* Left 6 cols: Engagement Formats */}
+              <div className="lg:col-span-6 flex flex-col">
+                <span className="font-mono text-[11.5px] tracking-[0.14em] uppercase text-[#D4AF37] font-semibold mb-4 flex items-center gap-2">
+                  <span className="inline-block w-2 h-0.5 bg-[#D4AF37]" />
+                  {speaking.formatsHeading}
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 flex-1">
+                  {speaking.formats.map((fmt, idx) => (
+                    <div
+                      key={idx}
+                      className="p-4 rounded-xl bg-[#11131A] border border-white/10 flex flex-col justify-between"
+                    >
+                      <div>
+                        <div className="inline-block text-[11px] font-mono text-white/70 bg-white/5 px-2 py-0.5 rounded border border-white/10 mb-2">
+                          {fmt.badge}
+                        </div>
+                        <h5 className="text-[15px] font-semibold text-white mb-1">
+                          {fmt.title}
+                        </h5>
+                        <p className="text-[12.5px] text-[#8E94A5] leading-relaxed">
+                          {fmt.desc}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right 6 cols: Agenda & Calendar */}
+              <div className="lg:col-span-6 flex flex-col">
+                <div className="flex items-center justify-between mb-4">
+                  <span className="font-mono text-[11.5px] tracking-[0.14em] uppercase text-[#D4AF37] font-semibold flex items-center gap-2">
+                    <span className="inline-block w-2 h-0.5 bg-[#D4AF37]" />
+                    {speaking.agendaHeading}
+                  </span>
+                  <span className="font-mono text-[10.5px] text-white/40">
+                    {speaking.agendaSubmeta}
+                  </span>
+                </div>
+                <div className="flex flex-col gap-3 flex-1">
+                  {speaking.agenda.map((ag, idx) => (
+                    <div
+                      key={idx}
+                      className="p-4 rounded-xl bg-[#11131A] border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 hover:border-white/20 transition-colors"
+                    >
+                      <div className="flex items-start sm:items-center gap-3.5">
+                        <div className="shrink-0 w-20 h-12 rounded-lg bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex flex-col items-center justify-center">
+                          <span className="font-mono text-[11px] font-bold text-[#D4AF37]">
+                            {ag.date}
+                          </span>
+                        </div>
+                        <div>
+                          <div className="text-[14.5px] font-semibold text-white">
+                            {ag.event}
+                          </div>
+                          <div className="flex items-center gap-2 mt-1 text-[12px] text-[#8E94A5]">
+                            <span>📍 {ag.city}</span>
+                            <span>•</span>
+                            <span className="text-[#D4AF37]/90">{ag.role}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="sm:self-center">
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-mono font-medium bg-white/5 border border-white/10 text-white/80">
+                          {ag.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Part C: Direct Invitation Action Card */}
+            <div className="relative rounded-2xl border border-[#D4AF37]/35 bg-gradient-to-br from-[#191712] via-[#12141B] to-[#0A0C10] p-6 sm:p-8 lg:p-10 shadow-[0_12px_40px_rgba(0,0,0,0.4)]">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                <div className="lg:col-span-7">
+                  <span className="inline-block font-mono text-[11px] uppercase tracking-wider text-[#D4AF37] mb-2 font-semibold">
+                    DIRECT KEYNOTE & MEDIA DESK
+                  </span>
+                  <h4 className="font-serif text-[clamp(20px,2.2vw,26px)] font-bold text-white mb-2 leading-tight">
+                    {speaking.ctaTitle}
+                  </h4>
+                  <p className="text-[14px] sm:text-[15px] text-[#A6ABB9] leading-relaxed mb-3">
+                    {speaking.ctaDesc}
+                  </p>
+                  <p className="text-[12px] font-mono text-[#D4AF37]/80 flex items-center gap-1.5">
+                    <span>⏱</span>
+                    <span>{speaking.notice}</span>
+                  </p>
+                </div>
+                <div className="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center lg:items-end">
+                  <button
+                    type="button"
+                    onClick={handleInviteSpeaker}
+                    className="min-h-[50px] px-6 rounded-xl bg-[#D4AF37] hover:bg-[#e0bc42] text-black font-semibold text-[14.5px] inline-flex items-center justify-center gap-2 transition-all duration-200 shadow-md hover:shadow-lg w-full sm:w-auto cursor-pointer"
+                  >
+                    <span>{speaking.inviteButton}</span>
+                    <span aria-hidden="true">→</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPressKitOpen(true)}
+                    className="min-h-[48px] px-5 rounded-xl border border-white/20 hover:border-white/40 bg-white/5 hover:bg-white/10 text-white font-medium text-[13.5px] inline-flex items-center justify-center gap-2 transition-all duration-200 w-full sm:w-auto cursor-pointer"
+                  >
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                      <line x1="16" y1="13" x2="8" y2="13"></line>
+                      <line x1="16" y1="17" x2="8" y2="17"></line>
+                      <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <span>{speaking.mediaKitButton}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* =================================================================
           ACCESSIBLE YOUTUBE MODAL (Mounts ONLY on activation + Cinematic Fade)
           ================================================================= */}
       <AnimatePresence>
@@ -1064,6 +1283,116 @@ export const MediaSection: React.FC<MediaSectionProps> = ({ locale = "uz" }) => 
           </motion.div>
         </motion.div>
       )}
+      </AnimatePresence>
+
+      {/* =================================================================
+          EXECUTIVE PRESS-KIT & SPEAKER BIO MODAL
+          ================================================================= */}
+      <AnimatePresence>
+        {pressKitOpen && speaking && (
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="press-kit-title"
+            initial={shouldReduceMotion ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={shouldReduceMotion ? undefined : { opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={() => setPressKitOpen(false)}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.96, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={shouldReduceMotion ? undefined : { opacity: 0, scale: 0.96, y: 16 }}
+              transition={{ duration: 0.3, ease: MONOGRAPH_EASE }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-[620px] bg-[#12141D] text-[#EDE8DF] border border-white/15 rounded-2xl p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto"
+            >
+              <div className="flex items-start justify-between gap-4 mb-5 border-b border-white/10 pb-4">
+                <div>
+                  <span className="font-mono text-[11px] tracking-wider uppercase text-[#D4AF37] font-semibold">
+                    OFFICIAL EXECUTIVE DOSSIER
+                  </span>
+                  <h3 id="press-kit-title" className="font-serif text-[22px] font-bold text-white mt-1">
+                    Anvar Abduqayumov
+                  </h3>
+                  <p className="text-[13px] text-[#9AA0B4] mt-0.5">
+                    {safeLocale === "ru"
+                      ? "Официальная справка для СМИ, организаторов форумов и изданий"
+                      : safeLocale === "en"
+                      ? "Official bio, press assets, and speaker summary"
+                      : "OAV, forum tashkilotchilari va nashriyotlar uchun rasmiy ma’lumotnoma"}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setPressKitOpen(false)}
+                  className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/70 hover:text-white transition-colors cursor-pointer"
+                  aria-label="Yopish"
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* Bio summary */}
+              <div className="space-y-4 text-[13.5px] text-[#CFD3DF] leading-relaxed mb-6">
+                <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                  <div className="text-[11px] font-mono text-[#D4AF37] uppercase tracking-wider mb-1 font-semibold">
+                    {safeLocale === "ru" ? "Краткая биография" : safeLocale === "en" ? "Short Executive Bio" : "Qisqa rasmiy biografiya"}
+                  </div>
+                  <p>
+                    {safeLocale === "ru"
+                      ? "Анвар Абдукаюмов — промышленный предприниматель, основатель брендов «Toybola» (производство полимерных игрушек) и «Samtech» (высокотехнологичное сырье и формы), председатель Совета бизнеса и промышленности Узбекистана UZBIC. Спикер национальных и международных бизнес-форумов."
+                      : safeLocale === "en"
+                      ? "Anvar Abduqayumov is an industrial entrepreneur, founder of 'Toybola' (injection-molded polymer toys) and 'Samtech', and Chairman of the Board at the Uzbekistan Business and Industry Council (UZBIC). Keynote speaker on industrialization and systemic governance."
+                      : "Anvar Abduqayumov — yirik sanoatchi-tadbirkor, «Toybola» (bolalar o‘yinchoqlari ishlab chiqarish) va «Samtech» korxonalari asoschisi, O‘zbekiston Biznes va Sanoat Kengashi (UZBIC) raisi. Sanoatni mahalliylashtirish va tizimli boshqaruv bo‘yicha spiker."}
+                  </p>
+                </div>
+
+                {/* Key Facts Ledger */}
+                <div className="grid grid-cols-3 gap-2.5 text-center">
+                  <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+                    <div className="font-serif text-[18px] sm:text-[20px] font-bold text-[#D4AF37]">15+ yil</div>
+                    <div className="text-[10.5px] text-[#8E94A5] mt-0.5">Sanoat tajribasi</div>
+                  </div>
+                  <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+                    <div className="font-serif text-[18px] sm:text-[20px] font-bold text-[#D4AF37]">500+</div>
+                    <div className="text-[10.5px] text-[#8E94A5] mt-0.5">Qoliplar va TPA</div>
+                  </div>
+                  <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+                    <div className="font-serif text-[18px] sm:text-[20px] font-bold text-[#D4AF37]">10+ davlat</div>
+                    <div className="text-[10.5px] text-[#8E94A5] mt-0.5">Eksport yo‘lagi</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action buttons inside modal */}
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setPressKitOpen(false);
+                    handleInviteSpeaker();
+                  }}
+                  className="flex-1 min-h-[46px] rounded-xl bg-[#D4AF37] hover:bg-[#e0bc42] text-black font-semibold text-[14px] flex items-center justify-center gap-2 transition-all cursor-pointer"
+                >
+                  <span>{speaking.inviteButton}</span>
+                  <span>→</span>
+                </button>
+                <a
+                  href="https://t.me/anvarabduqayum"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="min-h-[46px] px-5 rounded-xl border border-white/15 bg-white/5 hover:bg-white/10 text-white font-medium text-[13.5px] flex items-center justify-center gap-2 transition-all"
+                >
+                  <span>Telegram Qabulxona</span>
+                  <span>↗</span>
+                </a>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
       </AnimatePresence>
     </section>
   );

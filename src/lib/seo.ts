@@ -100,7 +100,6 @@ export interface BuildLocalizedMetadataInput {
   locale: string;
   routeSegment?:
     | ""
-    | "bron"
     | "hamkorlik"
     | "kutubxona"
     | "export"

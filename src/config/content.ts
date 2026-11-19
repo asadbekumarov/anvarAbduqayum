@@ -400,6 +400,38 @@ export interface LocaleContent {
       url: string;
       publicationType: string;
     }>;
+    speaking?: {
+      moduleTag: string;
+      heading: string;
+      headingEmphasis: string;
+      subheading: string;
+      topicsHeading: string;
+      topics: Array<{
+        title: string;
+        desc: string;
+        tag: string;
+      }>;
+      formatsHeading: string;
+      formats: Array<{
+        title: string;
+        desc: string;
+        badge: string;
+      }>;
+      agendaHeading: string;
+      agendaSubmeta: string;
+      agenda: Array<{
+        date: string;
+        event: string;
+        city: string;
+        role: string;
+        status: string;
+      }>;
+      ctaTitle: string;
+      ctaDesc: string;
+      inviteButton: string;
+      mediaKitButton: string;
+      notice: string;
+    };
   };
   contact: {
     booking: {
@@ -808,7 +840,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           status: "Tasdiqlangan ishlab chiqarish korxonasi",
           source: "Orginfo.uz (VISAGE ELECTRIC MChJ), Spielwarenmesse.de, Gazeta.uz (2020), Toybola.com",
           hasLogo: true,
-          logoUrl: "/images/partners/toy_bola.webp",
+          logoUrl: "/images/partners/toy_bola.svg",
           assetLabel: "[Tasdiqlangan korxona aktivi]",
           websiteUrl: "https://toybola.uz",
           externalUrl: "https://toybola.uz",
@@ -836,7 +868,8 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           tags: ["Kimyo sanoati", "Polimer modifikatorlar", "B2B xomashyo"],
           status: "Hammuassislikdagi B2B sanoat loyihasi",
           source: "B2B kooperatsiya kelishuvlari, tasdiqlanishi kutilmoqda",
-          hasLogo: false,
+          hasLogo: true,
+          logoUrl: "/images/partners/samtech.svg",
           assetLabel: "[Hammuassislikdagi sanoat loyihasi]",
           websiteUrl: null,
           externalUrl: "#",
@@ -865,7 +898,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           status: "Tarixiy asoschilik (joriy mulkdorlik tasdiqlanmagan)",
           source: "Spot.uz intervyulari (2020 / 2022); joriy egalik tasdiqlanmagan",
           hasLogo: true,
-          logoUrl: "/images/partners/afiyet.webp",
+          logoUrl: "/images/partners/afiyet.svg",
           assetLabel: "[Tarixiy HoReCa loyihasi]",
           websiteUrl: null,
           externalUrl: "#",
@@ -894,7 +927,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           status: "Tarixiy hamkorlik (joriy mulkdorlik tasdiqlanmagan)",
           source: "Spot.uz intervyusi (2020); joriy egalik tasdiqlanmagan",
           hasLogo: true,
-          logoUrl: "/images/partners/puro.webp",
+          logoUrl: "/images/partners/puro.svg",
           assetLabel: "[Tarixiy kafe loyihasi]",
           websiteUrl: null,
           externalUrl: "#",
@@ -922,7 +955,8 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           tags: ["Ichki ERP", "Ombor nazorati", "Tasdiq kutilmoqda"],
           status: "Huquqiy tuzilmasi va joriy roli tasdiqlanishi kutilmoqda",
           source: "Mijoz tasdig‘ini kutayotgan ro‘yxat (mustaqil yuridik tasdiq mavjud emas)",
-          hasLogo: false,
+          hasLogo: true,
+          logoUrl: "/images/partners/it_support.svg",
           assetLabel: "[Ichki jarayonlarni raqamlashtirish tashabbusi]",
           websiteUrl: null,
           externalUrl: "#",
@@ -951,7 +985,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           status: "Mustaqil jamoat platformasi (tijorat korxonasi emas)",
           source: "uzbic.uz rasmiy portali va Kun.uz axborotlari",
           hasLogo: true,
-          logoUrl: "/images/partners/uzbic.webp",
+          logoUrl: "/images/partners/uzbic.svg",
           assetLabel: "[Mustaqil jamoat platformasi // Tijorat aktivi emas]",
           websiteUrl: "https://uzbic.uz",
           externalUrl: "https://uzbic.uz",
@@ -1523,6 +1557,85 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           publicationType: "UZBIC eksport bayonoti",
         },
       ],
+      speaking: {
+        moduleTag: "06.C // SPIKERLIK VA OMMAVIY CHIQISHLAR",
+        heading: "Konferensiya, biznes forum va OAV uchun",
+        headingEmphasis: "takliflar",
+        subheading:
+          "Anvar Abduqayum sanoat ishlab chiqarish, biznesni tizimlashtirish, import o‘rnini bosish va eksport geografiyasini kengaytirish mavzularida xalqaro hamda milliy forumlarda asosiy spiker (Keynote) sifatida ishtirok etadi.",
+        topicsHeading: "Asosiy ma’ruza mavzulari",
+        topics: [
+          {
+            title: "Sanoat ishlab chiqarishni mahalliylashtirish va qolip (TPA) arxitekturasi",
+            desc: "Toybola va Samtech misolida 150T–850T termoplastavtomatlar parkini yo‘lga qo‘yish, xomashyo ta’minoti va import o‘rnini bosuvchi ishlab chiqarish zanjiri.",
+            tag: "Sanoat va Muhandislik",
+          },
+          {
+            title: "Egasiz ishlaydigan tizimlar: Operatsion xaosdan avtonomiyaga",
+            desc: "Biznesni qoliplash tamoyili, reglamentlar, boshqaruv KPI tizimlari va ta’sischining operatsion botqoqdan strategik kengash darajasiga chiqishi.",
+            tag: "Tizimlashtirish",
+          },
+          {
+            title: "Markaziy Osiyodan jahon bozoriga eksport strategiyasi",
+            desc: "10+ xorijiy davlatga eksport yo‘laklarini ochish, xalqaro sertifikatsiyalar va B2B distribyutorlik tarmoqlari bilan ishonchli shartnomalar tuzish.",
+            tag: "Eksport va Savdo",
+          },
+        ],
+        formatsHeading: "Ishtirok formatlari",
+        formats: [
+          {
+            title: "Keynote Spiker",
+            desc: "Yirik xalqaro va respublika iqtisodiy-biznes forumlarida bosh ma’ruza (30–45 daqiqa).",
+            badge: "Bosh ma’ruza",
+          },
+          {
+            title: "Panel va Munozara",
+            desc: "Sanoatchilar, investorlar va soha yetakchilari bilan tahliliy strategik sessiyalar.",
+            badge: "Ekspert paneli",
+          },
+          {
+            title: "OAV & Tahliliy Podkast",
+            desc: "Yetakchi biznes telekanallari, video nashrlar va YouTube tahririyatlari bilan chuqur intervyular.",
+            badge: "Media loyiha",
+          },
+          {
+            title: "Akademik & Yoshlar dasturlari",
+            desc: "Universitetlar va yosh tadbirkorlar auditoriyasi uchun amaliy mahorat darslari.",
+            badge: "Talabalar bilan",
+          },
+        ],
+        agendaHeading: "Yaqinlashib kelayotgan ommaviy chiqishlar",
+        agendaSubmeta: "Tadbirlar ro‘yxati tashkilotchilar bilan kelishilgan holda yangilanadi",
+        agenda: [
+          {
+            date: "2026 Q1",
+            event: "O‘zbekiston Ishlab Chiqaruvchilari va Sanoat Forumi",
+            city: "Toshkent",
+            role: "Keynote Spiker",
+            status: "Tasdiqlangan",
+          },
+          {
+            date: "2026 Q2",
+            event: "Markaziy Osiyo Eksport & Mahalliylashtirish Sammiti",
+            city: "Samarqand",
+            role: "Ekspert Paneli",
+            status: "Rejalashtirilgan",
+          },
+          {
+            date: "Doimiy",
+            event: "UZBIC Biznes Klubi: Tizimli Boshqaruv Sessiyalari",
+            city: "Toshkent",
+            role: "Tashabbuschi & Spiker",
+            status: "Ochiq qabul",
+          },
+        ],
+        ctaTitle: "Tadbiringizga taklif eting yoki intervyu tashkil qiling",
+        ctaDesc:
+          "OAV va tadbir tashkilotchilari uchun to‘g‘ridan-to‘g‘ri murojaat kanali. So‘rovingiz mas’ul jamoa tomonidan 24–48 soat ichida ko‘rib chiqiladi.",
+        inviteButton: "Spiker sifatida taklif qilish",
+        mediaKitButton: "Matbuot uchun ma’lumotlar to‘plami",
+        notice: "Reja zichligi sababli takliflarni tadbirdan kamida 2-3 hafta oldin yuborish tavsiya etiladi.",
+      },
     },
     contact: {
       booking: {
@@ -1541,7 +1654,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
         telegramCta: "Hamkorlik tartibi",
       },
       directory: {
-        ordinal: "07.B",
+        ordinal: "07",
         title: "Rasmiy aloqa kanallari",
         lead: "Tijoriy takliflar, hamkorlik murojaatlari va OAV so‘rovlari faqat quyidagi tasdiqlangan rasmiy manzillar orqali qabul qilinadi.",
         heading: "To‘g‘ridan-to‘g‘ri bog‘lanish",
@@ -1573,6 +1686,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
         topicLabel: "Murojaat yo‘nalishi",
         topicOptions: [
           { id: "coop", label: "Strategik hamkorlik" },
+          { id: "speaking", label: "Spikerlik va tadbirga taklif" },
           { id: "consult", label: "Konsultatsiya (tizimlashtirish)" },
           { id: "media", label: "OAV va intervyu" },
           { id: "other", label: "Boshqa masala" },
@@ -2131,7 +2245,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           status: "Подтвержденное производственное предприятие",
           source: "Orginfo.uz (ООО «VISAGE ELECTRIC»), Spielwarenmesse.de, Gazeta.uz (2020), Toybola.com",
           hasLogo: true,
-          logoUrl: "/images/partners/toy_bola.webp",
+          logoUrl: "/images/partners/toy_bola.svg",
           assetLabel: "[Подтвержденный производственный актив]",
           websiteUrl: "https://toybola.uz",
           externalUrl: "https://toybola.uz",
@@ -2159,7 +2273,8 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           tags: ["Химпром", "Модификаторы", "B2B сырье"],
           status: "Промышленный проект на базе соучредительства",
           source: "Соглашения о промышленной кооперации (ожидает подтверждения)",
-          hasLogo: false,
+          hasLogo: true,
+          logoUrl: "/images/partners/samtech.svg",
           assetLabel: "[Партнерский производственный проект]",
           websiteUrl: null,
           externalUrl: "#",
@@ -2188,7 +2303,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           status: "Историческое основание (текущее владение не подтверждено)",
           source: "Интервью Spot.uz (2020 / 2022); текущее владение не подтверждено",
           hasLogo: true,
-          logoUrl: "/images/partners/afiyet.webp",
+          logoUrl: "/images/partners/afiyet.svg",
           assetLabel: "[Исторический HoReCa-проект]",
           websiteUrl: null,
           externalUrl: "#",
@@ -2217,7 +2332,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           status: "Историческое партнёрство (текущее владение не подтверждено)",
           source: "Интервью Spot.uz (2020); текущее владение не подтверждено",
           hasLogo: true,
-          logoUrl: "/images/partners/puro.webp",
+          logoUrl: "/images/partners/puro.svg",
           assetLabel: "[Исторический проект кафе]",
           websiteUrl: null,
           externalUrl: "#",
@@ -2245,7 +2360,8 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           tags: ["Внутренний ERP", "Учет складов", "Ожидает подтверждения"],
           status: "Юридический статус и текущая роль ожидают подтверждения",
           source: "Список на подтверждение клиентом (независимого реестра нет)",
-          hasLogo: false,
+          hasLogo: true,
+          logoUrl: "/images/partners/it_support.svg",
           assetLabel: "[Внутренняя инициатива цифровизации]",
           websiteUrl: null,
           externalUrl: "#",
@@ -2274,7 +2390,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           status: "Независимая общественная платформа (не частная компания)",
           source: "Портал uzbic.uz и публикации Kun.uz",
           hasLogo: true,
-          logoUrl: "/images/partners/uzbic.webp",
+          logoUrl: "/images/partners/uzbic.svg",
           assetLabel: "[Общественная платформа // Не коммерческий актив]",
           websiteUrl: "https://uzbic.uz",
           externalUrl: "https://uzbic.uz",
@@ -2844,6 +2960,85 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           publicationType: "Комментарий UZBIC для СМИ",
         },
       ],
+      speaking: {
+        moduleTag: "06.C // СПИКЕРСТВО И ПУБЛИЧНЫЕ ВЫСТУПЛЕНИЯ",
+        heading: "Приглашение на конференции, форумы и",
+        headingEmphasis: "интервью",
+        subheading:
+          "Анвар Абдукаюм выступает в качестве ключевого спикера (Keynote) и эксперта на международных и национальных форумах по темам развития производства, систематизации бизнеса, импортозамещения и экспорта.",
+        topicsHeading: "Ключевые темы выступлений",
+        topics: [
+          {
+            title: "Локализация производства и архитектура литьевых пресс-форм (ТПА)",
+            desc: "Опыт парка термопластавтоматов 150T–850T на заводах Toybola и Samtech, управление сырьевой базой и создание импортозамещающих цепочек.",
+            tag: "Производство и Инженерия",
+          },
+          {
+            title: "Системы, работающие без собственника: От операционного хаоса к автономии",
+            desc: "Принцип пресс-формы (регламенты, KPI, делегирование) и переход основателя от рутины к совету директоров.",
+            tag: "Систематизация",
+          },
+          {
+            title: "Экспортная стратегия из Центральной Азии на мировой рынок",
+            desc: "Открытие коридоров поставок в 10+ стран, международная сертификация и надежные контракты с сетями дистрибуции.",
+            tag: "Экспорт и Торговля",
+          },
+        ],
+        formatsHeading: "Форматы участия",
+        formats: [
+          {
+            title: "Keynote Спикер",
+            desc: "Главное выступление на крупных международных и деловых форумах (30–45 мин).",
+            badge: "Главный доклад",
+          },
+          {
+            title: "Панельные дискуссии",
+            desc: "Экспертные стратегические сессии с промышленниками, инвесторами и отраслевыми лидерами.",
+            badge: "Экспертная панель",
+          },
+          {
+            title: "СМИ и аналитические подкасты",
+            desc: "Глубокие интервью для деловых изданий, телеканалов и ведущих YouTube-проектов.",
+            badge: "Медиа-проект",
+          },
+          {
+            title: "Академические встречи",
+            desc: "Практические встречи и лекции для студентов и начинающих предпринимателей.",
+            badge: "Для молодежи",
+          },
+        ],
+        agendaHeading: "Ближайшие выступления и график",
+        agendaSubmeta: "График обновляется по согласованию с оргкомитетами мероприятий",
+        agenda: [
+          {
+            date: "2026 Q1",
+            event: "Форум производителей и промышленников Узбекистана",
+            city: "Ташкент",
+            role: "Keynote Спикер",
+            status: "Подтверждено",
+          },
+          {
+            date: "2026 Q2",
+            event: "Саммит экспорта и локализации в Центральной Азии",
+            city: "Самарканд",
+            role: "Экспертная панель",
+            status: "Запланировано",
+          },
+          {
+            date: "Регулярно",
+            event: "Бизнес-клуб UZBIC: Сессии системного управления",
+            city: "Ташкент",
+            role: "Инициатор и спикер",
+            status: "Открытый прием",
+          },
+        ],
+        ctaTitle: "Пригласите спикером или организуйте интервью",
+        ctaDesc:
+          "Прямой канал взаимодействия для СМИ и организаторов мероприятий. Запросы рассматриваются командой в течение 24–48 часов.",
+        inviteButton: "Пригласить спикером",
+        mediaKitButton: "Пресс-кит и материалы для СМИ",
+        notice: "В связи с плотным графиком просим направлять приглашения за 2-3 недели до даты события.",
+      },
     },
     contact: {
       booking: {
@@ -2862,7 +3057,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
         telegramCta: "Формат обращения",
       },
       directory: {
-        ordinal: "07.B",
+        ordinal: "07",
         title: "Официальные каналы связи",
         lead: "Деловые предложения, запросы на партнерство и обращения СМИ принимаются исключительно по указанным официальным контактам.",
         heading: "Прямая связь",
@@ -2894,6 +3089,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
         topicLabel: "Направление запроса",
         topicOptions: [
           { id: "coop", label: "Стратегическое партнерство" },
+          { id: "speaking", label: "Приглашение спикером / Форум" },
           { id: "consult", label: "Консультация (систематизация)" },
           { id: "media", label: "СМИ и интервью" },
           { id: "other", label: "Другой вопрос" },
@@ -3452,7 +3648,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           status: "Verified operating manufacturing facility",
           source: "Orginfo.uz (VISAGE ELECTRIC LLC), Spielwarenmesse.de, Gazeta.uz (2020), Toybola.com",
           hasLogo: true,
-          logoUrl: "/images/partners/toy_bola.webp",
+          logoUrl: "/images/partners/toy_bola.svg",
           assetLabel: "[Verified manufacturing asset]",
           websiteUrl: "https://toybola.uz",
           externalUrl: "https://toybola.uz",
@@ -3480,7 +3676,8 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           tags: ["Chemical Industry", "Masterbatch", "B2B Supply"],
           status: "Co-founded industrial venture (pending registry confirmation)",
           source: "Industrial Cooperation Records (pending confirmation)",
-          hasLogo: false,
+          hasLogo: true,
+          logoUrl: "/images/partners/samtech.svg",
           assetLabel: "[Partner-based manufacturing venture]",
           websiteUrl: null,
           externalUrl: "#",
@@ -3509,7 +3706,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           status: "Historical founding (current ownership unconfirmed)",
           source: "Spot.uz Interview Records (2020 / 2022); current ownership unconfirmed",
           hasLogo: true,
-          logoUrl: "/images/partners/afiyet.webp",
+          logoUrl: "/images/partners/afiyet.svg",
           assetLabel: "[Historical HoReCa venture]",
           websiteUrl: null,
           externalUrl: "#",
@@ -3538,7 +3735,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           status: "Historical partnership (current ownership unconfirmed)",
           source: "Spot.uz Interview Record (2020); current ownership unconfirmed",
           hasLogo: true,
-          logoUrl: "/images/partners/puro.webp",
+          logoUrl: "/images/partners/puro.svg",
           assetLabel: "[Historical cafe venture]",
           websiteUrl: null,
           externalUrl: "#",
@@ -3566,7 +3763,8 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           tags: ["Internal ERP", "Inventory Tracking", "Pending Confirmation"],
           status: "Legal structure & current role pending confirmation",
           source: "Client-confirmation list (no independent registry confirmation)",
-          hasLogo: false,
+          hasLogo: true,
+          logoUrl: "/images/partners/it_support.svg",
           assetLabel: "[Internal digitalization initiative]",
           websiteUrl: null,
           externalUrl: "#",
@@ -3595,7 +3793,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           status: "Independent public council (not private equity)",
           source: "Official uzbic.uz portal & Kun.uz records",
           hasLogo: true,
-          logoUrl: "/images/partners/uzbic.webp",
+          logoUrl: "/images/partners/uzbic.svg",
           assetLabel: "[Independent public platform // Non-commercial asset]",
           websiteUrl: "https://uzbic.uz",
           externalUrl: "https://uzbic.uz",
@@ -4166,6 +4364,85 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
           publicationType: "UZBIC press statement",
         },
       ],
+      speaking: {
+        moduleTag: "06.C // KEYNOTE SPEAKING & PUBLIC ENGAGEMENTS",
+        heading: "Conference Keynotes, Forums & Media",
+        headingEmphasis: "Inquiries",
+        subheading:
+          "Anvar Abduqayum delivers keynote speeches and executive panel discussions on large-scale industrial manufacturing, autonomous operational systems, and export market expansion across Central Asia.",
+        topicsHeading: "Key Speaking Topics",
+        topics: [
+          {
+            title: "Industrial Localization & Injection Molding (IMM) Architecture",
+            desc: "Operating 150T–850T injection molding machinery across Toybola and Samtech, supply chain sovereignty, and substituting import dependencies.",
+            tag: "Manufacturing & Engineering",
+          },
+          {
+            title: "Autonomous Operating Systems: From Chaos to Governance",
+            desc: "The Mold Principle (SOPs, transparent KPI infrastructure, delegation), liberating founders from operational firefighting into strategic leadership.",
+            tag: "Systematization",
+          },
+          {
+            title: "Central Asian Export Strategy to Global Markets",
+            desc: "Establishing export corridors across 10+ countries, compliance certification, and structured distribution agreements.",
+            tag: "Export Strategy",
+          },
+        ],
+        formatsHeading: "Engagement Formats",
+        formats: [
+          {
+            title: "Keynote Speaker",
+            desc: "Headlining address at major international economic and business conferences (30–45 mins).",
+            badge: "Keynote",
+          },
+          {
+            title: "Executive Panel",
+            desc: "Strategic debates alongside industrial leaders, investors, and policymakers.",
+            badge: "Panel Session",
+          },
+          {
+            title: "Media & Analytical Podcasts",
+            desc: "In-depth video interviews for premier business broadcasts and digital publications.",
+            badge: "Media Feature",
+          },
+          {
+            title: "Academic & Youth Initiatives",
+            desc: "Practical masterclasses and guest lectures for university students and upcoming entrepreneurs.",
+            badge: "Campus Outreach",
+          },
+        ],
+        agendaHeading: "Upcoming Engagements & Agenda",
+        agendaSubmeta: "Schedule confirmed directly with event organizational committees",
+        agenda: [
+          {
+            date: "2026 Q1",
+            event: "Uzbekistan Industrial Manufacturers Forum",
+            city: "Tashkent",
+            role: "Keynote Speaker",
+            status: "Confirmed",
+          },
+          {
+            date: "2026 Q2",
+            event: "Central Asian Export & Localization Summit",
+            city: "Samarkand",
+            role: "Executive Panelist",
+            status: "Scheduled",
+          },
+          {
+            date: "Ongoing",
+            event: "UZBIC Executive Sessions: Systemic Governance",
+            city: "Tashkent",
+            role: "Founder & Speaker",
+            status: "Open Registration",
+          },
+        ],
+        ctaTitle: "Invite as a Keynote Speaker or Request an Interview",
+        ctaDesc:
+          "Official pipeline for press, event coordinators, and summit boards. Submissions reviewed by the executive desk within 24–48 hours.",
+        inviteButton: "Invite as Speaker",
+        mediaKitButton: "Official Press Kit & Bios",
+        notice: "Due to manufacturing commitments, submissions are recommended at least 2–3 weeks in advance.",
+      },
     },
     contact: {
       booking: {
@@ -4184,7 +4461,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
         telegramCta: "Collaboration Info",
       },
       directory: {
-        ordinal: "07.B",
+        ordinal: "07",
         title: "Verified official channels",
         lead: "Commercial inquiries, partnership proposals, and media requests are accepted exclusively through the verified channels listed below.",
         heading: "Direct directory",
@@ -4216,6 +4493,7 @@ export const siteContent: Record<"uz" | "ru" | "en", LocaleContent> = {
         topicLabel: "Inquiry topic",
         topicOptions: [
           { id: "coop", label: "Strategic partnership" },
+          { id: "speaking", label: "Keynote speaking & event invite" },
           { id: "consult", label: "Consultation (systematization)" },
           { id: "media", label: "Media & interviews" },
           { id: "other", label: "Other inquiry" },

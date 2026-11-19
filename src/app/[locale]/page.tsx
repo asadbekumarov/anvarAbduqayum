@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import { MobileStickyBar } from "@/components/layout/MobileStickyBar";
 import { Hero } from "@/components/sections/Hero";
 import { Portfolio } from "@/components/sections/Portfolio";
+import { Numbers } from "@/components/sections/Numbers";
 import { Timeline } from "@/components/sections/Timeline";
 import { CurrentInitiatives } from "@/components/sections/CurrentInitiatives";
 import { Principles } from "@/components/sections/Principles";
@@ -68,7 +69,10 @@ export default async function HomePage({
         {/* 02 — Business Portfolio */}
         {featuresConfig.sections.portfolio && <Portfolio locale={locale} />}
 
-        {/* 03 — Timeline / Faoliyat yo'li */}
+        {/* 03 — Numbers / Sanoat raqamlarda */}
+        {featuresConfig.sections.numbers && <Numbers locale={locale} />}
+
+        {/* 04 — Timeline / Faoliyat yo'li */}
         {featuresConfig.sections.timeline && <Timeline locale={locale} />}
 
         {/* 04 — Current Initiatives / Tashabbuslar */}

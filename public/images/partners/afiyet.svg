@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="afFlame" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#DC2626"/>
+      <stop offset="50%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#FBBF24"/>
+    </linearGradient>
+    <linearGradient id="afCopper" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FED7AA"/>
+      <stop offset="50%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#C2410C"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Afiyet Brand Mark: Turkish Hearth Flame & Ottoman Crescent -->
+  <g transform="translate(8, 10)">
+    <!-- Crescent Cradle -->
+    <path d="M7 22 C7 32 15 39 25 38 C32 37 37 32 38 26 C36 29 32 31 27 31 C18 31 12 25 12 17 C12 12 15 8 18 6 C11 9 7 15 7 22 Z" fill="url(#afCopper)"/>
+    <!-- Ascending Charcoal Grill Flame -->
+    <path d="M22 32 C18 26 21 19 25 15 C26 20 29 21 30 18 C32 23 31 28 27 31 C25 32 23 32 22 32 Z" fill="url(#afFlame)"/>
+    <!-- Star Spark -->
+    <polygon points="31,6 32,9 35,10 32,11 31,14 30,11 27,10 30,9" fill="#FDE047"/>
+  </g>
+
+  <!-- Typography: AFIYET -->
+  <text x="54" y="32" font-family="Georgia, Cambria, serif" font-weight="700" font-size="22" letter-spacing="2" fill="#FFFFFF">
+    AFIYET
+  </text>
+  <!-- Subtitle: KEBAB & RESTAURANT -->
+  <text x="55" y="46" font-family="system-ui, sans-serif" font-weight="600" font-size="8" letter-spacing="3" fill="#FB923C">
+    KEBAB // RESTAURANT
+  </text>
+</svg>

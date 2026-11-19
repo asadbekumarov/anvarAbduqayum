@@ -41,17 +41,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   }));
 
-  const bronEntries: MetadataRoute.Sitemap = routing.locales.map((locale) => ({
-    url: `${baseUrl}/${locale}/bron`,
+  const hamkorlikEntries: MetadataRoute.Sitemap = routing.locales.map((locale) => ({
+    url: `${baseUrl}/${locale}/hamkorlik`,
     lastModified,
     changeFrequency: "weekly" as const,
     priority: locale === "uz" ? 0.9 : 0.7,
     alternates: {
       languages: {
-        uz: `${baseUrl}/uz/bron`,
-        ru: `${baseUrl}/ru/bron`,
-        en: `${baseUrl}/en/bron`,
-        "x-default": `${baseUrl}/uz/bron`,
+        uz: `${baseUrl}/uz/hamkorlik`,
+        ru: `${baseUrl}/ru/hamkorlik`,
+        en: `${baseUrl}/en/hamkorlik`,
+        "x-default": `${baseUrl}/uz/hamkorlik`,
       },
     },
   }));
@@ -59,6 +59,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     ...homeEntries,
     ...(featuresConfig.quiz ? testEntries : []),
-    ...bronEntries,
+    ...(featuresConfig.partnershipIntake ? hamkorlikEntries : []),
   ];
 }

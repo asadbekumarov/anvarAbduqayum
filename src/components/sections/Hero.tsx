@@ -78,20 +78,10 @@ export const Hero: React.FC<HeroProps> = ({ locale = "uz" }) => {
           {/* Left Column: Monograph Editorial Content */}
           <div className="flex flex-col min-w-0">
 
-            {/* Editorial Kicker (Quiet, Authentic & Restrained) */}
-            {content.hero.kickerBadge && (
-              <div className="inline-flex items-center gap-2.5 mb-4 sm:mb-6">
-                <span className="w-5 h-[1.5px] bg-[var(--accent-gold-ink)] shrink-0" aria-hidden="true" />
-                <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--accent-gold-ink)]">
-                  {content.hero.kickerBadge}
-                </span>
-              </div>
-            )}
-
             {/* Main Editorial Headline */}
             <h1
               id="hero-heading"
-              className="font-serif text-3xl sm:text-5xl lg:text-[54px] xl:text-[62px] font-semibold leading-[1.08] text-[var(--text-ink)] tracking-tight mb-4 sm:mb-7 [overflow-wrap:break-word] min-w-0"
+              className="font-serif text-[clamp(2.1rem,5vw,3.875rem)] font-semibold leading-[1.08] text-[var(--text-ink)] tracking-tight mb-4 sm:mb-7 [overflow-wrap:break-word] min-w-0"
             >
               <em className="font-editorial-italic font-normal text-[var(--accent-gold-ink)] not-italic pr-2">
                 <StaggeredTextReveal
@@ -122,12 +112,12 @@ export const Hero: React.FC<HeroProps> = ({ locale = "uz" }) => {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: SWISS_EASE, delay: 0.36 }}
-              className="flex flex-wrap items-center gap-3 sm:gap-4 mb-8 sm:mb-12"
+              className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-8 sm:mb-12 w-full sm:w-auto"
             >
-              <MagneticPull>
+              <MagneticPull className="w-full sm:w-auto">
                 <BookingActionLink
                   locale={locale}
-                  className="min-h-[48px] sm:min-h-[52px] px-7 sm:px-8 bg-[var(--bg-dark)] text-[var(--bg-surface)] text-xs font-sans font-semibold uppercase tracking-[0.14em] inline-flex items-center justify-center gap-2.5 border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] hover:-translate-y-0.5 hover:shadow-[var(--shadow-editorial-gold)] active:translate-y-0 transition-[background-color,border-color,color,transform,box-shadow] duration-200 rounded-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-alabaster)]"
+                  className="w-full sm:w-auto min-h-[48px] sm:min-h-[52px] px-6 sm:px-8 bg-[var(--bg-dark)] text-[var(--bg-surface)] text-xs font-sans font-semibold uppercase tracking-[0.14em] inline-flex items-center justify-center gap-2.5 border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] hover:-translate-y-0.5 hover:shadow-[var(--shadow-editorial-gold)] active:translate-y-0 transition-[background-color,border-color,color,transform,box-shadow] duration-200 rounded-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-alabaster)]"
                 >
                   <span>{content.hero.ctaPrimary || "Hamkorlik tartibi"}</span>
                   <svg
@@ -148,7 +138,7 @@ export const Hero: React.FC<HeroProps> = ({ locale = "uz" }) => {
               </MagneticPull>
               <a
                 href="#portfel"
-                className="min-h-[48px] sm:min-h-[52px] px-6 sm:px-7 bg-transparent text-[var(--text-ink)] text-xs font-sans font-semibold uppercase tracking-[0.14em] inline-flex items-center justify-center gap-2 border border-[var(--border-hairline-strong)] hover:border-[var(--text-ink)] hover:bg-[var(--bg-surface)] hover:-translate-y-0.5 active:translate-y-0 transition-[background-color,border-color,color,transform] duration-200 rounded-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-alabaster)]"
+                className="w-full sm:w-auto min-h-[48px] sm:min-h-[52px] px-6 sm:px-7 bg-transparent text-[var(--text-ink)] text-xs font-sans font-semibold uppercase tracking-[0.14em] inline-flex items-center justify-center gap-2 border border-[var(--border-hairline-strong)] hover:border-[var(--text-ink)] hover:bg-[var(--bg-surface)] hover:-translate-y-0.5 active:translate-y-0 transition-[background-color,border-color,color,transform] duration-200 rounded-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-alabaster)]"
               >
                 <span>{content.hero.ctaSecondary || "Biznes ekotizimi"}</span>
               </a>

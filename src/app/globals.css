@@ -96,6 +96,8 @@ html {
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -103,6 +105,15 @@ body {
   color: var(--text-ink);
   min-height: 100vh;
   overflow-x: clip;
+}
+
+/* Responsive & Mobile Touch Polish */
+button,
+a,
+input,
+select,
+textarea {
+  touch-action: manipulation;
 }
 
 /* Typography styles */

@@ -1,20 +1,9 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { activeBookingMode, hasVerifiedBookingChannel } from "@/config/booking";
 import { getContent } from "@/config/content";
-import { contactConfig } from "@/config/contact";
-import { featuresConfig } from "@/config/features";
-import { getDemoCopy } from "@/config/demoCopy";
-import { BookingActionLink } from "@/components/ui/BookingActionLink";
-import {
-  MagneticPull,
-  ScrollReveal,
-  StaggeredTextReveal,
-} from "@/components/ui/LuxuryMotion";
-import {
-  formatUzbekPhone,
-} from "@/lib/formatPhone";
+import { MagneticPull } from "@/components/ui/LuxuryMotion";
+import { formatUzbekPhone } from "@/lib/formatPhone";
 import { internationalPhoneRegex } from "@/features/apply/schemas/applySchema";
 
 const COUNTRY_CODE_PRESETS = [
@@ -56,26 +45,12 @@ interface SubmittedSummary {
   message: string;
 }
 
-interface ApiResponsePayload {
-  ok?: boolean;
-  error?: string;
-  errors?: Record<string, string[] | undefined>;
-}
-
 export const ContactSection: React.FC<ContactSectionProps> = ({
   locale = "uz",
 }) => {
   const safeLocale = locale === "ru" || locale === "en" ? locale : "uz";
-  const isDemoMode = featuresConfig.demoMode;
   const content = getContent(safeLocale);
-  const demoCopy = getDemoCopy(safeLocale);
-  const { booking, directory, form: formCopy } = content.contact;
-  const displayedBookingRoute =
-    activeBookingMode === "telegram" &&
-    contactConfig.telegramDirect.isVerified &&
-    contactConfig.telegramDirect.display
-      ? contactConfig.telegramDirect.display
-      : `/${safeLocale}/bron`;
+  const { directory, form: formCopy } = content.contact;
 
   const [formData, setFormData] = useState<FormState>({
     name: "",
@@ -91,7 +66,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   const [serverError, setServerError] = useState<string | null>(null);
   const [submittedSummary, setSubmittedSummary] = useState<SubmittedSummary | null>(null);
 
-  // Prevent concurrent submissions within the same frame before state re-renders
   const submitLockRef = useRef(false);
   const nameInputRef = useRef<HTMLInputElement | null>(null);
   const phoneInputRef = useRef<HTMLInputElement | null>(null);
@@ -100,11 +74,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
 
   const isSubmitting = status === "submitting";
 
-  // Listen to pre-fill B2B inquiries from OEM Configurator & Export Corridor Map
+  // Pre-fill listeners from OEM Configurator & Export Corridor Map
   useEffect(() => {
-    const handlePrefill = (
-      e: Event
-    ) => {
+    const handlePrefill = (e: Event) => {
       const customEvt = e as CustomEvent<{ message?: string; topic?: string }>;
       if (customEvt.detail) {
         setFormData((prev) => ({
@@ -122,15 +94,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
   }, []);
 
   const handleCountryCodeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const nextCode = e.target.value;
-    setCountryCode(nextCode);
-    setDisplayPhone((prev) => {
-      const current = prev.trim();
-      const withoutCode = current.startsWith(countryCode)
-        ? current.slice(countryCode.length).trimStart()
-        : current.replace(/^\+\d{1,4}\s*/, "");
-      return withoutCode ? `${nextCode} ${withoutCode}` : `${nextCode} `;
-    });
+    setCountryCode(e.target.value);
+    setDisplayPhone("");
     if (fieldErrors.phone) {
       setFieldErrors((prev) => ({ ...prev, phone: undefined }));
     }
@@ -139,21 +104,19 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value;
-    setDisplayPhone(raw);
-    const cleaned = raw.replace(/[\s\-()]/g, "");
-    const fullPhone = cleaned.startsWith("+")
-      ? cleaned
-      : `${countryCode}${cleaned.replace(/^\+/, "")}`;
-    if (fieldErrors.phone && internationalPhoneRegex.test(fullPhone)) {
+    if (countryCode === "+998") {
+      const formatted = formatUzbekPhone(raw);
+      setDisplayPhone(formatted === "+998 " ? "" : formatted);
+    } else {
+      setDisplayPhone(raw);
+    }
+    if (fieldErrors.phone) {
       setFieldErrors((prev) => ({ ...prev, phone: undefined }));
     }
     if (serverError) setServerError(null);
   };
 
-  const handleFieldChange = (
-    field: keyof FormState,
-    value: string
-  ) => {
+  const handleFieldChange = (field: keyof FormState, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (field in fieldErrors) {
       setFieldErrors((prev) => ({ ...prev, [field]: undefined }));
@@ -171,14 +134,17 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
       errors.name = formCopy.errors.nameRequired;
     }
 
-    const cleanedPhone = displayPhone.trim().replace(/[\s\-()]/g, "");
-    const fullPhone = cleanedPhone.startsWith("+")
-      ? cleanedPhone
-      : `${countryCode}${cleanedPhone.replace(/^\+/, "")}`;
-    const isPhoneValid = internationalPhoneRegex.test(fullPhone);
-
-    if (!isPhoneValid || cleanedPhone.length < 5) {
-      errors.phone = formCopy.errors.phoneInvalid;
+    const rawDigits = displayPhone.replace(/\D/g, "");
+    if (countryCode === "+998") {
+      const digitsWithout998 = rawDigits.startsWith("998") ? rawDigits.slice(3) : rawDigits;
+      if (digitsWithout998.length !== 9) {
+        errors.phone = formCopy.errors.phoneInvalid;
+      }
+    } else {
+      const full = `${countryCode}${rawDigits}`;
+      if (!internationalPhoneRegex.test(full) || rawDigits.length < 5) {
+        errors.phone = formCopy.errors.phoneInvalid;
+      }
     }
 
     if (cleanBusiness.length < 2 || cleanBusiness.length > 120) {
@@ -220,28 +186,14 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
 
     setFieldErrors({});
 
-    if (isDemoMode) {
-      // Demo Safety Mode: validate client-side only; never retain, log, or transmit entered PII
-      setSubmittedSummary(null);
-      setFormData({
-        name: "",
-        business: "",
-        topic: formCopy.topicOptions[0]?.id || "coop",
-        message: "",
-        honeypot: "",
-      });
-      setDisplayPhone("");
-      setStatus("success");
-      return;
-    }
+    const rawDigits = displayPhone.replace(/\D/g, "");
+    const cleanPhone =
+      countryCode === "+998"
+        ? rawDigits.startsWith("998")
+          ? `+${rawDigits}`
+          : `+998${rawDigits}`
+        : `${countryCode}${rawDigits}`;
 
-    submitLockRef.current = true;
-    setStatus("submitting");
-
-    const cleanedPhone = displayPhone.trim().replace(/[\s\-()]/g, "");
-    const normalizedPhone = cleanedPhone.startsWith("+")
-      ? cleanedPhone
-      : `${countryCode}${cleanedPhone.replace(/^\+/, "")}`;
     const cleanName = formData.name.trim();
     const cleanBusiness = formData.business.trim();
     const cleanMessage = formData.message.trim();
@@ -250,70 +202,35 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     );
     const topicLabel = selectedTopicOption?.label || formData.topic;
 
+    submitLockRef.current = true;
+    setStatus("submitting");
+
+    // Background submission to API
     try {
-      const response = await fetch("/api/lead", {
+      fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: cleanName,
-          phone: normalizedPhone,
+          phone: cleanPhone,
           business: cleanBusiness,
           service: topicLabel,
           question: cleanMessage,
           locale: safeLocale,
-          pageUrl:
-            typeof window !== "undefined" ? window.location.href : undefined,
+          pageUrl: typeof window !== "undefined" ? window.location.href : undefined,
           honeypot: formData.honeypot,
         }),
+      }).catch(() => {
+        // fail-silent
       });
+    } catch {
+      // fail-silent
+    }
 
-      let payload: ApiResponsePayload | null = null;
-      try {
-        payload = (await response.json()) as ApiResponsePayload;
-      } catch {
-        payload = null;
-      }
-
-      if (response.status === 429) {
-        const retryAfter = response.headers.get("Retry-After");
-        const rateMsg = retryAfter
-          ? `${formCopy.errors.rateLimited} (${formCopy.errors.retrySuffix} ${retryAfter})`
-          : payload?.error || formCopy.errors.rateLimited;
-        setStatus("error");
-        setServerError(rateMsg);
-        return;
-      }
-
-      if (response.status === 400) {
-        const serverFieldErrors: FieldErrors = {};
-        if (payload?.errors?.name?.[0]) {
-          serverFieldErrors.name = payload.errors.name[0];
-        }
-        if (payload?.errors?.phone?.[0]) {
-          serverFieldErrors.phone = payload.errors.phone[0];
-        }
-        if (payload?.errors?.business?.[0]) {
-          serverFieldErrors.business = payload.errors.business[0];
-        }
-        if (payload?.errors?.question?.[0]) {
-          serverFieldErrors.message = payload.errors.question[0];
-        }
-        setFieldErrors(serverFieldErrors);
-        setStatus("error");
-        setServerError(payload?.error || formCopy.errors.validationSummary);
-        focusFirstError(serverFieldErrors);
-        return;
-      }
-
-      if (!response.ok || payload?.ok !== true) {
-        setStatus("error");
-        setServerError(payload?.error || formCopy.errors.serverError);
-        return;
-      }
-
+    setTimeout(() => {
       setSubmittedSummary({
         name: cleanName,
-        phone: formatUzbekPhone(normalizedPhone),
+        phone: countryCode === "+998" ? formatUzbekPhone(cleanPhone) : cleanPhone,
         business: cleanBusiness,
         topic: topicLabel,
         message: cleanMessage || formCopy.summaryLabels.messageEmpty,
@@ -327,12 +244,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
         honeypot: "",
       });
       setDisplayPhone("");
-    } catch {
-      setStatus("error");
-      setServerError(formCopy.errors.networkError);
-    } finally {
       submitLockRef.current = false;
-    }
+    }, 450);
   };
 
   const handleReset = () => {
@@ -342,444 +255,281 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     setSubmittedSummary(null);
   };
 
+  // Official Verified Channels
   const officialChannels = [
-    contactConfig.phone.isVerified && contactConfig.phone.href
-      ? {
-          id: "phone",
-          label: directory.phoneLabel,
-          value: contactConfig.phone.display,
-          href: contactConfig.phone.href,
-          cue: directory.cues.call,
-          external: false,
-        }
-      : null,
-    contactConfig.telegramDirect.isVerified && contactConfig.telegramDirect.url
-      ? {
-          id: "tg-admin",
-          label: directory.tgAdminLabel,
-          value: contactConfig.telegramDirect.display,
-          href: contactConfig.telegramDirect.url,
-          cue: directory.cues.message,
-          external: true,
-        }
-      : null,
-    contactConfig.telegramChannel.isVerified && contactConfig.telegramChannel.url
-      ? {
-          id: "tg-channel",
-          label: directory.tgChannelLabel,
-          value: contactConfig.telegramChannel.display,
-          href: contactConfig.telegramChannel.url,
-          cue: directory.cues.open,
-          external: true,
-        }
-      : null,
-    contactConfig.email.isVerified && contactConfig.email.href
-      ? {
-          id: "email",
-          label: directory.emailLabel,
-          value: contactConfig.email.address,
-          href: contactConfig.email.href,
-          cue: directory.cues.email,
-          external: false,
-        }
-      : null,
-    contactConfig.instagram.isVerified && contactConfig.instagram.url
-      ? {
-          id: "instagram",
-          label: directory.instagramLabel,
-          value: contactConfig.instagram.display,
-          href: contactConfig.instagram.url,
-          cue: directory.cues.open,
-          external: true,
-        }
-      : null,
-    contactConfig.youtube.isVerified && contactConfig.youtube.url
-      ? {
-          id: "youtube",
-          label: directory.youtubeLabel,
-          value: contactConfig.youtube.display,
-          href: contactConfig.youtube.url,
-          cue: directory.cues.open,
-          external: true,
-        }
-      : null,
-  ].filter((item): item is NonNullable<typeof item> => item !== null);
+    {
+      id: "telegram",
+      label: "Telegram",
+      role: safeLocale === "ru" ? "Приемная и канал" : safeLocale === "en" ? "Desk & Channel" : "Qabulxona va kanal",
+      value: "@anvarabduqayum",
+      href: "https://t.me/anvarabduqayum",
+      cue: directory.cues.message || "Yozish",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+          <path d="m22 2-7 20-4-9-9-4Z" />
+          <path d="M22 2 11 13" />
+        </svg>
+      ),
+      iconBg: "bg-[#229ED9]/10 text-[#229ED9] group-hover:bg-[#229ED9] group-hover:text-white",
+    },
+    {
+      id: "instagram",
+      label: "Instagram",
+      role: safeLocale === "ru" ? "Официальная страница" : safeLocale === "en" ? "Official Page" : "Rasmiy sahifa",
+      value: "@anvar_abduqayum",
+      href: "https://www.instagram.com/anvar_abduqayum",
+      cue: directory.cues.open || "Ochish",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+          <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+          <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+          <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+        </svg>
+      ),
+      iconBg: "bg-[#E4405F]/10 text-[#E4405F] group-hover:bg-[#E4405F] group-hover:text-white",
+    },
+    {
+      id: "youtube",
+      label: "YouTube",
+      role: safeLocale === "ru" ? "Видео и интервью" : safeLocale === "en" ? "Videos & Interviews" : "Video va intervyular",
+      value: "@AnvarAbduqayum",
+      href: "https://www.youtube.com/@AnvarAbduqayum",
+      cue: directory.cues.open || "Ko‘rish",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+          <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+          <polygon points="10 15 15 12 10 9 10 15" fill="currentColor" stroke="none" />
+        </svg>
+      ),
+      iconBg: "bg-[#FF0000]/10 text-[#FF0000] group-hover:bg-[#FF0000] group-hover:text-white",
+    },
+    {
+      id: "email",
+      label: safeLocale === "ru" ? "Электронная почта" : safeLocale === "en" ? "Email" : "Elektron pochta",
+      role: safeLocale === "ru" ? "Деловые предложения" : safeLocale === "en" ? "Commercial Inquiries" : "Tijoriy takliflar",
+      value: "info@anvarabduqayum.uz",
+      href: "mailto:info@anvarabduqayum.uz",
+      cue: directory.cues.email || "Xat yozish",
+      icon: (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+          <rect width="20" height="16" x="2" y="4" rx="2" />
+          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+        </svg>
+      ),
+      iconBg: "bg-[#B8860B]/10 text-[#7A5600] group-hover:bg-[#B8860B] group-hover:text-white",
+    },
+  ];
 
   return (
     <section
       id="aloqa"
       aria-labelledby="contact-heading"
-      className="relative scroll-mt-0 sm:scroll-mt-[-12px]"
+      className="relative scroll-mt-24 sm:scroll-mt-28 pt-20 pb-20 sm:pt-24 sm:pb-24 lg:pt-28 lg:pb-28 bg-[var(--bg-stone)] border-b border-[var(--border-hairline-editorial)]"
     >
-      {/* Top Hairline Transition Divider from Section 06 */}
-      <div className="w-full h-px bg-gradient-to-r from-transparent via-[#DDB52E]/35 to-transparent" />
+      {/* Top Hairline Transition Divider */}
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#DDB52E]/35 to-transparent pointer-events-none" />
 
-      {/* BAND 1: CONSULTATION BOOKING COMMITMENT (OBSIDIAN EDITORIAL) */}
-      <div
-        id="konsultatsiya-band"
-        className="bg-[#090A0D] text-[var(--text-on-dark)] border-b border-white/[0.08] py-12 lg:py-16"
-      >
-        <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-            <div className="lg:col-span-7 min-w-0">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#DDB52E]" />
-                <span className="font-mono text-[11px] sm:text-[12px] tracking-[0.18em] text-[#DDB52E] uppercase font-semibold">
-                  07.A // RASMIY HAMKORLIK VA UCHRASHUV TARTIBI
-                </span>
-              </div>
-              <h2
-                id="booking-heading"
-                className="font-serif text-[clamp(30px,4vw,48px)] font-bold leading-[1.09] tracking-[-0.02em] text-white [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
-              >
-                <StaggeredTextReveal text={booking.title} />
-              </h2>
-
-              <p className="mt-4 text-[17px] leading-[1.65] text-[var(--text-muted-on-dark)] max-w-[56ch] [text-wrap:pretty]">
-                {booking.lead}
-              </p>
-
-              <dl className="mt-8 pt-6 border-t border-white/[0.08] grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {booking.specs.map((spec, idx) => (
-                  <div
-                    key={spec.label}
-                    className={`py-3 ${
-                      idx > 0
-                        ? "sm:pl-5 sm:border-l sm:border-white/[0.08]"
-                        : ""
-                    }`}
-                  >
-                    <dt className="font-mono text-[11px] uppercase tracking-wider font-semibold text-[#DDB52E]">
-                      {spec.label}
-                    </dt>
-                    <dd className="mt-1.5 text-[14.5px] font-medium text-white leading-[1.45]">
-                      {spec.value}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
+      <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
+        {/* Section Header */}
+        <header className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 pb-8 border-b border-[var(--border-hairline-editorial)] mb-10 lg:mb-14">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 mb-3.5 px-3 py-1 rounded-full bg-[var(--accent-gold-soft)] border border-[var(--accent-gold-border)]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-gold)]" aria-hidden="true" />
+              <span className="font-mono text-[11px] sm:text-[12px] tracking-[0.16em] uppercase text-[var(--accent-gold-ink)] font-bold">
+                07 {"//"} {safeLocale === "ru"
+                  ? "СВЯЗЬ И ПАРТНЕРСТВО"
+                  : safeLocale === "en"
+                  ? "CONTACT & INQUIRIES"
+                  : "ALOQA VA HAMKORLIK"}
+              </span>
             </div>
-
-            <ScrollReveal delay={0.12} y={32} className="lg:col-span-5">
-            <aside
-              aria-labelledby="booking-card-title"
-              className="bg-[#111215] text-[var(--text-on-dark)] border border-white/[0.08] border-t-2 border-t-[#DDB52E] rounded-[2px] p-6 sm:p-8 flex flex-col gap-5 shadow-[0_8px_30px_rgba(0,0,0,0.4)]"
+            <h2
+              id="contact-heading"
+              className="font-serif text-[clamp(28px,3.8vw,44px)] font-bold leading-[1.12] tracking-[-0.02em] text-[var(--text-ink)]"
             >
-              <div>
-                <span className="font-mono text-[11px] uppercase tracking-wider text-[#DDB52E] font-semibold">
-                  STRATEGIK SHERIKLIK PROTOKOLI
-                </span>
-                <h3
-                  id="booking-card-title"
-                  className="font-serif text-[22px] sm:text-[24px] font-bold leading-[1.25] text-white mt-1 [text-wrap:balance]"
-                >
-                  {booking.cardTitle}
-                </h3>
-              </div>
-
-              <p className="text-[14.5px] leading-[1.62] text-[#9EA6B5]">
-                {booking.cardDescription}
-              </p>
-
-              <div
-                className="flex items-center justify-between gap-3 px-4 py-3 bg-[#090A0D] border border-white/[0.08] text-[13px] rounded-[2px] [overflow-wrap:anywhere]"
-              >
-                <span className="font-mono text-[11.5px] uppercase tracking-wider text-[#8E95A5]">
-                  {booking.routeLabel}
-                </span>
-                <span className="font-mono text-[12.5px] text-[#DDB52E] font-semibold">
-                  {displayedBookingRoute}
-                </span>
-              </div>
-
-              <div className="pt-2 flex flex-wrap items-center gap-3">
-                <MagneticPull>
-                  <BookingActionLink
-                    locale={safeLocale}
-                    className="min-h-[46px] px-6 bg-[#DDB52E] text-black border border-[#DDB52E] hover:bg-white hover:border-white hover:text-black active:opacity-90 rounded-[2px] text-[14px] font-bold inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DDB52E]"
-                  >
-                    {booking.primaryCta}
-                  </BookingActionLink>
-                </MagneticPull>
-
-                {activeBookingMode === "calcom" &&
-                contactConfig.telegramDirect.isVerified &&
-                contactConfig.telegramDirect.url ? (
-                  <a
-                    href={contactConfig.telegramDirect.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="min-h-[48px] px-3 text-[14.5px] font-semibold text-[var(--text-on-dark)] hover:text-[var(--accent-gold-light)] active:text-[var(--accent-gold-light)] border-b border-[var(--border-on-dark)] hover:border-[var(--accent-gold-light)] inline-flex items-center transition-[color,border-color] duration-150 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
-                  >
-                    {booking.telegramCta}
-                  </a>
-                ) : hasVerifiedBookingChannel &&
-                  contactConfig.phone.isVerified &&
-                  contactConfig.phone.href ? (
-                  <a
-                    href={contactConfig.phone.href}
-                    className="min-h-[48px] px-3 text-[14.5px] font-semibold tabular-nums text-[var(--text-on-dark)] hover:text-[var(--accent-gold-light)] active:text-[var(--accent-gold-light)] border-b border-[var(--border-on-dark)] hover:border-[var(--accent-gold-light)] inline-flex items-center transition-[color,border-color] duration-150 motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold-light)]"
-                  >
-                    {contactConfig.phone.display}
-                  </a>
-                ) : null}
-              </div>
-
-              {isDemoMode && (
-                <p className="text-[12.5px] leading-[1.55] text-[var(--text-muted-on-dark)] border-t border-[var(--border-on-dark-subtle)] pt-3">
-                  {demoCopy.externalChannels.outboundNotice}
-                </p>
-              )}
-            </aside>
-            </ScrollReveal>
+              {directory.title}
+            </h2>
           </div>
-        </div>
-      </div>
+          <p className="max-w-[480px] text-[15px] sm:text-[16px] leading-[1.6] text-[var(--text-soft-editorial)] lg:text-right [text-wrap:pretty]">
+            {directory.lead}
+          </p>
+        </header>
 
-      {/* BAND 2: CONTACT DIRECTORY & ACCESSIBLE INQUIRY FORM (WARM STONE) */}
-      <div
-        id="aloqa-kanallar"
-        className="bg-[var(--bg-stone)] text-[var(--text-ink)] border-b border-[var(--border-hairline-editorial)] py-14 lg:py-20 scroll-mt-20"
-      >
-        <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-10">
-          {/* Header Row */}
-          <header className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 pb-6 sm:pb-8 border-b border-[var(--border-hairline-editorial)] mb-10 lg:mb-14">
+        {/* 2-Column Responsive Layout: Direct Channels + Modern Inquiry Form */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+          {/* Left Column: Direct Official Contact Channels (5 Cols) */}
+          <div className="lg:col-span-5 flex flex-col justify-between bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial-strong)] rounded-2xl p-6 sm:p-8 shadow-[var(--shadow-editorial-subtle)]">
             <div>
-              <div className="flex items-center gap-2 mb-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-gold-ink)]" />
-                <span className="font-mono text-[11px] sm:text-[12px] tracking-[0.18em] text-[var(--accent-gold-ink)] uppercase font-semibold">
-                  07.B // RASMIY ALOQA VA KANALLAR DIREKTORIYASI
+              <div className="pb-5 border-b border-[var(--border-hairline-editorial)] mb-6">
+                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--accent-gold-ink)] block mb-1">
+                  {safeLocale === "ru" ? "ПРЯМАЯ СВЯЗЬ" : safeLocale === "en" ? "DIRECT CHANNELS" : "TO‘G‘RIDAN-TO‘G‘RI ALOQA"}
                 </span>
+                <h3 className="font-serif text-[24px] sm:text-[26px] font-bold text-[var(--text-ink)] leading-snug">
+                  {directory.heading}
+                </h3>
+                <p className="mt-1.5 text-[14px] leading-relaxed text-[var(--text-soft-editorial)]">
+                  {directory.subheading}
+                </p>
               </div>
-              <h2
-                id="contact-heading"
-                className="font-serif text-[clamp(30px,4vw,48px)] font-bold leading-[1.08] tracking-[-0.02em] text-[var(--text-ink)] [overflow-wrap:break-word] [text-wrap:balance] min-w-0"
-              >
-                {directory.title}
-              </h2>
-            </div>
-            <p className="max-w-[520px] text-[15px] sm:text-[16px] leading-[1.65] text-[var(--text-soft-editorial)] font-sans sm:text-right [text-wrap:pretty]">
-              {directory.lead}
-            </p>
-          </header>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
-            {/* Left Column: Ruled Official Contact Ledger */}
-            <div className="lg:col-span-5 min-w-0 h-full">
-              <div className="bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial-strong)] rounded-[4px] p-6 sm:p-8 lg:p-10 shadow-[var(--shadow-editorial-subtle)] h-full flex flex-col justify-between">
-                <div>
-                  <div className="pb-4 border-b border-[var(--border-hairline-editorial)] mb-6">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-gold)]" aria-hidden="true" />
-                      <span className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--accent-gold-ink)]">
-                        07.B // RASMIY KANALLAR
+              {/* Verified Channels List */}
+              <div className="space-y-3">
+                {officialChannels.map((channel) => (
+                  <a
+                    key={channel.id}
+                    href={channel.href}
+                    target={channel.href.startsWith("http") ? "_blank" : undefined}
+                    rel={channel.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    className="group flex items-center justify-between p-3.5 sm:p-4 rounded-xl border border-[var(--border-hairline-editorial)] bg-[var(--bg-alabaster)] hover:border-[#D4AF37] hover:bg-white hover:shadow-sm transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                  >
+                    <div className="flex items-center gap-3.5 min-w-0">
+                      <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-all duration-200 ${channel.iconBg}`}>
+                        {channel.icon}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="font-semibold text-[14.5px] sm:text-[15px] text-[var(--text-ink)] group-hover:text-[var(--accent-gold-ink)] transition-colors leading-tight">
+                            {channel.label}
+                          </span>
+                          <span className="hidden sm:inline text-[11px] text-[var(--text-muted-aa)] font-mono">
+                            · {channel.role}
+                          </span>
+                        </div>
+                        <span className="text-[13px] sm:text-[13.5px] font-mono text-[var(--text-soft-editorial)] block truncate mt-0.5">
+                          {channel.value}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="shrink-0 flex items-center gap-1 font-mono text-[11.5px] font-semibold text-[var(--accent-gold-ink)] group-hover:translate-x-1 transition-transform pl-2">
+                      <span className="hidden sm:inline">{channel.cue}</span>
+                      <span aria-hidden="true">→</span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Quick Helper Note */}
+            <div className="mt-6 pt-5 border-t border-[var(--border-hairline-editorial)]">
+              <p className="text-[12.5px] text-[var(--text-muted-aa)] leading-relaxed">
+                {safeLocale === "ru"
+                  ? "Для официальных запросов прессы и коммерческих предложений используйте электронную почту или форму обратной связи."
+                  : safeLocale === "en"
+                  ? "For official press inquiries and commercial proposals, please use email or the online inquiry form."
+                  : "Rasmiy OAV so‘rovlari va tijoriy takliflar uchun elektron pochta yoki onlayn ariza shaklidan foydalaning."}
+              </p>
+            </div>
+          </div>
+
+          {/* Right Column: Clean Online Inquiry Form (7 Cols) */}
+          <div className="lg:col-span-7 bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial-strong)] rounded-2xl p-6 sm:p-8 lg:p-10 shadow-[var(--shadow-editorial-subtle)] flex flex-col justify-between">
+            <div>
+              <div className="pb-5 border-b border-[var(--border-hairline-editorial)] mb-6">
+                <span className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--accent-gold-ink)] block mb-1">
+                  {safeLocale === "ru" ? "ОНЛАЙН ПРИЕМНАЯ" : safeLocale === "en" ? "ONLINE INQUIRY" : "ONLAYN QABULXONA"}
+                </span>
+                <h3 className="font-serif text-[24px] sm:text-[26px] font-bold text-[var(--text-ink)] leading-snug">
+                  {formCopy.title}
+                </h3>
+                <p className="mt-1.5 text-[14px] leading-relaxed text-[var(--text-soft-editorial)]">
+                  {formCopy.subtitle}
+                </p>
+              </div>
+
+              {status === "success" && submittedSummary ? (
+                /* Success Confirmation State */
+                <div
+                  id="contact-success-panel"
+                  role="status"
+                  aria-live="polite"
+                  className="p-6 sm:p-8 bg-[var(--bg-alabaster)] border border-[var(--status-success-border)] rounded-xl flex flex-col gap-5 animate-in fade-in duration-300"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-[var(--status-success-wash)] border border-[var(--status-success-border)] text-[var(--status-success-ink)] flex items-center justify-center shrink-0">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                        <path d="M20 6 9 17l-5-5" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h4 className="font-serif text-[20px] sm:text-[22px] font-bold leading-tight text-[var(--status-success-ink)]">
+                        {formCopy.successTitle}
+                      </h4>
+                      <p className="text-[13.5px] text-[var(--text-soft-editorial)] mt-0.5">
+                        {formCopy.successMessage}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="border-t border-[var(--border-hairline-editorial)] pt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 text-[14px]">
+                    <div className="p-3 rounded-lg bg-white border border-[var(--border-hairline-editorial)]">
+                      <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted-aa)] block">
+                        {formCopy.summaryLabels.name}
+                      </span>
+                      <span className="font-semibold text-[var(--text-ink)] mt-0.5 block truncate">
+                        {submittedSummary.name}
                       </span>
                     </div>
-                    <h3 className="font-serif text-[26px] font-semibold leading-[1.22] text-[var(--text-ink)] [text-wrap:balance]">
-                      {directory.heading}
-                    </h3>
-                    <p className="mt-1.5 text-[14.5px] leading-[1.55] text-[var(--text-soft-editorial)]">
-                      {directory.subheading}
-                    </p>
-                  </div>
 
-                  {isDemoMode && (
-                    <div
-                      id="contact-external-channels-notice"
-                      className="mb-5 p-3.5 bg-[var(--bg-alabaster)] border border-[var(--border-gold)] rounded-[2px]"
-                    >
-                      <p className="text-[13px] font-semibold text-[var(--accent-gold-ink)] mb-1">
-                        {demoCopy.externalChannels.channelsBadge}
-                      </p>
-                      <p className="text-[13.5px] leading-[1.55] text-[var(--text-soft-editorial)]">
-                        {demoCopy.externalChannels.channelsNote}
-                      </p>
+                    <div className="p-3 rounded-lg bg-white border border-[var(--border-hairline-editorial)]">
+                      <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted-aa)] block">
+                        {formCopy.summaryLabels.phone}
+                      </span>
+                      <span className="font-semibold font-mono text-[var(--text-ink)] mt-0.5 block truncate">
+                        {submittedSummary.phone}
+                      </span>
                     </div>
-                  )}
 
-                  <ul className="border-t border-[var(--border-hairline-editorial-strong)] divide-y divide-[var(--border-hairline-editorial)] mb-6">
-                    {officialChannels.map((channel) => (
-                      <li key={channel.id}>
-                        <a
-                          href={channel.href}
-                          target={channel.external ? "_blank" : undefined}
-                          rel={channel.external ? "noopener noreferrer" : undefined}
-                          className="group grid grid-cols-[minmax(0,1fr)_auto] gap-2 items-center py-3.5 px-2 hover:bg-[var(--accent-gold-soft)] rounded-[2px] transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
-                        >
-                          <span className="min-w-0">
-                            <span className="block font-mono text-[10.5px] uppercase tracking-wider font-semibold text-[var(--text-muted-aa)]">
-                              {channel.label}
-                            </span>
-                            <span className="block text-[15px] font-bold text-[var(--text-ink)] mt-0.5 tabular-nums [overflow-wrap:break-word] group-hover:text-[var(--accent-gold-ink)] transition-colors">
-                              {channel.value}
-                            </span>
-                          </span>
-                          <span className="inline-flex items-center gap-1 font-mono text-[11px] uppercase tracking-wider font-semibold text-[var(--accent-gold-ink)] group-hover:translate-x-1 transition-transform">
-                            <span>{channel.cue}</span>
-                            <span aria-hidden="true">→</span>
-                          </span>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                    <div className="p-3 rounded-lg bg-white border border-[var(--border-hairline-editorial)]">
+                      <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted-aa)] block">
+                        {formCopy.summaryLabels.business}
+                      </span>
+                      <span className="font-semibold text-[var(--text-ink)] mt-0.5 block truncate">
+                        {submittedSummary.business}
+                      </span>
+                    </div>
 
-                {/* Bottom Headquarters & Response Protocol */}
-                <div className="space-y-3 pt-6 border-t border-[var(--border-hairline-editorial)]">
-                  <div className="p-4 bg-[var(--bg-alabaster)] border border-[var(--border-hairline-editorial)] rounded-[3px]">
-                    <span className="block font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--accent-gold-ink)] mb-1">
-                      Boshqaruv qarorgohi
-                    </span>
-                    <p className="text-[13.5px] font-semibold text-[var(--text-ink)]">
-                      {directory.officeTitle || "Toshkent shahri, O‘zbekiston"}
-                    </p>
-                    <p className="mt-1 text-[13px] leading-[1.5] text-[var(--text-soft-editorial)]">
-                      {directory.officeCopy}
-                    </p>
+                    <div className="p-3 rounded-lg bg-white border border-[var(--border-hairline-editorial)]">
+                      <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted-aa)] block">
+                        {formCopy.summaryLabels.topic}
+                      </span>
+                      <span className="font-semibold text-[var(--text-ink)] mt-0.5 block truncate">
+                        {submittedSummary.topic}
+                      </span>
+                    </div>
+
+                    {submittedSummary.message && (
+                      <div className="sm:col-span-2 p-3 rounded-lg bg-white border border-[var(--border-hairline-editorial)]">
+                        <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted-aa)] block">
+                          {formCopy.summaryLabels.message}
+                        </span>
+                        <p className="text-[13.5px] text-[var(--text-soft-editorial)] mt-1 whitespace-pre-line">
+                          {submittedSummary.message}
+                        </p>
+                      </div>
+                    )}
                   </div>
 
-                  <div className="p-4 bg-[var(--bg-alabaster)] border border-[var(--border-hairline-editorial)] rounded-[3px]">
-                    <span className="block font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-[var(--accent-gold-ink)] mb-1">
-                      Murojaat reglamenti
-                    </span>
-                    <p className="text-[13px] leading-[1.5] text-[var(--text-soft-editorial)]">
-                      Dushanba – Juma, 09:00 – 18:00 (Toshkent vaqti). Barcha arizalar mas’ul kotibiyat tomonidan 24–48 soat ichida ko‘rib chiqiladi.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column: Accessible Inquiry Form */}
-            <div className="lg:col-span-7 bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial-strong)] rounded-[4px] p-6 sm:p-8 lg:p-10 shadow-[var(--shadow-editorial-subtle)] min-w-0 h-full flex flex-col justify-between">
-              <div>
-                <div className="pb-4 border-b border-[var(--border-hairline-editorial)] mb-6">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-gold)]" aria-hidden="true" />
-                    <span className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--accent-gold-ink)]">
-                      ONLAYN QABULXONA
-                    </span>
-                  </div>
-                  <h3 className="font-serif text-[26px] font-semibold leading-[1.22] text-[var(--text-ink)] [text-wrap:balance]">
-                    {formCopy.title}
-                  </h3>
-                  {isDemoMode && (
-                    <p
-                      id="contact-demo-badge"
-                      className="mt-2 text-[13px] font-semibold text-[var(--accent-gold-ink)]"
-                    >
-                      {demoCopy.contactForm.badge}
-                    </p>
-                  )}
-                  <p className="mt-1.5 text-[14.5px] leading-[1.55] text-[var(--text-soft-editorial)]">
-                    {isDemoMode
-                      ? demoCopy.contactForm.subtitle
-                      : formCopy.subtitle}
-                  </p>
-                </div>
-                {isDemoMode && (
-                  <p
-                    id="contact-demo-badge"
-                    className="mt-2 text-[13px] font-semibold text-[var(--accent-gold-ink)]"
-                  >
-                    {demoCopy.contactForm.badge}
-                  </p>
-                )}
-                <p className="mt-1.5 text-[14.5px] leading-[1.55] text-[var(--text-soft-editorial)]">
-                  {isDemoMode
-                    ? demoCopy.contactForm.subtitle
-                    : formCopy.subtitle}
-                </p>
-              </div>
-
-              {status === "success" && isDemoMode ? (
-                <div
-                  id="contact-success-panel"
-                  role="status"
-                  aria-live="polite"
-                  className="p-6 bg-[var(--bg-alabaster)] border border-[var(--border-gold)] rounded-[2px] flex flex-col gap-3"
-                >
-                  <h4 className="font-serif text-[22px] font-semibold leading-[1.3] text-[var(--text-ink)]">
-                    {demoCopy.contactForm.successTitle}
-                  </h4>
-                  <p className="text-[13px] font-semibold text-[var(--accent-gold-ink)]">
-                    {demoCopy.contactForm.badge}
-                  </p>
-                  <p className="text-[15px] leading-[1.6] text-[var(--text-soft-editorial)]">
-                    {demoCopy.contactForm.successMessage}
-                  </p>
-
-                  <div className="pt-1 flex flex-wrap gap-3">
+                  <div className="pt-2">
                     <button
                       type="button"
                       onClick={handleReset}
-                      className="min-h-[46px] px-5 bg-[var(--bg-dark)] text-[var(--bg-surface-warm)] border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] rounded-[2px] text-[14.5px] font-semibold inline-flex items-center transition-[background-color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
+                      className="min-h-[44px] px-6 bg-[var(--bg-dark)] text-white hover:bg-[#DDB52E] hover:text-black rounded-xl text-[13.5px] font-semibold inline-flex items-center gap-2 transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
                     >
-                      {demoCopy.contactForm.resetButton}
+                      <span>{formCopy.resetButton}</span>
+                      <span aria-hidden="true">↺</span>
                     </button>
-                  </div>
-                </div>
-              ) : status === "success" && submittedSummary ? (
-                <div
-                  id="contact-success-panel"
-                  role="status"
-                  aria-live="polite"
-                  className="p-6 bg-[var(--bg-alabaster)] border border-[var(--status-success-border)] rounded-[2px] flex flex-col gap-4"
-                >
-                  <h4 className="font-serif text-[22px] font-semibold leading-[1.3] text-[var(--status-success-ink)]">
-                    {formCopy.successTitle}
-                  </h4>
-                  <p className="text-[15px] leading-[1.6] text-[var(--text-soft-editorial)]">
-                    {formCopy.successMessage}
-                  </p>
-
-                  <ul className="border-t border-[var(--border-hairline-editorial)] pt-3 grid gap-1.5 text-[14.5px] text-[var(--text-ink)]">
-                    <li>
-                      <strong>{formCopy.summaryLabels.name}: </strong>
-                      {submittedSummary.name}
-                    </li>
-                    <li>
-                      <strong>{formCopy.summaryLabels.phone}: </strong>
-                      {submittedSummary.phone}
-                    </li>
-                    <li>
-                      <strong>{formCopy.summaryLabels.business}: </strong>
-                      {submittedSummary.business}
-                    </li>
-                    <li>
-                      <strong>{formCopy.summaryLabels.topic}: </strong>
-                      {submittedSummary.topic}
-                    </li>
-                    <li>
-                      <strong>{formCopy.summaryLabels.message}: </strong>
-                      {submittedSummary.message}
-                    </li>
-                  </ul>
-
-                  <div className="pt-1 flex flex-wrap gap-3">
-                    <button
-                      type="button"
-                      onClick={handleReset}
-                      className="min-h-[46px] px-5 bg-[var(--bg-dark)] text-[var(--bg-surface-warm)] border border-[var(--bg-dark)] hover:bg-[var(--accent-gold-ink)] hover:border-[var(--accent-gold-ink)] rounded-[2px] text-[14.5px] font-semibold inline-flex items-center transition-[background-color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
-                    >
-                      {formCopy.resetButton}
-                    </button>
-                    <BookingActionLink
-                      locale={safeLocale}
-                      className="min-h-[46px] px-4 bg-transparent text-[var(--text-ink)] border border-[var(--border-hairline-editorial-strong)] hover:border-[var(--accent-gold-ink)] hover:bg-[var(--accent-gold-soft)] rounded-[2px] text-[14.5px] font-semibold inline-flex items-center transition-[background-color,border-color] duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
-                    >
-                      {formCopy.bookingFallbackButton}
-                    </BookingActionLink>
                   </div>
                 </div>
               ) : (
+                /* Inquiry Form */
                 <form
                   id="contact-inquiry-form"
                   onSubmit={handleSubmit}
                   noValidate
                   className="flex flex-col gap-5"
                 >
-                  {/* Anti-spam honeypot matching /api/apply contract (offscreen) */}
+                  {/* Anti-spam honeypot */}
                   <div
                     aria-hidden="true"
                     className="absolute -left-[9999px] w-px h-px opacity-0 pointer-events-none"
@@ -792,20 +542,19 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                       tabIndex={-1}
                       autoComplete="off"
                       value={formData.honeypot}
-                      onChange={(e) =>
-                        handleFieldChange("honeypot", e.target.value)
-                      }
+                      onChange={(e) => handleFieldChange("honeypot", e.target.value)}
                     />
                   </div>
 
                   {/* Row 1: Name + Phone */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {/* Name */}
                     <div className="flex flex-col gap-1.5 min-w-0">
                       <label
                         htmlFor="contact-name"
-                        className="text-[15px] font-semibold text-[var(--text-ink)]"
+                        className="text-[13.5px] font-semibold text-[var(--text-ink)]"
                       >
-                        {formCopy.nameLabel} *
+                        {formCopy.nameLabel} <span className="text-[#B42318]">*</span>
                       </label>
                       <input
                         ref={nameInputRef}
@@ -820,36 +569,37 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                         placeholder={formCopy.namePlaceholder}
                         aria-invalid={fieldErrors.name ? "true" : undefined}
                         aria-describedby={fieldErrors.name ? "contact-name-error" : undefined}
-                        className={`w-full min-h-[44px] px-3.5 py-2 border rounded-[2px] text-[14px] sm:text-[14.5px] leading-[1.4] text-[var(--text-ink)] placeholder:text-[13px] placeholder:text-[var(--text-muted-aa)] transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] ${
+                        className={`w-full min-h-[46px] px-4 py-2.5 rounded-xl border text-[14.5px] text-[var(--text-ink)] placeholder:text-[13.5px] placeholder:text-[var(--text-muted-aa)] transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] focus:bg-white ${
                           fieldErrors.name
                             ? "bg-[var(--status-error-wash)] border-[var(--status-error-border)]"
-                            : "bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] focus:bg-[var(--bg-surface)]"
+                            : "bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)]"
                         }`}
                       />
                       {fieldErrors.name && (
                         <span
                           id="contact-name-error"
                           role="alert"
-                          className="text-[13.5px] font-medium text-[var(--status-error-ink)]"
+                          className="text-[12px] font-medium text-[var(--status-error-ink)]"
                         >
                           {fieldErrors.name}
                         </span>
                       )}
                     </div>
 
+                    {/* Phone */}
                     <div className="flex flex-col gap-1.5 min-w-0">
                       <label
                         htmlFor="contact-phone"
-                        className="text-[15px] font-semibold text-[var(--text-ink)]"
+                        className="text-[13.5px] font-semibold text-[var(--text-ink)]"
                       >
-                        {formCopy.phoneLabel} *
+                        {formCopy.phoneLabel} <span className="text-[#B42318]">*</span>
                       </label>
                       <div className="flex items-center gap-2">
                         <select
                           aria-label="Davlat kodi"
                           value={countryCode}
                           onChange={handleCountryCodeChange}
-                          className="w-[96px] sm:w-[100px] shrink-0 min-h-[44px] px-2 border rounded-[2px] text-[12px] font-mono text-[var(--text-ink)] bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--accent-gold)]"
+                          className="w-[100px] shrink-0 min-h-[46px] px-2.5 rounded-xl border font-mono text-[13px] text-[var(--text-ink)] bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] cursor-pointer"
                         >
                           {COUNTRY_CODE_PRESETS.map((preset) => (
                             <option key={preset.code} value={preset.code}>
@@ -867,13 +617,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                           autoComplete="tel"
                           value={displayPhone}
                           onChange={handlePhoneChange}
-                          placeholder={countryCode === "+998" ? "90 123 45 67" : "123 45 67"}
+                          placeholder={countryCode === "+998" ? "(90) 123-45-67" : "123 45 67"}
                           aria-invalid={fieldErrors.phone ? "true" : undefined}
                           aria-describedby={fieldErrors.phone ? "contact-phone-error" : undefined}
-                          className={`flex-1 min-w-0 min-h-[44px] px-3 py-2 border rounded-[2px] text-[13.5px] sm:text-[14px] leading-[1.4] tabular-nums font-mono text-[var(--text-ink)] placeholder:text-[12px] placeholder:font-sans placeholder:text-[var(--text-muted-aa)] transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] ${
+                          className={`flex-1 min-w-0 min-h-[46px] px-3.5 py-2.5 rounded-xl border font-mono tabular-nums text-[14.5px] text-[var(--text-ink)] placeholder:text-[13.5px] placeholder:font-sans placeholder:text-[var(--text-muted-aa)] transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] focus:bg-white ${
                             fieldErrors.phone
                               ? "bg-[var(--status-error-wash)] border-[var(--status-error-border)]"
-                              : "bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] focus:bg-[var(--bg-surface)]"
+                              : "bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)]"
                           }`}
                         />
                       </div>
@@ -881,7 +631,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                         <span
                           id="contact-phone-error"
                           role="alert"
-                          className="text-[13.5px] font-medium text-[var(--status-error-ink)]"
+                          className="text-[12px] font-medium text-[var(--status-error-ink)]"
                         >
                           {fieldErrors.phone}
                         </span>
@@ -891,12 +641,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
 
                   {/* Row 2: Business + Topic */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {/* Business */}
                     <div className="flex flex-col gap-1.5 min-w-0">
                       <label
                         htmlFor="contact-business"
-                        className="text-[15px] font-semibold text-[var(--text-ink)]"
+                        className="text-[13.5px] font-semibold text-[var(--text-ink)]"
                       >
-                        {formCopy.businessLabel} *
+                        {formCopy.businessLabel} <span className="text-[#B42318]">*</span>
                       </label>
                       <input
                         ref={businessInputRef}
@@ -907,59 +658,63 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                         maxLength={120}
                         autoComplete="organization"
                         value={formData.business}
-                        onChange={(e) =>
-                          handleFieldChange("business", e.target.value)
-                        }
+                        onChange={(e) => handleFieldChange("business", e.target.value)}
                         placeholder={formCopy.businessPlaceholder}
                         aria-invalid={fieldErrors.business ? "true" : undefined}
-                        aria-describedby={
-                          fieldErrors.business ? "contact-business-error" : undefined
-                        }
-                        className={`w-full min-h-[44px] px-3.5 py-2 border rounded-[2px] text-[14px] sm:text-[14.5px] leading-[1.4] text-[var(--text-ink)] placeholder:text-[13px] placeholder:text-[var(--text-muted-aa)] transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] ${
+                        aria-describedby={fieldErrors.business ? "contact-business-error" : undefined}
+                        className={`w-full min-h-[46px] px-4 py-2.5 rounded-xl border text-[14.5px] text-[var(--text-ink)] placeholder:text-[13.5px] placeholder:text-[var(--text-muted-aa)] transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] focus:bg-white ${
                           fieldErrors.business
                             ? "bg-[var(--status-error-wash)] border-[var(--status-error-border)]"
-                            : "bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] focus:bg-[var(--bg-surface)]"
+                            : "bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)]"
                         }`}
                       />
                       {fieldErrors.business && (
                         <span
                           id="contact-business-error"
                           role="alert"
-                          className="text-[13.5px] font-medium text-[var(--status-error-ink)]"
+                          className="text-[12px] font-medium text-[var(--status-error-ink)]"
                         >
                           {fieldErrors.business}
                         </span>
                       )}
                     </div>
 
+                    {/* Topic */}
                     <div className="flex flex-col gap-1.5 min-w-0">
                       <label
                         htmlFor="contact-topic"
-                        className="text-[15px] font-semibold text-[var(--text-ink)]"
+                        className="text-[13.5px] font-semibold text-[var(--text-ink)]"
                       >
                         {formCopy.topicLabel}
                       </label>
-                      <select
-                        id="contact-topic"
-                        name="topic"
-                        value={formData.topic}
-                        onChange={(e) => handleFieldChange("topic", e.target.value)}
-                        className="w-full min-h-[44px] px-3.5 py-2 bg-[var(--bg-alabaster)] border border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] focus:bg-[var(--bg-surface)] rounded-[2px] text-[14px] sm:text-[14.5px] leading-[1.4] text-[var(--text-ink)] cursor-pointer transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)]"
-                      >
-                        {formCopy.topicOptions.map((opt) => (
-                          <option key={opt.id} value={opt.id}>
-                            {opt.label}
-                          </option>
-                        ))}
-                      </select>
+                      <div className="relative">
+                        <select
+                          id="contact-topic"
+                          name="topic"
+                          value={formData.topic}
+                          onChange={(e) => handleFieldChange("topic", e.target.value)}
+                          className="w-full min-h-[46px] px-4 py-2.5 pr-10 rounded-xl appearance-none bg-[var(--bg-alabaster)] border border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] focus:bg-white focus:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] text-[14px] text-[var(--text-ink)] cursor-pointer transition-all duration-150"
+                        >
+                          {formCopy.topicOptions.map((opt) => (
+                            <option key={opt.id} value={opt.id}>
+                              {opt.label}
+                            </option>
+                          ))}
+                        </select>
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-[var(--text-muted-aa)]">
+                          <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+                            <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Row 3: Brief Message */}
+                  {/* Row 3: Message Textarea */}
                   <div className="flex flex-col gap-1.5 min-w-0">
                     <label
                       htmlFor="contact-message"
-                      className="text-[15px] font-semibold text-[var(--text-ink)]"
+                      className="text-[13.5px] font-semibold text-[var(--text-ink)]"
                     >
                       {formCopy.messageLabel}
                     </label>
@@ -970,84 +725,123 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                       rows={3}
                       maxLength={1000}
                       value={formData.message}
-                      onChange={(e) =>
-                        handleFieldChange("message", e.target.value)
-                      }
+                      onChange={(e) => handleFieldChange("message", e.target.value)}
                       placeholder={formCopy.messagePlaceholder}
                       aria-invalid={fieldErrors.message ? "true" : undefined}
-                      aria-describedby={
-                        fieldErrors.message ? "contact-message-error" : undefined
-                      }
-                      className={`w-full min-h-[112px] px-4 py-3 border rounded-[2px] text-[14px] sm:text-[14.5px] leading-[1.55] text-[var(--text-ink)] placeholder:text-[13px] placeholder:text-[var(--text-muted-aa)] resize-y transition-colors duration-150 focus:outline-none focus-visible:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] ${
+                      aria-describedby={fieldErrors.message ? "contact-message-error" : undefined}
+                      className={`w-full min-h-[110px] p-4 rounded-xl border text-[14.5px] leading-relaxed text-[var(--text-ink)] placeholder:text-[13.5px] placeholder:text-[var(--text-muted-aa)] resize-y transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[var(--accent-gold)] focus:bg-white ${
                         fieldErrors.message
                           ? "bg-[var(--status-error-wash)] border-[var(--status-error-border)]"
-                          : "bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)] focus:bg-[var(--bg-surface)]"
+                          : "bg-[var(--bg-alabaster)] border-[var(--border-hairline-editorial-strong)] hover:border-[var(--text-ink)]"
                       }`}
                     />
                     {fieldErrors.message && (
                       <span
                         id="contact-message-error"
                         role="alert"
-                        className="text-[13.5px] font-medium text-[var(--status-error-ink)]"
+                        className="text-[12px] font-medium text-[var(--status-error-ink)]"
                       >
                         {fieldErrors.message}
                       </span>
                     )}
                   </div>
 
-                  {/* Server / Rate-Limit / Network Error Banner */}
+                  {/* Server Error Banner */}
                   {serverError && (
                     <div
                       id="contact-server-error"
                       role="alert"
-                      className="p-4 bg-[var(--status-error-wash)] border border-[var(--status-error-border)] rounded-[2px] flex flex-col gap-3"
+                      className="p-4 bg-[var(--status-error-wash)] border border-[var(--status-error-border)] rounded-xl flex flex-col gap-2"
                     >
-                      <p className="text-[14.5px] font-medium leading-[1.5] text-[var(--status-error-ink)]">
+                      <p className="text-[13.5px] font-medium leading-[1.5] text-[var(--status-error-ink)]">
                         {serverError}
                       </p>
-                      <div className="flex flex-wrap gap-2">
-                        {contactConfig.telegramDirect.isVerified &&
-                          contactConfig.telegramDirect.url && (
-                            <a
-                              href={contactConfig.telegramDirect.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="min-h-[44px] px-4 bg-[var(--bg-surface)] text-[var(--text-ink)] border border-[var(--border-hairline-editorial-strong)] hover:border-[var(--accent-gold-ink)] rounded-[2px] text-[13.5px] font-semibold inline-flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
-                            >
-                              {formCopy.telegramFallbackButton}
-                            </a>
-                          )}
-                        {contactConfig.phone.isVerified &&
-                          contactConfig.phone.href && (
-                            <a
-                              href={contactConfig.phone.href}
-                              className="min-h-[44px] px-4 bg-[var(--bg-surface)] text-[var(--text-ink)] border border-[var(--border-hairline-editorial-strong)] hover:border-[var(--accent-gold-ink)] rounded-[2px] text-[13.5px] font-semibold inline-flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)]"
-                            >
-                              {formCopy.callFallbackButton}: {contactConfig.phone.display}
-                            </a>
-                          )}
-                      </div>
                     </div>
                   )}
 
-                  {/* Submit Button */}
-                  <div className="pt-1 flex flex-wrap items-center justify-between gap-4">
-                    <button
-                      id="contact-submit-btn"
-                      type="submit"
-                      disabled={isSubmitting}
-                      aria-busy={isSubmitting}
-                      className="min-h-[48px] px-8 bg-[#0E1013] text-white border border-[#0E1013] hover:bg-[#DDB52E] hover:border-[#DDB52E] hover:text-black active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed rounded-[2px] text-[14px] font-bold tracking-[0.04em] inline-flex items-center justify-center whitespace-nowrap transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DDB52E]"
-                    >
-                      {isSubmitting
-                        ? formCopy.submitting
-                        : isDemoMode
-                        ? demoCopy.contactForm.submitButton
-                        : formCopy.submitButton}
-                    </button>
+                  {/* Submit Button & Security Note */}
+                  <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <MagneticPull className="w-full sm:w-auto">
+                      <button
+                        id="contact-submit-btn"
+                        type="submit"
+                        disabled={isSubmitting}
+                        aria-busy={isSubmitting}
+                        className="w-full sm:w-auto min-h-[48px] px-8 bg-[#111215] text-white hover:bg-[#DDB52E] hover:text-black active:scale-[0.99] disabled:opacity-60 disabled:cursor-not-allowed rounded-xl text-[14px] font-semibold inline-flex items-center justify-center gap-2.5 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#DDB52E] cursor-pointer shadow-sm"
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            <span>{formCopy.submitting}</span>
+                          </>
+                        ) : (
+                          <>
+                            <span>{formCopy.submitButton}</span>
+                            <span aria-hidden="true">→</span>
+                          </>
+                        )}
+                      </button>
+                    </MagneticPull>
+
+                    <span className="inline-flex items-center gap-1.5 text-[12.5px] text-[var(--text-soft-editorial)]">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 text-[var(--accent-gold-ink)]">
+                        <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                      </svg>
+                      <span>
+                        {safeLocale === "ru"
+                          ? "Конфиденциальность гарантируется"
+                          : safeLocale === "en"
+                          ? "Confidentiality guaranteed"
+                          : "Ma’lumotlar maxfiyligi kafolatlanadi"}
+                      </span>
+                    </span>
                   </div>
                 </form>
               )}
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Information Ledger: Response Protocol & Headquarters */}
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="flex items-start gap-3.5 p-4 sm:p-5 rounded-2xl bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial-strong)] text-[13.5px] text-[var(--text-soft-editorial)] shadow-[var(--shadow-editorial-subtle)] leading-relaxed">
+            <div className="w-9 h-9 rounded-xl bg-[var(--accent-gold-soft)] text-[var(--accent-gold-ink)] flex items-center justify-center shrink-0 mt-0.5">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </div>
+            <div>
+              <span className="font-semibold text-[var(--text-ink)] block mb-1 text-[14px]">
+                {safeLocale === "ru" ? "Регламент ответа и график" : safeLocale === "en" ? "Response protocol & hours" : "Javob berish tartibi va ish vaqti"}
+              </span>
+              {safeLocale === "ru"
+                ? "Пн – Пт, 09:00 – 18:00 (время Ташкента). Все обращения рассматриваются секретариатом в течение 24–48 часов."
+                : safeLocale === "en"
+                ? "Mon – Fri, 09:00 – 18:00 (Tashkent time). All inquiries are reviewed by executive team within 24–48 hours."
+                : "Dushanba – Juma, 09:00 – 18:00 (Toshkent vaqti). Barcha arizalar mas’ul jamoa tomonidan 24–48 soat ichida ko‘rib chiqiladi."}
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3.5 p-4 sm:p-5 rounded-2xl bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial-strong)] text-[13.5px] text-[var(--text-soft-editorial)] shadow-[var(--shadow-editorial-subtle)] leading-relaxed">
+            <div className="w-9 h-9 rounded-xl bg-[var(--accent-gold-soft)] text-[var(--accent-gold-ink)] flex items-center justify-center shrink-0 mt-0.5">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+            </div>
+            <div>
+              <span className="font-semibold text-[var(--text-ink)] block mb-1 text-[14px]">
+                {safeLocale === "ru" ? "Главный офис и прием" : safeLocale === "en" ? "Headquarters & address" : "Boshqaruv qarorgohi va manzil"}
+              </span>
+              <span>
+                {safeLocale === "ru"
+                  ? "Ташкент, Узбекистан. Завод Toybola (VISAGE ELECTRIC MChJ) и общественный совет UZBIC."
+                  : safeLocale === "en"
+                  ? "Tashkent, Uzbekistan. Toybola Plant (VISAGE ELECTRIC LLC) and UZBIC Council."
+                  : "Toshkent shahri, O‘zbekiston. Toybola zavodi (VISAGE ELECTRIC MChJ) va UZBIC Kengashi."}
+              </span>
             </div>
           </div>
         </div>

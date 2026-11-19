@@ -78,7 +78,7 @@ export const CurrentInitiatives: React.FC<CurrentInitiativesProps> = ({
 
 
         {/* 3 Restrained Editorial Cards with Subtle Hover Elevation */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {initiatives.items.map((item, idx) => {
             const statusText =
               initiatives.statusLabels?.[item.status] || item.tag;
@@ -91,7 +91,9 @@ export const CurrentInitiatives: React.FC<CurrentInitiativesProps> = ({
                 whileHover={{ y: -3 }}
                 transition={{ duration: 0.2 }}
                 aria-labelledby={`initiative-title-${item.id}`}
-                className="bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial)] hover:border-[var(--accent-gold)] hover:shadow-[var(--shadow-editorial-subtle)] rounded-[2px] p-6 sm:p-7 flex flex-col justify-between gap-6 transition-[border-color,box-shadow] duration-200 min-w-0"
+                className={`bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial)] hover:border-[var(--accent-gold)] hover:shadow-[var(--shadow-editorial-subtle)] rounded-[2px] p-5 sm:p-7 flex flex-col justify-between gap-6 transition-[border-color,box-shadow] duration-200 min-w-0 ${
+                  idx === 2 ? "md:col-span-2 lg:col-span-1" : ""
+                }`}
               >
                 <div className="flex flex-col gap-4">
                   {/* Top Index + Period Row */}

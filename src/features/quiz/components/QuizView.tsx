@@ -494,7 +494,7 @@ export function QuizView() {
                     }}
                     placeholder={t("namePlaceholder")}
                     disabled={isSubmitting}
-                    className="w-full bg-[#070707]/80 border border-[#1E1E1E] px-4 py-3.5 text-sm text-white placeholder:text-neutral-500 focus:border-[#D4AF37] focus:outline-none transition-colors rounded-none"
+                    className="w-full bg-[#070707]/80 border border-[#1E1E1E] px-4 py-3.5 text-[16px] sm:text-sm text-white placeholder:text-neutral-500 focus:border-[#D4AF37] focus:outline-none transition-colors rounded-none"
                   />
                   {formErrors.name && (
                     <p className="font-mono text-xs text-amber-300 mt-1.5">
@@ -520,7 +520,7 @@ export function QuizView() {
                     onChange={handlePhoneInputChange}
                     placeholder="+998 90 123 45 67"
                     disabled={isSubmitting}
-                    className="w-full bg-[#070707]/80 border border-[#1E1E1E] px-4 py-3.5 text-sm text-white placeholder:text-neutral-500 focus:border-[#D4AF37] focus:outline-none transition-colors rounded-none font-mono"
+                    className="w-full bg-[#070707]/80 border border-[#1E1E1E] px-4 py-3.5 text-[16px] sm:text-sm text-white placeholder:text-neutral-500 focus:border-[#D4AF37] focus:outline-none transition-colors rounded-none font-mono"
                   />
                   {formErrors.phone && (
                     <p className="font-mono text-xs text-amber-300 mt-1.5">

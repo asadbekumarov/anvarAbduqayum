@@ -57,13 +57,6 @@ export interface BookingCtaTarget {
 export function getBookingCtaTarget(locale: string = "uz"): BookingCtaTarget {
   const safeLocale = locale === "ru" || locale === "en" ? locale : "uz";
 
-  if (activeBookingMode === "calcom" && Boolean(verifiedCalLink)) {
-    return {
-      href: `/${safeLocale}/bron`,
-      isExternal: false,
-    };
-  }
-
   if (
     contactConfig.telegramDirect.isVerified &&
     Boolean(contactConfig.telegramDirect.url)
@@ -74,8 +67,15 @@ export function getBookingCtaTarget(locale: string = "uz"): BookingCtaTarget {
     };
   }
 
+  if (featuresConfig.partnershipIntake) {
+    return {
+      href: `/${safeLocale}/hamkorlik`,
+      isExternal: false,
+    };
+  }
+
   return {
-    href: `/${safeLocale}/bron`,
+    href: `/${safeLocale}#aloqa`,
     isExternal: false,
   };
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { Tabs as TabsPrimitive } from "radix-ui";
 import { getContent } from "@/config/content";
@@ -86,7 +87,7 @@ export const Principles: React.FC<PrinciplesProps> = ({ locale = "uz" }) => {
           {/* LEFT COLUMN: Philosophy Plaque + Module Selectors */}
           <div className="lg:col-span-5 flex flex-col gap-6 min-w-0">
             {/* Executive Philosophy Plaque */}
-            <div className="bg-[#111319] border border-white/[0.08] border-l-2 border-l-[#D4AF37] rounded-[4px] p-6 shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
+            <div className="bg-[#111319] border border-white/[0.08] border-l-2 border-l-[#D4AF37] rounded-[4px] p-4 sm:p-6 shadow-[0_8px_24px_rgba(0,0,0,0.35)]">
               <div className="flex items-center justify-between gap-2 pb-3 mb-3 border-b border-white/[0.06]">
                 <span className="font-mono text-[11px] font-bold uppercase tracking-[0.16em] text-[#D4AF37]">
                   {principles.statementHeading || "Boshqaruv falsafasi"}
@@ -120,7 +121,7 @@ export const Principles: React.FC<PrinciplesProps> = ({ locale = "uz" }) => {
                     key={tabKey}
                     id={`mold-tab-${tabKey}`}
                     value={tabKey}
-                    className={`relative min-h-[54px] px-5 py-3.5 text-left rounded-[4px] border flex items-center justify-between gap-4 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] cursor-pointer ${
+                    className={`relative min-h-[50px] sm:min-h-[54px] px-3.5 sm:px-5 py-3 sm:py-3.5 text-left rounded-[4px] border flex items-center justify-between gap-3 sm:gap-4 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37] cursor-pointer ${
                       isSelected
                         ? "bg-[#141722] border-[#D4AF37]/50 text-[#FFFFFF] shadow-[0_4px_16px_rgba(0,0,0,0.3)]"
                         : "bg-[#0E1015]/60 border-white/[0.06] text-[#8E95A5] hover:text-[#FFFFFF] hover:bg-[#12141A] hover:border-white/[0.15]"
@@ -163,7 +164,7 @@ export const Principles: React.FC<PrinciplesProps> = ({ locale = "uz" }) => {
                   key={tabKey}
                   value={tabKey}
                   id={`mold-panel-${tabKey}`}
-                  className="bg-[#111319] border border-white/[0.09] rounded-[4px] p-6 sm:p-8 lg:p-10 shadow-[0_16px_40px_rgba(0,0,0,0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
+                  className="bg-[#111319] border border-white/[0.09] rounded-[4px] p-5 sm:p-8 lg:p-10 shadow-[0_16px_40px_rgba(0,0,0,0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#D4AF37]"
                 >
                   <motion.div
                     initial={
@@ -291,6 +292,75 @@ export const Principles: React.FC<PrinciplesProps> = ({ locale = "uz" }) => {
             })}
           </div>
         </TabsPrimitive.Root>
+
+        {/* Interactive B2B Diagnostic Banner (The Test Bridge) */}
+        <div className="mt-14 sm:mt-16 relative overflow-hidden rounded-2xl border border-[#D4AF37]/35 bg-gradient-to-br from-[#12141A] via-[#161822] to-[#0E1015] p-6 sm:p-10 shadow-[0_12px_40px_rgba(0,0,0,0.5)]">
+          {/* Subtle Ambient Gold Glow in corner */}
+          <div className="absolute top-0 right-0 -mt-12 -mr-12 w-64 h-64 rounded-full bg-[#D4AF37]/10 blur-3xl pointer-events-none" />
+
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div className="lg:col-span-8 space-y-3">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 text-[#D4AF37] font-mono text-[11px] uppercase tracking-wider font-bold">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37] animate-pulse" />
+                <span>
+                  {locale === "ru"
+                    ? "ЭКСПРЕСС-АУДИТ // 2 МИНУТЫ"
+                    : locale === "en"
+                    ? "EXPRESS AUDIT // 2 MINUTES"
+                    : "EKSPRESS-AUDIT // 2 DAQIQA"}
+                </span>
+              </div>
+
+              <h3 className="font-serif text-[24px] sm:text-[30px] font-bold text-white tracking-tight leading-snug">
+                {locale === "ru"
+                  ? "Может ли ваш бизнес работать без вашего участия?"
+                  : locale === "en"
+                  ? "Can your business run without you?"
+                  : "Biznesingiz egasisiz ishlay oladimi?"}
+              </h3>
+
+              <p className="text-[14px] sm:text-[15px] text-[#A6ADB8] leading-relaxed max-w-2xl">
+                {locale === "ru"
+                  ? "Оцените операционную систему вашего предприятия по 10 критериям методологии Анвара Абдукаюма и получите персональные рекомендации по систематизации."
+                  : locale === "en"
+                  ? "Evaluate your company's operational management across 10 benchmarks from Anvar Abduqayum's methodology and get actionable recommendations."
+                  : "Anvar Abduqayumning 10 ta operatsion mezoni asosida korxonangizning tizimlilik darajasini tekshiring, zaif nuqtalarni aniqlang va shaxsiy tavsiyalarni oling."}
+              </p>
+
+              {/* Feature pills */}
+              <div className="flex flex-wrap items-center gap-2.5 pt-2 text-[12px] text-[#C2C7D1] font-mono">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.08]">
+                  <span aria-hidden="true">⏱</span>
+                  {locale === "ru" ? "10 практических вопросов" : locale === "en" ? "10 practical questions" : "10 ta amaliy savol"}
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.08]">
+                  <span aria-hidden="true">📊</span>
+                  {locale === "ru" ? "3 уровня зрелости системы" : locale === "en" ? "3 system maturity tiers" : "3 xil tahliliy xulosa"}
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/[0.04] border border-white/[0.08]">
+                  <span aria-hidden="true">⚡</span>
+                  {locale === "ru" ? "Мгновенный результат" : locale === "en" ? "Instant results" : "Darhol bepul natija"}
+                </span>
+              </div>
+            </div>
+
+            <div className="lg:col-span-4 flex lg:justify-end">
+              <Link
+                href={`/${locale}/test`}
+                className="w-full sm:w-auto min-h-[52px] px-8 py-3.5 bg-[#D4AF37] hover:bg-[#F3E5AB] text-black font-semibold rounded-xl text-[14px] tracking-wide inline-flex items-center justify-center gap-2.5 shadow-[0_4px_24px_rgba(212,175,55,0.3)] transition-all duration-200 active:scale-[0.99] cursor-pointer"
+              >
+                <span>
+                  {locale === "ru"
+                    ? "Пройти диагностику"
+                    : locale === "en"
+                    ? "Start Diagnostic"
+                    : "Diagnostikadan o‘tish"}
+                </span>
+                <span aria-hidden="true" className="text-lg">→</span>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

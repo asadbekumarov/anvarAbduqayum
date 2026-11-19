@@ -68,10 +68,10 @@ export const featuresConfig: FeatureFlags = {
   // Temporary safe handoff to official Telegram administrator pending verified Cal.com config
   bookingMode: "telegram",
 
-  // Consulting, Investment, legacy /test are disabled; B2B International Partnership Portal is enabled
+  // Consulting, Investment are disabled; Quiz and B2B Partnership are enabled
   consulting: false,
   investment: false,
-  quiz: false,
+  quiz: true,
   partnershipIntake: resolvePartnershipIntake(),
   ventureDossiers: resolveVentureDossiers(),
   mediaLibrary: resolveMediaLibrary(),
@@ -82,10 +82,10 @@ export const featuresConfig: FeatureFlags = {
     hero: true,
     dossier: false,
     portfolio: true,
+    numbers: true,
     timeline: true,
     initiatives: true,
     principles: true,
-    numbers: false,
     exportUzbic: false,
     mistakes: false,
     media: true,

@@ -62,7 +62,9 @@ export default async function PartnershipPage({
   return (
     <div className="flex min-h-screen flex-col bg-[#090A0D] text-[#F5F5F7]">
       <Navbar locale={locale} />
-      <main className="flex-1 pt-16 pb-20 md:pb-12 bg-gradient-to-b from-[#090A0D] via-[#0E1015] to-[#090A0D]">
+      {/* Top Hairline Transition Divider */}
+      <div className="w-full h-px bg-gradient-to-r from-transparent via-[#DDB52E]/35 to-transparent pointer-events-none" />
+      <main className="flex-1 pt-20 sm:pt-28 pb-20 md:pb-16 bg-gradient-to-b from-[#090A0D] via-[#0E1015] to-[#090A0D]">
         <PartnershipIntakeView locale={locale} />
       </main>
       <Footer locale={locale} />

@@ -185,7 +185,7 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
             onChange={(e) => handleChange("name", e.target.value)}
             placeholder={t("namePlaceholder")}
             disabled={isSubmitting}
-            className="w-full bg-[#111111] border border-white/[0.12] px-4 py-3 text-sm text-white placeholder:text-neutral-600 focus:border-white/50 focus:outline-none transition-colors rounded-none"
+            className="w-full bg-[#111111] border border-white/[0.12] px-4 py-3 text-[16px] sm:text-sm text-white placeholder:text-neutral-600 focus:border-white/50 focus:outline-none transition-colors rounded-none"
           />
           {errors.name && (
             <span className="text-xs text-red-400 font-mono mt-1 block">
@@ -210,7 +210,7 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
             disabled={isSubmitting}
             aria-invalid={Boolean(errors.phone)}
             aria-describedby={errors.phone ? "apply-phone-error" : undefined}
-            className={`w-full bg-[#111111] border px-4 py-3 text-sm text-white placeholder:text-neutral-600 focus:outline-none transition-colors rounded-none font-mono ${
+            className={`w-full bg-[#111111] border px-4 py-3 text-[16px] sm:text-sm text-white placeholder:text-neutral-600 focus:outline-none transition-colors rounded-none font-mono ${
               errors.phone ? "border-red-500 focus:border-red-400" : "border-white/[0.12] focus:border-white/50"
             }`}
           />
@@ -236,7 +236,7 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
               onChange={(e) => handleChange("address", e.target.value)}
               placeholder={t("addressPlaceholder")}
               disabled={isSubmitting}
-              className="w-full bg-[#111111] border border-white/[0.12] px-4 py-3 text-sm text-white placeholder:text-neutral-600 focus:border-white/50 focus:outline-none transition-colors rounded-none"
+              className="w-full bg-[#111111] border border-white/[0.12] px-4 py-3 text-[16px] sm:text-sm text-white placeholder:text-neutral-600 focus:border-white/50 focus:outline-none transition-colors rounded-none"
             />
             {errors.address && (
               <span className="text-xs text-red-400 font-mono mt-1 block">
@@ -257,7 +257,7 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
               onChange={(e) => handleChange("question", e.target.value)}
               placeholder={t("bookNotePlaceholder")}
               disabled={isSubmitting}
-              className="w-full bg-[#111111] border border-white/[0.12] px-4 py-3 text-sm text-white placeholder:text-neutral-600 focus:border-white/50 focus:outline-none transition-colors rounded-none resize-none"
+              className="w-full bg-[#111111] border border-white/[0.12] px-4 py-3 text-[16px] sm:text-sm text-white placeholder:text-neutral-600 focus:border-white/50 focus:outline-none transition-colors rounded-none resize-none"
             />
           </div>
         </>
@@ -363,7 +363,7 @@ export function ApplyForm({ onSuccess, selectedService, isBook }: ApplyFormProps
               onChange={(e) => handleChange("question", e.target.value)}
               placeholder={t("questionPlaceholder")}
               disabled={isSubmitting}
-              className="w-full bg-[#111111] border border-white/[0.12] px-4 py-3 text-sm text-white placeholder:text-neutral-600 focus:border-white/50 focus:outline-none transition-colors rounded-none resize-none"
+              className="w-full bg-[#111111] border border-white/[0.12] px-4 py-3 text-[16px] sm:text-sm text-white placeholder:text-neutral-600 focus:border-white/50 focus:outline-none transition-colors rounded-none resize-none"
             />
           </div>
         </>

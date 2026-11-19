@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import {
   motion,
   AnimatePresence,
@@ -9,7 +10,6 @@ import Link from "next/link";
 import { getContent } from "@/config/content";
 import { featuresConfig } from "@/config/features";
 import { getDossierUiCopy } from "@/features/dossiers/config/dossierData";
-import { MonolithImage } from "@/components/ui/MonolithImage";
 import { ExportCorridorMap } from "@/components/sections/ExportCorridorMap";
 import { OemConfigurator } from "@/components/sections/OemConfigurator";
 
@@ -273,21 +273,21 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
               </span>
             </div>
 
-            {/* BRAND PEDESTAL: Clean logo or hallmarked monogram */}
+            {/* BRAND PEDESTAL: High-fidelity brand logo hallmark */}
             <div className="h-14 w-full flex items-center justify-start mb-5">
               {company.hasLogo && company.logoUrl ? (
-                <div className="h-12 w-32 px-3 bg-[#090A0D] border border-white/[0.08] rounded-[3px] flex items-center justify-center">
-                  <MonolithImage
+                <div className="h-12 w-48 px-3.5 bg-[#0C0E12] border border-white/[0.14] group-hover:border-[#D4AF37]/60 rounded-[4px] flex items-center justify-center transition-all duration-300 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_2px_10px_rgba(0,0,0,0.5)] group-hover:shadow-[0_0_16px_rgba(212,175,55,0.2)]">
+                  <Image
                     src={company.logoUrl}
                     alt={`${company.name} logo`}
                     width={200}
-                    height={60}
-                    containerClassName="w-full h-full flex items-center justify-center"
-                    imageClassName="h-6 max-w-[85%] w-auto object-contain brightness-95 group-hover:brightness-100 transition-all"
+                    height={50}
+                    className="h-8 max-h-[85%] w-auto max-w-[92%] object-contain transition-transform duration-300 group-hover:scale-105"
+                    priority={idx < 4}
                   />
                 </div>
               ) : (
-                <div className="h-12 px-3.5 bg-[#090A0D] border border-white/[0.08] rounded-[3px] inline-flex items-center gap-2.5 font-mono text-[12px] font-bold text-[#FAF9F5]">
+                <div className="h-12 px-4 bg-[#0C0E12] border border-white/[0.14] group-hover:border-[#D4AF37]/60 rounded-[4px] inline-flex items-center gap-2.5 font-mono text-[12px] font-bold text-[#FAF9F5] shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]">
                   <span className="text-[#D4AF37]">{MONOGRAM_PATHS}</span>
                   <span className="tracking-widest">{company.monogram || company.name.slice(0, 2).toUpperCase()}</span>
                 </div>
@@ -379,7 +379,7 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
           <div
             role="tablist"
             aria-label="Portfolio Tools & Views"
-            className="flex items-center gap-6 sm:gap-10 overflow-x-auto no-scrollbar"
+            className="flex items-center gap-4 sm:gap-8 lg:gap-10 overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0 scroll-smooth"
           >
             {viewTabs.map((tab, idx) => {
               const isActive = activeView === tab.id;
@@ -390,7 +390,7 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
                   role="tab"
                   aria-selected={isActive}
                   onClick={() => setActiveView(tab.id)}
-                  className={`group pb-4 font-mono text-[12px] sm:text-[13px] uppercase tracking-[0.14em] font-medium flex items-center gap-2.5 transition-colors relative whitespace-nowrap cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#D4AF37] ${
+                  className={`group pb-4 font-mono text-[12px] sm:text-[13px] uppercase tracking-[0.14em] font-medium flex items-center gap-2.5 transition-colors relative whitespace-nowrap cursor-pointer shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#D4AF37] ${
                     isActive ? "text-[#FAF9F5] font-semibold" : "text-[#7A8290] hover:text-[#C2C7D1]"
                   }`}
                 >
@@ -438,41 +438,43 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
         {activeView === "gallery" && (
           <div>
             {/* Editorial Sub-Filter Toolbar */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-5 border-b border-white/[0.06]">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-[11px] font-mono uppercase tracking-[0.16em] text-[#7A8290] mr-2 shrink-0">
-                  Sektor:
-                </span>
-                <div
-                  className="flex flex-wrap items-center gap-1.5"
-                  role="tablist"
-                  aria-label={portfolio.eyebrow}
-                >
-                  {filterKeys.map((catKey) => {
-                    const isActive = selectedCategory === catKey;
-                    return (
-                      <button
-                        key={catKey}
-                        type="button"
-                        role="tab"
-                        aria-selected={isActive}
-                        onClick={() => setSelectedCategory(catKey)}
-                        className={`px-3.5 py-1.5 rounded-[3px] text-[12px] font-sans transition-all duration-150 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#D4AF37] ${
-                          isActive
-                            ? "bg-[#D4AF37] text-[#090A0D] font-bold shadow-sm"
-                            : "bg-transparent text-[#9EA6B5] hover:text-[#FAF9F5] hover:bg-white/[0.05]"
-                        }`}
-                      >
-                        {portfolio.filters[catKey]}
-                      </button>
-                    );
-                  })}
+            <div className="flex flex-col gap-4 mb-8 pb-5 border-b border-white/[0.08]">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2.5">
+                  <span className="text-[11px] font-mono uppercase tracking-[0.18em] text-[#D4AF37] shrink-0 font-semibold">
+                    Sektor:
+                  </span>
+                  <div
+                    className="flex flex-wrap items-center gap-2"
+                    role="tablist"
+                    aria-label={portfolio.eyebrow}
+                  >
+                    {filterKeys.map((catKey) => {
+                      const isActive = selectedCategory === catKey;
+                      return (
+                        <button
+                          key={catKey}
+                          type="button"
+                          role="tab"
+                          aria-selected={isActive}
+                          onClick={() => setSelectedCategory(catKey)}
+                          className={`min-h-[38px] px-3.5 py-1.5 rounded-[3px] text-[12px] font-sans transition-all duration-200 cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#D4AF37] border ${
+                            isActive
+                              ? "bg-[#D4AF37] text-[#090A0D] border-[#D4AF37] font-bold shadow-[0_2px_12px_rgba(212,175,55,0.25)]"
+                              : "bg-[#12141A] text-[#9EA6B5] border-white/[0.08] hover:border-[#D4AF37]/50 hover:text-[#FAF9F5] hover:bg-white/[0.04]"
+                          }`}
+                        >
+                          {portfolio.filters[catKey]}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
 
-              <div className="font-mono text-[11px] tracking-wider text-[#7A8290] flex items-center gap-2 shrink-0">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" aria-hidden="true" />
-                <span>KO‘RSATILMOQDA: {filteredCompanies.length} TA KORXONA</span>
+                <div className="font-mono text-[11px] tracking-wider text-[#7A8290] flex items-center gap-2 shrink-0 pt-1 sm:pt-0">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" aria-hidden="true" />
+                  <span>KO‘RSATILMOQDA: {filteredCompanies.length} TA KORXONA</span>
+                </div>
               </div>
             </div>
 
@@ -540,6 +542,17 @@ const PortfolioCard: React.FC<PortfolioCardProps> = ({
               ref={modalScrollRef}
               className="overflow-y-auto overscroll-contain px-5 py-6 pb-[max(28px,env(safe-area-inset-bottom,28px))] sm:px-8 sm:pt-7 sm:pb-8"
             >
+              {activeCompany.hasLogo && activeCompany.logoUrl && (
+                <div className="mb-4 inline-flex items-center h-12 w-48 px-3.5 bg-[#0C0E12] border border-white/[0.14] rounded-[4px] shadow-sm">
+                  <Image
+                    src={activeCompany.logoUrl}
+                    alt={`${activeCompany.name} logo`}
+                    width={200}
+                    height={50}
+                    className="h-8 w-auto max-w-[92%] object-contain"
+                  />
+                </div>
+              )}
               <h3
                 id="modalCompanyTitle"
                 className="font-sans text-[clamp(22px,4vw,30px)] font-bold text-[var(--text-ink)] leading-[1.18] mb-4"

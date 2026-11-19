@@ -36,6 +36,16 @@ function withRuntimeSecurityHeaders(
 export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Safe redirect for legacy /bron requests to /hamkorlik
+  if (/^(?:\/(uz|ru|en))?\/bron(?:\/|$)/.test(pathname)) {
+    const matchedLocale =
+      pathname.match(/^\/(uz|ru|en)(?:\/|$)/)?.[1] || routing.defaultLocale;
+    return withRuntimeSecurityHeaders(
+      request,
+      NextResponse.redirect(new URL(`/${matchedLocale}/hamkorlik`, request.url))
+    );
+  }
+
   if (!featuresConfig.quiz) {
     if (/^(?:\/(uz|ru|en))?\/test(?:\/|$)/.test(pathname)) {
       const matchedLocale =

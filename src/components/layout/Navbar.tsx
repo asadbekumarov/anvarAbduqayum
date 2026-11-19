@@ -316,7 +316,7 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
               href={`/${locale}`}
               className="group min-h-[40px] flex flex-col justify-center py-1 min-w-0 shrink-0 rounded-[2px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-alabaster)]"
             >
-              <span className="font-serif text-base sm:text-lg xl:text-[19px] 2xl:text-[21px] font-bold tracking-[0.06em] xl:tracking-[0.08em] text-[var(--text-ink)] uppercase leading-none whitespace-nowrap">
+              <span className="font-serif text-[15px] min-[360px]:text-base sm:text-lg xl:text-[19px] 2xl:text-[21px] font-bold tracking-[0.04em] min-[360px]:tracking-[0.06em] xl:tracking-[0.08em] text-[var(--text-ink)] uppercase leading-none whitespace-nowrap">
                 ANVAR ABDUQAYUM<span className="text-[var(--accent-gold-ink)]">.</span>
               </span>
               <span className="sr-only">
@@ -549,12 +549,12 @@ export const Navbar: React.FC<NavbarProps> = ({ locale = "uz" }) => {
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: "100%", opacity: 0.8 }}
               transition={{ type: "spring", damping: 28, stiffness: 260 }}
-              className="fixed top-0 right-0 w-full max-w-[340px] sm:max-w-[380px] h-full bg-[var(--bg-alabaster)] border-l border-[var(--border-hairline)] z-[2000] flex flex-col p-6 shadow-2xl overflow-y-auto lg:hidden"
+              className="fixed top-0 right-0 w-full max-w-[340px] sm:max-w-[380px] h-full bg-[var(--bg-alabaster)] border-l border-[var(--border-hairline)] z-[2000] flex flex-col p-4 min-[380px]:p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] shadow-2xl overflow-y-auto overscroll-contain lg:hidden"
             >
               {/* Drawer Header */}
               <div className="flex items-center justify-between pb-4 border-b border-[var(--border-hairline-subtle)] mb-4 gap-3">
                 <div className="min-w-0 flex-1">
-                  <span className="font-serif font-bold text-base tracking-[0.1em] text-[var(--text-ink)] whitespace-nowrap truncate block uppercase">
+                  <span className="font-serif font-bold text-base tracking-[0.08em] text-[var(--text-ink)] whitespace-nowrap truncate block uppercase">
                     ANVAR ABDUQAYUM<span className="text-[var(--accent-gold-ink)]">.</span>
                   </span>
                   <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--accent-gold-ink)] whitespace-nowrap block mt-0.5">

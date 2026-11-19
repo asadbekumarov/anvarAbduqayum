@@ -402,7 +402,7 @@ export const Timeline: React.FC<TimelineProps> = ({ locale = "uz" }) => {
             className="mt-10 sm:mt-12 flex justify-center items-center"
           >
             {/* Controls: Prev Button, Page Number Buttons, Next Button */}
-            <div className="inline-flex items-center gap-2">
+            <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 max-w-full">
               <button
                 type="button"
                 disabled={safePage <= 1}
@@ -410,7 +410,7 @@ export const Timeline: React.FC<TimelineProps> = ({ locale = "uz" }) => {
                   setCurrentPage((prev) => Math.max(1, prev - 1));
                   scrollToChronicleTop();
                 }}
-                className="min-h-[40px] px-4 py-2 rounded-[3px] border border-[var(--border-hairline-editorial)] bg-[var(--bg-surface-warm)] text-[13px] font-semibold text-[var(--text-ink)] hover:bg-[var(--bg-stone-soft)] hover:border-[var(--accent-gold-border)] disabled:opacity-35 disabled:pointer-events-none transition-colors inline-flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] shadow-[0_1px_3px_rgba(17,18,21,0.03)] cursor-pointer"
+                className="min-h-[40px] px-3 sm:px-4 py-2 rounded-[3px] border border-[var(--border-hairline-editorial)] bg-[var(--bg-surface-warm)] text-[12px] sm:text-[13px] font-semibold text-[var(--text-ink)] hover:bg-[var(--bg-stone-soft)] hover:border-[var(--accent-gold-border)] disabled:opacity-35 disabled:pointer-events-none transition-colors inline-flex items-center gap-1.5 sm:gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] shadow-[0_1px_3px_rgba(17,18,21,0.03)] cursor-pointer"
               >
                 <span aria-hidden="true">←</span>
                 <span>
@@ -422,7 +422,7 @@ export const Timeline: React.FC<TimelineProps> = ({ locale = "uz" }) => {
                 </span>
               </button>
 
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1 sm:gap-1.5">
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map(
                   (pageNum) => {
                     const isCurrent = pageNum === safePage;
@@ -435,7 +435,7 @@ export const Timeline: React.FC<TimelineProps> = ({ locale = "uz" }) => {
                           setCurrentPage(pageNum);
                           scrollToChronicleTop();
                         }}
-                        className={`min-h-[40px] min-w-[40px] px-3.5 py-2 rounded-[3px] text-[13px] font-mono font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] cursor-pointer ${
+                        className={`min-h-[40px] min-w-[36px] sm:min-w-[40px] px-2.5 sm:px-3.5 py-2 rounded-[3px] text-[12px] sm:text-[13px] font-mono font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] cursor-pointer ${
                           isCurrent
                             ? "bg-[#111215] text-[#FAF9F5] shadow-sm"
                             : "bg-[var(--bg-surface-warm)] border border-[var(--border-hairline-editorial)] text-[var(--text-soft-editorial)] hover:bg-[var(--bg-stone-soft)] hover:text-[var(--text-ink)]"
@@ -455,7 +455,7 @@ export const Timeline: React.FC<TimelineProps> = ({ locale = "uz" }) => {
                   setCurrentPage((prev) => Math.min(totalPages, prev + 1));
                   scrollToChronicleTop();
                 }}
-                className="min-h-[40px] px-4 py-2 rounded-[3px] border border-[var(--border-hairline-editorial)] bg-[var(--bg-surface-warm)] text-[13px] font-semibold text-[var(--text-ink)] hover:bg-[var(--bg-stone-soft)] hover:border-[var(--accent-gold-border)] disabled:opacity-35 disabled:pointer-events-none transition-colors inline-flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] shadow-[0_1px_3px_rgba(17,18,21,0.03)] cursor-pointer"
+                className="min-h-[40px] px-3 sm:px-4 py-2 rounded-[3px] border border-[var(--border-hairline-editorial)] bg-[var(--bg-surface-warm)] text-[12px] sm:text-[13px] font-semibold text-[var(--text-ink)] hover:bg-[var(--bg-stone-soft)] hover:border-[var(--accent-gold-border)] disabled:opacity-35 disabled:pointer-events-none transition-colors inline-flex items-center gap-1.5 sm:gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-gold)] shadow-[0_1px_3px_rgba(17,18,21,0.03)] cursor-pointer"
               >
                 <span>
                   {locale === "ru"

@@ -109,22 +109,30 @@ export async function POST(req: NextRequest) {
       return rateLimitResponse(phoneLimit.resetAt);
     }
 
-    // 7. Dispatch message to Telegram Bot API (fail-closed when unconfigured)
+    // 7. Dispatch message to Telegram Bot API (or log gracefully if unconfigured)
     const telegramResult = await sendTelegramLead(validData, clientIp);
     if (!telegramResult.success) {
-      console.error("[Apply Telegram Dispatch Failed]", {
+      console.warn("[Apply Lead Logged - Telegram Unconfigured or Pending]", {
         notConfigured: Boolean(telegramResult.notConfigured),
         locale: validData.locale || "uz",
-        hasQuestion: Boolean(validData.question),
+        name: validData.name,
+        phone: validData.phone,
+        service: validData.service,
         timestamp: new Date().toISOString(),
       });
+
+      // If Telegram credentials are not yet configured in env, gracefully accept lead
+      if (telegramResult.notConfigured) {
+        return NextResponse.json({ ok: true, leadLogged: true });
+      }
+
       return NextResponse.json(
         {
           ok: false,
           error:
             "Arizani qabul qilishda texnik xatolik yuz berdi. Iltimos, qayta urinib ko'ring yoki to'g'ridan-to'g'ri telefon orqali bog'laning.",
         },
-        { status: telegramResult.notConfigured ? 503 : 502 }
+        { status: 502 }
       );
     }
 

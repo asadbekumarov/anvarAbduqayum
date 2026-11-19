@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="100%" height="100%" fill="none">
+  <defs>
+    <linearGradient id="aaGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBF0B9"/>
+      <stop offset="35%" stop-color="#D4AF37"/>
+      <stop offset="70%" stop-color="#AA820A"/>
+      <stop offset="100%" stop-color="#D4AF37"/>
+    </linearGradient>
+    <linearGradient id="aaGoldStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF2C6"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#6B5205"/>
+    </linearGradient>
+    <linearGradient id="aaDarkPlate" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#16181E"/>
+      <stop offset="100%" stop-color="#08090C"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Industrial Chamfered Ingot / Octagon Frame -->
+  <polygon 
+    points="28,8 132,8 152,28 152,132 132,152 28,152 8,132 8,28" 
+    fill="url(#aaDarkPlate)" 
+    stroke="url(#aaGoldStroke)" 
+    stroke-width="2.5"
+  />
+
+  <!-- Inner Precision Mold Hairline -->
+  <polygon 
+    points="32,14 128,14 146,32 146,128 128,146 32,146 14,128 14,32" 
+    fill="none" 
+    stroke="#D4AF37" 
+    stroke-width="0.8" 
+    stroke-opacity="0.4"
+  />
+
+  <!-- Corner Precision Registration Marks -->
+  <line x1="8" y1="28" x2="18" y2="28" stroke="#D4AF37" stroke-width="1.2" stroke-opacity="0.8"/>
+  <line x1="28" y1="8" x2="28" y2="18" stroke="#D4AF37" stroke-width="1.2" stroke-opacity="0.8"/>
+  <line x1="152" y1="28" x2="142" y2="28" stroke="#D4AF37" stroke-width="1.2" stroke-opacity="0.8"/>
+  <line x1="132" y1="8" x2="132" y2="18" stroke="#D4AF37" stroke-width="1.2" stroke-opacity="0.8"/>
+  <line x1="8" y1="132" x2="18" y2="132" stroke="#D4AF37" stroke-width="1.2" stroke-opacity="0.8"/>
+  <line x1="28" y1="152" x2="28" y2="142" stroke="#D4AF37" stroke-width="1.2" stroke-opacity="0.8"/>
+  <line x1="152" y1="132" x2="142" y2="132" stroke="#D4AF37" stroke-width="1.2" stroke-opacity="0.8"/>
+  <line x1="132" y1="152" x2="132" y2="142" stroke="#D4AF37" stroke-width="1.2" stroke-opacity="0.8"/>
+
+  <!-- Center Interlocking Architectural "AA" Monogram -->
+  <!-- Left A -->
+  <path 
+    d="M60 36 L36 114 L50 114 L55 97 L75 97 L80 114 L94 114 L70 36 Z M65 58 L71 84 L59 84 Z" 
+    fill="url(#aaGold)" 
+    stroke="#16181E" 
+    stroke-width="1.5"
+  />
+
+  <!-- Right Interlocking A (Shifted & Overlapping with Depth) -->
+  <path 
+    d="M100 36 L76 114 L90 114 L95 97 L115 97 L120 114 L134 114 L110 36 Z M105 58 L111 84 L99 84 Z" 
+    fill="url(#aaGold)" 
+    stroke="#08090C" 
+    stroke-width="2"
+  />
+
+  <!-- Gold Hallmark Diamond / Est 2004 Hallmark -->
+  <polygon points="80,126 84,131 80,136 76,131" fill="#D4AF37"/>
+  <line x1="45" y1="131" x2="70" y2="131" stroke="#D4AF37" stroke-width="0.8" stroke-opacity="0.5"/>
+  <line x1="90" y1="131" x2="115" y2="131" stroke="#D4AF37" stroke-width="0.8" stroke-opacity="0.5"/>
+</svg>

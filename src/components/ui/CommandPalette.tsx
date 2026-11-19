@@ -247,15 +247,15 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     // 1. Quick Actions
     items.push(
       {
-        id: "action-bron",
-        title: i18n.bookMeeting,
-        subtitle: i18n.bookDesc,
+        id: "action-hamkorlik",
+        title: locale === "ru" ? "Заявка на партнерство" : locale === "en" ? "Partnership Inquiry" : "Hamkorlik arizasi",
+        subtitle: locale === "ru" ? "B2B партнерство и экспорт" : locale === "en" ? "B2B partnership portal" : "B2B hamkorlik portali",
         category: "quick",
         categoryLabel: i18n.quickTitle,
-        shortcut: "B",
+        shortcut: "H",
         onSelect: () => {
           setIsOpen(false);
-          router.push(`/${locale}/bron`);
+          router.push(`/${locale}/hamkorlik`);
         },
       },
       {
