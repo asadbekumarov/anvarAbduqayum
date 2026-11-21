@@ -10,13 +10,15 @@ import { getDemoCopy } from "@/config/demoCopy";
 
 // Publicly reachable origin for Open Graph crawlers (Telegram, WhatsApp, Facebook, LinkedIn)
 export const getPublicOgOrigin = (): string => {
-  if (SITE_URL && !SITE_URL.includes("localhost") && !SITE_URL.includes("127.0.0.1")) {
+  if (
+    SITE_URL &&
+    !SITE_URL.includes("localhost") &&
+    !SITE_URL.includes("127.0.0.1") &&
+    !SITE_URL.includes("-projects-")
+  ) {
     return SITE_URL;
   }
-  if (process.env.NEXT_PUBLIC_DEMO_URL) {
-    return process.env.NEXT_PUBLIC_DEMO_URL.trim().replace(/\/$/, "");
-  }
-  return DEMO_ORIGIN || OFFICIAL_PRODUCTION_ORIGIN;
+  return DEMO_ORIGIN || "https://anvarabduqayum.vercel.app";
 };
 
 export const OG_BASE_URL = getPublicOgOrigin();

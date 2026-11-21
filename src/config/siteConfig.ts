@@ -2,14 +2,14 @@ import { contactConfig } from "./contact";
 import { featuresConfig } from "./features";
 
 export const OFFICIAL_PRODUCTION_ORIGIN = "https://anvarabduqayum.uz";
-export const DEMO_ORIGIN = "https://anvar-abduqayum-flax.vercel.app";
+export const DEMO_ORIGIN = "https://anvarabduqayum.vercel.app";
 
 const resolveDemoOrigin = (): string => {
   const explicitDemo = process.env.NEXT_PUBLIC_DEMO_URL?.trim().replace(/\/$/, "");
   if (explicitDemo) return explicitDemo;
 
   const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/$/, "");
-  if (configured && configured !== OFFICIAL_PRODUCTION_ORIGIN) {
+  if (configured && configured !== OFFICIAL_PRODUCTION_ORIGIN && !configured.includes("localhost")) {
     return configured;
   }
 
@@ -20,19 +20,17 @@ const getBaseUrl = (): string => {
   if (featuresConfig.demoMode) {
     return resolveDemoOrigin();
   }
-  if (process.env.NEXT_PUBLIC_SITE_URL) {
-    return process.env.NEXT_PUBLIC_SITE_URL.trim().replace(/\/$/, "");
-  }
-  if (process.env.NEXT_PUBLIC_VERCEL_URL) {
-    return `https://${process.env.NEXT_PUBLIC_VERCEL_URL.trim().replace(/\/$/, "")}`;
+  const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/$/, "");
+  if (configured && !configured.includes("localhost") && !configured.includes("127.0.0.1")) {
+    return configured;
   }
   if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
     return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL.trim().replace(/\/$/, "")}`;
   }
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL.trim().replace(/\/$/, "")}`;
+  if (process.env.NEXT_PUBLIC_VERCEL_URL && !process.env.NEXT_PUBLIC_VERCEL_URL.includes("-projects-")) {
+    return `https://${process.env.NEXT_PUBLIC_VERCEL_URL.trim().replace(/\/$/, "")}`;
   }
-  return OFFICIAL_PRODUCTION_ORIGIN;
+  return DEMO_ORIGIN;
 };
 
 export const SITE_URL = getBaseUrl();
