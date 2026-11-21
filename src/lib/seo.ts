@@ -1,13 +1,31 @@
 import type { Metadata } from "next";
-import { SITE_URL, isIndexingEnabled } from "@/config/siteConfig";
+import {
+  SITE_URL,
+  isIndexingEnabled,
+  DEMO_ORIGIN,
+  OFFICIAL_PRODUCTION_ORIGIN,
+} from "@/config/siteConfig";
 import { featuresConfig } from "@/config/features";
 import { getDemoCopy } from "@/config/demoCopy";
 
-export const OG_IMAGE_PATH = "/images/brand/og-image.png";
-export const OG_IMAGE_URL = `${SITE_URL}${OG_IMAGE_PATH}`;
+// Publicly reachable origin for Open Graph crawlers (Telegram, WhatsApp, Facebook, LinkedIn)
+export const getPublicOgOrigin = (): string => {
+  if (SITE_URL && !SITE_URL.includes("localhost") && !SITE_URL.includes("127.0.0.1")) {
+    return SITE_URL;
+  }
+  if (process.env.NEXT_PUBLIC_DEMO_URL) {
+    return process.env.NEXT_PUBLIC_DEMO_URL.trim().replace(/\/$/, "");
+  }
+  return DEMO_ORIGIN || OFFICIAL_PRODUCTION_ORIGIN;
+};
+
+export const OG_BASE_URL = getPublicOgOrigin();
+export const OG_IMAGE_PATH = "/images/brand/og-image.jpg";
+export const OG_IMAGE_PATH_PNG = "/images/brand/og-image.png";
+export const OG_IMAGE_URL = `${OG_BASE_URL}${OG_IMAGE_PATH}`;
 export const OG_IMAGE_WIDTH = 1200;
 export const OG_IMAGE_HEIGHT = 630;
-export const OG_IMAGE_TYPE = "image/png";
+export const OG_IMAGE_TYPE = "image/jpeg";
 
 const OG_LOCALE_BY_LANG = {
   uz: "uz_UZ",
@@ -24,14 +42,38 @@ export function normalizeLocale(locale: string): SupportedLocale {
 }
 
 export function getOgImageDescriptor(alt: string) {
+  const base = getPublicOgOrigin();
+  const url = `${base}${OG_IMAGE_PATH}`;
   return {
-    url: OG_IMAGE_URL,
-    ...(OG_IMAGE_URL.startsWith("https://") ? { secureUrl: OG_IMAGE_URL } : {}),
+    url,
+    secureUrl: url,
     width: OG_IMAGE_WIDTH,
     height: OG_IMAGE_HEIGHT,
     type: OG_IMAGE_TYPE,
     alt,
   };
+}
+
+export function getOgImageDescriptors(alt: string) {
+  const base = getPublicOgOrigin();
+  return [
+    {
+      url: `${base}${OG_IMAGE_PATH}`,
+      secureUrl: `${base}${OG_IMAGE_PATH}`,
+      width: OG_IMAGE_WIDTH,
+      height: OG_IMAGE_HEIGHT,
+      type: "image/jpeg",
+      alt,
+    },
+    {
+      url: `${base}${OG_IMAGE_PATH_PNG}`,
+      secureUrl: `${base}${OG_IMAGE_PATH_PNG}`,
+      width: OG_IMAGE_WIDTH,
+      height: OG_IMAGE_HEIGHT,
+      type: "image/png",
+      alt,
+    },
+  ];
 }
 
 export function getDefaultOgImageAlt(locale: string): string {
@@ -148,7 +190,7 @@ export function buildLocalizedMetadata({
     authors: [{ name: "Anvar Abduqayum", url: SITE_URL }],
     creator: "Anvar Abduqayum",
     publisher: "Anvar Abduqayum",
-    metadataBase: new URL(SITE_URL),
+    metadataBase: new URL(getPublicOgOrigin()),
     robots: getRobotsMetadata(),
     alternates: {
       canonical: canonicalUrl,
@@ -167,7 +209,7 @@ export function buildLocalizedMetadata({
       alternateLocale,
       url: canonicalUrl,
       siteName,
-      images: [getOgImageDescriptor(resolvedAlt)],
+      images: getOgImageDescriptors(resolvedAlt),
     },
     twitter: {
       card: "summary_large_image",
@@ -175,7 +217,7 @@ export function buildLocalizedMetadata({
       description,
       images: [
         {
-          url: OG_IMAGE_URL,
+          url: `${getPublicOgOrigin()}${OG_IMAGE_PATH}`,
           alt: resolvedAlt,
         },
       ],

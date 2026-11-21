@@ -7,6 +7,7 @@ import {
   OG_IMAGE_URL,
   getDefaultOgImageAlt,
   getOgImageDescriptor,
+  getPublicOgOrigin,
   getRobotsMetadata,
 } from "@/lib/seo";
 
@@ -23,7 +24,7 @@ const rootSiteName = featuresConfig.demoMode
 const rootOgAlt = getDefaultOgImageAlt("uz");
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: new URL(getPublicOgOrigin()),
   robots: getRobotsMetadata(),
   title: rootTitle,
   description: rootDescription,
